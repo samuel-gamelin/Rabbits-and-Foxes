@@ -7,7 +7,7 @@
 ### Setup Instructions
 1. From your terminal, run: 
 ```bash
-git clone https://github.com/samuel-gamelin/SYSC-3110"
+git clone https://github.com/samuel-gamelin/SYSC-3110
 ```
 This will create a folder called SYSC-3110.
 
