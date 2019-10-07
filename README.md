@@ -15,14 +15,14 @@
    3. From that window, click on the "Directory" button next to the "Import source" box, and select the "SYSC-3110" folder that              was just created. Click "Finish".
    4. You will have to add JUnit 4 to your classpath to run the tests. To do so, right-click on the project name, then click                 "Build Path -> Add Libraries". Select JUnit, hit "Next", select JUnit 4 and click "Finish".
 #### Rules for Contributions:
-   Commits:
+- Commits:
    1. only commit code to the corresponding milestone 
    2. Please doccument your commits with changes and updates. 
    3. Please test your code before commit to the repo
    4. Add test casses for your commit 
    5. Merging to master will occur on weekly bases under the review of all developers on the project
-   Pull requests:
-   Issues:
+- Pull requests:
+- Issues:
         
 ### Additional Tools
 
