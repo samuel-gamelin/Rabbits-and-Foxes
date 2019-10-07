@@ -1,4 +1,4 @@
-# SYSC 3110 - Project 
+# Rabbits and Foxes
 
 ### Resources
 * IDE: [Eclipse](https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-java-developers)
@@ -15,20 +15,29 @@
    3. From that window, click on the "Directory" button next to the "Import source" box, and select the "SYSC-3110" folder that              was just created. Click "Finish".
    4. You will have to add JUnit 4 to your classpath to run the tests. To do so, right-click on the project name, then click                 "Build Path -> Add Libraries". Select JUnit, hit "Next", select JUnit 4 and click "Finish".
 #### Rules for Contributions:
+
+When contributing to the project please start on the issues page which is used for task tracking.
 - Commits:
-   1. only commit code to the corresponding milestone 
-   2. Please doccument your commits with changes and updates. 
-   3. Please test your code before commit to the repo
-   4. Add test casses for your commit 
-   5. Merging to master will occur on weekly bases under the review of all developers on the project
+1. Only commit code to the corresponding milestone.
+2. Please doccument your commits with changes and updates. 
+4. Added test cases for the updates made
+5. Merging to master will occur on weekly bases under the review of all developers on the project
 - Pull requests:
+If you decide to create your own branch and the commit to the corresponding milestone.
+1. Open a pull request to the corresponding milestone.
+2. Doccuemnt your code
+3. If there are any errors during merge please consult any developer on the team
 - Issues:
-        
+1. Issues will be used for task tracking 
+2. When an issue is solved please doccuemnt the changes that have been made 
+3. close the issue after you have commited your code.
+
 ### Additional Tools
 
 - Contributions are made through GitHub, on this repository.
-   - Please download and install git and/or GitHub Desktop. [Download Link](https://www.google.ca)
+   - Please download and install git and/or GitHub Desktop. [Download Link](https://git-scm.com/)
 - Slack is used as the main chat for this project. [Inviation Link](https://www.google.ca)
+- Github Issues will be used to task and ticket tracking.
 
 ### Documentation 
 Documentation can be found [here](https://www.google.ca)
