@@ -41,7 +41,9 @@ When contributing to the project please start on the issues page which is used f
     - Please download and install git and/or GitHub Desktop. [Download Link](https://git-scm.com/)
 - Slack is used as the main chat for this project. [Invitation Link](https://www.google.ca)
 - Github Issues will be used for task and ticket tracking.
-
+## Road Map
+## known issues
+## New features
 ## The Team
 - [Mohamed Radwan](mailto:mohamedradwan@cmail.carleton.ca)
 - [Samuel Gamelin](mailto:)
