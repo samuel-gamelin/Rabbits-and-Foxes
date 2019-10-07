@@ -50,9 +50,9 @@ When contributing to the project please start on the issues page which is used f
 ## The Team
 - [Mohamed Radwan](mailto:mohamedradwan@cmail.carleton.ca)
 - [Samuel Gamelin](mailto:samuelgamelin@cmail.carleton.ca)
-- [Dani Hashweh](mailto:)
+- [Dani Hashweh](mailto:danihashweh@cmail.carleton.ca)
 - [John Breton](mailto:johnbreton@cmail.carleton.ca)
-- [Abdalla El Nakla](mailto:)
+- [Abdalla El Nakla](mailto:abdallaelnakla@cmail.carleton.ca)
 
 ## Documentation 
 Documentation for the project can be found [here](https://github.com/samuel-gamelin/SYSC-3110/tree/master/documentation)
