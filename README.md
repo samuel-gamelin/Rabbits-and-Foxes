@@ -16,11 +16,11 @@
    4. You will have to add JUnit 4 to your classpath to run the tests. To do so, right-click on the project name, then click                 "Build Path -> Add Libraries". Select JUnit, hit "Next", select JUnit 4 and click "Finish".
 #### Rules for Contributions:
    Commits:
-      1. only commit code to the corresponding milestone 
-      2. Please doccument your commits with changes and updates. 
-      3. Please test your code before commit to the repo
-      4. Add test casses for your commit 
-      5. Merging to master will occur on weekly bases under the review of all developers on the project
+     1. only commit code to the corresponding milestone 
+     2. Please doccument your commits with changes and updates. 
+     3. Please test your code before commit to the repo
+     4. Add test casses for your commit 
+     5. Merging to master will occur on weekly bases under the review of all developers on the project
    Pull requests:
    Issues:
         
