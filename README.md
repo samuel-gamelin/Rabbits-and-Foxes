@@ -36,7 +36,7 @@ If you decide to create your own branch and then commit to the corresponding mil
 
 - Contributions are made through GitHub, on this repository.
 - Please download and install git and/or GitHub Desktop. [Download Link](https://git-scm.com/)
-- Slack is used as the main chat for this project. [Inviation Link](https://www.google.ca)
+- Slack is used as the main chat for this project. [Invitation Link](https://www.google.ca)
 - Github Issues will be used to task and ticket tracking.
 
 ### Documentation 
