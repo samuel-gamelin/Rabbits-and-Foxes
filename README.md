@@ -43,4 +43,4 @@ If you decide to create your own branch and then commit to the corresponding mil
 Documentation can be found [here](https://www.google.ca)
  
 ### License and Disclaimer
-This application is for educational pupose. JumpIN is a registered comerical product. The developers are not responsible for the distribution of this product. 
+This application is for educational puposes. JumpIN is a registered commerical product. The developers are not responsible for the distribution of this product. 
