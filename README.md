@@ -20,22 +20,22 @@ When contributing to the project please start on the issues page which is used f
 - Commits:
 1. Only commit code to the corresponding milestone.
 2. Please doccument your commits with changes and updates. 
-4. Added test cases for the updates made
-5. Merging to master will occur on weekly bases under the review of all developers on the project
+4. Add test cases for the updates made.
+5. Merging to master will occur on weekly bases under the review of all developers on the project.
 - Pull requests:
-If you decide to create your own branch and the commit to the corresponding milestone.
+If you decide to create your own branch and then commit to the corresponding milestone.
 1. Open a pull request to the corresponding milestone.
-2. Doccuemnt your code
-3. If there are any errors during merge please consult any developer on the team
+2. Document your code.
+3. If there are any errors during the merge please consult any developer on the team.
 - Issues:
-1. Issues will be used for task tracking 
-2. When an issue is solved please doccuemnt the changes that have been made 
-3. close the issue after you have commited your code.
+1. Issues will be used for task tracking. 
+2. When an issue is solved please doccuemnt the changes that have been made. 
+3. Close the issue after you have commited your code.
 
 ### Additional Tools
 
 - Contributions are made through GitHub, on this repository.
-   - Please download and install git and/or GitHub Desktop. [Download Link](https://git-scm.com/)
+- Please download and install git and/or GitHub Desktop. [Download Link](https://git-scm.com/)
 - Slack is used as the main chat for this project. [Inviation Link](https://www.google.ca)
 - Github Issues will be used to task and ticket tracking.
 
@@ -43,4 +43,4 @@ If you decide to create your own branch and the commit to the corresponding mile
 Documentation can be found [here](https://www.google.ca)
  
 ### License and Disclaimer
-This application is for educational pupose. Jump IN is a registered comerical product. The developers are not responsible for the distribution of this product. 
+This application is for educational pupose. JumpIN is a registered comerical product. The developers are not responsible for the distribution of this product. 
