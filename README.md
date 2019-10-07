@@ -37,10 +37,10 @@ If you decide to create your own branch and then commit to the corresponding mil
 - Contributions are made through GitHub, on this repository.
 - Please download and install git and/or GitHub Desktop. [Download Link](https://git-scm.com/)
 - Slack is used as the main chat for this project. [Invitation Link](https://www.google.ca)
-- Github Issues will be used to task and ticket tracking.
+- Github Issues will be used for task and ticket tracking.
 
 ### Documentation 
-Documentation can be found [here](https://www.google.ca)
+Documentation can be found [here](https://github.com/samuel-gamelin/SYSC-3110/tree/master/documentation)
  
 ### License and Disclaimer
-This application is for educational puposes. JumpIN is a registered commerical product. The developers are not responsible for the distribution of this product. 
+This application is for educational purposes. JumpIN is a registered commerical product. The developers are not responsible for the distribution of this product. 
