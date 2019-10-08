@@ -73,8 +73,7 @@ Please add info
 
 ## Documentation
 
-- Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing)
-- Please send @Mohamed Radwan your email to be able to edit the document
+Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing)
 
 ## License and Disclaimer
 
