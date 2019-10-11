@@ -8,9 +8,15 @@ package app;
  *
  */
 public class Tile {
+	private Colour tileColour; 
+	
+	public enum Colour{
+		BROWN, GREEN
+	}
+		
 
-	public Tile() {
-		// TODO Auto-generated constructor stub
+	public Tile(Colour tileColour) {
+		this.tileColour = tileColour;
 	}
 
 }
