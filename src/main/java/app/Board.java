@@ -115,7 +115,7 @@ public class Board {
 			representation.append(x + 1);
 			representation.append(" ");
 			for (int y = 0; y < SIZE; y++) {
-				representation.append(tiles[x][y]);
+				representation.append(tiles[x][y].retrievePiece().toShortString());
 			}
 		}
 		return representation.toString();
