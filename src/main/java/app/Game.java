@@ -8,12 +8,21 @@ package app;
  *
  */
 public class Game {
+	private Parser parser;
 
 	/**
 	 * 
 	 */
 	public Game() {
-		// TODO Auto-generated constructor stub
+		parser = new Parser();
+	}
+
+	/***
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
 	}
 
 }

@@ -1,7 +1,8 @@
 package app;
+
 /***
  * 
- * @author 
+ * @author
  *
  */
 public abstract class Piece {
@@ -9,7 +10,6 @@ public abstract class Piece {
 	/**
 	 * 
 	 */
-	abstract boolean canMove(int xStart,int yStart, int xEnd,int yEnd);
-
+	abstract boolean canMove(int xStart, int yStart, int xEnd, int yEnd);
 
 }
