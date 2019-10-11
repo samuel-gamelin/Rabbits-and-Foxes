@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="12.0.1" class="java.beans.XMLDecoder">
+<java version="12.0.2" class="java.beans.XMLDecoder">
  <object class="com.horstmann.violet.ClassDiagramGraph">
   <void method="addNode">
    <object class="com.horstmann.violet.ClassNode" id="ClassNode0">
@@ -231,7 +231,7 @@
     </void>
     <void property="methods">
      <void property="text">
-      <string>&lt;u&gt;+ main&lt;/u&gt;
+      <string>&lt;u&gt;+main(args:String[])&lt;/u&gt;
 </string>
      </void>
     </void>
