@@ -51,6 +51,12 @@ When contributing to the project please start on the issues page which is used f
 - Slack is used as the main chat for this project. [Invitation Link](https://www.google.ca)
 - Github Issues will be used for task and ticket tracking.
 
+## Current UML
+
+<p align="center"> 
+<img src="https://github.com/samuel-gamelin/SYSC-3110/raw/mileStone1/documentation/uml/modelUML.png">
+</p>
+
 ## Road Map
 
 Please add info
