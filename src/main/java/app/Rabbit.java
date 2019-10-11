@@ -1,4 +1,5 @@
 package app;
+
 /***
  * 
  * @author
@@ -7,7 +8,18 @@ package app;
 public class Rabbit extends Piece {
 
 	public Rabbit() {
-		// TODO Auto-generated constructor stub
+		super(PieceType.RABBIT);
+	}
+
+	@Override
+	public boolean canMove(int xStart, int yStart, int xEnd, int yEnd) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String toShortString() {
+		return "RB";
 	}
 
 }
