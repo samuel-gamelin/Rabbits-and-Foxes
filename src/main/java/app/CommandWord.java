@@ -7,7 +7,7 @@ package app;
  * @version 1.0
  */
 public enum CommandWord {
-	HELP("help"), INVALID("?"), MOVE("move"), START("start"), QUIT("quit");
+	HELP("help"), MOVE("move"), START("start"), QUIT("quit"), INVALID("invalid");
 	
 	// The string representation of command.
 	private String command;

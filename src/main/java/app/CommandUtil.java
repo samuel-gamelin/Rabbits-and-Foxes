@@ -23,13 +23,20 @@ public class CommandUtil {
 	 */
 	public CommandUtil() {
 		validCommands = new HashMap<String, CommandWord>();
+		for(CommandWord command : CommandWord.values()) {
+			if(command != CommandWord.INVALID) {
+				validCommands.put(command.toString(), command);
+			}
+		}
 	}
 	
 	/**
-	 * 
+	 * Displays a string of valid commands separated by a whitespace.
+	 * Once all the valid commands have displayed, a newline is printed.
 	 */
 	public void showCommands() {
-		
+		validCommands.entrySet().forEach(entry->{System.out.print(entry.getValue().toString() + " ");});
+		System.out.println();
 	}
 	
 	/**
