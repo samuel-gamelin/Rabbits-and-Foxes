@@ -12,7 +12,8 @@
     <void property="methods">
      <void property="text">
       <string>+Board()
-+move()</string>
++move()
++toString():String</string>
      </void>
     </void>
     <void property="name">
