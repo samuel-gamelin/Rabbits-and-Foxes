@@ -89,7 +89,7 @@ public class Board {
 	public boolean isInWinningState() {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (!(tiles[i][j] != null && tiles[i][j].getColour().equals(Tile.Colour.BROWN) && tiles[i][j].retrievePiece().getType().equas(Piece.RABBIT))) {
+				if (!(tiles[i][j] != null && tiles[i][j].getColour().equals(Tile.Colour.BROWN) && tiles[i][j].retrievePiece().getType().equals(Piece.PieceType.RABBIT))) {
 					return false;
 				}
 			}
@@ -98,8 +98,6 @@ public class Board {
 	}
 	
 	/**
-	 * Returns a String representation of the Board.
-	 * 
 	 * @return A string representation
 	 */
 	@Override
