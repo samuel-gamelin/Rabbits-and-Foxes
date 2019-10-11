@@ -9,8 +9,7 @@ public abstract class Piece {
 	/**
 	 * 
 	 */
-	public Piece() {
-		// TODO Auto-generated constructor stub
-	}
+	abstract boolean canMove(int xStart,int yStart, int xEnd,int yEnd);
+
 
 }
