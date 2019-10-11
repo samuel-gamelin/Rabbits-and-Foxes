@@ -8,12 +8,11 @@ package app;
  *
  */
 public class Tile {
-	private Colour tileColour; 
-	
-	public enum Colour{
+	private Colour tileColour;
+
+	public enum Colour {
 		BROWN, GREEN
 	}
-		
 
 	public Tile(Colour tileColour) {
 		this.tileColour = tileColour;
