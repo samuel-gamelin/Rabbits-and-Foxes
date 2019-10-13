@@ -9,17 +9,17 @@ package app;
  */
 public class Board {
 	/**
-	 * The size of any side for the board
+	 * The size of any side for the board.
 	 */
 	public static final int SIZE = 5;
 
 	/**
-	 * A 2D array of tiles used to manager all tiles on the board
+	 * A 2D array of tiles used to manage all tiles on the board.
 	 */
 	private Tile[][] tiles;
 
 	/**
-	 * Creates a board object, initializing it with the default game configuration.
+	 * Creates a board object and initializes it with the default game configuration.
 	 */
 	public Board() {
 		tiles = new Tile[SIZE][SIZE];
@@ -27,7 +27,7 @@ public class Board {
 	}
 
 	/**
-	 * Initializes the board with a default tile and piece configuration
+	 * Initializes the board with a default configuration.
 	 */
 	private void initializeDefaultBoard() {
 		// Corner brown tiles
@@ -47,16 +47,16 @@ public class Board {
 			}
 		}
 
-		// Adding the mushrooms (there can be 0 to 3)
+		// Adding the mushrooms (there can be 0 to 3, here we have 2)
 		tiles[3][1].placePiece(new Mushroom());
 		tiles[2][4].placePiece(new Mushroom());
 
-		// Adding the rabbits (there can be 1 to 3)
+		// Adding the rabbits (there can be 1 to 3, here we have 3)
 		tiles[3][0].placePiece(new Rabbit());
 		tiles[4][2].placePiece(new Rabbit());
 		tiles[1][4].placePiece(new Rabbit());
 
-		// Adding the foxes (there can be 0 to 2)
+		// Adding the foxes (there can be 0 to 2, here we have 2)
 		tiles[1][1].placePiece(new Fox());
 		tiles[4][3].placePiece(new Fox());
 	}
@@ -69,7 +69,7 @@ public class Board {
 	 * @param yStart The starting y position
 	 * @param yEnd   The ending y position
 	 * @return true if the move was successful, false if parameters are invalid or
-	 *         move was unsuccessful
+	 *         the move was unsuccessful
 	 */
 	public boolean move(int xStart, int xEnd, int yStart, int yEnd) {
 		if (xStart < 0 || xStart > SIZE || xEnd < 0 || xEnd > SIZE || yStart < 0 || yStart > SIZE || yEnd < 0
@@ -99,7 +99,7 @@ public class Board {
 	}
 
 	/**
-	 * @return A string representation
+	 * @return A string representation of this board.
 	 */
 	@Override
 	public String toString() {
@@ -114,7 +114,7 @@ public class Board {
 			representation.append(x + 1);
 			representation.append(" ");
 			for (int y = 0; y < SIZE; y++) {
-				representation.append(tiles[x][y].retrievePiece().toShortString());
+				representation.append(tiles[x][y].toString());
 			}
 		}
 		return representation.toString();
