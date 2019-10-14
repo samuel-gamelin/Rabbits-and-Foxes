@@ -3,8 +3,6 @@
  */
 package app;
 
-import java.util.ArrayList;
-
 /**
  * This class is responsible for controlling the game. Using parser and board
  * class to play the game/
@@ -41,7 +39,6 @@ public class Game {
 	public void playGame() {
 		System.out.println("Welcome to JumpIN Game !");
 		System.out.println("Type 'help' if you need help.\n");
-		ArrayList<String> command;
 		boolean done = false;
 		while (!this.isDone()) {
 			command = parser.readCommand();
@@ -50,17 +47,55 @@ public class Game {
 		System.out.println("\nThank you for playing. Good bye.");
 	}
 
+	/***
+	 * Prints all the commands that can be used within the game.
+	 */
 	private void printHelp() {
-		// TODO
-		System.out.println("Help menu goes here");
-		// parser.showCommands();
+		System.out.println("Here is the help menu:");
+		parser.showCommands();
 	}
 
-	private boolean processCommandWord(ArrayList<String> command) {
-		return false;
+	/***
+	 * Process the command to see how the game should respond.
+	 * 
+	 * @param command
+	 * @return
+	 */
+	private boolean processCommandWord(CommandWord command) {
+		boolean endGame = false;
+		CommandWord commandWord = command.readCommand();
+		if (commandWord == CommandWord.HELP) {
+			this.printHelp();
+		} else if (commandWord == CommandWord.MOVE) {
+			this.movePiece(commandWord);
+		} else if (commandWord == CommandWord.INVALID) {
+			System.out.println("Invalid command please try again.");
+			System.out.println("Type 'help' if you need help.\n");
+		} else if (commandWord == CommandWord.QUIT) {
+			this.quiteGame(commandWord);
+		} else if (commandWord == CommandWord.START) {
+
+		}
+		return endGame;
 	}
 
+	/***
+	 * Invokes a method in board to move the piece on specific coordinate
+	 * 
+	 * @param command
+	 */
+	private void movePiece(CommandWord command) {
+
+	}
+
+	/***
+	 * checks if the user truly wants to quite the game.
+	 * 
+	 * @param commandWord
+	 * @return true if the user wants to quite the game
+	 */
 	private boolean quiteGame(CommandWord commandWord) {
+		// TO DO
 		return true;
 	}
 
