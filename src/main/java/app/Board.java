@@ -62,7 +62,7 @@ public class Board {
 	}
 
 	/**
-	 * Makes a move.
+	 * Makes a move given starting and ending positions.
 	 * 
 	 * @param xStart The starting x position
 	 * @param xEnd   The ending x position

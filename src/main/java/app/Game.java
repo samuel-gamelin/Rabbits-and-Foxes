@@ -4,16 +4,19 @@
 package app;
 
 /**
- * @author Mohamed
- *
+ * This class is responsible for controlling the game. Using parser and board
+ * class to play the game/
+ * 
+ * @author Mohamed Radwan
+ * @version 1.0
  */
 public class Game {
 	private Parser parser;
 	private Board board;
-	private CommandUtil commandUtil;
 
 	/**
-	 * 
+	 * The main constructor starts the game and initializes the board as well as the
+	 * parser
 	 */
 	public Game() {
 		this.parser = new Parser();
@@ -21,18 +24,8 @@ public class Game {
 	}
 
 	/***
-	 * 
-	 */
-	public void playGame() {
-
-//		while (!this.isDone()) {
-//			commandUtil = parser.readCommand();
-//			finished = processCommand(command);
-//		}
-
-	}
-
-	/***
+	 * This method is used to call a method within board to check the status of the
+	 * game
 	 * 
 	 * @return true if the game is done
 	 */
@@ -41,17 +34,27 @@ public class Game {
 	}
 
 	/***
+	 * This method is used to play the game.
+	 */
+	public void playGame() {
+		System.out.println("Welcome to JumpIN Game !");
+		System.out.println("Type 'help' if you need help.\n");
+		while (!this.isDone()) {
+			CommandUtil command = parser.getCommandWord();
+		}
+		System.out.println("\nThank you for playing. Good bye.");
+	}
+
+	/***
+	 * Main method used to run the game
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		// create a new game
 		Game game = new Game();
-		System.out.println("\n Welcome to JumpIN Game !");
-		System.out.println("This is a Fun Game");
-		System.out.println("Type 'help' if you need help. \n");
+		// run the game
 		game.playGame();
-		System.out.println("Thank you for playing. Good bye.");
-
 	}
 
 }
