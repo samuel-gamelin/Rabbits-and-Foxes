@@ -55,7 +55,7 @@ public class Tile {
 	 * @param occupied If True, Tile will become occupied, if False, the Tile will become available.
 	 */
 	private void setOccupied(boolean occupied) {
-		this.occupied = !occupied; 
+		this.occupied = occupied; 
 	}
 	
 	/**
