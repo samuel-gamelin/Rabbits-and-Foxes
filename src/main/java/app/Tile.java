@@ -20,16 +20,7 @@ public class Tile {
 	 * A piece of type Piece that will be placed on the tile. 
 	 */
 	private Piece piece; 
-	
-	/**
-	 * Sets the tileColour, occupied, and piece to the default values. 
-	 */
-	public Tile() {
-		this.tileColour = null; 
-		this.occupied = false; 
-		this.piece = null; 
-	}
-	
+
 	/**
 	 * Constructs the Tile based on the passed tileColour. 
 	 * @param tileColour The colour of the tile as type Colour.  
@@ -64,13 +55,13 @@ public class Tile {
 	 * @param occupied If True, Tile will become occupied, if False, the Tile will become available.
 	 */
 	private void setOccupied(boolean occupied) {
-		occupied = !occupied; 
+		this.occupied = !occupied; 
 	}
 	
 	/**
 	 * @return the current Piece placed on the Tile. 
 	 */
-	public Piece retreivePiece() {
+	public Piece retrievePiece() {
 		return piece; 
 	}
 	
@@ -79,10 +70,10 @@ public class Tile {
 	 * @param piece The piece of type Piece that will removed from the tile. 
 	 * @return The piece that was removed. 
 	 */
-	public Piece removePiece(Piece piece) {
-		Piece oldPiece = piece; 
+	public Piece removePiece() {
+		Piece oldPiece = this.piece; 
 		setOccupied(false); 
-		piece = null; 
+		this.piece = null; 
 		return oldPiece; 
 	}
 	
