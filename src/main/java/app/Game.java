@@ -3,6 +3,8 @@
  */
 package app;
 
+import java.util.ArrayList;
+
 /**
  * This class is responsible for controlling the game. Using parser and board
  * class to play the game/
@@ -39,10 +41,27 @@ public class Game {
 	public void playGame() {
 		System.out.println("Welcome to JumpIN Game !");
 		System.out.println("Type 'help' if you need help.\n");
+		ArrayList<String> command;
+		boolean done = false;
 		while (!this.isDone()) {
-			CommandUtil command = parser.getCommandWord();
+			command = parser.readCommand();
+			done = this.processCommandWord(command);
 		}
 		System.out.println("\nThank you for playing. Good bye.");
+	}
+
+	private void printHelp() {
+		// TODO
+		System.out.println("Help menu goes here");
+		// parser.showCommands();
+	}
+
+	private boolean processCommandWord(ArrayList<String> command) {
+		return false;
+	}
+
+	private boolean quiteGame(CommandWord commandWord) {
+		return true;
 	}
 
 	/***
