@@ -3,6 +3,8 @@
  */
 package app;
 
+import java.util.Scanner;
+
 /**
  * This class is responsible for controlling the game. Using parser and board
  * class to play the game
@@ -49,7 +51,7 @@ public class Game {
 	 */
 	private void playGame() {
 		boolean done = false;
-		while (!(this.isDone() && done)) {
+		while (!(this.isDone() || done)) {
 			Command command = parser.readCommand();
 			CommandWord commandWord = command.getCommandWord();
 			done = this.processCommandWord(commandWord);
@@ -109,7 +111,6 @@ public class Game {
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.startGame();
-
 	}
 
 }
