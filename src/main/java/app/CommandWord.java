@@ -1,8 +1,10 @@
 package app;
 
 /**
- * Stores all the possible command words for Rabbits and Foxes. It also stores
- * the String representation.
+ * The CommandWord enumeration is used to store all of the defined commands for the Game.
+ * It also stores their corresponding String representation.
+ * 
+ * Of note, all String representations are strictly lowercase.
  * 
  * @author John Breton
  * @version 1.0
@@ -10,11 +12,11 @@ package app;
 public enum CommandWord {
 	HELP("help"), MOVE("move"), START("start"), QUIT("quit"), INVALID("invalid");
 
-	// The string representation of command.
-	private String command;
+	// Instance variable declaration.
+	private String command; // The string representation of the CommandWord.
 
 	/**
-	 * Constructors the command as a String.
+	 * Construct the passed command String.
 	 * 
 	 * @param command The command as a String.
 	 */
@@ -24,7 +26,10 @@ public enum CommandWord {
 
 	@Override
 	/**
-	 * @return The String representation of the command.
+	 * Override the toString method inherited from Object.
+	 * This method will return the string representation of a defined CommandWord.
+	 * 
+	 * @return The String representation of the CommandWord.
 	 */
 	public String toString() {
 		return command;

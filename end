@@ -1,0 +1,405 @@
+[33mcommit c295bcc38d0b2625ff43527485c32d88447fb824[m[33m ([m[1;36mHEAD -> [m[1;32mmileStone1[m[33m, [m[1;31morigin/mileStone1[m[33m)[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 14 11:48:04 2019 -0400
+
+    fix uml not opening
+
+[33mcommit eb6be2fbe0b058aa31def9a07c145936b92c5e30[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 14 10:54:14 2019 -0400
+
+    updated Game class
+
+[33mcommit d3fa954ce9b986e93b3e1bef9ece3fd1ede19694[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Sun Oct 13 13:45:51 2019 -0400
+
+    Update Board
+    
+    Update the documentation for Board
+
+[33mcommit 995c2dc33690dedc22e904eaaadf267dac2bf21d[m
+Author: danihashweh <55706559+danihashweh@users.noreply.github.com>
+Date:   Fri Oct 11 20:44:20 2019 -0400
+
+    Update modelUML.violet
+    
+    Update UML.
+
+[33mcommit 30785f4e1ebea455eef8dfc9cd69fa57a81f2d28[m
+Author: danihashweh <55706559+danihashweh@users.noreply.github.com>
+Date:   Fri Oct 11 20:43:13 2019 -0400
+
+    Update Tile.java
+    
+    Implement methods according to the UML Diagram.
+
+[33mcommit 5527644f217c99ee484241fb970054ae3f3fbe00[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Fri Oct 11 18:47:13 2019 -0400
+
+    change game class, modified the formating for other classes, and updated uml
+
+[33mcommit 2d0509ac222bca091324d36695d4c5007938770e[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Fri Oct 11 15:33:03 2019 -0400
+
+    Update Board.java
+
+[33mcommit 8af2856239574bc1d3fd6f18a20a66870b018a3e[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Fri Oct 11 15:21:10 2019 -0400
+
+    Update Board and UML image
+
+[33mcommit b7a93232c916662ac97bf037632fb3f8e761d48e[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Fri Oct 11 15:18:03 2019 -0400
+
+    Add board and piece functionality
+    
+    Add basic functionality to board and piece classes
+
+[33mcommit 7ba716a366ba85ff8a22b883676fb4b7361cd7c8[m
+Author: John Breton <johnbreton@cmail.carleton.ca>
+Date:   Fri Oct 11 14:29:09 2019 -0400
+
+    Modify command processing
+
+[33mcommit 508777c29b3f30be29b25196b426df74e9fd65ae[m
+Author: John Breton <johnbreton@cmail.carleton.ca>
+Date:   Fri Oct 11 12:23:13 2019 -0400
+
+    Add initial parser design
+
+[33mcommit 7eb4cd0d222099221f74bd939e51d0fe04f45560[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Fri Oct 11 11:32:00 2019 -0400
+
+    add uml img to the readme file for easier acess
+
+[33mcommit fba21c6b7ce592b77f76c85235815605e1cca992[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Fri Oct 11 11:26:39 2019 -0400
+
+    update a picture of the uml
+
+[33mcommit dd24fb6244450b2081279cd51a8fee9d06e8c5a3[m
+Merge: abe17d8 584a5b8
+Author: Abdoltim <a.elnakla@hotmail.com>
+Date:   Fri Oct 11 11:02:08 2019 -0400
+
+    Merge branch 'mileStone1' of https://github.com/samuel-gamelin/SYSC-3110 into mileStone1
+
+[33mcommit abe17d80c7cdeaa89296d167be2644b9bde2eefa[m
+Author: Abdoltim <a.elnakla@hotmail.com>
+Date:   Fri Oct 11 11:01:56 2019 -0400
+
+    Update Piece.java
+    
+    add canMove method
+
+[33mcommit 584a5b802e95d07614391a103e2dba25ddbb6580[m
+Merge: 44358ed 94d200c
+Author: danihashweh <55706559+danihashweh@users.noreply.github.com>
+Date:   Fri Oct 11 11:01:00 2019 -0400
+
+    Merge branch 'mileStone1' of https://github.com/samuel-gamelin/SYSC-3110 into mileStone1
+
+[33mcommit 44358ed7f3081b39a479ac0e0698706215b55834[m
+Author: danihashweh <55706559+danihashweh@users.noreply.github.com>
+Date:   Fri Oct 11 11:00:51 2019 -0400
+
+    Update modelUML.violet
+    
+    Add getColour()
+
+[33mcommit 94d200c3cbcf99308149233ce9b664a10cfd50b6[m
+Merge: 8a4fb5d 76de080
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Fri Oct 11 10:45:21 2019 -0400
+
+    Merge branch 'mileStone1' of https://github.com/samuel-gamelin/SYSC-3110 into mileStone1
+
+[33mcommit 8a4fb5d040fd81a8ffda5399fbd624e8a388d3ef[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Fri Oct 11 10:42:09 2019 -0400
+
+    export a picture of the uml
+
+[33mcommit 76de080e41e3569f99a09d7a7388d9b1e59df689[m
+Author: Abdoltim <a.elnakla@hotmail.com>
+Date:   Fri Oct 11 10:41:45 2019 -0400
+
+    Update Tile.java
+    
+    Add Enumerated Tile Colours
+
+[33mcommit 95feb5571b4377c57e3bf900aee34d7a8f7bd397[m
+Author: danihashweh <55706559+danihashweh@users.noreply.github.com>
+Date:   Fri Oct 11 10:21:27 2019 -0400
+
+    Update modelUML.violet
+    
+    Add toString to Board
+
+[33mcommit 9529de641eda5a4fcb7e5ef57843081fdd52e71b[m
+Author: danihashweh <55706559+danihashweh@users.noreply.github.com>
+Date:   Fri Oct 11 09:48:08 2019 -0400
+
+    Update modelUML.violet
+    
+    - Finish initial UML outline
+
+[33mcommit 01941be8b5d3657ae97b383511d4df2c119147f1[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Fri Oct 11 09:30:39 2019 -0400
+
+    added classes
+
+[33mcommit 65a40853c23c4b16106d0315338b8a2397ed6c28[m
+Author: danihashweh <55706559+danihashweh@users.noreply.github.com>
+Date:   Fri Oct 11 08:30:14 2019 -0400
+
+    Update modelUML.violet
+    
+    Fixed main in UML
+
+[33mcommit dc9440e3f4c10b6fc3c0a7abd2396a9e12907150[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Wed Oct 9 19:56:16 2019 -0400
+
+    Add files via upload
+
+[33mcommit 4fabc641e865c7a529fdd6531d8461cf193b1270[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Wed Oct 9 14:18:28 2019 -0400
+
+    Test changes
+
+[33mcommit d4436525cfe9588827a2a20fc9e34dc8832d14fa[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Tue Oct 8 19:46:51 2019 -0400
+
+    UML digarm
+
+[33mcommit b7f788358ef6dc402fa1cdef21dd0c966549f468[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Tue Oct 8 18:24:21 2019 -0400
+
+    updated readme
+
+[33mcommit 8f44f9c947aa938a907056515eb317bac09bb4c4[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Tue Oct 8 15:36:14 2019 -0400
+
+    update readme
+
+[33mcommit c1a196987f5730b57717b90ea0a7214126b99428[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Mon Oct 7 18:59:03 2019 -0400
+
+    Update email addresses
+
+[33mcommit 436542fa1816346dd2ce6e2d1e1e398c1a890d89[m
+Author: John Breton <55368611+john-breton@users.noreply.github.com>
+Date:   Mon Oct 7 18:31:58 2019 -0400
+
+    Clean up
+
+[33mcommit a705a73e731ea7748b6eed63387dd5c3c10dae17[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 16:23:02 2019 -0400
+
+    added topics from the assignment pdf
+
+[33mcommit 74acaeda6409c11c008ba6642df8c6ca9cfde3ca[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 16:04:31 2019 -0400
+
+    clean up
+
+[33mcommit 473b2cafd3a42efa8a581c313b742912b6de3986[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 16:02:30 2019 -0400
+
+    Create keep
+
+[33mcommit e415b3926edb4315e1d089c4d3b6bfc31d715864[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 15:48:47 2019 -0400
+
+    clean up
+
+[33mcommit 013ae5c84bdbbc32c952a473f7a6afc508ad2175[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 15:22:39 2019 -0400
+
+    clean up and added more info
+
+[33mcommit 4821033b22a592253def4bb6b46beb3ac6eda986[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 15:11:26 2019 -0400
+
+    Update README.md
+
+[33mcommit 70d2e5c351c93f79fca1fc7e487862987163ffcc[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 15:07:31 2019 -0400
+
+    Update README.md
+
+[33mcommit 87c6d25e1dddc37e73b9c3cec869bced96060b1d[m
+Author: John Breton <55368611+john-breton@users.noreply.github.com>
+Date:   Mon Oct 7 14:35:34 2019 -0400
+
+    Update README.md
+
+[33mcommit f5df65633c1ded6f3dad2aad01fed81c2dd57898[m
+Author: John Breton <55368611+john-breton@users.noreply.github.com>
+Date:   Mon Oct 7 14:34:46 2019 -0400
+
+    Update README.md
+
+[33mcommit a69bbb77fd141023ab9d28c3d13b41b991f29be5[m
+Author: John Breton <55368611+john-breton@users.noreply.github.com>
+Date:   Mon Oct 7 14:31:18 2019 -0400
+
+    Update README.md
+
+[33mcommit e45c9e166ccfe157078fb4acf2d2f6740aa104c7[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 14:24:17 2019 -0400
+
+    Update README.md
+
+[33mcommit af87c6e1983bca17948173d64109e90bfb1c19c5[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 14:10:59 2019 -0400
+
+    clean up
+
+[33mcommit a11546af3c49e6d39628d31ca829dad8b79b230b[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 14:10:15 2019 -0400
+
+    Update README.md
+
+[33mcommit 2747e42a1a19ae51d6f21979c379c5ab9b2f6064[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 14:08:05 2019 -0400
+
+    Update README.md
+
+[33mcommit 042ee1517273a205a5f9dc40d3ca1559ec14fb89[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 14:07:32 2019 -0400
+
+    fixed syntax issues
+
+[33mcommit 587f49f5094dce031a99ab8f7c330b29844c60d1[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Mon Oct 7 14:04:49 2019 -0400
+
+    Update README.md
+    
+    clean up and added more information with regards to contribution and distribution of the software
+
+[33mcommit 666452a7cb035cfafa93fdff05f8a0e133240524[m[33m ([m[1;31morigin/test[m[33m, [m[1;31morigin/dev[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Mon Oct 7 07:23:49 2019 -0400
+
+    Add documentation folder
+
+[33mcommit fcd9f4f0ae3132323e81ea4c2583029d9a110867[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Sat Oct 5 16:56:37 2019 -0400
+
+    Minor formatting changes
+
+[33mcommit b86ee9172631da2f2e071c08b94b88f9ccf7d103[m
+Merge: cb7ef85 d720d67
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Sat Oct 5 16:50:52 2019 -0400
+
+    Merge pull request #1 from samuel-gamelin/MohamedRadwan-patch-1
+    
+    Update README.md
+
+[33mcommit d720d6753dccd0dca5ddfe01c61c1973cd506bcb[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Sat Oct 5 16:49:44 2019 -0400
+
+    Update README.md
+
+[33mcommit 3393c593c28c697339595d996c983ebc20243fd8[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Sat Oct 5 16:48:23 2019 -0400
+
+    Update README.md
+
+[33mcommit 9db7a3dd32d15a323e4bed61cc99204b4f3b9761[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Sat Oct 5 16:48:02 2019 -0400
+
+    Update README.md
+
+[33mcommit 7aff6fe6ab018fd38b024139563b4aa988be2d32[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Sat Oct 5 16:46:57 2019 -0400
+
+    Update README.md
+
+[33mcommit cb7ef855d1ad8009e406b98f8ea69db587214715[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Sat Oct 5 16:42:46 2019 -0400
+
+    Delete CODEOWNERS
+
+[33mcommit 38c1a0f02d1f1930219ee292e2232d725a239b61[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Sat Oct 5 16:35:43 2019 -0400
+
+    Update README.md
+
+[33mcommit d7576046168d2d7f1a221f7e6b021b93d87bc937[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Sat Oct 5 16:19:06 2019 -0400
+
+    Setout sample project structure
+
+[33mcommit 621390257df58c1cf74f1d7344d5a415da449134[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Sat Oct 5 15:33:20 2019 -0400
+
+    Create .gitignore
+
+[33mcommit aed18d6c13a50209abb5f6fcc93441038ddb29a3[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Sat Sep 28 19:18:40 2019 -0400
+
+    Update README.md
+
+[33mcommit d4e8fb8bd4e11d5f881432bc078fb4cf8d23e776[m
+Author: Samuel Gamelin <gamelinsamuel@gmail.com>
+Date:   Wed Sep 4 18:24:18 2019 -0400
+
+    Update README.md
+
+[33mcommit 35362ae0ce2c7e087065946643a29d871928efa1[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Wed Sep 4 18:08:02 2019 -0400
+
+    Update README.md
+
+[33mcommit 93ee5c33bf1383b6e48bf1463eef8a3958e7565a[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Wed Sep 4 18:06:51 2019 -0400
+
+    Create CODEOWNERS
+
+[33mcommit 6922c2a3c94521d7d8ae784a6e1c0d6e7c8359b1[m
+Author: Mohamed Radwan <mohamed.rad@outlook.com>
+Date:   Wed Sep 4 18:06:23 2019 -0400
+
+    Create README.md

@@ -72,7 +72,7 @@ public class Game {
 			System.out.println("Invalid command please try again.");
 			System.out.println("Type 'help' if you need help.\n");
 		} else if (commandWord == CommandWord.QUIT) {
-			this.quiteGame(commandWord);
+			this.quitGame(commandWord);
 		} else if (commandWord == CommandWord.START) {
 
 		}
@@ -94,7 +94,7 @@ public class Game {
 	 * @param commandWord
 	 * @return true if the user wants to quite the game
 	 */
-	private boolean quiteGame(CommandWord commandWord) {
+	private boolean quitGame(CommandWord commandWord) {
 		// TO DO
 		return true;
 	}

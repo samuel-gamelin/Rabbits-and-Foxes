@@ -6,58 +6,50 @@ package app;
 import java.util.HashMap;
 
 /**
- * The CommandUtil class is responsible for processing user commands. It also
- * keeps track of all possible commands
+ * The CommandUtil class is responsible for processing inputed commands. 
+ * It also keeps track of all possible valid commands.
  * 
  * @author John Breton
  * @version 1.0
  */
 public class CommandUtil {
-
-	// Instance variable decelerations.
-	private CommandWord command;
-	private HashMap<String, CommandWord> validCommands; // Maps a specific String to a valid CommandWord
+	// Instance variable declaration.
+	private HashMap<String, CommandWord> validCommands; // Maps a corresponding String to a valid CommandWord
 
 	/**
-	 * Constructor for the CommandUtil class.
+	 * Construct the HashMap that contains the valid commands for the Game.
 	 */
 	public CommandUtil() {
 		validCommands = new HashMap<String, CommandWord>();
 		for (CommandWord command : CommandWord.values()) {
 			if (command != CommandWord.INVALID) {
-				validCommands.put(command.toString(), command);
+				validCommands.put(command.toString(), command); // Map the string representation of the CommandWord to itself.
 			}
 		}
 	}
 
 	/**
-	 * Displays a string of valid commands separated by a whitespace. Once all the
-	 * valid commands have displayed, a newline is printed.
+	 * Display a String of all valid commands separated by a whitespace. 
+	 * Once all the valid commands have been displayed, a newline is printed.
 	 */
-	public void showCommands() {
-		validCommands.entrySet().forEach(entry -> {
-			System.out.print(entry.getValue().toString() + " ");
-		});
+	public void showCommands() { 
+		validCommands.entrySet().forEach(e -> {System.out.print(e.getValue() + " ");});
 		System.out.println();
 	}
 
 	/**
-	 * Checks to see if the passed String is a valid command for the game. The valid
-	 * commands for the game are
+	 * Return the corresponding CommandWord that matches the passed String.
+	 * If no CommandWord matches the passed String, this method will return CommandWord.INVALID
 	 * 
-	 * @param command The string to check to determine if it's a valid command.
-	 * @return True if the passed string is a command, false otherwise.
+	 * @param command The String representation of a valid CommandWord.
+	 * @return The enumerated CommandWord, based on the passed String. 
+	 * 		   If the String is not recognized, CommandWord.INVALID is returned.
 	 */
-	public boolean isCommand(String command) {
-		return true;
-	}
-
-	/**
-	 * 
-	 * @param command
-	 * @return
-	 */
-	public CommandWord getCommandWord(String command) {
-		return QUIT;
+	public CommandWord getCommandWord(String commandWord) {
+		CommandWord command = validCommands.get(commandWord);
+		if (command == null) {
+			return CommandWord.INVALID; // The commandWord was not a valid string representation of any valid CommandWord.
+		}
+		return command;
 	}
 }

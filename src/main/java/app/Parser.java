@@ -3,39 +3,59 @@
  */
 package app;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * The Parser class is responsible for parsing user input. This input is used to
- * determine
+ * determine how to progress through the Game, based on the CommandWord the user
+ * has inputed. 
  * 
  * @author John Breton
  * @version 1.0
  */
 public class Parser {
-	// Instance variable
-	Scanner scanner;
+	// Instance variables declarations.
+	Scanner parser;
+	CommandUtil commandUtil;
 
 	/**
-	 * Constructor for the Parser class. The parser is a Scanner that scans for user
-	 * input.
+	 * Construct the Parser. 
+	 * The Parser is a Scanner that scans for user input.
+	 * Any Parser will also have a CommandUtil that deals with command utilities.
 	 */
 	public Parser() {
-		scanner = new Scanner(System.in);
+		commandUtil = new CommandUtil();
+		parser = new Scanner(System.in);
 	}
 
 	/**
+	 * Read the current line of input from the parser and stores it in a temporary String array.
 	 * 
-	 * @return An array containing the strings of the command (Minimum of 1 String,
-	 *         maximum of 3).
+	 * The first thing that is read should be a valid CommandWord. 
+	 * If this is the only input, the default Command constructor is called and returned.
+	 * 
+	 * If there are exactly four Strings in the temporary String array, it should indicate that
+	 * a move CommandWord was issued. In this instance, the second Command constructor is 
+	 * called and returned.
+	 * 
+	 * @return A Command, constructed based on the passed CommandWord and, if applicable, subsequent input. 
+	 *         If the input is malformed a Command with value CommandWord.INVALID is returned.
 	 */
-	public ArrayList<String> readCommand() {
-		ArrayList<String> commands = new ArrayList<String>();
-		while (scanner.hasNext()) {
-			commands.add(scanner.next());
+	public Command readCommand() {
+		String[] input = parser.nextLine().split(" ");
+		if (input.length == 1) {
+			return new Command(commandUtil.getCommandWord(input[0].toLowerCase()));
+		} else if (input.length == 4) {
+			return new Command(commandUtil.getCommandWord(input[0].toLowerCase()),input[1],input[2],input[3].toLowerCase());
 		}
-		return commands;
+		return new Command(CommandWord.INVALID);
 	}
-
+	
+	/**
+	 * Print a list of all the valid commands for the game.
+	 * This list includes the valid commands: help, move, start, and quit.
+	 */
+	public void showAllCommands() {
+		commandUtil.showCommands();
+	}
 }
