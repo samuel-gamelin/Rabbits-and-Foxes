@@ -10,7 +10,7 @@ package app;
  * @version 1.0
  */
 public enum CommandWord {
-	HELP("help"), MOVE("move"), START("start"), QUIT("quit"), INVALID("invalid");
+	HELP("help"), MOVE("move"), RESET("reset"), START("start"), QUIT("quit"), INVALID("invalid");
 
 	// Instance variable declaration.
 	private String command; // The string representation of the CommandWord.

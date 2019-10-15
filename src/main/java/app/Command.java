@@ -28,7 +28,7 @@ public class Command {
 	/**
 	 * Construct the Command.
 	 * This is the default constructor for the Command class.
-	 * This constructor is used for the valid commands: start, help, and quit. 
+	 * This constructor is used for the valid commands: help, reset, start, and quit. 
 	 * For the move command, please use the secondary constructor.
 	 * 
 	 * @param commandWord The CommandWord (either start, help, or quit) to be registered to this Command. 

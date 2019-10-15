@@ -53,7 +53,7 @@ public class Parser {
 	
 	/**
 	 * Print a list of all the valid commands for the game.
-	 * This list includes the valid commands: help, move, start, and quit.
+	 * This list includes the valid commands: help, move, reset, start, and quit.
 	 */
 	public void showAllCommands() {
 		commandUtil.showCommands();
