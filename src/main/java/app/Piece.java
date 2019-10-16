@@ -6,6 +6,9 @@ package app;
  */
 public abstract class Piece {
 
+	/**
+	 * An enumeration representing the piece's type.
+	 */
 	enum PieceType {
 		FOX, MUSHROOM, RABBIT
 	}
@@ -32,7 +35,7 @@ public abstract class Piece {
 	 * @return True if the piece can move the specified start to end positions.
 	 *         False otherwise.
 	 */
-	abstract boolean canMove(int xStart, int yStart, int xEnd, int yEnd);
+	abstract boolean canMove(Move move);
 
 	/**
 	 * @return A short, two-character string representing the piece.

@@ -12,7 +12,7 @@ public class Rabbit extends Piece {
 	}
 
 	@Override
-	public boolean canMove(int xStart, int yStart, int xEnd, int yEnd) {
+	public boolean canMove(Move move) {
 		// TODO Auto-generated method stub
 		return false;
 	}

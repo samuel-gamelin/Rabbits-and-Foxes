@@ -1,85 +1,78 @@
-/**
- * 
- */
 package app;
 
 /**
  * @author Mohamed Radwan
- *
+ *	@author Samuel Gamelin
  */
 public class Move {
 
-	private int xStartInt;
-	private int yStartInt;
+	private int xStart;
+	private int yStart;
+	private int xEnd;
+	private int yEnd;
 
-	private int xEndInt;
-	private int yEndInt;
-
-	/***
+	/**
+	 * Constructs a move object given two strings, where each string must be of length 2 representing a position on the
+	 * board. For example, 'A2' resolves to (0, 1) and 'C3' resolves to (2, 2).
 	 * 
-	 * @param start
-	 * @param end
+	 * @param start The starting position, specified as a two-character string
+	 * @param end The ending position, specified as a two-character string
 	 */
 	public Move(String start, String end) {
-		if (start.length() == 2 && end.length() == 2 && start != null && end != null) {
-			this.xStartInt = Character.getNumericValue(start.charAt(0)) - 10;
-			this.yStartInt = Character.getNumericValue(start.charAt(1));
-			this.xEndInt = Character.getNumericValue(end.charAt(0)) - 10;
-			this.yEndInt = Character.getNumericValue(end.charAt(1));
+		if (start != null && end != null && start.length() == 2 && end.length() == 2) {
+			this.xStart = Character.getNumericValue(start.charAt(0)) - 10;
+			this.yStart = Character.getNumericValue(start.charAt(1));
+			this.xEnd = Character.getNumericValue(end.charAt(0)) - 10;
+			this.yEnd = Character.getNumericValue(end.charAt(1));
 		} else {
-			this.xStartInt = -1;
-			this.yStartInt = -1;
-			this.xEndInt = -1;
-			this.yEndInt = -1;
+			this.xStart = -1;
+			this.yStart = -1;
+			this.xEnd = -1;
+			this.yEnd = -1;
 		}
 	}
 
-	/***
+	/**
+	 * Constructs a move object given the starting and ending x and y positions
 	 * 
-	 * @param xStart
-	 * @param ystart
-	 * @param xEnd
-	 * @param yEnd
+	 * @param xStart The starting x position
+	 * @param yStart The starting y position
+	 * @param xEnd The ending x position
+	 * @param yEnd The starting y position
 	 */
-	public Move(int xStart, int ystart, int xEnd, int yEnd) {
-		this.xStartInt = xStart;
-		this.yStartInt = ystart;
-		this.xEndInt = xEnd;
-		this.yEndInt = yEnd;
+	public Move(int xStart, int yStart, int xEnd, int yEnd) {
+		this.xStart = xStart;
+		this.yStart = yStart;
+		this.xEnd = xEnd;
+		this.yEnd = yEnd;
 	}
 
-	/***
-	 *
-	 * 
-	 * @return the int value of x Start
+	/**
+	 * @return The integer value of the starting x position
 	 */
-	public int getxStart() {
-		return this.xStartInt;
+	public int getXStart() {
+		return this.xStart;
 	}
 
-	/***
-	 * 
-	 * 
-	 * @return the int value of y Start
+	/**
+	 * @return The integer value of the starting y position
 	 */
-	public int getyStart() {
-		return this.yStartInt;
+	public int getYStart() {
+		return this.yStart;
 	}
 
-	/***
-	 * 
-	 * @return
+	/**
+	 * @return The integer value of the ending x position
 	 */
-	public int getxEnd() {
-		return this.xEndInt;
+	public int getXEnd() {
+		return this.xEnd;
 	}
 
-	/***
-	 * 
-	 * @return
+	/**
+	 * @return The integer value of the ending y position
 	 */
-	public int getyEnd() {
-		return this.yEndInt;
+	public int getYEnd() {
+		return this.yEnd;
 	}
 
 }

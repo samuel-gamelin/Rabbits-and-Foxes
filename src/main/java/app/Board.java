@@ -62,21 +62,23 @@ public class Board {
 	}
 
 	/**
-	 * Makes a move given starting and ending positions.
+	 * Makes a move given the provided move object.
 	 * 
-	 * @param xStart The starting x position
-	 * @param xEnd   The ending x position
-	 * @param yStart The starting y position
-	 * @param yEnd   The ending y position
+	 * @param move The object representing the move
 	 * @return true if the move was successful, false if parameters are invalid or
 	 *         the move was unsuccessful
 	 */
-	public boolean move(int xStart, int xEnd, int yStart, int yEnd) {
+	public boolean move(Move move) {
+		int xStart = move.getXStart();
+		int yStart = move.getYStart();
+		int xEnd = move.getXEnd();
+		int yEnd = move.getYEnd();
+		
 		if (xStart < 0 || xStart > SIZE || xEnd < 0 || xEnd > SIZE || yStart < 0 || yStart > SIZE || yEnd < 0
 				|| yEnd > SIZE || !tiles[xStart][yStart].isOccupied() || tiles[xEnd][yEnd].isOccupied()) {
 			return false;
 		}
-		if (tiles[xStart][yStart].retrievePiece().canMove(xStart, xEnd, yStart, yEnd)) {
+		if (tiles[xStart][yStart].retrievePiece().canMove(move)) {
 			tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
 			return true;
 		}
