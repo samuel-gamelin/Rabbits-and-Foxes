@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_221" class="java.beans.XMLDecoder">
+<java version="12" class="java.beans.XMLDecoder">
  <object class="com.horstmann.violet.ClassDiagramGraph">
   <void method="addNode">
    <object class="com.horstmann.violet.ClassNode" id="ClassNode0">
@@ -458,21 +458,20 @@ RABBIT</string>
      <void property="text">
       <string>-&lt;u&gt;EMPTY&lt;/u&gt;=&quot;X&quot;:String
 -commandWord:CommandWord
--xPos:String
--yPos:String
--direction:String</string>
+-startPos:String
+-endPos:String
+</string>
      </void>
     </void>
     <void property="methods">
      <void property="text">
       <string>+Command(commandWord:CommandWord)
-+Command(commandWord:CommandWord,xPos:String,yPos:String,direction:String)
++Command(commandWord:CommandWord,startPos:String,endPos:String)
 +getCommandWord():CommandWord
-+getXPos():int
-+getYPos():int
-+getDirection():String
-+hasCoordinatesAndDirection():boolean
-+isValid():boolean</string>
++getStartPos():String
++getEndPos():String
++hasCoordinates():boolean
++isValidCommandWord():boolean</string>
      </void>
     </void>
     <void property="name">

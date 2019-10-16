@@ -34,7 +34,7 @@ public class Parser {
 	 * The first thing that is read should be a valid CommandWord. 
 	 * If this is the only input, the default Command constructor is called and returned.
 	 * 
-	 * If there are exactly four Strings in the temporary String array, it should indicate that
+	 * If there are exactly three Strings in the temporary String array, it should indicate that
 	 * a move CommandWord was issued. In this instance, the second Command constructor is 
 	 * called and returned.
 	 * 
@@ -45,8 +45,8 @@ public class Parser {
 		String[] input = parser.nextLine().split(" ");
 		if (input.length == 1) {
 			return new Command(commandUtil.getCommandWord(input[0].toLowerCase()));
-		} else if (input.length == 4) {
-			return new Command(commandUtil.getCommandWord(input[0].toLowerCase()),input[1],input[2],input[3].toLowerCase());
+		} else if (input.length == 3 && (commandUtil.getCommandWord(input[0]) == CommandWord.MOVE)) {
+			return new Command(commandUtil.getCommandWord(input[0].toLowerCase()),input[1], input[2]);
 		}
 		return new Command(CommandWord.INVALID);
 	}

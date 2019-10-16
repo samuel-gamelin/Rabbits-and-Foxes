@@ -3,27 +3,26 @@ package app;
 /**
  * The Command class holds information about any inputed commands. 
  * 
- * A Command is made of 4 parts. The first part is a CommandWord. This is done
+ * A Command is made of 3 parts. The first part is a CommandWord. This is done
  * to keep track of whether a valid CommandWord was specified by the input.
  * 
- * The next 3 parts of a Command are Strings. These will typically be represented
- * by an "X" unless the CommandWord specified by the input was CommandWord.MOVE. 
- * If that was the case, then these 3 Strings will store information that helps
- * process a move. This includes the x and y coordinates where a move will originate 
- * from, and the direction in which the move will take place.
+ * The next 2 parts of a Command are Strings. These will typically be represented
+ * by an "XX" unless the CommandWord specified by the input was CommandWord.MOVE. 
+ * If that was the case, then these 2 Strings will store information that helps
+ * process a move. This includes the position where a move will originate 
+ * from, and the position where a move will end.
  * 
  * @author John Breton
  * @version 1.0
  */
 public class Command {
 	// Final variable declaration.
-	private static final String EMPTY = "X"; // Used to initialize an instance variable that has not been passed a value.
+	private static final String EMPTY = "XX"; // Used to initialize an instance variable that has not been passed a value.
 	
 	// Instance variables declarations.
 	private CommandWord commandWord; // The CommandWord to be associated with this Command.
-	private String xPos; 			 // If the commandWord is move, specifies the x coordinate where the move will originate.
-	private String yPos;			 // If the commandWord is move, specifies the y coordinate where the move will originate.
-	private String direction;		 // If the commandWord is move, specifies the direction in which the move will take place.
+	private String startPos; 		 // If the commandWord is move, specifies the start position from where the move will originate.
+	private String endPos;			 // If the commandWord is move, specifies the end position of the move.
 	
 	/**
 	 * Construct the Command.
@@ -35,9 +34,8 @@ public class Command {
 	 */
 	public Command(CommandWord commandWord) {
 		this.commandWord = commandWord;
-		this.xPos = EMPTY;
-		this.yPos = EMPTY;
-		this.direction = EMPTY;
+		this.startPos = EMPTY;
+		this.endPos = EMPTY;
 	}
 	
 	/**
@@ -46,15 +44,13 @@ public class Command {
 	 * This constructor should only be called when the CommandWord is "move".
 	 * 
 	 * @param commandWord The command, for this constructor it should always be "move".
-	 * @param xPos The x position where the move will take place.
-	 * @param yPos The y position where the move will take place.
-	 * @param direction The direction in which the move will proceed.
+	 * @param startPos The position where the move will originate from.
+	 * @param endPos The position where the move will conclude.
 	 */
-	public Command(CommandWord commandWord, String xPos, String yPos, String direction) {
+	public Command(CommandWord commandWord, String startPos, String endPos) {
 		this.commandWord = commandWord;
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.direction = direction;
+		this.startPos = startPos;
+		this.endPos = endPos;
 	}
 	
 	/**
@@ -67,52 +63,40 @@ public class Command {
 	}
 	
 	/**
-	 * Return the x position associated with this Command.
+	 * Return the start position associated with this Command, so long as it is formatted properly (Eg. "A1").
+	 * Note that properly formatted does not strictly require that the alphabetic character be uppercase.
 	 * 
-	 * @exception NumberFormatException Will be thrown if the xPos String is not strictly the representation of an int.
-	 * @return The x position to use for accessing the Board, as an integer.
-	 * 		   If no x position was specified when this Command was created or xPos is not properly formated, this will return -1.
+	 * @return The start position to use for accessing the Board, as a String.
+	 * 		   If no start position was specified when this Command was created or startPos is improperly formated, this will return "XX".
 	 */
-	public int getXPos() {
-		try {
-			return Integer.parseInt(xPos);
-		} catch (Exception NumberFormatException) {
-			return -1;
+	public String getStartPos() {
+		if (startPos.length() == 2 && Character.isAlphabetic(startPos.charAt(0)) && Character.isDigit(startPos.charAt(1))) {
+			return startPos.toUpperCase();
 		}
+		return EMPTY;
 	}
 	
 	/**
-	 * Return the y position associated with this Command.
+	 * Return the end position associated with this Command, so long as it is formatted properly (Eg. "A2").
+	 * Note that properly formatted does not strictly require that the alphabetic character be uppercase.
 	 * 
-	 * @exception NumberFormatException Will be thrown if the yPos String is not strictly the representation of an int.
-	 * @return The y position to use for accessing the Board, as an integer.
-	 *         If no y position was specified when this Command was constructed or yPos is not properly formated, this will return -1.
+	 * @return The end position to use for accessing the Board, as a String.
+	 *         If no end position was specified when this Command was constructed or endPos is improperly formated, this will return "XX".
 	 */
-	public int getYPos() {
-		try {
-			return Integer.parseInt(yPos);
-		} catch (Exception NumberFormatException) {
-			return -1;
+	public String getEndPos() {
+		if (endPos.length() == 2 && Character.isAlphabetic(endPos.charAt(0)) && Character.isDigit(endPos.charAt(1))) {
+			return endPos.toUpperCase();
 		}
+		return EMPTY;
 	}
 	
 	/**
-	 * Return the direction associated with this Command.
+	 * Check if this Command was constructed with values for startPos and endPos.
 	 * 
-	 * @return The direction in which to move a Piece, as a String.
-	 *         If no direction was specified when this Command was constructed, this will return "X".
+	 * @return True if the Command had startPos and endPos specified in its constructor, false otherwise.
 	 */
-	public String getDirection() {
-		return direction;
-	}
-	
-	/**
-	 * Check if this Command was constructed with values for xPos, yPos, and direction.
-	 * 
-	 * @return True if the Command has coordinates and a direction, false otherwise.
-	 */
-	public boolean hasCoordinatesAndDirection() {
-		return !(xPos.equals(EMPTY) || yPos.equals(EMPTY) || direction.contentEquals(EMPTY));
+	public boolean hasCoordinates() {
+		return !(startPos.equals(EMPTY) && endPos.equals(EMPTY));
 	}
 	
 	/**
@@ -120,7 +104,8 @@ public class Command {
 	 * 
 	 * @return True if the commandWord of the Command contains a valid CommandWord, false otherwise.
 	 */
-	public boolean isValid() {
-		return (commandWord == CommandWord.INVALID);
+	public boolean isValidCommandWord() {
+		return commandWord == CommandWord.INVALID;
 	}
+	
 }
