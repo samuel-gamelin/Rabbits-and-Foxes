@@ -49,8 +49,8 @@ public class Game {
 		do {
 			done = processCommandWord(parser.readCommand().getCommandWord());
 			System.out.println(board);
-		} while (!this.board.isInWinningState() || !done);
-		
+		} while (!(this.board.isInWinningState() && done));
+
 		System.out.println("\nThe foxes will now go back to sleep!");
 		System.out.println("Thank you for playing. Good bye.");
 	}
@@ -71,7 +71,8 @@ public class Game {
 			// Logic needed to extract move object from command
 			board.move(new Move(0, 0, 0, 0));
 		} else if (commandWord.equals(CommandWord.INVALID)) {
-			System.out.println("Invalid command please try again.\nType 'help' if you need help.\n");
+			System.out.println("Invalid command please try again.");
+			System.out.println("Type 'help' if you need help.\n");
 		} else if (commandWord.equals(CommandWord.QUIT)) {
 			endGame = true;
 		} else if (commandWord.equals(CommandWord.RESET)) {

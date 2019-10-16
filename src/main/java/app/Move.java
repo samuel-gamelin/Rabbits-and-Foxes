@@ -2,7 +2,7 @@ package app;
 
 /**
  * @author Mohamed Radwan
- *	@author Samuel Gamelin
+ * @author Samuel Gamelin
  */
 public class Move {
 
@@ -12,11 +12,12 @@ public class Move {
 	private int yEnd;
 
 	/**
-	 * Constructs a move object given two strings, where each string must be of length 2 representing a position on the
-	 * board. For example, 'A2' resolves to (0, 1) and 'C3' resolves to (2, 2).
+	 * Constructs a move object given two strings, where each string must be of
+	 * length 2 representing a position on the board. For example, 'A2' resolves to
+	 * (0, 1) and 'C3' resolves to (2, 2).
 	 * 
-	 * @param start The starting position, specified as a two-character string
-	 * @param end The ending position, specified as a two-character string
+	 * @param start - The starting position, specified as a two-character string.
+	 * @param end - The ending position, specified as a two-character string.
 	 */
 	public Move(String start, String end) {
 		if (start != null && end != null && start.length() == 2 && end.length() == 2) {
@@ -37,8 +38,8 @@ public class Move {
 	 * 
 	 * @param xStart The starting x position
 	 * @param yStart The starting y position
-	 * @param xEnd The ending x position
-	 * @param yEnd The starting y position
+	 * @param xEnd   The ending x position
+	 * @param yEnd   The starting y position
 	 */
 	public Move(int xStart, int yStart, int xEnd, int yEnd) {
 		this.xStart = xStart;
