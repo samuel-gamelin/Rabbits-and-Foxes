@@ -36,7 +36,7 @@ public class Game {
 				startGame = true;
 
 			else if (command.getCommandWord().equals(CommandWord.RESET)
-					| command.getCommandWord().equals(CommandWord.MOVE))
+					|| command.getCommandWord().equals(CommandWord.MOVE))
 				System.out.println("\nThe game hasn't started yet, type 'start' to start");
 
 			// commands HELP, QUIT, INVALID
