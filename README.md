@@ -51,12 +51,17 @@ When contributing to the project please start on the issues page which is used f
 - Slack is used as the main chat for this project. [Invitation Link](https://www.google.ca)
 - Github Issues will be used for task and ticket tracking.
 
-## Current UML
+## Current UML Diagram
 
 <p align="center"> 
-<img src="https://github.com/samuel-gamelin/SYSC-3110/raw/mileStone1/documentation/uml/modelUML.png">
+<img src="https://github.com/samuel-gamelin/SYSC-3110/raw/mileStone1/documentation/UMLDiagram/modelUML.png">
 </p>
-
+Date: October 16, 2019
+## Current Sequence Diagram
+<p align="center"> 
+<img src="https://github.com/samuel-gamelin/SYSC-3110/raw/mileStone1/documentation/SequenceDiagram/SequenceDiagram.png">
+</p>
+Date: October 16, 2019
 ## Road Map
 
 Please add info
