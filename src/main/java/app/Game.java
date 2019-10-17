@@ -17,6 +17,7 @@ public class Game {
 	 */
 	public Game() {
 		this.parser = new Parser();
+		this.board = new Board();
 	}
 
 	/**
@@ -24,21 +25,32 @@ public class Game {
 	 * the game. It then calls the method playGame().
 	 */
 	public void startGame() {
-		this.board = new Board();
-		System.out.println("Welcome to JumpIN Game !");
-		System.out.println("Type 'help' if you need help.");
-		System.out.println("\nPlease type 'Start' to start the game. Have fun!");
 		boolean startGame = false;
+		CommandWord commandWord;
+		System.out.println("Welcome to JumpIN Game !");
+		System.out.println("Type 'help' at any time if you need help.");
+		System.out.println("Please type 'Start' to start the game. Have fun!");
 		do {
-			if (parser.readCommand().getCommandWord().equals(CommandWord.START)) {
+			commandWord = parser.readCommand().getCommandWord();
+			switch (commandWord) {
+			case START:
 				startGame = true;
+				break;
+			default:
+				break;
 			}
-
 		} while (!startGame);
-		System.out.println("Get Ready, Game is Starting.");
-		System.out.println("Foxes are moving to position...");
-		System.out.println("Game started, have fun.");
+		System.out.println("Foxes are moving to position...\nGame started, have fun.");
 		this.playGame();
+	}
+
+	/***
+	 * This method will print the help menu for the user
+	 */
+	private void printHelp() {
+		System.out.println("Here is the help menu:");
+		parser.showAllCommands();
+		System.out.println();
 	}
 
 	/**
@@ -47,12 +59,12 @@ public class Game {
 	private void playGame() {
 		boolean done;
 		do {
-			done = processCommandWord(parser.readCommand().getCommandWord());
-			System.out.println(board);
+			done = processCommandWord(parser.readCommand());
+			System.out.println(this.board.toString());
 		} while (!(this.board.isInWinningState() && done));
-
 		System.out.println("\nThe foxes will now go back to sleep!");
 		System.out.println("Thank you for playing. Good bye.");
+		//System.exit(0);
 	}
 
 	/**
@@ -61,24 +73,29 @@ public class Game {
 	 * @param command The command to process
 	 * @return True, if the user has requested the game to end. False otherwise.
 	 */
-	private boolean processCommandWord(CommandWord commandWord) {
-		boolean endGame = false;
-		if (commandWord.equals(CommandWord.HELP)) {
-			System.out.println("Here is the help menu:");
-			parser.showAllCommands();
-			System.out.println();
-		} else if (commandWord.equals(CommandWord.MOVE)) {
-			// Logic needed to extract move object from command
-			board.move(new Move(0, 0, 0, 0));
-		} else if (commandWord.equals(CommandWord.INVALID)) {
+	private boolean processCommandWord(Command command) {
+		CommandWord commandWord = command.getCommandWord();
+		switch (commandWord) {
+		case HELP:
+			printHelp();
+			break;
+		case MOVE:
+			board.move(new Move(command.getStartPos(), command.getEndPos()));
+			break;
+		case INVALID:
 			System.out.println("Invalid command please try again.");
 			System.out.println("Type 'help' if you need help.\n");
-		} else if (commandWord.equals(CommandWord.QUIT)) {
-			endGame = true;
-		} else if (commandWord.equals(CommandWord.RESET)) {
-			this.startGame();
+			break;
+		case QUIT:
+			return true;
+		case RESET:
+			System.out.println("The Game is being reset enjoy.");
+			this.board = new Board();
+			break;
+		default:
+			break;
 		}
-		return endGame;
+		return false;
 	}
 
 	/**
