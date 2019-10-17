@@ -17,7 +17,6 @@ public class Game {
 	 */
 	public Game() {
 		this.parser = new Parser();
-		this.board = new Board();
 	}
 
 	/**
@@ -25,6 +24,7 @@ public class Game {
 	 * the game. It then calls the method playGame().
 	 */
 	public void startGame() {
+		this.board = new Board();
 		boolean startGame = false;
 		CommandWord commandWord;
 		System.out.println("Welcome to JumpIN Game !");
@@ -35,6 +35,12 @@ public class Game {
 			switch (commandWord) {
 			case START:
 				startGame = true;
+				break;
+			case HELP:
+				printHelp();
+				break;
+			case QUIT:
+				this.quit();
 				break;
 			default:
 				break;
@@ -53,18 +59,21 @@ public class Game {
 		System.out.println();
 	}
 
+	private void quit() {
+		System.out.println("\nThe foxes will now go back to sleep!");
+		System.out.println("Thank you for playing. Good bye.");
+		System.exit(0);
+	}
+
 	/**
 	 * This method will run the game for the user to interact with.
 	 */
 	private void playGame() {
-		boolean done;
 		do {
-			done = processCommandWord(parser.readCommand());
+			processCommandWord(parser.readCommand());
 			System.out.println(this.board.toString());
-		} while (!(this.board.isInWinningState() && done));
-		System.out.println("\nThe foxes will now go back to sleep!");
-		System.out.println("Thank you for playing. Good bye.");
-		//System.exit(0);
+		} while (!this.board.isInWinningState());
+		this.quit();
 	}
 
 	/**
@@ -73,7 +82,7 @@ public class Game {
 	 * @param command The command to process
 	 * @return True, if the user has requested the game to end. False otherwise.
 	 */
-	private boolean processCommandWord(Command command) {
+	private void processCommandWord(Command command) {
 		CommandWord commandWord = command.getCommandWord();
 		switch (commandWord) {
 		case HELP:
@@ -87,7 +96,8 @@ public class Game {
 			System.out.println("Type 'help' if you need help.\n");
 			break;
 		case QUIT:
-			return true;
+			this.quit();
+			break;
 		case RESET:
 			System.out.println("The Game is being reset enjoy.");
 			this.board = new Board();
@@ -95,7 +105,6 @@ public class Game {
 		default:
 			break;
 		}
-		return false;
 	}
 
 	/**
