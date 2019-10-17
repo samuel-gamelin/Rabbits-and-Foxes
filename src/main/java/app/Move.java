@@ -21,9 +21,9 @@ public class Move {
 	 */
 	public Move(String start, String end) {
 		if (start != null && end != null && start.length() == 2 && end.length() == 2) {
-			this.xStart = Character.getNumericValue(start.charAt(0)) - 10;
+			this.xStart = Character.getNumericValue(start.charAt(0)) - 1;
 			this.yStart = Character.getNumericValue(start.charAt(1)) - 1;
-			this.xEnd = Character.getNumericValue(end.charAt(0)) - 10;
+			this.xEnd = Character.getNumericValue(end.charAt(0)) - 1;
 			this.yEnd = Character.getNumericValue(end.charAt(1)) - 1;
 		} else {
 			this.xStart = -1;
