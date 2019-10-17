@@ -17,14 +17,14 @@ public class Move {
 	 * (0, 1) and 'C3' resolves to (2, 2).
 	 * 
 	 * @param start - The starting position, specified as a two-character string.
-	 * @param end - The ending position, specified as a two-character string.
+	 * @param end   - The ending position, specified as a two-character string.
 	 */
 	public Move(String start, String end) {
 		if (start != null && end != null && start.length() == 2 && end.length() == 2) {
-			this.xStart = Character.getNumericValue(start.charAt(0)) - 10;
-			this.yStart = Character.getNumericValue(start.charAt(1));
-			this.xEnd = Character.getNumericValue(end.charAt(0)) - 10;
-			this.yEnd = Character.getNumericValue(end.charAt(1));
+			this.xStart = Character.getNumericValue(start.charAt(0)) - 1;
+			this.yStart = Character.getNumericValue(start.charAt(1)) - 1;
+			this.xEnd = Character.getNumericValue(end.charAt(0)) - 1;
+			this.yEnd = Character.getNumericValue(end.charAt(1)) - 1;
 		} else {
 			this.xStart = -1;
 			this.yStart = -1;

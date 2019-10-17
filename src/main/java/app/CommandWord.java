@@ -1,8 +1,8 @@
 package app;
 
 /**
- * The CommandWord enumeration is used to store all of the defined commands for the Game.
- * It also stores their corresponding String representation.
+ * The CommandWord enumeration is used to store all of the defined commands for
+ * the Game. It also stores their corresponding String representation.
  * 
  * Of note, all String representations are strictly lowercase.
  * 
@@ -26,8 +26,8 @@ public enum CommandWord {
 
 	@Override
 	/**
-	 * Override the toString method inherited from Object.
-	 * This method will return the string representation of a defined CommandWord.
+	 * Override the toString method inherited from Object. This method will return
+	 * the string representation of a defined CommandWord.
 	 * 
 	 * @return The String representation of the CommandWord.
 	 */

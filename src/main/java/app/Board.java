@@ -19,7 +19,8 @@ public class Board {
 	private Tile[][] tiles;
 
 	/**
-	 * Creates a board object and initializes it with the default game configuration.
+	 * Creates a board object and initializes it with the default game
+	 * configuration.
 	 */
 	public Board() {
 		tiles = new Tile[SIZE][SIZE];
@@ -73,7 +74,7 @@ public class Board {
 		int yStart = move.getYStart();
 		int xEnd = move.getXEnd();
 		int yEnd = move.getYEnd();
-		
+
 		if (xStart < 0 || xStart > SIZE || xEnd < 0 || xEnd > SIZE || yStart < 0 || yStart > SIZE || yEnd < 0
 				|| yEnd > SIZE || !tiles[xStart][yStart].isOccupied() || tiles[xEnd][yEnd].isOccupied()) {
 			return false;
@@ -91,8 +92,8 @@ public class Board {
 	public boolean isInWinningState() {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (tiles[i][j].getColour().equals(Tile.Colour.BROWN)
-						&& (tiles[i][j].retrievePiece() == null || !tiles[i][j].retrievePiece().getPieceType().equals(Piece.PieceType.RABBIT))) {
+				if (tiles[i][j].getColour().equals(Tile.Colour.BROWN) && (tiles[i][j].retrievePiece() == null
+						|| !tiles[i][j].retrievePiece().getPieceType().equals(Piece.PieceType.RABBIT))) {
 					return false;
 				}
 			}

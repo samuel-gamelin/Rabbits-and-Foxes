@@ -5,6 +5,7 @@ package app;
  * class to play the game
  * 
  * @author Mohamed Radwan
+ * @author Dani Hashweh
  * @version 1.0
  */
 public class Game {
@@ -25,34 +26,52 @@ public class Game {
 	 */
 	public void startGame() {
 		this.board = new Board();
-		System.out.println("Welcome to JumpIN Game !");
-		System.out.println("Type 'help' if you need help.");
-		System.out.println("\nPlease type 'Start' to start the game. Have fun!");
 		boolean startGame = false;
+		System.out.println("Welcome to JumpIN Game !");
+		System.out.println("Type 'help' at any time if you need help.");
+		System.out.println("Please type 'Start' to start the game. Have fun!");
 		do {
-			if (parser.readCommand().getCommandWord().equals(CommandWord.START)) {
+			Command command = parser.readCommand();
+			if (command.getCommandWord().equals(CommandWord.START))
 				startGame = true;
-			}
+
+			else if (command.getCommandWord().equals(CommandWord.RESET)
+					| command.getCommandWord().equals(CommandWord.MOVE))
+				System.out.println("\nThe game hasn't started yet, type 'start' to start");
+
+			// commands HELP, QUIT, INVALID
+			else
+				processCommandWord(command);
 
 		} while (!startGame);
-		System.out.println("Get Ready, Game is Starting.");
-		System.out.println("Foxes are moving to position...");
-		System.out.println("Game started, have fun.");
+		System.out.println("\nFoxes are moving to position...\nGame started, have fun.");
 		this.playGame();
+	}
+
+	/***
+	 * This method will print the help menu for the user
+	 */
+	private void printHelp() {
+		System.out.println("\nHere is the help menu:");
+		parser.showAllCommands();
+		System.out.println();
+	}
+
+	private void quit() {
+		System.out.println("\nThe foxes will now go back to sleep!");
+		System.out.println("Thank you for playing. Good bye.");
+		System.exit(0);
 	}
 
 	/**
 	 * This method will run the game for the user to interact with.
 	 */
 	private void playGame() {
-		boolean done;
 		do {
-			done = processCommandWord(parser.readCommand().getCommandWord());
-			System.out.println(board);
-		} while (!(this.board.isInWinningState() && done));
-
-		System.out.println("\nThe foxes will now go back to sleep!");
-		System.out.println("Thank you for playing. Good bye.");
+			processCommandWord(parser.readCommand());
+			System.out.println(this.board.toString());
+		} while (!this.board.isInWinningState());
+		quit();
 	}
 
 	/**
@@ -61,24 +80,28 @@ public class Game {
 	 * @param command The command to process
 	 * @return True, if the user has requested the game to end. False otherwise.
 	 */
-	private boolean processCommandWord(CommandWord commandWord) {
-		boolean endGame = false;
-		if (commandWord.equals(CommandWord.HELP)) {
-			System.out.println("Here is the help menu:");
-			parser.showAllCommands();
-			System.out.println();
-		} else if (commandWord.equals(CommandWord.MOVE)) {
-			// Logic needed to extract move object from command
-			board.move(new Move(0, 0, 0, 0));
-		} else if (commandWord.equals(CommandWord.INVALID)) {
-			System.out.println("Invalid command please try again.");
+	private void processCommandWord(Command command) {
+		CommandWord commandWord = command.getCommandWord();
+		switch (commandWord) {
+		case HELP:
+			printHelp();
+			break;
+		case MOVE:
+			board.move(new Move(command.getStartPos(), command.getEndPos()));
+			break;
+		case INVALID:
+			System.out.println("\nInvalid command please try again.");
 			System.out.println("Type 'help' if you need help.\n");
-		} else if (commandWord.equals(CommandWord.QUIT)) {
-			endGame = true;
-		} else if (commandWord.equals(CommandWord.RESET)) {
-			this.startGame();
+			break;
+		case QUIT:
+			quit();
+		case RESET:
+			System.out.println("The Game is being reset enjoy.");
+			this.board = new Board();
+			break;
+		default:
+			break;
 		}
-		return endGame;
 	}
 
 	/**

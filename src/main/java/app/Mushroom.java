@@ -13,7 +13,6 @@ public class Mushroom extends Piece {
 
 	@Override
 	public boolean canMove(Move move) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
