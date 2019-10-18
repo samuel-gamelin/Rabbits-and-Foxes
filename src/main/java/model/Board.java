@@ -65,7 +65,7 @@ public class Board {
 	/**
 	 * Makes a move given the provided move object.
 	 * 
-	 * @param move The object representing the move
+	 * @param  move The object representing the move
 	 * @return true if the move was successful, false if parameters are invalid or
 	 *         the move was unsuccessful
 	 */
@@ -100,6 +100,17 @@ public class Board {
 		}
 		return true;
 	}
+	
+	/**
+	 * Validates the path given a Move object and the piece type.
+	 * 
+	 * @param move 		The object representing the move
+	 * @param piecetype The type of the piece
+	 * @return 			True if the path for this move is valid for the specified piece given the current state of the board, false otherwise.
+	 */
+	private boolean validatePath(Move move, Piece.PieceType piecetype) {
+		return false;
+	}
 
 	/**
 	 * @return A string representation of this board.
@@ -107,19 +118,69 @@ public class Board {
 	@Override
 	public String toString() {
 		StringBuilder representation = new StringBuilder();
-
+		
 		// Adding the top row of letters
+		representation.append(new String(new char[5]).replace('\0', ' '));
 		for (int i = 0; i < SIZE; i++) {
-			representation.append(" ");
-			representation.append((char) (i + 'A'));
+			representation.append(i + 1);
+			representation.append(new String(new char[8]).replace('\0', ' '));
 		}
-		for (int x = 0; x < SIZE; x++) {
-			representation.append(x + 1);
-			representation.append(" ");
-			for (int y = 0; y < SIZE; y++) {
+		
+		
+		for (int y = 0; y < SIZE; y++) {
+			// First row
+			representation.append("\n  ");
+			for (int x = 0; x < SIZE; x++) {
+				char tileColour = tiles[x][y].getColour().toString().charAt(0);
+				for (int i = 0; i < 8; i++) {
+					representation.append(tileColour);
+				}
+				representation.append(" ");
+			}
+			
+			// Second row
+			representation.append("\n  ");
+			for (int x = 0; x < SIZE; x++) {
+				char tileColour = tiles[x][y].getColour().toString().charAt(0);
+				representation.append(tileColour);
+				representation.append(new String(new char[6]).replace('\0', ' '));
+				representation.append(tileColour);
+				representation.append(" ");
+			}
+			
+			// Third row
+			representation.append("\n" + (y + 1) + " ");
+			for (int x = 0; x < SIZE; x++) {
+				char tileColour = tiles[x][y].getColour().toString().charAt(0);
+				representation.append(tileColour);
+				representation.append(new String(new char[2]).replace('\0', ' '));
 				representation.append(tiles[x][y].toString());
+				representation.append(new String(new char[2]).replace('\0', ' '));
+				representation.append(tileColour);
+				representation.append(" ");
+			}
+			
+			// Fourth row
+			representation.append("\n  ");
+			for (int x = 0; x < SIZE; x++) {
+				char tileColour = tiles[x][y].getColour().toString().charAt(0);
+				representation.append(tileColour);
+				representation.append(new String(new char[6]).replace('\0', ' '));
+				representation.append(tileColour);
+				representation.append(" ");
+			}
+			
+			// Fifth row
+			representation.append("\n  ");
+			for (int x = 0; x < SIZE; x++) {
+				char tileColour = tiles[x][y].getColour().toString().charAt(0);
+				for (int i = 0; i < 8; i++) {
+					representation.append(tileColour);
+				}
+				representation.append(" ");
 			}
 		}
+		
 		return representation.toString();
 	}
 }

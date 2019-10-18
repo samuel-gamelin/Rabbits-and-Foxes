@@ -81,11 +81,11 @@ public class Tile {
 	}
 
 	/**
-	 * @return A string representation of this tile
+	 * @return A 2-character string representation of this tile. If the tile has no piece, return the string "  " (two spaces).
 	 */
 	@Override
 	public String toString() {
-		return piece.toShortString();
+		return piece != null ? piece.toShortString(): "  "; 
 	}
 
 	/**

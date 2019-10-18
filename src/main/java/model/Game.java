@@ -5,6 +5,7 @@ package app;
  * class to play the game
  * 
  * @author Mohamed Radwan
+ * @author Dani Hashweh
  * @version 1.0
  */
 public class Game {
@@ -26,27 +27,24 @@ public class Game {
 	public void startGame() {
 		this.board = new Board();
 		boolean startGame = false;
-		CommandWord commandWord;
 		System.out.println("Welcome to JumpIN Game !");
 		System.out.println("Type 'help' at any time if you need help.");
 		System.out.println("Please type 'Start' to start the game. Have fun!");
 		do {
-			commandWord = parser.readCommand().getCommandWord();
-			switch (commandWord) {
-			case START:
+			Command command = parser.readCommand();
+			if (command.getCommandWord().equals(CommandWord.START))
 				startGame = true;
-				break;
-			case HELP:
-				printHelp();
-				break;
-			case QUIT:
-				this.quit();
-				break;
-			default:
-				break;
-			}
+
+			else if (command.getCommandWord().equals(CommandWord.RESET)
+					|| command.getCommandWord().equals(CommandWord.MOVE))
+				System.out.println("\nThe game hasn't started yet, type 'start' to start");
+
+			// commands HELP, QUIT, INVALID
+			else
+				processCommandWord(command);
+
 		} while (!startGame);
-		System.out.println("Foxes are moving to position...\nGame started, have fun.");
+		System.out.println("\nFoxes are moving to position...\nGame started, have fun.");
 		this.playGame();
 	}
 
@@ -54,7 +52,7 @@ public class Game {
 	 * This method will print the help menu for the user
 	 */
 	private void printHelp() {
-		System.out.println("Here is the help menu:");
+		System.out.println("\nHere is the help menu:");
 		parser.showAllCommands();
 		System.out.println();
 	}
@@ -73,7 +71,7 @@ public class Game {
 			processCommandWord(parser.readCommand());
 			System.out.println(this.board.toString());
 		} while (!this.board.isInWinningState());
-		this.quit();
+		quit();
 	}
 
 	/**
@@ -92,12 +90,11 @@ public class Game {
 			board.move(new Move(command.getStartPos(), command.getEndPos()));
 			break;
 		case INVALID:
-			System.out.println("Invalid command please try again.");
+			System.out.println("\nInvalid command please try again.");
 			System.out.println("Type 'help' if you need help.\n");
 			break;
 		case QUIT:
-			this.quit();
-			break;
+			quit();
 		case RESET:
 			System.out.println("The Game is being reset enjoy.");
 			this.board = new Board();
