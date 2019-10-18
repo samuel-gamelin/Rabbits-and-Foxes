@@ -1,4 +1,4 @@
-package app;
+package model;
 
 /**
  * The Command class holds information about any inputed commands.

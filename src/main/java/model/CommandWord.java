@@ -1,4 +1,4 @@
-package app;
+package model;
 
 /**
  * The CommandWord enumeration is used to store all of the defined commands for

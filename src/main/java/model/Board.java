@@ -1,4 +1,4 @@
-package app;
+package model;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within

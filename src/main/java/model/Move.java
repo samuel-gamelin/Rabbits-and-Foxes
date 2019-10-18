@@ -1,4 +1,4 @@
-package app;
+package model;
 
 /**
  * @author Mohamed Radwan

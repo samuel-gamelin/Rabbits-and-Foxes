@@ -1,7 +1,7 @@
 /**
  * 
  */
-package app;
+package model;
 
 import java.util.HashMap;
 
