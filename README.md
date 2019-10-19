@@ -1,4 +1,4 @@
-# JumpIN Game
+## JumpIN Game
 
 This GitHub repo is used for the development of a JumpIN game that follows the MVC design pattern.
 
