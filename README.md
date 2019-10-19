@@ -40,7 +40,7 @@ When contributing to the project please start on the issues page which is used f
 - Issues:
   - Issues will be used for task tracking.
   - When an issue is solved please document the changes that have been made.
-  - Close the issue after you have commited your code.
+  - Close the issue after you have commit your code.
   - If the issue is a bug please use Bug-<title> for the title
   - If the issue is a task please use Task-<title> for the title
 
