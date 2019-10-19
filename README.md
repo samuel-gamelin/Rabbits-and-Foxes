@@ -66,7 +66,7 @@ Date: October 16, 2019
 ## Road Map
 
 - Create the model
-  - Parser user input
+  - Parse user input
   - Implement the board
   - Implement piece movements
   - Create the UML Diagram
@@ -77,14 +77,19 @@ Date: October 16, 2019
 
 Currently no known issues are present.
 
-> Please Note if you notice a bug. Please add it to issues.
+> If you notice a bug, please add it to Issues tab. Make sure you include how to recreate the bug!
 
 ## New features
 
-- Parsing user input
-- Moving pieces on the board
-- Displaying the board to the user
-- Identify if the movement is valid based on the game rules
+- MileStone1: A fully playable text-based implementation of the game! 
+    - Parsing user input
+    - Moving pieces on the board
+    - Displaying the board to the user
+    - Identifying if a move is valid based on the game rules
+    - Creating a board and setting pieces on said board
+    - Proceeding with the game based on user input.
+    - Ability to process if the user has solved the puzzle
+    - Among other fundamental features necessary to ensure the game proceeds smoothly
 
 ## The Team
 
