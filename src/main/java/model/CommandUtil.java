@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model;
 
 import java.util.HashMap;
@@ -23,8 +20,7 @@ public class CommandUtil {
 		validCommands = new HashMap<>();
 		for (CommandWord command : CommandWord.values()) {
 			if (command != CommandWord.INVALID) {
-				validCommands.put(command.toString(), command); // Map the string representation of the CommandWord to
-																// itself.
+				validCommands.put(command.toString(), command); 
 			}
 		}
 	}
@@ -34,9 +30,7 @@ public class CommandUtil {
 	 * the valid commands have been displayed, a newline is printed.
 	 */
 	public void showCommands() {
-		validCommands.entrySet().forEach(e -> {
-			System.out.print(e.getValue() + " ");
-		});
+		validCommands.entrySet().forEach(e -> {System.out.print(e.getValue() + " ");});
 		System.out.println();
 	}
 
@@ -52,8 +46,7 @@ public class CommandUtil {
 	public CommandWord getCommandWord(String commandWord) {
 		CommandWord command = validCommands.get(commandWord);
 		if (command == null) {
-			return CommandWord.INVALID; // The commandWord was not a valid string representation of any valid
-										// CommandWord.
+			return CommandWord.INVALID; 
 		}
 		return command;
 	}

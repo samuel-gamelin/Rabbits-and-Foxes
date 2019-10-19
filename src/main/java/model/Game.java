@@ -25,21 +25,23 @@ public class Game {
 	 * the game. It then calls the method playGame().
 	 */
 	public void startGame() {
-		System.out.println("Welcome to JumpIN Game !");
+		System.out.println("Welcome to the game of JumpIN!");
 		System.out.println("Type 'help' at any time if you need help.");
-		System.out.println("Please type 'Start' to start the game. Have fun!");
+		System.out.println("Please type 'start' to start the game. Have fun!");
 		this.board = new Board();
 		boolean startGame = false;
 		Command command;
 		do {
 			command = parser.readCommand();
 			if (command.getCommandWord().equals(CommandWord.MOVE)) {
-				System.out.println("Cant Move before starting the game");
+				System.out.println("You can't move before starting the game.");
+			} else if (command.getCommandWord().equals(CommandWord.RESET)){
+				System.out.println("You can't reset the game before starting it.");
 			} else {
 				startGame = this.processCommandWord(command);
 			}
 		} while (!startGame);
-		System.out.println("Game started, have fun.");
+		System.out.println("The game has begun, have fun!");
 		this.playGame();
 	}
 
@@ -51,7 +53,7 @@ public class Game {
 			processCommandWord(parser.readCommand());
 			System.out.println(this.board.toString());
 		} while (!this.board.isInWinningState());
-		System.out.println("Congrats your won !");
+		System.out.println("Congrats, you solved the puzzle!");
 	}
 
 	/**
@@ -68,10 +70,10 @@ public class Game {
 			System.out.println("Thank you for playing. Good bye.");
 			System.exit(0);
 		} else if (commandWord.equals(CommandWord.INVALID)) {
-			System.out.println("Invalid command please try again.");
+			System.out.println("Invalid command, please try again.");
 			System.out.println("Type 'help' if you need help.\n");
 		} else if (commandWord.equals(CommandWord.RESET)) {
-			System.out.println("The Game is being reset enjoy.");
+			System.out.println("The game has been reset, enjoy.");
 			this.board = new Board();
 		} else if (commandWord.equals(CommandWord.START)) {
 			return true;

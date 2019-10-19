@@ -19,8 +19,8 @@ public class Parser {
 	CommandUtil commandUtil;
 
 	/**
-	 * Construct the Parser. The Parser is a Scanner that scans for user input. Any
-	 * Parser will also have a CommandUtil that deals with command utilities.
+	 * Construct the Parser. The Parser is a Scanner that scans for user input. 
+	 * Any Parser will also have a CommandUtil that deals with command utilities.
 	 */
 	public Parser() {
 		commandUtil = new CommandUtil();

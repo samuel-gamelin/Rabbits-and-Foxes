@@ -17,22 +17,19 @@ package model;
  */
 public class Command {
 	// Final variable declaration.
-	private static final String EMPTY = "XX"; // Used to initialize an instance variable that has not been passed a
-												// value.
+	private static final String EMPTY = "XX"; // Used to initialize an instance variable that has not been passed a value.
 
 	// Instance variables declarations.
 	private CommandWord commandWord; // The CommandWord to be associated with this Command.
-	private String startPos; // If the commandWord is move, specifies the start position from where the move
-								// will originate.
-	private String endPos; // If the commandWord is move, specifies the end position of the move.
+	private String startPos;         // Specifies the start position of a move.
+	private String endPos;           // Specifies the end position of a move.
 
 	/**
 	 * Construct the Command. This is the default constructor for the Command class.
 	 * This constructor is used for the valid commands: help, reset, start, and
 	 * quit. For the move command, please use the secondary constructor.
 	 * 
-	 * @param commandWord The CommandWord (either start, help, or quit) to be
-	 *                    registered to this Command.
+	 * @param commandWord The CommandWord (either start, help, or quit) to be registered to this Command.
 	 */
 	public Command(CommandWord commandWord) {
 		this.commandWord = commandWord;
@@ -44,8 +41,7 @@ public class Command {
 	 * Construct the Command. This is the secondary constructor for the Command
 	 * class. This constructor should only be called when the CommandWord is "move".
 	 * 
-	 * @param commandWord The command, for this constructor it should always be
-	 *                    "move".
+	 * @param commandWord The command, for this constructor it should always be "move".
 	 * @param startPos    The position where the move will originate from.
 	 * @param endPos      The position where the move will conclude.
 	 */
@@ -65,36 +61,23 @@ public class Command {
 	}
 
 	/**
-	 * Return the start position associated with this Command, so long as it is
-	 * formatted properly (Eg. "A1"). Note that properly formatted does not strictly
-	 * require that the alphabetic character be uppercase.
+	 * Return the start position associated with this Command.
 	 * 
 	 * @return The start position to use for accessing the Board, as a String. If no
-	 *         start position was specified when this Command was created or
-	 *         startPos is improperly formated, this will return "XX".
+	 *         start position was specified when this Command was created, this will return "XX".
 	 */
 	public String getStartPos() {
-		if (startPos.length() == 2 && Character.isAlphabetic(startPos.charAt(0))
-				&& Character.isDigit(startPos.charAt(1))) {
-			return startPos.toUpperCase();
-		}
-		return EMPTY;
+		return startPos;
 	}
 
 	/**
-	 * Return the end position associated with this Command, so long as it is
-	 * formatted properly (Eg. "A2"). Note that properly formatted does not strictly
-	 * require that the alphabetic character be uppercase.
+	 * Return the end position associated with this Command.
 	 * 
 	 * @return The end position to use for accessing the Board, as a String. If no
-	 *         end position was specified when this Command was constructed or
-	 *         endPos is improperly formated, this will return "XX".
+	 *         end position was specified when this Command was created, this will return "XX".
 	 */
 	public String getEndPos() {
-		if (endPos.length() == 2 && Character.isAlphabetic(endPos.charAt(0)) && Character.isDigit(endPos.charAt(1))) {
-			return endPos.toUpperCase();
-		}
-		return EMPTY;
+		return endPos;
 	}
 
 	/**
@@ -104,7 +87,7 @@ public class Command {
 	 *         constructor, false otherwise.
 	 */
 	public boolean hasCoordinates() {
-		return !(startPos.equals(EMPTY) && endPos.equals(EMPTY));
+		return !(startPos.equals(EMPTY) || endPos.equals(EMPTY));
 	}
 
 	/**
@@ -116,5 +99,4 @@ public class Command {
 	public boolean isValidCommandWord() {
 		return commandWord == CommandWord.INVALID;
 	}
-
 }
