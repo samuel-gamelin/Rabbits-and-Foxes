@@ -7,17 +7,16 @@ package model;
  * to keep track of whether a valid CommandWord was specified by the input.
  * 
  * The next 2 parts of a Command are Strings. These will typically be
- * represented by an "XX" unless the CommandWord specified by the input was
- * CommandWord.MOVE. If that was the case, then these 2 Strings will store
- * information that helps process a move. This includes the position where a
- * move will originate from, and the position where a move will end.
+ * represented by an "X" unless the CommandWord specified by the input was
+ * CommandWord.MOVE. If that was the case, then these 2 Strings will be initialized
+ * with Strings passed by the user for startPos and endPos.
  * 
  * @author John Breton
  * @version 1.0
  */
 public class Command {
 	// Final variable declaration.
-	private static final String EMPTY = "XX"; // Used to initialize an instance variable that has not been passed a value.
+	private static final String EMPTY = "X"; // Used to initialize an instance variable that has not been passed a value.
 
 	// Instance variables declarations.
 	private CommandWord commandWord; // The CommandWord to be associated with this Command.
@@ -64,7 +63,7 @@ public class Command {
 	 * Return the start position associated with this Command.
 	 * 
 	 * @return The start position to use for accessing the Board, as a String. If no
-	 *         start position was specified when this Command was created, this will return "XX".
+	 *         start position was specified when this Command was created, this will return "X".
 	 */
 	public String getStartPos() {
 		return startPos;
@@ -74,7 +73,7 @@ public class Command {
 	 * Return the end position associated with this Command.
 	 * 
 	 * @return The end position to use for accessing the Board, as a String. If no
-	 *         end position was specified when this Command was created, this will return "XX".
+	 *         end position was specified when this Command was created, this will return "X".
 	 */
 	public String getEndPos() {
 		return endPos;

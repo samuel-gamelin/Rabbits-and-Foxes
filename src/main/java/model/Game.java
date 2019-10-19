@@ -52,7 +52,7 @@ public class Game {
 		System.out.println(this.board.toString());
 		do {
 			if (processCommandWord(parser.readCommand())) {
-				System.out.println("The Game is already running type 'rest' if you want to start over");
+				System.out.println("The game is already running, type 'reset' if you want to start over.");
 			}
 		} while (!this.board.isInWinningState());
 		System.out.println("Congrats, you solved the puzzle!");
