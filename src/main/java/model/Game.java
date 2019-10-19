@@ -35,7 +35,7 @@ public class Game {
 			command = parser.readCommand();
 			if (command.getCommandWord().equals(CommandWord.MOVE)) {
 				System.out.println("You can't move before starting the game.");
-			} else if (command.getCommandWord().equals(CommandWord.RESET)){
+			} else if (command.getCommandWord().equals(CommandWord.RESET)) {
 				System.out.println("You can't reset the game before starting it.");
 			} else {
 				startGame = this.processCommandWord(command);
@@ -49,9 +49,11 @@ public class Game {
 	 * This method will run the game for the user to interact with.
 	 */
 	private void playGame() {
+		System.out.println(this.board.toString());
 		do {
-			processCommandWord(parser.readCommand());
-			System.out.println(this.board.toString());
+			if (processCommandWord(parser.readCommand())) {
+				System.out.println("The Game is already running type 'rest' if you want to start over");
+			}
 		} while (!this.board.isInWinningState());
 		System.out.println("Congrats, you solved the puzzle!");
 	}
@@ -66,6 +68,7 @@ public class Game {
 		CommandWord commandWord = command.getCommandWord();
 		if (commandWord.equals(CommandWord.MOVE)) {
 			board.move(new Move(command.getStartPos(), command.getEndPos()));
+			System.out.println(this.board.toString());
 		} else if (commandWord.equals(CommandWord.QUIT)) {
 			System.out.println("Thank you for playing. Good bye.");
 			System.exit(0);
@@ -75,6 +78,7 @@ public class Game {
 		} else if (commandWord.equals(CommandWord.RESET)) {
 			System.out.println("The game has been reset, enjoy.");
 			this.board = new Board();
+			this.playGame();
 		} else if (commandWord.equals(CommandWord.START)) {
 			return true;
 		} else if (commandWord.equals(CommandWord.HELP)) {
