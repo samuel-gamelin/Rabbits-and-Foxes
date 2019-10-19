@@ -10,7 +10,7 @@ package model;
 public class Game {
 	private Parser parser;
 	private Board board;
-	private static final Game game = new Game();
+	private static final Game GAME = new Game();
 
 	/**
 	 * The main constructor starts the game and initializes the board as well as the
@@ -90,7 +90,7 @@ public class Game {
 	}
 
 	public static Game getGame() {
-		return game;
+		return GAME;
 	}
 
 	/**
