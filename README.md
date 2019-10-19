@@ -2,7 +2,7 @@
 
 ## About
 
-Please add info
+This GitHub repo is used for the development of a JumpIN game that follows the MVC design pattern.
 
 ## Development
 
@@ -54,25 +54,39 @@ When contributing to the project please start on the issues page which is used f
 ## Current UML Diagram
 
 <p align="center"> 
-<img src="https://github.com/samuel-gamelin/SYSC-3110/raw/mileStone1/documentation/UMLDiagram/modelUML.png">
+<img src="./documentation/UMLDiagram/modelUML.png">
 </p>
 Date: October 16, 2019
+
 ## Current Sequence Diagram
+
 <p align="center"> 
-<img src="https://github.com/samuel-gamelin/SYSC-3110/raw/mileStone1/documentation/SequenceDiagram/SequenceDiagram.png">
+<img src="./documentation/SequenceDiagram/SequenceDiagram.png">
 </p>
 Date: October 16, 2019
+
 ## Road Map
 
-Please add info
+- Create the model
+  - Parser user input
+  - Implement the board
+  - Implement piece movements
+  - Create the UML Diagram
+  - Create the Sequence Diagram
+  - Document the development and design process
 
 ## Known issues
 
-Please add info
+Currently no known issues are present.
+
+> Please Note if you notice a bug. Please add it to issues.
 
 ## New features
 
-Please add info
+- Parsing user input
+- Moving pieces on the board
+- Displaying the board to the user
+- Identify if the movement is valid based on the game rules
 
 ## The Team
 
