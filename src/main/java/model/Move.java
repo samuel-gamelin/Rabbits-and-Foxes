@@ -120,7 +120,7 @@ public class Move {
 	 * @return the distance in the Horizontal direction.
 	 */
 	public int xDistance() {
-		return Math.abs(xEnd - xStart);
+		return xEnd - xStart;
 	}
 
 	/**
@@ -130,6 +130,6 @@ public class Move {
 	 * @return the distance in the Vertical direction.
 	 */
 	public int yDistance() {
-		return Math.abs(yEnd - yStart);
+		return yEnd - yStart;
 	}
 }
