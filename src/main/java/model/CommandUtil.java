@@ -28,7 +28,7 @@ public class CommandUtil {
 	}
 
 	/**
-	 * Return a String of all valid commands separated by a whitespace.
+	 * Return a List of all valid commands.
 	 */
 	public List<CommandWord> getCommands() {
 		List<CommandWord> commandList = new ArrayList<>();
