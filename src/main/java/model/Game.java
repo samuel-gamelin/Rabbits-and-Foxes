@@ -106,16 +106,16 @@ public class Game {
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Prints the help menu for the user.
+	 * Prints the help menu for the Game.
 	 */
 	private void printHelp() {
 		System.out.println("Help menu:");
 		System.out.println();
-		List<String> commandsWithInfo = parser.getAllCommands();
-		for (String curr : commandsWithInfo) {
-			System.out.println(curr + "\n");
+		List<CommandWord> commandsWithInfo = parser.getAllCommands();
+		for (CommandWord curr : commandsWithInfo) {
+			System.out.println(curr.getHelpInfo() + "\n");
 		}
 	}
 
