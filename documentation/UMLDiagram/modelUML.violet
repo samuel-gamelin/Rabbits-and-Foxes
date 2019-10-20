@@ -31,9 +31,16 @@
       <double>630.0</double>
      </void>
     </void>
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>y</string>
+     <void method="set">
+      <object idref="Point2D$Double0"/>
+      <double>40.0</double>
+     </void>
+    </void>
     <void method="setLocation">
      <double>630.0</double>
-     <double>0.0</double>
+     <double>40.0</double>
     </void>
    </object>
   </void>
@@ -240,6 +247,7 @@
 +startGame()
 -playGame()
 -processCommandWord(commandWord:CommandWord):boolean
+-printHelp()
 +&lt;u&gt;getGame&lt;/u&gt;:Game
 +&lt;u&gt;main&lt;/u&gt;(args:String[])
 </string>
@@ -256,11 +264,11 @@
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double6"/>
-      <double>900.0</double>
+      <double>990.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>900.0</double>
+     <double>990.0</double>
      <double>0.0</double>
     </void>
    </object>
@@ -277,7 +285,7 @@
      <void property="text">
       <string>+Parser()
 +readCommand():Command
-+showAllCommands()</string>
++getAllCommands():List&lt;CommandWord&gt;</string>
      </void>
     </void>
     <void property="name">
@@ -291,19 +299,19 @@
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double7"/>
-      <double>870.0</double>
+      <double>1040.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double7"/>
-      <double>220.0</double>
+      <double>270.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>870.0</double>
-     <double>220.0</double>
+     <double>1040.0</double>
+     <double>270.0</double>
     </void>
    </object>
   </void>
@@ -319,6 +327,14 @@ QUIT
 INVALID</string>
      </void>
     </void>
+    <void property="methods">
+     <void property="text">
+      <string>+CommandWord(command:String, helpInfo:String)
++getHelpInfo():String
++toString():String
+</string>
+     </void>
+    </void>
     <void property="name">
      <void property="text">
       <string>&lt;&lt;enumeration&gt;&gt;
@@ -331,19 +347,19 @@ INVALID</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double8"/>
-      <double>1050.0</double>
+      <double>1170.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double8"/>
-      <double>600.0</double>
+      <double>570.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>1050.0</double>
-     <double>600.0</double>
+     <double>1170.0</double>
+     <double>570.0</double>
     </void>
    </object>
   </void>
@@ -357,7 +373,7 @@ INVALID</string>
     <void property="methods">
      <void property="text">
       <string>+CommandUtil()
-+showCommands()
++getCommands():List&lt;CommandWord&gt;
 +getCommandWord(commandWord:String):CommandWord
 </string>
      </void>
@@ -373,19 +389,19 @@ INVALID</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double9"/>
-      <double>950.0</double>
+      <double>1150.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double9"/>
-      <double>470.0</double>
+      <double>440.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>950.0</double>
-     <double>470.0</double>
+     <double>1150.0</double>
+     <double>440.0</double>
     </void>
    </object>
   </void>
@@ -436,9 +452,7 @@ RABBIT</string>
 +Command(commandWord:CommandWord,startPos:String,endPos:String)
 +getCommandWord():CommandWord
 +getStartPos():String
-+getEndPos():String
-+hasCoordinates():boolean
-+isValidCommandWord():boolean</string>
++getEndPos():String</string>
      </void>
     </void>
     <void property="name">
@@ -452,19 +466,19 @@ RABBIT</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double11"/>
-      <double>440.0</double>
+      <double>590.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double11"/>
-      <double>580.0</double>
+      <double>480.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>440.0</double>
-     <double>580.0</double>
+     <double>590.0</double>
+     <double>480.0</double>
     </void>
    </object>
   </void>
