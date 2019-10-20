@@ -1,11 +1,14 @@
 package model;
 
+import model.Piece.PieceType;
+
 /**
  * This class represents a board which keeps track of tiles and pieces within
  * them.
  * 
  * @author Samuel Gamelin
  * @author Abdalla El Nakla
+ * @author Dani Hashweh
  * @version 1.0
  */
 public class Board {
@@ -59,8 +62,8 @@ public class Board {
 		tiles[1][4].placePiece(new Rabbit());
 
 		// Adding the foxes (there can be 0 to 2, here we have 2)
-		tiles[1][1].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.HORIZONTAL));
-		tiles[0][1].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL));
+		tiles[0][1].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.HORIZONTAL));
+		tiles[1][1].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL));
 	}
 
 	/**
@@ -75,12 +78,71 @@ public class Board {
 		int yStart = move.getYStart();
 		int xEnd = move.getXEnd();
 		int yEnd = move.getYEnd();
+		Piece piece = tiles[xStart][yStart].retrievePiece();
+	
+		if(piece.getPieceType() == Piece.PieceType.FOX){
+			if (xStart < 0 || xStart >= SIZE || xEnd < 0 || xEnd >= SIZE || yStart < 0 || yStart >= SIZE || yEnd < 0
+					|| yEnd >= SIZE || !tiles[xStart][yStart].isOccupied()) {
+				return false;
+			}
+			
+			//IF TAIL IS ON RIGHT OF HEAD
+			if((tiles[xStart][yStart]).toString().equals("FT") && (tiles[xStart-1][yStart]).toString().equals("FH")) {
+				if (piece.canMove(move) && validatePath(move, piece.getPieceType())) {
+					//If tail is going into head position
+					if((tiles[xEnd][yEnd].isOccupied()) &&(tiles[xEnd][yEnd]).toString().equals("FT")) {
+						tiles[xEnd-1][yEnd].placePiece(tiles[xStart-1][yStart].removePiece());
+						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+					}
+					//moving tail into empty position
+					else if((tiles[xStart][yStart]).toString().equals("FT")){
+						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+						tiles[xEnd-1][yEnd].placePiece(tiles[xStart-1][yStart].removePiece());
+					}
+					//moving tail into empty position
+					else if((tiles[xStart][yStart]).toString().equals("FT")){
+						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+						tiles[xEnd+1][yEnd].placePiece(tiles[xStart+1][yStart].removePiece());
+					}
+
+					return true; 
+				}
+			}
+			
+			//IF HEAD IS ON RIGHT OF TAIL
+			else if((tiles[xStart][yStart]).toString().equals("FH") && (tiles[xStart+1][yStart]).toString().equals("FT")) {
+				if (piece.canMove(move) && validatePath(move, piece.getPieceType())) {
+					//If head is going into tail position
+					if((tiles[xEnd][yEnd].isOccupied()) &&(tiles[xEnd][yEnd]).toString().equals("FT")) {
+						tiles[xEnd-1][yEnd].placePiece(tiles[xStart-1][yStart].removePiece());
+						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+					}
+					//moving head into empty position
+					else if((tiles[xStart][yStart]).toString().equals("FH")){
+						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+						tiles[xEnd+1][yEnd].placePiece(tiles[xStart+1][yStart].removePiece());
+					}
+					//moving tail into empty position
+					else if((tiles[xStart][yStart]).toString().equals("FT")){
+						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+						tiles[xEnd+1][yEnd].placePiece(tiles[xStart+1][yStart].removePiece());
+					}
+
+					return true; 
+				}
+			}
+			
+			
+			
+			return false; 
+			
+		}
 
 		if (xStart < 0 || xStart >= SIZE || xEnd < 0 || xEnd >= SIZE || yStart < 0 || yStart >= SIZE || yEnd < 0
 				|| yEnd >= SIZE || !tiles[xStart][yStart].isOccupied() || tiles[xEnd][yEnd].isOccupied()) {
 			return false;
 		}
-		if (tiles[xStart][yStart].retrievePiece().canMove(move)&& validatePath(move,tiles[xStart][yStart].retrievePiece().getPieceType())) {
+		if (piece.canMove(move) && validatePath(move, piece.getPieceType())) {
 			tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
 			return true;
 		}
@@ -114,10 +176,8 @@ public class Board {
 	private boolean validatePath(Move move, Piece.PieceType piecetype) {
 		int xStart = move.getXStart();
 		int yStart = move.getYStart();
-		int xEnd = move.getXEnd();
-		int yEnd = move.getYEnd();
-		int xDistance = xEnd - xStart;
-		int yDistance = yEnd - yStart;		
+		int xDistance = move.xDistance();
+		int yDistance = move.yDistance(); 	
 		int direction = move.direction();
 		
 		if(piecetype == Piece.PieceType.RABBIT && direction == 1){
