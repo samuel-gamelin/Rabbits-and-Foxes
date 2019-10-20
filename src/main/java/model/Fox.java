@@ -41,20 +41,18 @@ public class Fox extends Piece {
 
 	@Override
 	public boolean canMove(Move move) {
-		int xStart = move.getXStart();
-		int yStart = move.getYStart();
-		int xEnd = move.getXEnd();
-		int yEnd = move.getYEnd();
+		int foxDirection = move.direction();
 		if (this.direction.equals(Direction.HORIZONTAL)) {
-			if ((xStart == xEnd) && (yStart != yEnd)) {
+			if (foxDirection == 0) {
 				return true;
 			}
 		}
 		if (this.direction.equals(Direction.VERTICAL)) {
-			if ((xStart != xEnd) && (yStart == yEnd)) {
+			if (foxDirection == 1) {
 				return true;
 			}
 		}
+		
 		return false;
 
 	}

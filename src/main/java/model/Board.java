@@ -60,7 +60,7 @@ public class Board {
 
 		// Adding the foxes (there can be 0 to 2, here we have 2)
 		tiles[1][1].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.HORIZONTAL));
-		tiles[1][2].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL));
+		tiles[0][1].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL));
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class Board {
 			}
 			
 		}
-		return false;
+		return true;
 		
 	}
 
