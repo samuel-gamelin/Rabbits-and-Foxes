@@ -20,7 +20,7 @@ public class Rabbit extends Piece {
 		if((xStart==xEnd)&&(yStart !=yEnd)) {
 			return true;
 		}
-		if((xStart!=xEnd)&&(yStart ==yEnd)) {
+		if((xStart!=xEnd)&&(yStart==yEnd)) {
 			return true;
 		}
 		return false;
