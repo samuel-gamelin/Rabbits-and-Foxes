@@ -91,11 +91,23 @@ public class Game {
 		} else if (commandWord.equals(CommandWord.START)) {
 			return true;
 		} else if (commandWord.equals(CommandWord.HELP)) {
-			System.out.println("Here is the help menu:");
-			parser.showAllCommands();
-			System.out.println();
+			printHelp();
 		}
 		return false;
+	}
+
+	private void printHelp() {
+		System.out.println("Help Menu:");
+		System.out.println();
+		System.out.println(
+				"- 'move xy xy' -> Moves the objects on the board. x representing the horizontal vaules on the top of the board. y represents the vertical values printed on the left side of the baord ");
+		System.out.println(
+				"The first xy after move command represents the object you want to move, and the second xy represnets the location you want it to be moved to.");
+		System.out.println("- 'help'  : Prints the help menu.");
+		System.out.println("- 'quit'  : Quits the game.");
+		System.out.println("- 'rest'  : Rests the game.");
+		System.out.println("- 'start' : starts the game.");
+
 	}
 
 	/***
