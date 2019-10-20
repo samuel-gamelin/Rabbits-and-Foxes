@@ -23,7 +23,7 @@ in order to implement this text-based version of the game.
 
 ## Known Issues
 - Foxes are broken
-- Rabbits are broken
+
 ## Roadmap Ahead
 For the next milestone (milestone 2), the GUI-based version of the game must be implemented. This will
 require us to complete the View and Controller portions of the MVC pattern. We will also have to setup
