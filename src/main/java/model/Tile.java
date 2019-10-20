@@ -1,7 +1,9 @@
 package model;
 
 /**
- * 
+ * This class represents the tiles that the pieces will be placed on. 
+ * These tiles will also be placed on the board to track what is occupied
+ * and what isn't. 
  * 
  * @author Dani Hashweh
  */
