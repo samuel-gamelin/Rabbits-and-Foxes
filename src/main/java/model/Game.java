@@ -67,6 +67,7 @@ public class Game {
 	 */
 	private void playGame() {
 		System.out.println(this.board);
+		System.out.println();
 		do {
 			if (processCommandWord(parser.readCommand())) {
 				System.out.println("The game is already running, type 'reset' if you want to start over.\n");
