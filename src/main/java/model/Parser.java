@@ -4,6 +4,7 @@
 package model;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * The Parser class is responsible for parsing user input. This input is used to
@@ -15,7 +16,7 @@ import java.util.Scanner;
  */
 public class Parser {
 	// Instance variables declarations.
-	Scanner parser;
+	Scanner scanner;
 	CommandUtil commandUtil;
 
 	/**
@@ -24,7 +25,7 @@ public class Parser {
 	 */
 	public Parser() {
 		commandUtil = new CommandUtil();
-		parser = new Scanner(System.in);
+		scanner = new Scanner(System.in);
 	}
 
 	/**
@@ -43,7 +44,7 @@ public class Parser {
 	 *         with value CommandWord.INVALID is returned.
 	 */
 	public Command readCommand() {
-		String[] input = parser.nextLine().split(" ");
+		String[] input = scanner.nextLine().split(" ");
 		if (input.length == 1) {
 			return new Command(commandUtil.getCommandWord(input[0].toLowerCase()));
 		} else if (input.length == 3 && (commandUtil.getCommandWord(input[0]) == CommandWord.MOVE)) {
@@ -56,7 +57,34 @@ public class Parser {
 	 * Print a list of all the valid commands for the game. This list includes the
 	 * valid commands: help, move, reset, start, and quit.
 	 */
-	public void showAllCommands() {
-		commandUtil.showCommands();
+	public ArrayList<String> getAllCommands() {
+		ArrayList<CommandWord> commandList = commandUtil.getCommands();
+		ArrayList<String> commandListWithInfo = new ArrayList<>();
+		for (CommandWord curr : commandList) {
+			if (curr.equals(CommandWord.HELP)) {
+				commandListWithInfo.add("  help: Displays this menu.");
+			} else if (curr.equals(CommandWord.START)) {
+				commandListWithInfo.add("  start: Starts the game. Can only be used before the game has started.");
+			} else if (curr.equals(CommandWord.MOVE)) {
+				String temp = "";
+				temp += "  move x1y1 x2y2: Moves a piece from x1y1 to x2y2, if the move is valid.\n\n";
+				temp += "                  Rabbits (Denoted by \"RB\") can move by jumping over\n";
+				temp += "                  occupied tiles. Rabbits can only move in a straight line.\n\n";
+				temp += "                  Foxes (Denoted by \"FH\" and \"FT\") can move by sliding\n";
+				temp += "                  to the left and right if they are horizontal, or up and\n";
+				temp += "                  down if they are vertical. They cannot slide through or\n";
+				temp += "                  past occupied tiles. They can be jumped over by rabbits.\n\n";
+				temp += "                  Mushrooms (Denoted by \"MU\") cannot move. However, they\n";
+				temp += "                  can be jumped over by rabbits.\n\n";
+				temp += "                  An example move: \"move 12 14\", which moves a piece from\n";
+				temp += "                  column 1 row 2, to column 1 row 4, if the move is valid.";
+				commandListWithInfo.add(temp);
+			} else if (curr.equals(CommandWord.RESET)) {
+				commandListWithInfo.add("  reset: Resets the game. Can only be used after the game has started.");
+			} else if (curr.equals(CommandWord.QUIT)) {
+				commandListWithInfo.add("  quit: Quits the game.");
+			}
+		}
+		return commandListWithInfo;
 	}
 }

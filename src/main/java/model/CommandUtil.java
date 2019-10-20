@@ -1,10 +1,11 @@
 package model;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
- * The CommandUtil class is responsible for processing inputed commands. It also
- * keeps track of all possible valid commands.
+ * The CommandUtil class is responsible for keeping track of all valid CommandWords. 
+ * It also processes and returns the CommandWord of a Command.
  * 
  * @author John Breton
  * @version 1.0
@@ -26,18 +27,16 @@ public class CommandUtil {
 	}
 
 	/**
-	 * Display a String of all valid commands separated by a whitespace. Once all
-	 * the valid commands have been displayed, a newline is printed.
+	 * Return a String of all valid commands separated by a whitespace.
 	 */
-	public void showCommands() {
-		validCommands.entrySet().forEach(e -> {System.out.print(e.getValue() + " ");});
-		System.out.println();
+	public ArrayList<CommandWord> getCommands() {
+		ArrayList<CommandWord> commandList = new ArrayList<>();
+		validCommands.entrySet().forEach(e -> commandList.add(e.getValue()));
+		return commandList;
 	}
 
 	/**
-	 * Return the corresponding CommandWord that matches the passed String. If no
-	 * CommandWord matches the passed String, this method will return
-	 * CommandWord.INVALID
+	 * Return the corresponding CommandWord that matches the passed String.
 	 * 
 	 * @param command The String representation of a valid CommandWord.
 	 * @return The enumerated CommandWord, based on the passed String. If the String
