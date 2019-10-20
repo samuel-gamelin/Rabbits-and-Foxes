@@ -10,6 +10,7 @@ package model;
  * 
  * @author Mohamed Radwan
  * @author Samuel Gamelin
+ * @author Dani Hashweh
  */
 
 public class Move {
@@ -120,7 +121,7 @@ public class Move {
 	 * @return the distance in the Horizontal direction.
 	 */
 	public int xDistance() {
-		return xEnd - xStart;
+		return Math.abs(xEnd - xStart);
 	}
 
 	/**
@@ -130,6 +131,6 @@ public class Move {
 	 * @return the distance in the Vertical direction.
 	 */
 	public int yDistance() {
-		return yEnd - yStart;
+		return Math.abs(yEnd - yStart);
 	}
 }
