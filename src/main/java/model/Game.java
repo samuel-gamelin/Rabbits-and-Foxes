@@ -1,8 +1,13 @@
 package model;
 
 /**
- * This class is responsible for controlling the game. Using parser and board
- * class to play the game
+ * This class starts a game and plays it.
+ * 
+ * It is singleton class since there can only be one instance of game class
+ * running at a time. This will help manage game so that the user would not be
+ * able to run multiple game instances at once.
+ * 
+ * The Game class uses
  * 
  * @author Mohamed Radwan
  * @version 1.0
@@ -17,6 +22,7 @@ public class Game {
 	 * parser
 	 */
 	private Game() {
+		this.board = new Board();
 		this.parser = new Parser();
 	}
 
@@ -28,7 +34,6 @@ public class Game {
 		System.out.println("Welcome to the game of JumpIN!");
 		System.out.println("Type 'help' at any time if you need help.");
 		System.out.println("Please type 'start' to start the game. Have fun!");
-		this.board = new Board();
 		boolean startGame = false;
 		Command command;
 		do {
@@ -89,6 +94,10 @@ public class Game {
 		return false;
 	}
 
+	/***
+	 * 
+	 * @return
+	 */
 	public static Game getGame() {
 		return GAME;
 	}
@@ -99,8 +108,7 @@ public class Game {
 	 * @param args The command line arguments
 	 */
 	public static void main(String[] args) {
-		Game game = getGame();
-		game.startGame();
+		Game.getGame().startGame();
 	}
 
 }
