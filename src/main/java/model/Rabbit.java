@@ -2,7 +2,7 @@ package model;
 
 /***
  * 
- * @author
+ * @author Abdalla
  *
  */
 public class Rabbit extends Piece {
@@ -13,7 +13,16 @@ public class Rabbit extends Piece {
 
 	@Override
 	public boolean canMove(Move move) {
-		// TODO Auto-generated method stub
+		int xStart = move.getXStart();
+		int yStart = move.getYStart();
+		int xEnd = move.getXEnd();
+		int yEnd = move.getYEnd();
+		if((xStart==xEnd)&&(yStart !=yEnd)) {
+			return true;
+		}
+		if((xStart!=xEnd)&&(yStart ==yEnd)) {
+			return true;
+		}
 		return false;
 	}
 

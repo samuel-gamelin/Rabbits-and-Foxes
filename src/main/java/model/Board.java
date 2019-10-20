@@ -5,6 +5,7 @@ package model;
  * them.
  * 
  * @author Samuel Gamelin
+ * @author Abdalla El Nakla
  * @version 1.0
  */
 public class Board {
@@ -58,8 +59,8 @@ public class Board {
 		tiles[1][4].placePiece(new Rabbit());
 
 		// Adding the foxes (there can be 0 to 2, here we have 2)
-		tiles[1][1].placePiece(new Fox());
-		tiles[4][3].placePiece(new Fox());
+		tiles[1][1].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.HORIZONTAL));
+		tiles[1][2].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL));
 	}
 
 	/**
@@ -79,7 +80,7 @@ public class Board {
 				|| yEnd > SIZE || !tiles[xStart][yStart].isOccupied() || tiles[xEnd][yEnd].isOccupied()) {
 			return false;
 		}
-		if (tiles[xStart][yStart].retrievePiece().canMove(move)) {
+		if (tiles[xStart][yStart].retrievePiece().canMove(move)&& validatePath(move,tiles[xStart][yStart].retrievePiece().getPieceType())) {
 			tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
 			return true;
 		}
@@ -110,7 +111,60 @@ public class Board {
 	 *         the current state of the board, false otherwise.
 	 */
 	private boolean validatePath(Move move, Piece.PieceType piecetype) {
+		int xStart = move.getXStart();
+		int yStart = move.getYStart();
+		int xEnd = move.getXEnd();
+		int yEnd = move.getYEnd();
+		int xDistance = Math.abs(xStart - xEnd);
+		int yDistance = Math.abs(yStart - yEnd);		
+		int direction = move.direction();
+		
+		if(piecetype == Piece.PieceType.RABBIT) {
+			if(direction == 1){
+				for(int i = 1; i < yDistance;i++ ) {
+					if(!tiles[xStart][yStart+i].isOccupied()) {
+						return false;
+					}	
+				}
+				
+			}
+			
+		}
+		if(piecetype == Piece.PieceType.RABBIT) {
+			if(direction == 0){
+				for(int i = 1; i < yDistance;i++ ) {
+					if(!tiles[xStart+i][yStart].isOccupied()) {
+						return false;
+					}	
+				}
+				
+			}
+			
+		}
+		if(piecetype == Piece.PieceType.FOX) {
+			if(direction == 1){
+				for(int i = 1; i < yDistance;i++ ) {
+					if(tiles[xStart][yStart+i].isOccupied()) {
+						return false;
+					}	
+				}
+				
+			}
+			
+		}
+		if(piecetype == Piece.PieceType.FOX) {
+			if(direction == 0){
+				for(int i = 1; i < yDistance;i++ ) {
+					if(tiles[xStart+i][yStart].isOccupied()) {
+						return false;
+					}	
+				}
+				
+			}
+			
+		}
 		return false;
+		
 	}
 
 	/**
