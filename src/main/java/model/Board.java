@@ -96,11 +96,12 @@ public class Board {
 					if ((xStart + xDistance) <= 0 || (xStart + xDistance) >= (SIZE - 1)) {	// Ensure an adjacent tail is not pushed off the board
 						return false;
 					}
-					if (((Fox) tiles[xStart + 1][yStart].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL)) {		// Other corresponding fox piece is on the right
+					//((Fox) tiles[xStart + 1][yStart].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL) || (tiles[xStart +1][yStart].retrievePiece() == null)
+					if (findAdjacentFoxPosition(xStart, yStart) == 0 || findAdjacentFoxPosition(xStart, yStart) == 1) {		// Other corresponding fox piece is on the right
 						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
 						tiles[xEnd + 1][yEnd].placePiece(tiles[xStart + 1][yStart].removePiece());
 						return true;
-					} else if (((Fox) tiles[xStart - 1][yStart].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL)) {	// Other corresponding fox piece is on the left
+					} else if (findAdjacentFoxPosition(xStart -1, yStart) == 0 || findAdjacentFoxPosition(xStart-1, yStart) == 1) {	// Other corresponding fox piece is on the left
 						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
 						tiles[xEnd - 1][yEnd].placePiece(tiles[xStart - 1][yStart].removePiece());
 						return true;
@@ -186,6 +187,24 @@ public class Board {
 		}
 		return true;
 	}
+	
+	/**
+	 *
+	 * @param xStart
+	 * @param yStart
+	 * @return 0 if FT is on right of FH. 1 if FH is on right of FT. 2 if FT is under FH. 3 if FH is under FT. 
+	 */
+	private int findAdjacentFoxPosition(int xStart, int yStart) {
+		if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL) && (((tiles[xStart+1][yStart]).toString().equals("FT")))) 
+			return 0; 
+		else if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL) && (((tiles[xStart+1][yStart]).toString().equals("FH")))) 
+			return 1; 
+		else if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.VERTICAL) && (((tiles[xStart][yStart+1]).toString().equals("FT"))))
+			return 2; 
+		else if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.VERTICAL) && (((tiles[xStart][yStart+1]).toString().equals("FH"))))
+			return 4; 
+		return -1; 
+	}
 
 	/**
 	 * Validates the path given a Move object and the piece type.
@@ -259,8 +278,8 @@ public class Board {
 						}
 					}
 				} else {																// Moving right
-					for(int i = xStart; i < xEnd; i++) {
-						if(tiles[i][yStart].isOccupied() || !(tiles[i][yStart].retrievePiece() instanceof Fox) || !((Fox) (tiles[i][yStart].retrievePiece())).getDirection().equals(Fox.Direction.HORIZONTAL)) {
+					for(int i = xStart + 1; i <= xEnd; i++) {
+						if(tiles[i][yStart].isOccupied()) { //|| !(tiles[i][yStart].retrievePiece() instanceof Fox) || !((Fox) (tiles[i][yStart].retrievePiece())).getDirection().equals(Fox.Direction.HORIZONTAL)
 							return false;
 						}
 					}
@@ -274,13 +293,13 @@ public class Board {
 				}
 				if (yDistance < 0) {													// Moving up
 					for(int i = yStart; i > yEnd; i--) {
-						if(tiles[xStart][i].isOccupied() || !(tiles[i][yStart].retrievePiece() instanceof Fox) || !((Fox) (tiles[i][yStart].retrievePiece())).getDirection().equals(Fox.Direction.VERTICAL)) {
+						if(tiles[xStart][i].isOccupied() || !(tiles[xStart][i].retrievePiece() instanceof Fox) || !((Fox) (tiles[xStart][i].retrievePiece())).getDirection().equals(Fox.Direction.VERTICAL)) {
 							return false;
 						}
 					}
 				} else {																// Moving down
 					for(int i = yStart; i < yEnd; i++) {
-						if(tiles[xStart][i].isOccupied() || !(tiles[i][yStart].retrievePiece() instanceof Fox) || !((Fox) (tiles[i][yStart].retrievePiece())).getDirection().equals(Fox.Direction.VERTICAL)) {
+						if(tiles[xStart][i].isOccupied() || !(tiles[xStart][i].retrievePiece() instanceof Fox) || !((Fox) (tiles[xStart][i].retrievePiece())).getDirection().equals(Fox.Direction.VERTICAL)) {
 							return false;
 						}
 					}
