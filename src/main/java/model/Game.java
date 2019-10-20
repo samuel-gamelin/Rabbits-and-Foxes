@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class starts a game and plays it.
@@ -101,7 +101,7 @@ public class Game {
 	private void printHelp() {
 		System.out.println("Help menu:");
 		System.out.println();
-		ArrayList<String> commandsWithInfo = parser.getAllCommands();
+		List<String> commandsWithInfo = parser.getAllCommands();
 		for (String curr : commandsWithInfo) {
 			System.out.println(curr + "\n");
 		}

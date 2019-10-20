@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -29,8 +30,8 @@ public class CommandUtil {
 	/**
 	 * Return a String of all valid commands separated by a whitespace.
 	 */
-	public ArrayList<CommandWord> getCommands() {
-		ArrayList<CommandWord> commandList = new ArrayList<>();
+	public List<CommandWord> getCommands() {
+		List<CommandWord> commandList = new ArrayList<>();
 		validCommands.entrySet().forEach(e -> commandList.add(e.getValue()));
 		return commandList;
 	}

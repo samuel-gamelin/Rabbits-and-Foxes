@@ -4,6 +4,7 @@
 package model;
 
 import java.util.Scanner;
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -20,8 +21,8 @@ public class Parser {
 	CommandUtil commandUtil;
 
 	/**
-	 * Construct the Parser. The Parser is a Scanner that scans for user input. 
-	 * Any Parser will also have a CommandUtil that deals with command utilities.
+	 * Construct the Parser. The Parser is a Scanner that scans for user input. Any
+	 * Parser will also have a CommandUtil that deals with command utilities.
 	 */
 	public Parser() {
 		commandUtil = new CommandUtil();
@@ -54,31 +55,35 @@ public class Parser {
 	}
 
 	/**
-	 * Print a list of all the valid commands for the game. This list includes the
-	 * valid commands: help, move, reset, start, and quit.
+	 * This method is used to return to Game class all available commands with
+	 * information on what each command does and how to use it.
+	 * 
+	 * @return commandListWithInfo - a list of all the valid commands for the game.
+	 *         This list includes the valid commands: help, move, reset, start, and
+	 *         quit.
 	 */
-	public ArrayList<String> getAllCommands() {
-		ArrayList<CommandWord> commandList = commandUtil.getCommands();
-		ArrayList<String> commandListWithInfo = new ArrayList<>();
+	public List<String> getAllCommands() {
+		List<CommandWord> commandList = commandUtil.getCommands();
+		List<String> commandListWithInfo = new ArrayList<>();
 		for (CommandWord curr : commandList) {
 			if (curr.equals(CommandWord.HELP)) {
 				commandListWithInfo.add("  help: Displays this menu.");
 			} else if (curr.equals(CommandWord.START)) {
 				commandListWithInfo.add("  start: Starts the game. Can only be used before the game has started.");
 			} else if (curr.equals(CommandWord.MOVE)) {
-				String temp = "";
-				temp += "  move x1y1 x2y2: Moves a piece from x1y1 to x2y2, if the move is valid.\n\n";
-				temp += "                  Rabbits (Denoted by \"RB\") can move by jumping over\n";
-				temp += "                  occupied tiles. Rabbits can only move in a straight line.\n\n";
-				temp += "                  Foxes (Denoted by \"FH\" and \"FT\") can move by sliding\n";
-				temp += "                  to the left and right if they are horizontal, or up and\n";
-				temp += "                  down if they are vertical. They cannot slide through or\n";
-				temp += "                  past occupied tiles. They can be jumped over by rabbits.\n\n";
-				temp += "                  Mushrooms (Denoted by \"MU\") cannot move. However, they\n";
-				temp += "                  can be jumped over by rabbits.\n\n";
-				temp += "                  An example move: \"move 12 14\", which moves a piece from\n";
-				temp += "                  column 1 row 2, to column 1 row 4, if the move is valid.";
-				commandListWithInfo.add(temp);
+				StringBuilder temp = new StringBuilder();
+				temp.append("  move x1y1 x2y2: Moves a piece from x1y1 to x2y2, if the move is valid.\n\n");
+				temp.append("                  Rabbits (Denoted by \"RB\") can move by jumping over\n");
+				temp.append("                  occupied tiles. Rabbits can only move in a straight line.\n\n");
+				temp.append("                  Foxes (Denoted by \"FH\" and \"FT\") can move by sliding\n");
+				temp.append("                  to the left and right if they are horizontal, or up and\n");
+				temp.append("                  down if they are vertical. They cannot slide through or\n");
+				temp.append("                  past occupied tiles. They can be jumped over by rabbits.\n\n");
+				temp.append("                  Mushrooms (Denoted by \"MU\") cannot move. However, they\n");
+				temp.append("                  can be jumped over by rabbits.\n\n");
+				temp.append("                  An example move: \"move 12 14\", which moves a piece from\n");
+				temp.append("                  column 1 row 2, to column 1 row 4, if the move is valid.");
+				commandListWithInfo.add(temp.toString());
 			} else if (curr.equals(CommandWord.RESET)) {
 				commandListWithInfo.add("  reset: Resets the game. Can only be used after the game has started.");
 			} else if (curr.equals(CommandWord.QUIT)) {
