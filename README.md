@@ -1,8 +1,7 @@
-# Rabbits and Foxes
+## JumpIN Game
 
-## About
+This GitHub repo is used for the development of a JumpIN game that follows the MVC design pattern.
 
-Please add info
 
 ## Development
 
@@ -36,11 +35,10 @@ When contributing to the project please start on the issues page which is used f
   - Open a pull request to the corresponding milestone.
   - Document your code.
   - If there are any conflicts during the merge please consult any developer on the team.
-  - Please use the **merge and squash** option.
 - Issues:
   - Issues will be used for task tracking.
   - When an issue is solved please document the changes that have been made.
-  - Close the issue after you have commited your code.
+  - Close the issue after you have commit your code.
   - If the issue is a bug please use Bug-<title> for the title
   - If the issue is a task please use Task-<title> for the title
 
@@ -51,17 +49,47 @@ When contributing to the project please start on the issues page which is used f
 - Slack is used as the main chat for this project. [Invitation Link](https://www.google.ca)
 - Github Issues will be used for task and ticket tracking.
 
+## Current UML Diagram
+
+<p align="center"> 
+<img src="./documentation/UMLDiagram/modelUML.png">
+</p>
+Date: October 16, 2019
+
+## Current Sequence Diagram
+
+<p align="center"> 
+<img src="./documentation/SequenceDiagram/SequenceDiagram.png">
+</p>
+Date: October 16, 2019
+
 ## Road Map
 
-Please add info
+- Create the model
+  - Parse user input
+  - Implement the board
+  - Implement piece movements
+  - Create the UML Diagram
+  - Create the Sequence Diagram
+  - Document the development and design process
 
 ## Known issues
 
-Please add info
+Currently no known issues are present.
+
+> If you notice a bug, please add it to Issues tab. Make sure you include how to recreate the bug!
 
 ## New features
 
-Please add info
+- MileStone1: A fully playable text-based implementation of the game! 
+    - Parsing user input
+    - Moving pieces on the board
+    - Displaying the board to the user
+    - Identifying if a move is valid based on the game rules
+    - Creating a board and setting pieces on said board
+    - Proceeding with the game based on user input.
+    - Ability to process if the user has solved the puzzle
+    - Among other fundamental features necessary to ensure the game proceeds smoothly
 
 ## The Team
 
