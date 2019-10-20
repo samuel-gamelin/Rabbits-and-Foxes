@@ -2,15 +2,15 @@ package model;
 
 /**
  * 
- * @author Abdalla
+ * @author Abdalla El Nakla
  *
  */
 public class Fox extends Piece {
 	private Direction direction;
 	private FoxType foxType;
-	
+
 	/*
-	 * An enumeration represeting 
+	 * An enumeration represeting
 	 */
 	public enum FoxType {
 		HEAD, TAIL
@@ -36,20 +36,8 @@ public class Fox extends Piece {
 
 	@Override
 	public boolean canMove(Move move) {
-		int foxDirection = move.direction();
-		if (this.direction.equals(Direction.HORIZONTAL)) {
-			if (foxDirection == 0) {
-				return true;
-			}
-		}
-		else if (this.direction.equals(Direction.VERTICAL)) {
-			if (foxDirection == 1) {
-				return true;
-			}
-		}
-		
-		return false;
-
+		return ((this.direction.equals(Direction.HORIZONTAL) && (move.direction() == 0))
+				|| (this.direction.equals(Direction.VERTICAL) && (move.direction() == 1)));
 	}
 
 	@Override
