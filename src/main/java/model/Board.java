@@ -1,4 +1,4 @@
-	package model;
+package model;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within
@@ -76,8 +76,8 @@ public class Board {
 		int xEnd = move.getXEnd();
 		int yEnd = move.getYEnd();
 
-		if (xStart < 0 || xStart > SIZE || xEnd < 0 || xEnd > SIZE || yStart < 0 || yStart > SIZE || yEnd < 0
-				|| yEnd > SIZE || !tiles[xStart][yStart].isOccupied() || tiles[xEnd][yEnd].isOccupied()) {
+		if (xStart < 0 || xStart >= SIZE || xEnd < 0 || xEnd >= SIZE || yStart < 0 || yStart >= SIZE || yEnd < 0
+				|| yEnd >= SIZE || !tiles[xStart][yStart].isOccupied() || tiles[xEnd][yEnd].isOccupied()) {
 			return false;
 		}
 		if (tiles[xStart][yStart].retrievePiece().canMove(move)&& validatePath(move,tiles[xStart][yStart].retrievePiece().getPieceType())) {
@@ -93,8 +93,9 @@ public class Board {
 	public boolean isInWinningState() {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (tiles[i][j].getColour().equals(Tile.Colour.BROWN) && (tiles[i][j].retrievePiece() == null
-						|| !tiles[i][j].retrievePiece().getPieceType().equals(Piece.PieceType.RABBIT))) {
+				if (tiles[i][j].retrievePiece() != null
+						&& tiles[i][j].retrievePiece().getPieceType().equals(Piece.PieceType.RABBIT)
+						&& !tiles[i][j].getColour().equals(Tile.Colour.BROWN)) {
 					return false;
 				}
 			}
