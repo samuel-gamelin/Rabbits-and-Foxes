@@ -10,7 +10,6 @@ package model;
  * 
  * @author Mohamed Radwan
  * @author Samuel Gamelin
- * @author Dani Hashweh
  */
 
 public class Move {
@@ -121,16 +120,16 @@ public class Move {
 	 * @return the distance in the Horizontal direction.
 	 */
 	public int xDistance() {
-		return Math.abs(xEnd - xStart);
+		return xEnd - xStart;
 	}
 
 	/**
-	 * This method calculates the distance the object needs to move in the y
+	 * This method calculates the distance the object needs to move in the x
 	 * direction.
 	 * 
 	 * @return the distance in the Vertical direction.
 	 */
 	public int yDistance() {
-		return Math.abs(yEnd - yStart);
+		return yEnd - yStart;
 	}
 }
