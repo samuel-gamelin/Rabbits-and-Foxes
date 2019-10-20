@@ -30,16 +30,8 @@ public class Fox extends Piece {
 		return direction;
 	}
 
-	public void setDirection(Direction direction) {
-		this.direction = direction;
-	}
-
 	public FoxType getFoxType() {
 		return foxType;
-	}
-
-	public void setFoxType(FoxType foxType) {
-		this.foxType = foxType;
 	}
 
 	@Override
@@ -50,7 +42,7 @@ public class Fox extends Piece {
 				return true;
 			}
 		}
-		if (this.direction.equals(Direction.VERTICAL)) {
+		else if (this.direction.equals(Direction.VERTICAL)) {
 			if (foxDirection == 1) {
 				return true;
 			}
