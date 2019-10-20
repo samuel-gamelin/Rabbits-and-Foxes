@@ -1,8 +1,10 @@
 package model;
 
 /***
+ * This abstract class provides a high-level prototype for a piece.
  * 
- * @author
+ * @author Abdalla El Nakla
+ * @author Samuel Gamelin
  */
 public abstract class Piece {
 
