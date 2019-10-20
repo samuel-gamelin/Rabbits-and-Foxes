@@ -34,7 +34,6 @@ When contributing to the project please start on the issues page which is used f
   - Open a pull request to the corresponding milestone.
   - Document your code.
   - If there are any conflicts during the merge please consult any developer on the team.
-  - Please use the **merge and squash** option.
 - Issues:
   - Issues will be used for task tracking.
   - When an issue is solved please document the changes that have been made.
