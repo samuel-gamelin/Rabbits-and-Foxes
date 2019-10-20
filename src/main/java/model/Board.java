@@ -1,4 +1,4 @@
-package model;
+	package model;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within
@@ -174,64 +174,62 @@ public class Board {
 	public String toString() {
 		StringBuilder representation = new StringBuilder();
 
-		// Adding the top row of letters
-		representation.append(new String(new char[5]).replace('\0', ' '));
+		// Adding the top row of numbers
+		representation.append("     ");
 		for (int i = 0; i < SIZE; i++) {
 			representation.append(i + 1);
-			representation.append(new String(new char[8]).replace('\0', ' '));
+			representation.append("        ");
 		}
 
 		for (int y = 0; y < SIZE; y++) {
 			// First row
 			representation.append("\n  ");
 			for (int x = 0; x < SIZE; x++) {
-				char tileColour = tiles[x][y].getColour().toString().charAt(0);
-				for (int i = 0; i < 8; i++) {
-					representation.append(tileColour);
+				representation.append("|");
+				if (tiles[x][y].getColour().equals(Tile.Colour.BROWN)) {
+					representation.append("--BB--");
+				} else {
+					representation.append("------");
 				}
-				representation.append(" ");
+				representation.append("| ");
 			}
 
 			// Second row
 			representation.append("\n  ");
 			for (int x = 0; x < SIZE; x++) {
-				char tileColour = tiles[x][y].getColour().toString().charAt(0);
-				representation.append(tileColour);
-				representation.append(new String(new char[6]).replace('\0', ' '));
-				representation.append(tileColour);
-				representation.append(" ");
+				representation.append("|");
+				representation.append("      ");
+				representation.append("| ");
 			}
 
 			// Third row
 			representation.append("\n" + (y + 1) + " ");
 			for (int x = 0; x < SIZE; x++) {
-				char tileColour = tiles[x][y].getColour().toString().charAt(0);
-				representation.append(tileColour);
-				representation.append(new String(new char[2]).replace('\0', ' '));
+				representation.append("|");
+				representation.append("  ");
 				representation.append(tiles[x][y].toString());
-				representation.append(new String(new char[2]).replace('\0', ' '));
-				representation.append(tileColour);
-				representation.append(" ");
+				representation.append("  ");
+				representation.append("| ");
 			}
 
 			// Fourth row
 			representation.append("\n  ");
 			for (int x = 0; x < SIZE; x++) {
-				char tileColour = tiles[x][y].getColour().toString().charAt(0);
-				representation.append(tileColour);
-				representation.append(new String(new char[6]).replace('\0', ' '));
-				representation.append(tileColour);
-				representation.append(" ");
+				representation.append("|");
+				representation.append("      ");
+				representation.append("| ");
 			}
 
 			// Fifth row
 			representation.append("\n  ");
 			for (int x = 0; x < SIZE; x++) {
-				char tileColour = tiles[x][y].getColour().toString().charAt(0);
-				for (int i = 0; i < 8; i++) {
-					representation.append(tileColour);
+				representation.append("|");
+				if (tiles[x][y].getColour().equals(Tile.Colour.BROWN)) {
+					representation.append("__BB__");
+				} else {
+					representation.append("______");
 				}
-				representation.append(" ");
+				representation.append("| ");
 			}
 		}
 
