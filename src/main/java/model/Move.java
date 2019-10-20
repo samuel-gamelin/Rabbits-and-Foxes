@@ -22,8 +22,8 @@ public class Move {
 	/**
 	 * Constructs a move object given two strings, where each string must be of
 	 * length 2 representing a position on the board. For example, '12' resolves to
-	 * (0, 1) and '33' resolves to (2, 2). Should the inputs be invalid, all positions
-	 * will be set to -1.
+	 * (0, 1) and '33' resolves to (2, 2). Should the inputs be invalid, all
+	 * positions will be set to -1.
 	 * 
 	 * @param start - The start position, specified as a two-character string.
 	 * @param end   - The end position, specified as a two-character string.
@@ -58,7 +58,7 @@ public class Move {
 		this.yEnd = yEnd;
 	}
 
-	/***
+	/**
 	 * This will return the private variable representing the start x position.
 	 * 
 	 * @return xStart - The value of the start x position as an integer.
@@ -94,22 +94,42 @@ public class Move {
 		return yEnd;
 	}
 
-	/***
+	/**
 	 * This method is used to compute the direction of movement. Since each piece
 	 * has move restrictions this method will be used to initially determine if a
 	 * move is valid.
 	 * 
-	 * @return integer - Horizontal = 0, Vertical = 1, Invalid = -1
+	 * @return direction - Horizontal = 0, Vertical = 1, Invalid = -1
 	 *
 	 */
 	public int direction() {
+		int direction = -1;
+
 		if ((xStart == xEnd) && (yStart != yEnd)) {
-			return 1;
+			direction = 1;
+		} else if ((xStart != xEnd) && (yStart == yEnd)) {
+			direction = 0;
 		}
-		if ((xStart != xEnd) && (yStart == yEnd)) {
-			return 0;
-		}
-		return -1;
+		return direction;
 	}
 
+	/**
+	 * This method calculates the distance the object needs to move in the x
+	 * direction.
+	 * 
+	 * @return the distance in the Horizontal direction.
+	 */
+	public int xDistance() {
+		return xEnd - xStart;
+	}
+
+	/**
+	 * This method calculates the distance the object needs to move in the y
+	 * direction.
+	 * 
+	 * @return the distance in the Vertical direction.
+	 */
+	public int yDistance() {
+		return yEnd - yStart;
+	}
 }
