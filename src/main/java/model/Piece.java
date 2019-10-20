@@ -1,6 +1,6 @@
 package model;
 
-/***
+/**
  * This abstract class provides a high-level prototype for a piece.
  * 
  * @author Abdalla El Nakla

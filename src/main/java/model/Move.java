@@ -22,7 +22,8 @@ public class Move {
 	/**
 	 * Constructs a move object given two strings, where each string must be of
 	 * length 2 representing a position on the board. For example, '12' resolves to
-	 * (0, 1) and '33' resolves to (2, 2). This will allow
+	 * (0, 1) and '33' resolves to (2, 2). Should the inputs be invalid, all positions
+	 * will be set to -1.
 	 * 
 	 * @param start - The start position, specified as a two-character string.
 	 * @param end   - The end position, specified as a two-character string.
