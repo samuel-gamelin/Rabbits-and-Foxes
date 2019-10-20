@@ -73,7 +73,7 @@ public class Game {
 		CommandWord commandWord = command.getCommandWord();
 		if (commandWord.equals(CommandWord.MOVE)) {
 			board.move(new Move(command.getStartPos(), command.getEndPos()));
-			System.out.println(this.board.toString());
+			System.out.println(board);
 		} else if (commandWord.equals(CommandWord.QUIT)) {
 			System.out.println("Thank you for playing. Good bye.");
 			System.exit(0);

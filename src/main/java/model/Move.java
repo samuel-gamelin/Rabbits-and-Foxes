@@ -24,8 +24,8 @@ public class Move {
 	 * length 2 representing a position on the board. For example, '12' resolves to
 	 * (0, 1) and '33' resolves to (2, 2). This will allow
 	 * 
-	 * @param start - The starting position, specified as a two-character string.
-	 * @param end   - The ending position, specified as a two-character string.
+	 * @param start - The start position, specified as a two-character string.
+	 * @param end   - The end position, specified as a two-character string.
 	 */
 	public Move(String start, String end) {
 		if (start != null && end != null && start.length() == 2 && end.length() == 2) {
@@ -45,10 +45,10 @@ public class Move {
 	 * Given the position of the object being moved and where it needs to be moved
 	 * this will construct the object for the move class.
 	 * 
-	 * @param xStart The integer value of the starting x position
-	 * @param yStart The integer value of the starting y position
-	 * @param xEnd   The integer value of the ending x position
-	 * @param yEnd   The integer value of the starting y position
+	 * @param xStart - The integer value of the start x position.
+	 * @param yStart - The integer value of the start y position.
+	 * @param xEnd   - The integer value of the ending x position.
+	 * @param yEnd   - The integer value of the start y position.
 	 */
 	public Move(int xStart, int yStart, int xEnd, int yEnd) {
 		this.xStart = xStart;
@@ -58,41 +58,48 @@ public class Move {
 	}
 
 	/***
-	 * This will return the private variable representing the starting x string
-	 * position.
+	 * This will return the private variable representing the start x position.
 	 * 
-	 * @return xStart The integer value of the starting x position
+	 * @return xStart - The value of the start x position as an integer.
 	 */
 	public int getXStart() {
-		return this.xStart;
+		return xStart;
 	}
 
 	/**
-	 * @return The integer value of the starting y position
+	 * This will return the private variable representing the start y position.
+	 * 
+	 * @return yStart - The value of the start y position as an integer.
 	 */
 	public int getYStart() {
-		return this.yStart;
+		return yStart;
 	}
 
 	/**
-	 * @return The integer value of the ending x position
+	 * This will return the private variable representing the end x position.
+	 * 
+	 * @return xEnd - The value of the end x position as an integer.
 	 */
 	public int getXEnd() {
-		return this.xEnd;
+		return xEnd;
 	}
 
 	/**
-	 * @return The integer value of the ending y position
+	 * This will return the private variable representing the end y position.
+	 * 
+	 * @return yEnd - The value of the end y position as an integer.
 	 */
 	public int getYEnd() {
-		return this.yEnd;
+		return yEnd;
 	}
 
-
 	/***
-	 * This will return the direction of the Movement
+	 * This method is used to compute the direction of movement. Since each piece
+	 * has move restrictions this method will be used to initially determine if a
+	 * move is valid.
 	 * 
-	 * @return 1 if vertical, 0 if Horizontal, and -1 if invalid
+	 * @return integer - Horizontal = 0, Vertical = 1, Invalid = -1
+	 *
 	 */
 	public int direction() {
 		if ((xStart == xEnd) && (yStart != yEnd)) {
