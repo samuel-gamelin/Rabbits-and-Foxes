@@ -1,4 +1,4 @@
-	package model;
+package model;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within
@@ -93,8 +93,9 @@ public class Board {
 	public boolean isInWinningState() {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (tiles[i][j].getColour().equals(Tile.Colour.BROWN) && (tiles[i][j].retrievePiece() == null
-						|| !tiles[i][j].retrievePiece().getPieceType().equals(Piece.PieceType.RABBIT))) {
+				if (tiles[i][j].retrievePiece() != null
+						&& tiles[i][j].retrievePiece().getPieceType().equals(Piece.PieceType.RABBIT)
+						&& !tiles[i][j].getColour().equals(Tile.Colour.BROWN)) {
 					return false;
 				}
 			}
