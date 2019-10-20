@@ -76,8 +76,8 @@ public class Board {
 		int xEnd = move.getXEnd();
 		int yEnd = move.getYEnd();
 
-		if (xStart < 0 || xStart > SIZE || xEnd < 0 || xEnd > SIZE || yStart < 0 || yStart > SIZE || yEnd < 0
-				|| yEnd > SIZE || !tiles[xStart][yStart].isOccupied() || tiles[xEnd][yEnd].isOccupied()) {
+		if (xStart < 0 || xStart >= SIZE || xEnd < 0 || xEnd >= SIZE || yStart < 0 || yStart >= SIZE || yEnd < 0
+				|| yEnd >= SIZE || !tiles[xStart][yStart].isOccupied() || tiles[xEnd][yEnd].isOccupied()) {
 			return false;
 		}
 		if (tiles[xStart][yStart].retrievePiece().canMove(move)&& validatePath(move,tiles[xStart][yStart].retrievePiece().getPieceType())) {
