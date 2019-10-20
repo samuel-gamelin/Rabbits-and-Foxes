@@ -46,7 +46,7 @@ public class Game {
 				startGame = this.processCommandWord(command);
 			}
 		} while (!startGame);
-		System.out.println("The game has begun, have fun!");
+		System.out.println("The game has begun, have fun!\n\n");
 		this.playGame();
 	}
 
@@ -72,8 +72,12 @@ public class Game {
 	private boolean processCommandWord(Command command) {
 		CommandWord commandWord = command.getCommandWord();
 		if (commandWord.equals(CommandWord.MOVE)) {
-			board.move(new Move(command.getStartPos(), command.getEndPos()));
-			System.out.println(board);
+			if (board.move(new Move(command.getStartPos(), command.getEndPos()))) {
+				System.out.println("\nMove has been made\n");
+				System.out.println("\n" + board + "\n");
+			} else {
+				System.out.println("\nInvalid move try again\n");
+			}
 		} else if (commandWord.equals(CommandWord.QUIT)) {
 			System.out.println("Thank you for playing. Good bye.");
 			System.exit(0);
