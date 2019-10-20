@@ -8,7 +8,10 @@ package model;
 public class Fox extends Piece {
 	private Direction direction;
 	private FoxType foxType;
-
+	
+	/*
+	 * An enumeration represeting 
+	 */
 	public enum FoxType {
 		HEAD, TAIL
 	}

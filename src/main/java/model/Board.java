@@ -115,12 +115,11 @@ public class Board {
 		int yStart = move.getYStart();
 		int xEnd = move.getXEnd();
 		int yEnd = move.getYEnd();
-		int xDistance = Math.abs(xStart - xEnd);
-		int yDistance = Math.abs(yStart - yEnd);		
+		int xDistance = xEnd - xStart;
+		int yDistance = yEnd - yStart;		
 		int direction = move.direction();
 		
-		if(piecetype == Piece.PieceType.RABBIT) {
-			if(direction == 1){
+		if(piecetype == Piece.PieceType.RABBIT && direction == 1){
 				for(int i = 1; i < yDistance;i++ ) {
 					if(!tiles[xStart][yStart+i].isOccupied()) {
 						return false;
@@ -129,20 +128,17 @@ public class Board {
 				
 			}
 			
-		}
-		if(piecetype == Piece.PieceType.RABBIT) {
-			if(direction == 0){
-				for(int i = 1; i < yDistance;i++ ) {
+		
+		if(piecetype == Piece.PieceType.RABBIT && direction == 0){
+				for(int i = 1; i < xDistance;i++ ) {
 					if(!tiles[xStart+i][yStart].isOccupied()) {
 						return false;
 					}	
 				}
 				
 			}
-			
-		}
-		if(piecetype == Piece.PieceType.FOX) {
-			if(direction == 1){
+
+		if(piecetype == Piece.PieceType.FOX && direction == 1){
 				for(int i = 1; i < yDistance;i++ ) {
 					if(tiles[xStart][yStart+i].isOccupied()) {
 						return false;
@@ -151,18 +147,15 @@ public class Board {
 				
 			}
 			
-		}
-		if(piecetype == Piece.PieceType.FOX) {
-			if(direction == 0){
-				for(int i = 1; i < yDistance;i++ ) {
+		
+		if(piecetype == Piece.PieceType.FOX && direction == 0){
+				for(int i = 1; i < xDistance;i++ ) {
 					if(tiles[xStart+i][yStart].isOccupied()) {
 						return false;
 					}	
 				}
 				
 			}
-			
-		}
 		return true;
 		
 	}
