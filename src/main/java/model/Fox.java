@@ -8,28 +8,46 @@ package model;
 public class Fox extends Piece {
 	private Direction direction;
 	private FoxType foxType;
+	
 
-	/*
-	 * An enumeration represeting
+	/**
+	 * 
+	 * An enumeration representing the head and tail of the fox
+	 *
 	 */
 	public enum FoxType {
 		HEAD, TAIL
 	}
-
+	/**
+	 * 
+	 * An enumeration representing the direction the fox is going
+	 *
+	 */
 	public enum Direction {
 		VERTICAL, HORIZONTAL
 	}
 
+	/**
+	 * Construct a new fox given the head or tail and the direction
+	 * @param foxType The fox type of the fox, as a FoxType
+	 * @param direction The direction given for the Fox
+	 */
 	public Fox(FoxType foxType, Direction direction) {
 		super(PieceType.FOX);
 		this.foxType = foxType;
 		this.direction = direction;
 	}
-
+	/**
+	 * 
+	 * @return the Direction
+	 */
 	public Direction getDirection() {
 		return direction;
 	}
-
+	/**
+	 * 
+	 * @return the FoxType, Whether it is heads or tails
+	 */
 	public FoxType getFoxType() {
 		return foxType;
 	}
