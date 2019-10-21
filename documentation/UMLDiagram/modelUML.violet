@@ -13,7 +13,8 @@
      <void property="text">
       <string>+Board()
 -initializeDefaultBoard()
--validatePath(move:Move, piece:Piece):boolean
+-validateFoxPath(move:Move,fox:Piece,location:boolean):boolean
+-validateRabbitPath(move:Move):boolean
 +move(move:Move):boolean
 +isInWinningState():boolean
 +toString():String</string>
@@ -558,7 +559,7 @@ VERTICAL</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double13"/>
-      <double>590.0</double>
+      <double>630.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
@@ -569,7 +570,7 @@ VERTICAL</string>
      </void>
     </void>
     <void method="setLocation">
-     <double>590.0</double>
+     <double>630.0</double>
      <double>220.0</double>
     </void>
    </object>
