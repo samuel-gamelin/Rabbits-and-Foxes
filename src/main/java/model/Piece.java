@@ -36,6 +36,7 @@ public abstract class Piece {
 	/**
 	 * @return True if the piece can move the specified start to end positions.
 	 *         False otherwise.
+	 * @param move The Move object representing the move that should be verified for eligibility by this piece.
 	 */
 	abstract boolean canMove(Move move);
 

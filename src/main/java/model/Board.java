@@ -7,6 +7,7 @@ package model;
  * @author Samuel Gamelin
  * @author Abdalla El Nakla
  * @author Dani Hashweh
+ * @author John Breton
  * @version 1.0
  */
 public class Board {
@@ -55,13 +56,15 @@ public class Board {
 		tiles[2][4].placePiece(new Mushroom());
 
 		// Adding the rabbits (there can be 1 to 3, here we have 3)
+		tiles[1][4].placePiece(new Rabbit());
 		tiles[3][0].placePiece(new Rabbit());
 		tiles[4][2].placePiece(new Rabbit());
-		tiles[1][4].placePiece(new Rabbit());
 
 		// Adding the foxes (there can be 0 to 2, here we have 2)
-		tiles[0][1].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.HORIZONTAL));
-		tiles[1][1].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL));
+		tiles[3][3].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.HORIZONTAL, false));
+		tiles[4][3].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL, false));
+		tiles[1][0].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.VERTICAL, true));
+		tiles[1][1].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.VERTICAL, true));
 	}
 
 	/**
@@ -78,7 +81,6 @@ public class Board {
 		int yEnd = move.getYEnd();
 		int xDistance = move.xDistance();
 		int yDistance = move.yDistance(); 	
-		//int direction = move.direction();
 		
 		// Do a preliminary check on the move (i.e. making sure it is in bounds, and that the starting tile actually has a piece)
 		if (xStart < 0 || xStart >= SIZE || xEnd < 0 || xEnd >= SIZE || yStart < 0 || yStart >= SIZE || yEnd < 0
@@ -89,87 +91,86 @@ public class Board {
 		// Extract the piece to move
 		Piece piece = tiles[xStart][yStart].retrievePiece();
 		
-		// If the piece can move in the specified fashion and the path determined by the board is acceptable for that specific piece, move the piece(s) accordingly
-		if (piece.canMove(move) && validatePath(move, piece)) {
-			if (piece.getPieceType().equals(Piece.PieceType.FOX)) {						// Moving a Fox
-				if (((Fox) piece).getDirection().equals(Fox.Direction.HORIZONTAL)) {	// Moving horizontally
-					if ((xStart + xDistance) <= 0 || (xStart + xDistance) >= (SIZE - 1)) {	// Ensure an adjacent tail is not pushed off the board
-						return false;
+		// Check to see if the piece is a fox, since they require more logic to move :')
+		if (piece instanceof Fox) {
+			boolean location = true;																										 // True for immediate right or up, false otherwise
+			// Find its head/tail
+			if ((((Fox) piece).getDirection().equals(Fox.Direction.HORIZONTAL))) { 														 	 // It's to the left or right
+				if (xStart - 1 < 0) { 											   														 	 // Must be to the right
+					location = true;
+				} else if (xStart + 1 > 4) {										   													 	 // Must be to the left
+					location = false;
+				} else {															   													     // Could be either, we need to check both
+					if ((tiles[xStart - 1][yStart].retrievePiece() != null) && (tiles[xStart - 1][yStart].retrievePiece() instanceof Fox) && ((((Fox)tiles[xStart - 1][yStart].retrievePiece()).getId()) == ((Fox)piece).getId())) { 		 // Check to the left
+						location = false;
+					} else if ((tiles[xStart + 1][yStart].retrievePiece() != null) && (tiles[xStart + 1][yStart].retrievePiece() instanceof Fox) && ((((Fox)tiles[xStart + 1][yStart].retrievePiece()).getId()) == ((Fox)piece).getId())) {  // Must be to the right
+						location = true;
 					}
-					//((Fox) tiles[xStart + 1][yStart].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL) || (tiles[xStart +1][yStart].retrievePiece() == null)
-					if (findAdjacentFoxPosition(xStart, yStart) == 0 || findAdjacentFoxPosition(xStart, yStart) == 1) {		// Other corresponding fox piece is on the right
+				}
+				// We have both pieces of the fox, now we try to move them.	
+				if (piece.canMove(move) && validateFoxPath(move, piece, location)) {												         // Only need to check one, since it will be either true for both or false for both
+					if (location && xDistance < 0) {																						 // Check to see if the other part of fox is to the right and we are moving left
 						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
 						tiles[xEnd + 1][yEnd].placePiece(tiles[xStart + 1][yStart].removePiece());
 						return true;
-					} else if (findAdjacentFoxPosition(xStart -1, yStart) == 0 || findAdjacentFoxPosition(xStart-1, yStart) == 1) {	// Other corresponding fox piece is on the left
+					} else if (location && xDistance > 0) {                      															 // Check to see if the other part of fox is to the right and we are moving right
+						tiles[xEnd + 1][yEnd].placePiece(tiles[xStart + 1][yStart].removePiece());
+						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+						return true;
+					} else if (!location && xDistance > 0) { 																		         // Check to see if the other part of fox is to the left and we are moving right
 						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
 						tiles[xEnd - 1][yEnd].placePiece(tiles[xStart - 1][yStart].removePiece());
 						return true;
-					}
-				} else if (((Fox) piece).getDirection().equals(Fox.Direction.VERTICAL)) {	// Moving vertically
-					if ((yStart + yDistance) <= 0 || (yStart + yDistance) >= (SIZE - 1)) {	// Ensure an adjacent tail is not pushed off the board
-						return false;
-					}
-					if (((Fox) tiles[xStart][yStart + 1].retrievePiece()).getDirection().equals(Fox.Direction.VERTICAL)) {			// Other corresponding fox piece is below
+					} else {																												 // We know the other part of the fox is to the left and we are moving left
+						tiles[xEnd - 1][yEnd].placePiece(tiles[xStart - 1][yStart].removePiece());
 						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
-						tiles[xEnd][yEnd + 1].placePiece(tiles[xStart][yStart + 1].removePiece());
 						return true;
-					} else if (((Fox) tiles[xStart][yStart - 1].retrievePiece()).getDirection().equals(Fox.Direction.VERTICAL)) {	// Other corresponding fox piece is on the left
+					} 
+				}
+				return false;																												 // It was an invalid move after all.
+			} else { 																														 // It's above or below it.
+				if (yStart - 1 < 0) {																									 	 // Must be below
+					location = false;
+				} else if (yStart + 1 > 4) { 																								 // Must be above			
+					location = true;
+				} else {																													 // Could be either, we need to check both.
+					if ((tiles[xStart][yStart - 1].retrievePiece() != null) && (tiles[xStart][yStart - 1].retrievePiece() instanceof Fox) && ((((Fox)tiles[xStart][yStart - 1].retrievePiece()).getId()) == ((Fox)piece).getId())) { // Check above
+						location = true;
+					} else if ((tiles[xStart][yStart + 1].retrievePiece() != null) && (tiles[xStart][yStart + 1].retrievePiece() instanceof Fox) && ((((Fox)tiles[xStart][yStart + 1].retrievePiece()).getId()) == ((Fox)piece).getId())){																												 // Must be below										
+						location = false;
+					}
+				}
+				// We have both pieces of the fox, now we try to move them.
+				if (piece.canMove(move) && validateFoxPath(move, piece, location)) {												         // Only need to check one, since it will be either true for both or false for both.
+					if (location && yDistance > 0) {																						 // Check to see if the other part of the fox is up and we are moving down
 						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
 						tiles[xEnd][yEnd - 1].placePiece(tiles[xStart][yStart - 1].removePiece());
 						return true;
-					}
-				}
-				/*//IF TAIL IS ON RIGHT OF HEAD
-				if((tiles[xStart][yStart]).toString().equals("FT") && (tiles[xStart-1][yStart]).toString().equals("FH")) {
-					//If tail is going into head position
-					if((tiles[xEnd][yEnd].isOccupied()) &&(tiles[xEnd][yEnd]).toString().equals("FT")) {
-						tiles[xEnd-1][yEnd].placePiece(tiles[xStart-1][yStart].removePiece());
+					} else if (location && yDistance < 0) {																					 // Check to see if the other part of the fox is up and we are moving up 
+						tiles[xEnd][yEnd - 1].placePiece(tiles[xStart][yStart - 1].removePiece());
 						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
-					}
-					//moving tail into empty position
-					else if((tiles[xStart][yStart]).toString().equals("FT")){
+						return true;
+					} else if (!location && yDistance > 0) {																				 // Check to see if the other part of the fox is down and we are moving down
+						tiles[xEnd][yEnd + 1].placePiece(tiles[xStart][yStart + 1].removePiece());
 						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
-						tiles[xEnd-1][yEnd].placePiece(tiles[xStart-1][yStart].removePiece());
-					}
-					//moving tail into empty position
-					else if((tiles[xStart][yStart]).toString().equals("FT")){
+						return true;
+					} else {																												 // We know the other part of the fox is down and we are moving up
 						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
-						tiles[xEnd+1][yEnd].placePiece(tiles[xStart+1][yStart].removePiece());
-					}
-
-					return true; 
-				}
-				
-				//IF HEAD IS ON RIGHT OF TAIL
-				else if((tiles[xStart][yStart]).toString().equals("FH") && (tiles[xStart+1][yStart]).toString().equals("FT")) {
-					if (piece.canMove(move) && validatePath(move, piece)) {
-						//If head is going into tail position
-						if((tiles[xEnd][yEnd].isOccupied()) &&(tiles[xEnd][yEnd]).toString().equals("FT")) {
-							tiles[xEnd-1][yEnd].placePiece(tiles[xStart-1][yStart].removePiece());
-							tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
-						}
-						//moving head into empty position
-						else if((tiles[xStart][yStart]).toString().equals("FH")){
-							tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
-							tiles[xEnd+1][yEnd].placePiece(tiles[xStart+1][yStart].removePiece());
-						}
-						//moving tail into empty position
-						else if((tiles[xStart][yStart]).toString().equals("FT")){
-							tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
-							tiles[xEnd+1][yEnd].placePiece(tiles[xStart+1][yStart].removePiece());
-						}
-
+						tiles[xEnd][yEnd + 1].placePiece(tiles[xStart][yStart + 1].removePiece());
 						return true;
 					}
-				}*/
-				return false;
+				}
+				return false;																												 // It was an invalid move after all.																							 
 			}
-			
-			tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
-			return true;
+		} else if (piece instanceof Rabbit){
+		// If the rabbit can move in the specified fashion and the path determined by the board is acceptable for the rabbit, move the rabbit accordingly
+			if (piece.canMove(move) && validateRabbitPath(move)) {
+				tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+				return true;
+			}
+			return false;																													 // It was an invalid move after all.
 		}
-		return false;
+		return false;																														 // Mushrooms can't move
 	}
 
 	/**
@@ -189,34 +190,14 @@ public class Board {
 	}
 	
 	/**
-	 *
-	 * @param xStart
-	 * @param yStart
-	 * @return 0 if FT is on right of FH. 1 if FH is on right of FT. 2 if FT is under FH. 3 if FH is under FT. 
-	 */
-	private int findAdjacentFoxPosition(int xStart, int yStart) {
-		if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL) && (((tiles[xStart+1][yStart]).toString().equals("FT")))) 
-			return 0; 
-		else if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL) && (((tiles[xStart+1][yStart]).toString().equals("FH")))) 
-			return 1; 
-		else if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.VERTICAL) && (((tiles[xStart][yStart+1]).toString().equals("FT"))))
-			return 2; 
-		else if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.VERTICAL) && (((tiles[xStart][yStart+1]).toString().equals("FH"))))
-			return 4; 
-		return -1; 
-	}
-
-	/**
-	 * Validates the path given a Move object and the piece type.
+	 * Validate the path of a move object for a Fox.
 	 * 
-	 * @param move      The object representing the move
-	 * @param piece The piece whose move path is to be validate
-	 * @return True if the path for this move is valid for the specified piece given
-	 *         the current state of the board, false otherwise.
+	 * @param move The move we are trying to validate.
+	 * @param fox The fox piece we are trying to validate a move for.
+	 * @param location True if the other piece of the fox is to the right or up, false otherwise.
+	 * @return True if the path for this move is valid for foxes, false otherwise.
 	 */
-	private boolean validatePath(Move move, Piece piece) {
-		Piece.PieceType piecetype = piece.getPieceType();
-		
+	private boolean validateFoxPath(Move move, Piece fox, boolean location) {
 		int xStart = move.getXStart();
 		int yStart = move.getYStart();
 		int xEnd = move.getXEnd();
@@ -230,91 +211,135 @@ public class Board {
 			return false;
 		}
 		
-		// Rabbit
-		if (piecetype.equals(Piece.PieceType.RABBIT)) {
-			if (Math.abs(xDistance) == 1 || Math.abs(yDistance) == 1) {				// Rabbits must jump over at least one obstacle
-				return false;
-			} else if (direction == 0) {						// Horizontal move
-				if (xDistance < 0) {							// Moving left
-					for(int i = xStart - 1; i > xEnd; i--) {
-						if(!tiles[i][yStart].isOccupied()) {
-							return false;
-						}
-					}
-				} else {										// Moving right
-					for(int i = xStart + 1; i < xEnd; i++) {
-						if(!tiles[i][yStart].isOccupied()) {
-							return false;
-						}
-					}
-				}
-			} else if (direction == 1) {						// Vertical move
-				if (yDistance < 0) {							// Moving up
-					for(int i = yStart - 1; i > yEnd; i--) {
-						if(!tiles[xStart][i].isOccupied()) {
-							return false;
-						}
-					}
-				} else {										// Moving down
-					for(int i = yStart + 1; i < yEnd; i++) {
-						if(!tiles[xStart][i].isOccupied()) {
-							return false;
-						}
-					}
-				}
-			}
-			if (tiles[xEnd][yEnd].isOccupied()) {
-				return false;
-			}
-		} else if (piecetype.equals(Piece.PieceType.FOX)) {								// Fox
-			if (direction == 0) {														// Horizontal move
-				if (!(((Fox) piece).getDirection().equals(Fox.Direction.HORIZONTAL))) {
+		if ((((Fox) fox).getDirection().equals(Fox.Direction.HORIZONTAL)) && direction == 0)  {					// Check to see if the fox is horizontal and the move is horizontal
+			if (location && xDistance > 0) {																	// The other part of the fox is to the right and we are moving right
+				if (xEnd + 1 > 4) {																				// Check to see if the move will push the fox out of bounds
 					return false;
 				}
-				if (xDistance < 0) {													// Moving left
-					for(int i = xStart; i > xEnd; i--) {
-						if(tiles[i][yStart].isOccupied() || !(tiles[i][yStart].retrievePiece() instanceof Fox) || !((Fox) (tiles[i][yStart].retrievePiece())).getDirection().equals(Fox.Direction.HORIZONTAL)) {
-							return false;
-						}
-					}
-				} else {																// Moving right
-					for(int i = xStart + 1; i <= xEnd; i++) {
-						if(tiles[i][yStart].isOccupied()) { //|| !(tiles[i][yStart].retrievePiece() instanceof Fox) || !((Fox) (tiles[i][yStart].retrievePiece())).getDirection().equals(Fox.Direction.HORIZONTAL)
-							return false;
-						}
+				for (int i = xStart + 2; i <= xEnd + 1; i++) {													// Need to make sure there are no obstacles in the path
+					if (tiles[i][yStart].isOccupied()) {
+						return false;
 					}
 				}
-				//if (!(tiles[xEnd][yEnd].retrievePiece() != null && tiles[xEnd][yEnd].retrievePiece().getPieceType().equals(Piece.PieceType.FOX) && (((Fox) tiles[xEnd][yEnd].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL)))) {
-				//	return false;
-				//}
-			} else {
-				if (!(((Fox) piece).getDirection().equals(Fox.Direction.VERTICAL))) {	// Vertical move
+			} else if (location && xDistance < 0) {																// The other part of the fox is to the right and we are moving left
+				for (int i = xStart - 1; i >= xEnd; i--) {														// Need to make sure there are no obstacles in the path
+					if (tiles[i][yStart].isOccupied()) {
+						return false;
+					}
+				}
+			} else if (!location && xDistance > 0) {															// The other part of the fox is to the left and we are moving right
+				for (int i = xStart + 1; i <= xEnd; i++) {														// Need to make sure there are no obstacles in the path
+					if (tiles[i][yStart].isOccupied()) {
+						return false;
+					}
+				}
+			} else {																							// We know that the other part of the fox is to the left and we are moving left
+				if (xEnd - 1 < 0) {																				// Check to see if the move will push the fox out of bounds
 					return false;
 				}
-				if (yDistance < 0) {													// Moving up
-					for(int i = yStart; i > yEnd; i--) {
-						if(tiles[xStart][i].isOccupied() || !(tiles[xStart][i].retrievePiece() instanceof Fox) || !((Fox) (tiles[xStart][i].retrievePiece())).getDirection().equals(Fox.Direction.VERTICAL)) {
-							return false;
-						}
-					}
-				} else {																// Moving down
-					for(int i = yStart; i < yEnd; i++) {
-						if(tiles[xStart][i].isOccupied() || !(tiles[xStart][i].retrievePiece() instanceof Fox) || !((Fox) (tiles[xStart][i].retrievePiece())).getDirection().equals(Fox.Direction.VERTICAL)) {
-							return false;
-						}
+				for (int i = xStart - 2; i >= xEnd - 1; i--) {
+					if (tiles[i][yStart].isOccupied()) {
+						return false;
 					}
 				}
-				//if (!(tiles[xEnd][yEnd].retrievePiece() != null && tiles[xEnd][yEnd].retrievePiece().getPieceType().equals(Piece.PieceType.FOX) && (((Fox) tiles[xEnd][yEnd].retrievePiece()).getDirection().equals(Fox.Direction.VERTICAL)))) {
-				//	return false;
-				//}
 			}
+			return true;																						// The move is valid for the fox
+		} 
+		
+		if ((((Fox) fox).getDirection().equals(Fox.Direction.VERTICAL)) && direction == 1) {  					// Check to see if the fox is vertical and the move is vertical
+			if (location && yDistance > 0) {																	// The other part of the fox is up and we are moving down
+				for (int i = yStart + 1; i <= yEnd; i++) {														// Need to make sure there are no obstacles in the path
+					if (tiles[xStart][i].isOccupied()) {														
+						return false;
+					}
+				}
+			} else if (location && yDistance < 0) {																// The other part of the fox is up and we are moving up									
+				if (yEnd - 1 < 0) {																				// Check to see if the move will push the fox out of bounds
+					return false;
+				}
+				for (int i = yStart - 2; i >= yEnd - 1; i--) {													// Need to make sure there are no obstacles in the path
+					if (tiles[xStart][i].isOccupied()) {														
+						return false;
+					}
+				}
+			} else if (!location && yDistance > 0) {															// The other part of the fox is down and we are moving down	
+				if (yEnd + 1 > 4) {																				// Check to see if the move will push the fox out of bounds
+					return false;
+				}
+				for (int i = yStart + 2; i <= yEnd + 1; i++) {														// Need to make sure there are no obstacles in the path
+					if (tiles[xStart][i].isOccupied()) {
+						return false;
+					}
+				}
+			} else {																							// We know the other part of the fox is down and we are moving up
+				for (int i = yStart - 1; i >= yEnd; i--) {														// Need to make sure there are no obstacles in the path
+					if (tiles[xStart][i].isOccupied()) {
+						return false;
+					}
+				}
+			}
+			return true;																						// The move is valid for the fox
 		}
-		return true;
+		return false;																							// Direction and fox orientation did not match (invalid move)
 	}
 
 	/**
-	 * @return A string representation of this board.
+	 * Validate the path of a rabbit given a move object.
+	 * 
+	 * @param move The object representing the move
+	 * @return True if the path for this move is valid for rabbits, false otherwise.
 	 */
+	private boolean validateRabbitPath(Move move) {	
+		int xStart = move.getXStart();
+		int yStart = move.getYStart();
+		int xEnd = move.getXEnd();
+		int yEnd = move.getYEnd();
+		int xDistance = move.xDistance();
+		int yDistance = move.yDistance(); 	
+		int direction = move.direction();
+		
+		// Static or diagonal path
+		if (direction == -1) {
+			return false;
+		}
+		
+		if (Math.abs(xDistance) == 1 || Math.abs(yDistance) == 1) {	// Rabbits must jump over at least one obstacle
+			return false;
+		} else if (direction == 0) {								// Horizontal move
+			if (xDistance < 0) {									// Moving left
+				for(int i = xStart - 1; i > xEnd; i--) {
+					if(!tiles[i][yStart].isOccupied()) {
+						return false;
+					}
+				}
+			} else {												// Moving right
+				for(int i = xStart + 1; i < xEnd; i++) {
+					if(!tiles[i][yStart].isOccupied()) {
+						return false;
+					}
+				}
+			}
+		} else if (direction == 1) {								// Vertical move
+			if (yDistance < 0) {									// Moving up
+				for(int i = yStart - 1; i > yEnd; i--) {
+					if(!tiles[xStart][i].isOccupied()) {
+						return false;
+					}
+				}
+			} else {												// Moving down
+				for(int i = yStart + 1; i < yEnd; i++) {
+					if(!tiles[xStart][i].isOccupied()) {
+						return false;
+					}
+				}
+			}
+		}
+		if (tiles[xEnd][yEnd].isOccupied()) {
+			return false;
+		} 
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder representation = new StringBuilder();

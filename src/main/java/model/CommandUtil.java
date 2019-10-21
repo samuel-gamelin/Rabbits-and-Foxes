@@ -29,6 +29,8 @@ public class CommandUtil {
 
 	/**
 	 * Return a List of all valid commands.
+	 * 
+	 * @return A List containing all of the valid CommandWords, as definied in the CommandWord enum.
 	 */
 	public List<CommandWord> getCommands() {
 		List<CommandWord> commandList = new ArrayList<>();
@@ -39,7 +41,7 @@ public class CommandUtil {
 	/**
 	 * Return the corresponding CommandWord that matches the passed String.
 	 * 
-	 * @param command The String representation of a valid CommandWord.
+	 * @param commandWord The String representation of a valid CommandWord.
 	 * @return The enumerated CommandWord, based on the passed String. If the String
 	 *         is not recognized, CommandWord.INVALID is returned.
 	 */
