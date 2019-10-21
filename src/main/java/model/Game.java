@@ -44,7 +44,7 @@ public class Game {
 	 * the game, at which point it will call playGame().
 	 */
 	public void startGame() {
-		System.out.println("Welcome to the game of JumpIN!");
+		System.out.println("Welcome to the game of Rabbits and Foxes!");
 		System.out.println("Type 'help' at any time if you need help.");
 		System.out.println("Please type 'start' to start the game. Have fun!");
 		boolean startGame = false;
