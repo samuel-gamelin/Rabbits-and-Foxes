@@ -228,24 +228,6 @@ public class Board {
 		}
 		return true;
 	}
-	
-	/**
-	 *
-	 * @param xStart
-	 * @param yStart
-	 * @return 0 if FT is on right of FH. 1 if FH is on right of FT. 2 if FT is under FH. 3 if FH is under FT. 
-	 */
-	private int findAdjacentFoxPosition(int xStart, int yStart) {
-		if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL) && (((tiles[xStart+1][yStart]).toString().equals("FT")))) 
-			return 0; 
-		else if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL) && (((tiles[xStart+1][yStart]).toString().equals("FH")))) 
-			return 1; 
-		else if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.VERTICAL) && (((tiles[xStart][yStart+1]).toString().equals("FT"))))
-			return 2; 
-		else if(((Fox) tiles[xStart][yStart].retrievePiece()).getDirection().equals(Fox.Direction.VERTICAL) && (((tiles[xStart][yStart+1]).toString().equals("FH"))))
-			return 4; 
-		return -1; 
-	}
 
 	/**
 	 * Validates the path given a Move object and the piece type.
