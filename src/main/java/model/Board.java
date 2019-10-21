@@ -91,32 +91,48 @@ public class Board {
 		
 		// If the piece can move in the specified fashion and the path determined by the board is acceptable for that specific piece, move the piece(s) accordingly
 		if (piece.canMove(move) && validatePath(move, piece)) {
-			if (piece.getPieceType().equals(Piece.PieceType.FOX)) {						// Moving a Fox
-				if (((Fox) piece).getDirection().equals(Fox.Direction.HORIZONTAL)) {	// Moving horizontally
-					if ((xStart + xDistance) <= 0 || (xStart + xDistance) >= (SIZE - 1)) {	// Ensure an adjacent tail is not pushed off the board
+			//System.out.println(xEnd + 1);
+			//System.out.println(tiles[xEnd + 1][yEnd].isOccupied());
+			if (piece.getPieceType().equals(Piece.PieceType.FOX)) {								// Moving a Fox
+				Fox UP = null, DOWN = null, LEFT = null, RIGHT = null;
+				try {
+					UP = (Fox) tiles[xStart][yStart - 1].retrievePiece();
+				} catch (Exception e) {}
+				try {
+					DOWN = (Fox) tiles[xStart][yStart + 1].retrievePiece();
+				} catch (Exception e) {}
+				try {
+					LEFT = (Fox) tiles[xStart - 1][yStart].retrievePiece();
+				} catch (Exception e) {}
+				try {
+					RIGHT = (Fox) tiles[xStart + 1][yStart].retrievePiece();
+				} catch (Exception e) {}
+				
+				if (((Fox) piece).getDirection().equals(Fox.Direction.HORIZONTAL)) {			// Moving horizontally
+					if ((xStart + xDistance) < 0 || (xStart + xDistance) >= SIZE) {				// Ensure an adjacent tail is not pushed off the board
 						return false;
 					}
-					//((Fox) tiles[xStart + 1][yStart].retrievePiece()).getDirection().equals(Fox.Direction.HORIZONTAL) || (tiles[xStart +1][yStart].retrievePiece() == null)
-					if (findAdjacentFoxPosition(xStart, yStart) == 0 || findAdjacentFoxPosition(xStart, yStart) == 1) {		// Other corresponding fox piece is on the right
-						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+					
+					if (RIGHT != null && RIGHT.getDirection().equals(Fox.Direction.HORIZONTAL) && (xEnd + 1 < SIZE) && !tiles[xEnd + 1][yEnd].isOccupied()) {		// Other corresponding fox piece is on the right
 						tiles[xEnd + 1][yEnd].placePiece(tiles[xStart + 1][yStart].removePiece());
-						return true;
-					} else if (findAdjacentFoxPosition(xStart -1, yStart) == 0 || findAdjacentFoxPosition(xStart-1, yStart) == 1) {	// Other corresponding fox piece is on the left
 						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+						return true;
+					} else if (LEFT != null && LEFT.getDirection().equals(Fox.Direction.HORIZONTAL) && (xEnd - 1 > 0)  && !tiles[xEnd][yEnd].isOccupied()) {	// Other corresponding fox piece is on the left
 						tiles[xEnd - 1][yEnd].placePiece(tiles[xStart - 1][yStart].removePiece());
+						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
 						return true;
 					}
-				} else if (((Fox) piece).getDirection().equals(Fox.Direction.VERTICAL)) {	// Moving vertically
-					if ((yStart + yDistance) <= 0 || (yStart + yDistance) >= (SIZE - 1)) {	// Ensure an adjacent tail is not pushed off the board
+				} else if (((Fox) piece).getDirection().equals(Fox.Direction.VERTICAL)) {		// Moving vertically
+					if ((yStart + yDistance) <= 0 || (yStart + yDistance) >= SIZE) {			// Ensure an adjacent tail is not pushed off the board
 						return false;
 					}
-					if (((Fox) tiles[xStart][yStart + 1].retrievePiece()).getDirection().equals(Fox.Direction.VERTICAL)) {			// Other corresponding fox piece is below
-						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+					if (DOWN != null && DOWN.getDirection().equals(Fox.Direction.VERTICAL) && (yEnd + 1 < SIZE) && !tiles[xEnd][yEnd].isOccupied()) {			// Other corresponding fox piece is below
 						tiles[xEnd][yEnd + 1].placePiece(tiles[xStart][yStart + 1].removePiece());
-						return true;
-					} else if (((Fox) tiles[xStart][yStart - 1].retrievePiece()).getDirection().equals(Fox.Direction.VERTICAL)) {	// Other corresponding fox piece is on the left
 						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
+						return true;
+					} else if (UP != null && UP.getDirection().equals(Fox.Direction.VERTICAL) && (yEnd - 1 < 0) && !tiles[xEnd][yEnd].isOccupied()) {	// Other corresponding fox piece is above
 						tiles[xEnd][yEnd - 1].placePiece(tiles[xStart][yStart - 1].removePiece());
+						tiles[xEnd][yEnd].placePiece(tiles[xStart][yStart].removePiece());
 						return true;
 					}
 				}
@@ -272,14 +288,14 @@ public class Board {
 					return false;
 				}
 				if (xDistance < 0) {													// Moving left
-					for(int i = xStart; i > xEnd; i--) {
-						if(tiles[i][yStart].isOccupied() || !(tiles[i][yStart].retrievePiece() instanceof Fox) || !((Fox) (tiles[i][yStart].retrievePiece())).getDirection().equals(Fox.Direction.HORIZONTAL)) {
+					for(int i = xStart - 1; i >= xEnd; i--) {
+						if(tiles[i][yStart].isOccupied() && (!(tiles[i][yStart].retrievePiece() instanceof Fox) || !((Fox) (tiles[i][yStart].retrievePiece())).getDirection().equals(Fox.Direction.HORIZONTAL))) {
 							return false;
 						}
 					}
 				} else {																// Moving right
 					for(int i = xStart + 1; i <= xEnd; i++) {
-						if(tiles[i][yStart].isOccupied()) { //|| !(tiles[i][yStart].retrievePiece() instanceof Fox) || !((Fox) (tiles[i][yStart].retrievePiece())).getDirection().equals(Fox.Direction.HORIZONTAL)
+						if(tiles[i][yStart].isOccupied() && (!(tiles[i][yStart].retrievePiece() instanceof Fox) || !((Fox) (tiles[i][yStart].retrievePiece())).getDirection().equals(Fox.Direction.HORIZONTAL))) {
 							return false;
 						}
 					}
@@ -292,14 +308,14 @@ public class Board {
 					return false;
 				}
 				if (yDistance < 0) {													// Moving up
-					for(int i = yStart; i > yEnd; i--) {
-						if(tiles[xStart][i].isOccupied() || !(tiles[xStart][i].retrievePiece() instanceof Fox) || !((Fox) (tiles[xStart][i].retrievePiece())).getDirection().equals(Fox.Direction.VERTICAL)) {
+					for(int i = yStart - 1; i >= yEnd; i--) {
+						if (tiles[xStart][i].isOccupied() && (!(tiles[xStart][i].retrievePiece() instanceof Fox) || !((Fox) (tiles[xStart][i].retrievePiece())).getDirection().equals(Fox.Direction.VERTICAL))) {
 							return false;
 						}
 					}
 				} else {																// Moving down
-					for(int i = yStart; i < yEnd; i++) {
-						if(tiles[xStart][i].isOccupied() || !(tiles[xStart][i].retrievePiece() instanceof Fox) || !((Fox) (tiles[xStart][i].retrievePiece())).getDirection().equals(Fox.Direction.VERTICAL)) {
+					for(int i = yStart - 1; i <= yEnd; i++) {
+						if(tiles[xStart][i].isOccupied() && (!(tiles[xStart][i].retrievePiece() instanceof Fox) || !((Fox) (tiles[xStart][i].retrievePiece())).getDirection().equals(Fox.Direction.VERTICAL))) {
 							return false;
 						}
 					}
