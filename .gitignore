@@ -95,3 +95,7 @@ hs_err_pid*
 
 # macOS
 *.DS_Store
+
+# IntelliJ
+*.idea
+*.iml
