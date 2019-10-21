@@ -24,7 +24,7 @@ in order to implement this text-based version of the game. </div>
 
 
 ## Known Issues
-- Foxes are broken
+- There are currently no known issues with the deliverables for milestone 1.
 
 ## Roadmap Ahead
 
