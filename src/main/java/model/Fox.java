@@ -8,6 +8,7 @@ package model;
 public class Fox extends Piece {
 	private Direction direction;
 	private FoxType foxType;
+	private boolean id;
 
 	/**
 	 * An enumeration representing the head and tail of the fox
@@ -28,11 +29,13 @@ public class Fox extends Piece {
 	 * 
 	 * @param foxType The fox type of the fox, as a FoxType
 	 * @param direction The direction given for the Fox
+	 * @param id The id of the fox, used to differentiate different foxes
 	 */
-	public Fox(FoxType foxType, Direction direction) {
+	public Fox(FoxType foxType, Direction direction, boolean id) {
 		super(PieceType.FOX);
 		this.foxType = foxType;
 		this.direction = direction;
+		this.id = id;
 	}
 	
 	/**
@@ -47,6 +50,13 @@ public class Fox extends Piece {
 	 */
 	public FoxType getFoxType() {
 		return foxType;
+	}
+	
+	/**
+	 * @return The id of this fox.
+	 */
+	public boolean getId() {
+		return id;
 	}
 
 	@Override

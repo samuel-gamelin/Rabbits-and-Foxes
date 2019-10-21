@@ -61,10 +61,10 @@ public class Board {
 		tiles[4][2].placePiece(new Rabbit());
 
 		// Adding the foxes (there can be 0 to 2, here we have 2)
-		tiles[3][3].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.HORIZONTAL));
-		tiles[4][3].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL));
-		tiles[1][0].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.VERTICAL));
-		tiles[1][1].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.VERTICAL));
+		tiles[3][3].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.HORIZONTAL, false));
+		tiles[4][3].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL, false));
+		tiles[1][0].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.VERTICAL, true));
+		tiles[1][1].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.VERTICAL, true));
 	}
 
 	/**
@@ -101,9 +101,9 @@ public class Board {
 				} else if (xStart + 1 > 4) {										   													 	 // Must be to the left
 					location = false;
 				} else {															   													     // Could be either, we need to check both
-					if ((tiles[xStart - 1][yStart].retrievePiece() != null) && (tiles[xStart - 1][yStart].retrievePiece() instanceof Fox)) { // Check to the left
+					if ((tiles[xStart - 1][yStart].retrievePiece() != null) && (tiles[xStart - 1][yStart].retrievePiece() instanceof Fox) && ((((Fox)tiles[xStart - 1][yStart].retrievePiece()).getId()) == ((Fox)piece).getId())) { 		 // Check to the left
 						location = false;
-					} else { 																											     // Must be to the right
+					} else if ((tiles[xStart + 1][yStart].retrievePiece() != null) && (tiles[xStart + 1][yStart].retrievePiece() instanceof Fox) && ((((Fox)tiles[xStart + 1][yStart].retrievePiece()).getId()) == ((Fox)piece).getId())) {  // Must be to the right
 						location = true;
 					}
 				}
@@ -134,9 +134,9 @@ public class Board {
 				} else if (yStart + 1 > 4) { 																								 // Must be above			
 					location = true;
 				} else {																													 // Could be either, we need to check both.
-					if ((tiles[xStart][yStart - 1].retrievePiece() != null) && (tiles[xStart][yStart - 1].retrievePiece() instanceof Fox)) { // Check above
+					if ((tiles[xStart][yStart - 1].retrievePiece() != null) && (tiles[xStart][yStart - 1].retrievePiece() instanceof Fox) && ((((Fox)tiles[xStart][yStart - 1].retrievePiece()).getId()) == ((Fox)piece).getId())) { // Check above
 						location = true;
-					} else {																												 // Must be below										
+					} else if ((tiles[xStart][yStart + 1].retrievePiece() != null) && (tiles[xStart][yStart + 1].retrievePiece() instanceof Fox) && ((((Fox)tiles[xStart][yStart + 1].retrievePiece()).getId()) == ((Fox)piece).getId())){																												 // Must be below										
 						location = false;
 					}
 				}
@@ -221,7 +221,7 @@ public class Board {
 						return false;
 					}
 				}
-			} else if (location && xDistance < 0) {																// The other part of the fox is to the right and we are moving left}
+			} else if (location && xDistance < 0) {																// The other part of the fox is to the right and we are moving left
 				for (int i = xStart - 1; i >= xEnd; i--) {														// Need to make sure there are no obstacles in the path
 					if (tiles[i][yStart].isOccupied()) {
 						return false;
@@ -237,8 +237,6 @@ public class Board {
 				if (xEnd - 1 < 0) {																				// Check to see if the move will push the fox out of bounds
 					return false;
 				}
-				System.out.println(xStart - 2);
-				System.out.println(xEnd - 1);
 				for (int i = xStart - 2; i >= xEnd - 1; i--) {
 					if (tiles[i][yStart].isOccupied()) {
 						return false;
@@ -250,7 +248,7 @@ public class Board {
 		
 		if ((((Fox) fox).getDirection().equals(Fox.Direction.VERTICAL)) && direction == 1) {  					// Check to see if the fox is vertical and the move is vertical
 			if (location && yDistance > 0) {																	// The other part of the fox is up and we are moving down
-				for (int i = yStart + 1; i < yEnd; i++) {														// Need to make sure there are no obstacles in the path
+				for (int i = yStart + 1; i <= yEnd; i++) {														// Need to make sure there are no obstacles in the path
 					if (tiles[xStart][i].isOccupied()) {														
 						return false;
 					}
@@ -268,7 +266,7 @@ public class Board {
 				if (yEnd + 1 > 4) {																				// Check to see if the move will push the fox out of bounds
 					return false;
 				}
-				for (int i = yStart + 2; i <= yEnd; i++) {														// Need to make sure there are no obstacles in the path
+				for (int i = yStart + 2; i <= yEnd + 1; i++) {														// Need to make sure there are no obstacles in the path
 					if (tiles[xStart][i].isOccupied()) {
 						return false;
 					}
