@@ -1,9 +1,9 @@
 package model;
 
 /***
+ * A class representing a Rabbit piece.
  * 
  * @author Abdalla El Nakla
- *
  */
 public class Rabbit extends Piece {
 
