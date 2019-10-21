@@ -56,15 +56,15 @@ public class Board {
 		tiles[2][4].placePiece(new Mushroom());
 
 		// Adding the rabbits (there can be 1 to 3, here we have 3)
+		tiles[1][4].placePiece(new Rabbit());
 		tiles[3][0].placePiece(new Rabbit());
 		tiles[4][2].placePiece(new Rabbit());
-		tiles[1][4].placePiece(new Rabbit());
 
 		// Adding the foxes (there can be 0 to 2, here we have 2)
-		tiles[0][1].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.HORIZONTAL));
-		tiles[1][1].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL));
-		tiles[3][2].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.VERTICAL));
-		tiles[3][3].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.VERTICAL));
+		tiles[3][3].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.HORIZONTAL));
+		tiles[4][3].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL));
+		tiles[1][0].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.VERTICAL));
+		tiles[1][1].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.VERTICAL));
 	}
 
 	/**
@@ -210,8 +210,6 @@ public class Board {
 		if (direction == -1) {
 			return false;
 		}
-		
-		System.out.println(location);
 		
 		if ((((Fox) fox).getDirection().equals(Fox.Direction.HORIZONTAL)) && direction == 0)  {					// Check to see if the fox is horizontal and the move is horizontal
 			if (location && xDistance > 0) {																	// The other part of the fox is to the right and we are moving right
