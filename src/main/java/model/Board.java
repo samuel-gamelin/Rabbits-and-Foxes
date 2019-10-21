@@ -353,9 +353,6 @@ public class Board {
 		return true;
 	}
 
-	/**
-	 * @return A string representation of this board.
-	 */
 	@Override
 	public String toString() {
 		StringBuilder representation = new StringBuilder();

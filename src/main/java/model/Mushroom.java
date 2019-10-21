@@ -1,9 +1,9 @@
 package model;
 
 /***
+ * A class representing a Mushroom piece.
  * 
- * @author
- *
+ * @author Abdalla El Nakla
  */
 public class Mushroom extends Piece {
 
