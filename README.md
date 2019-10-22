@@ -45,8 +45,8 @@ When contributing to the project please start on the issues page which is used f
 ##### Additional Tools
 
 - Contributions are made through GitHub, on this repository.
-  - Please download and install git and/or GitHub Desktop. [Download Link](https://git-scm.com/)
-- Slack is used as the main chat for this project. [Invitation Link](https://www.google.ca)
+  - Please download and install [git](https://git-scm.com/) and/or [GitHub Desktop](https://desktop.github.com/).
+- Slack is used as the main chat for this project.
 - Github Issues will be used for task and ticket tracking.
 
 ## Current UML Diagram
@@ -54,24 +54,22 @@ When contributing to the project please start on the issues page which is used f
 <p align="center"> 
 <img src="./documentation/UMLDiagram/modelUML.png">
 </p>
-Date: October 16, 2019
+Date: October 21, 2019
 
 ## Current Sequence Diagram
 
 <p align="center"> 
 <img src="./documentation/SequenceDiagram/SequenceDiagram.png">
 </p>
-Date: October 16, 2019
+Date: October 21, 2019
 
 ## Road Map
 
-- Create the model
-  - Parse user input
-  - Implement the board
-  - Implement piece movements
-  - Create the UML Diagram
-  - Create the Sequence Diagram
-  - Document the development and design process
+- Creating the View and Controller portions of the game
+  - Building a graphical user interface to allow the user to pay the game interactively
+  - Implementing unit tests for the Model portion of the game
+  - Continuing to implement gradual improvements
+  - Continuing to document the development and design process
 
 ## Known issues
 
