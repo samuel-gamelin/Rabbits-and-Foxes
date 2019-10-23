@@ -19,7 +19,7 @@ public class Game {
 	/**
 	 * The Parser object used by game to process user input.
 	 */
-	private ParserTest parser;
+	private Parser parser;
 	
 	/**
 	 * The Board object used by game to 
@@ -36,7 +36,7 @@ public class Game {
 	 */
 	private Game() {
 		this.board = new Board();
-		this.parser = new ParserTest();
+		this.parser = new Parser();
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Game {
 		System.out.println("Please type 'start' to start the game. Have fun!");
 		boolean startGame = false;
 		do {
-			CommandTest command = parser.readCommand();
+			Command command = parser.readCommand();
 			if (command.getCommandWord().equals(CommandWord.MOVE)) {
 				System.out.println("You can't move before starting the game.");
 			} else if (command.getCommandWord().equals(CommandWord.RESET)) {
@@ -82,7 +82,7 @@ public class Game {
 	 * @param command The command to process
 	 * @return True, if the user has requested the game to start. False otherwise.
 	 */
-	private boolean processCommandWord(CommandTest command) {
+	private boolean processCommandWord(Command command) {
 		CommandWord commandWord = command.getCommandWord();
 		if (commandWord.equals(CommandWord.MOVE)) {
 			if (board.move(new Move(command.getStartPos(), command.getEndPos()))) {

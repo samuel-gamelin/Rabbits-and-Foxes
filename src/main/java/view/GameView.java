@@ -12,9 +12,5 @@ public class GameView extends JFrame implements Observer{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-	
-	
 
 }
