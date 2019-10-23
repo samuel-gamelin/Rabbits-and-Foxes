@@ -25,9 +25,9 @@ public class Board {
 	private Tile[][] tiles;
 	
 	/**
-	 * A list of listeners.
+	 * A list of listeners that are updated on the status of this board whenever appropriate.
 	 */
-	private List<BoardListener> rabbitsAndFoxesListeners;
+	private List<BoardListener> boardListeners;
 
 	/**
 	 * Creates a board object and initializes it with the default game
@@ -35,7 +35,7 @@ public class Board {
 	 */
 	public Board() {
 		tiles = new Tile[SIZE][SIZE];
-		rabbitsAndFoxesListeners = new ArrayList<>();
+		boardListeners = new ArrayList<>();
 		initializeDefaultBoard();
 	}
 
@@ -413,5 +413,15 @@ public class Board {
 		}
 
 		return representation.toString();
+	}
+	
+	/**
+	 * Adds a listener to this board.
+	 * 
+	 * @param boardListener The listener to add
+	 * @return True if the listener was successfully added, false otherwise
+	 */
+	public boolean addListener(BoardListener boardListener) {
+		return boardListeners.add(boardListener);
 	}
 }

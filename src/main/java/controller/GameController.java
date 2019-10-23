@@ -1,18 +1,11 @@
 package controller;
 
-import model.BoardEvent;
-import model.BoardListener;
-
 /**
- * @author Mohamed
- *
+ * 
+ * 
+ * @author Mohamed Radwan
+ * @author Samuel Gamelin
  */
-public class GameController implements BoardListener {
-
-	@Override
-	public void handleBoardEvent(BoardEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+public class GameController {
 
 }
