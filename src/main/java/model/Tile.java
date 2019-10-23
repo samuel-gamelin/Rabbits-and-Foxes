@@ -21,7 +21,7 @@ public class Tile {
 	/**
 	 * A piece of type Piece that will be placed on the tile.
 	 */
-	private Piece piece;
+	private PieceTest piece;
 
 	/**
 	 * An enumeration representing this tile's colour (either brown or green).
@@ -51,8 +51,8 @@ public class Tile {
 	 * 
 	 * @return The piece that was removed.
 	 */
-	public Piece removePiece() {
-		Piece oldPiece = this.piece;
+	public PieceTest removePiece() {
+		PieceTest oldPiece = this.piece;
 		setOccupied(false);
 		this.piece = null;
 		return oldPiece;
@@ -61,7 +61,7 @@ public class Tile {
 	/**
 	 * @return the current Piece placed on the Tile.
 	 */
-	public Piece retrievePiece() {
+	public PieceTest retrievePiece() {
 		return piece;
 	}
 
@@ -70,7 +70,7 @@ public class Tile {
 	 * 
 	 * @param piece Of type Piece will now be placed on the tile.
 	 */
-	public void placePiece(Piece piece) {
+	public void placePiece(PieceTest piece) {
 		setOccupied(true);
 		this.piece = piece;
 	}

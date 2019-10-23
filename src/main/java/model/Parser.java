@@ -43,14 +43,14 @@ public class Parser {
 	 *         applicable, subsequent input. If the input is malformed a Command
 	 *         with value CommandWord.INVALID is returned.
 	 */
-	public Command readCommand() {
+	public CommandTest readCommand() {
 		String[] input = scanner.nextLine().split(" ");
 		if (input.length == 1) {
-			return new Command(commandUtil.getCommandWord(input[0].toLowerCase()));
+			return new CommandTest(commandUtil.getCommandWord(input[0].toLowerCase()));
 		} else if (input.length == 3 && (commandUtil.getCommandWord(input[0]) == CommandWord.MOVE)) {
-			return new Command(commandUtil.getCommandWord(input[0].toLowerCase()), input[1], input[2]);
+			return new CommandTest(commandUtil.getCommandWord(input[0].toLowerCase()), input[1], input[2]);
 		}
-		return new Command(CommandWord.INVALID);
+		return new CommandTest(CommandWord.INVALID);
 	}
 
 	/**

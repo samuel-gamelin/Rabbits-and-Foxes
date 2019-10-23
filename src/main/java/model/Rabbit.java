@@ -5,7 +5,7 @@ package model;
  * 
  * @author Abdalla El Nakla
  */
-public class Rabbit extends Piece {
+public class Rabbit extends PieceTest {
 
 	public Rabbit() {
 		super(PieceType.RABBIT);

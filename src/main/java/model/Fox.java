@@ -5,7 +5,7 @@ package model;
  * 
  * @author Abdalla El Nakla
  */
-public class Fox extends Piece {
+public class Fox extends PieceTest {
 	private Direction direction;
 	private FoxType foxType;
 	private boolean id;

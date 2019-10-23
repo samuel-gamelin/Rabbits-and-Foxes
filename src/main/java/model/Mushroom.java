@@ -5,7 +5,7 @@ package model;
  * 
  * @author Abdalla El Nakla
  */
-public class Mushroom extends Piece {
+public class Mushroom extends PieceTest {
 
 	public Mushroom() {
 		super(PieceType.MUSHROOM);

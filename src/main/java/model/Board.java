@@ -19,14 +19,14 @@ public class Board {
 	/**
 	 * A 2D array of tiles used to manage all tiles on the board.
 	 */
-	private Tile[][] tiles;
+	private TileTest[][] tiles;
 
 	/**
 	 * Creates a board object and initializes it with the default game
 	 * configuration.
 	 */
 	public Board() {
-		tiles = new Tile[SIZE][SIZE];
+		tiles = new TileTest[SIZE][SIZE];
 		initializeDefaultBoard();
 	}
 
@@ -35,18 +35,18 @@ public class Board {
 	 */
 	private void initializeDefaultBoard() {
 		// Corner brown tiles
-		tiles[0][0] = new Tile(Tile.Colour.BROWN);
-		tiles[4][0] = new Tile(Tile.Colour.BROWN);
-		tiles[0][4] = new Tile(Tile.Colour.BROWN);
-		tiles[4][4] = new Tile(Tile.Colour.BROWN);
+		tiles[0][0] = new TileTest(Tile.TileTest.BROWN);
+		tiles[4][0] = new TileTest(Tile.TileTest.BROWN);
+		tiles[0][4] = new TileTest(Tile.TileTest.BROWN);
+		tiles[4][4] = new TileTest(Tile.TileTest.BROWN);
 
 		// Center brown tile
-		tiles[2][2] = new Tile(Tile.Colour.BROWN);
+		tiles[2][2] = new TileTest(Tile.TileTest.BROWN);
 
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				if (tiles[i][j] == null) {
-					tiles[i][j] = new Tile(Tile.Colour.GREEN);
+					tiles[i][j] = new TileTest(Tile.TileTest.GREEN);
 				}
 			}
 		}
@@ -89,7 +89,7 @@ public class Board {
 		}
 		
 		// Extract the piece to move
-		Piece piece = tiles[xStart][yStart].retrievePiece();
+		PieceTest piece = tiles[xStart][yStart].retrievePiece();
 		
 		// Check to see if the piece is a fox, since they require more logic to move :')
 		if (piece instanceof Fox) {
@@ -180,8 +180,8 @@ public class Board {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				if (tiles[i][j].retrievePiece() != null
-						&& tiles[i][j].retrievePiece().getPieceType().equals(Piece.PieceType.RABBIT)
-						&& !tiles[i][j].getColour().equals(Tile.Colour.BROWN)) {
+						&& tiles[i][j].retrievePiece().getPieceType().equals(Piece.PieceTest.RABBIT)
+						&& !tiles[i][j].getColour().equals(Tile.TileTest.BROWN)) {
 					return false;
 				}
 			}
@@ -197,7 +197,7 @@ public class Board {
 	 * @param location True if the other piece of the fox is to the right or up, false otherwise.
 	 * @return True if the path for this move is valid for foxes, false otherwise.
 	 */
-	private boolean validateFoxPath(Move move, Piece fox, boolean location) {
+	private boolean validateFoxPath(Move move, PieceTest fox, boolean location) {
 		int xStart = move.getXStart();
 		int yStart = move.getYStart();
 		int xEnd = move.getXEnd();
@@ -356,7 +356,7 @@ public class Board {
 			representation.append("\n  ");
 			for (int x = 0; x < SIZE; x++) {
 				representation.append("|");
-				if (tiles[x][y].getColour().equals(Tile.Colour.BROWN)) {
+				if (tiles[x][y].getColour().equals(Tile.TileTest.BROWN)) {
 					representation.append("--BB--");
 				} else {
 					representation.append("------");
@@ -394,7 +394,7 @@ public class Board {
 			representation.append("\n  ");
 			for (int x = 0; x < SIZE; x++) {
 				representation.append("|");
-				if (tiles[x][y].getColour().equals(Tile.Colour.BROWN)) {
+				if (tiles[x][y].getColour().equals(Tile.TileTest.BROWN)) {
 					representation.append("__BB__");
 				} else {
 					representation.append("______");
