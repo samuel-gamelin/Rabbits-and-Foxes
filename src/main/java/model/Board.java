@@ -1,8 +1,11 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class represents a board which keeps track of tiles and pieces within
- * them.
+ * them. It also serves as the Model for the Rabbits and Foxes game.
  * 
  * @author Samuel Gamelin
  * @author Abdalla El Nakla
@@ -20,6 +23,11 @@ public class Board {
 	 * A 2D array of tiles used to manage all tiles on the board.
 	 */
 	private Tile[][] tiles;
+	
+	/**
+	 * A list of listeners.
+	 */
+	private List<BoardListener> rabbitsAndFoxesListeners;
 
 	/**
 	 * Creates a board object and initializes it with the default game
@@ -27,6 +35,7 @@ public class Board {
 	 */
 	public Board() {
 		tiles = new Tile[SIZE][SIZE];
+		rabbitsAndFoxesListeners = new ArrayList<>();
 		initializeDefaultBoard();
 	}
 
