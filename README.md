@@ -101,6 +101,10 @@ Currently no known issues are present.
 
 Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing)
 
+## Credits for Graphical Resources
+
+The pictures and graphical resouces used in this game were obtained from https://www.smartgames.eu/uk/one-player-games/jumpin.
+
 ## License and Disclaimer
 
 > This application is for educational purposes. JumpIN is a registered commercial product. The developers are not responsible for the distribution of this product.
