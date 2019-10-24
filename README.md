@@ -52,14 +52,14 @@ When contributing to the project please start on the issues page which is used f
 ## Current UML Diagram
 
 <p align="center"> 
-<img src="./documentation/UMLDiagram/modelUML.png">
+<img src="documentation/uml/classDiagram.png">
 </p>
 Date: October 21, 2019
 
 ## Current Sequence Diagram
 
 <p align="center"> 
-<img src="./documentation/SequenceDiagram/SequenceDiagram.png">
+<img src="documentation/uml/sequenceDiagram.png">
 </p>
 Date: October 21, 2019
 
