@@ -49,7 +49,7 @@ When contributing to the project please start on the issues page which is used f
 - Slack is used as the main chat for this project.
 - Github Issues will be used for task and ticket tracking.
 
-## Current UML Diagram
+## Current Class Diagram
 
 <p align="center"> 
 <img src="documentation/uml/classDiagram.png">
@@ -79,7 +79,7 @@ Currently no known issues are present.
 
 ## New features
 
-- MileStone1: A fully playable text-based implementation of the game! 
+- Milestone1: A fully playable text-based implementation of the game! 
     - Parsing user input
     - Moving pieces on the board
     - Displaying the board to the user
