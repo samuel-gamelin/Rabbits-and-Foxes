@@ -1,8 +1,6 @@
 package controller;
 
 import model.Board;
-import model.BoardEvent;
-import model.BoardListener;
 
 /**
  * 

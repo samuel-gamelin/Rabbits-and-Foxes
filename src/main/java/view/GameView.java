@@ -37,7 +37,8 @@ public class GameView extends JFrame implements BoardListener {
 		gameController = new GameController(board);
 		
 		this.setContentPane(new JLabel(Resources.BOARD));
-		
+		this.setSize(875,925);
+		setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		menuBar = new JMenuBar();
 
@@ -53,14 +54,14 @@ public class GameView extends JFrame implements BoardListener {
 
 		this.setJMenuBar(menuBar);
 
-		buttons = new JButton[Board.SIZE][Board.SIZE];
-		for (int i = 0; i < Board.SIZE; i++) {
-			for (int j = 0; j < Board.SIZE; j++) {
-				JButton button = new JButton("_");
-				buttons[i][j] = button;
-				this.add(button);
-			}
-		}
+//		buttons = new JButton[Board.SIZE][Board.SIZE];
+//		for (int i = 0; i < Board.SIZE; i++) {
+//			for (int j = 0; j < Board.SIZE; j++) {
+//				JButton button = new JButton("_");
+//				buttons[i][j] = button;
+//				this.add(button);
+//			}
+//		}
 
 		this.setVisible(true);
 
