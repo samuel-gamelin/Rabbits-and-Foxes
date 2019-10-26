@@ -28,9 +28,6 @@ public final class Resources {
 	// Mushroom icon
 	public static final ImageIcon MUSHROOM = new ImageIcon(Resources.class.getClassLoader().getResource("mushroom.png"));
 	
-	// Brown hole icon
-	public static final ImageIcon BROWN_HOLE = new ImageIcon(Resources.class.getClassLoader().getResource("brown-hole.png"));
-	
 	// Board icon
 	public static final ImageIcon BOARD = new ImageIcon(Resources.class.getClassLoader().getResource("board.png"));
 }
