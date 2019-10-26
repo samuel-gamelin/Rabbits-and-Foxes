@@ -5,6 +5,7 @@ package model;
  * 
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
+ * @version 2.0
  */
 public abstract class Piece {
 

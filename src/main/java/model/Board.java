@@ -11,7 +11,7 @@ import java.util.List;
  * @author Abdalla El Nakla
  * @author Dani Hashweh
  * @author John Breton
- * @version 1.0
+ * @version 2.0
  */
 public class Board {
 	/**

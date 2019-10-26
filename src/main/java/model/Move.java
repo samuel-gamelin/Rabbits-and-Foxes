@@ -10,6 +10,7 @@ package model;
  * 
  * @author Mohamed Radwan
  * @author Samuel Gamelin
+ * @version 2.0
  */
 
 public class Move {

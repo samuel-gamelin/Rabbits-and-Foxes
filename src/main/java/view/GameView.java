@@ -14,6 +14,7 @@ import resources.Resources;
  * 
  * @author Mohamed Radwan
  * @author Samuel Gamelin
+ * @version 2.0
  */
 public class GameView extends JFrame implements BoardListener {
 	private static final long serialVersionUID = 1L;

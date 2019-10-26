@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
  * This class provides a simple way to access graphical resources used by the game.
  * 
  * @author Samuel Gamelin
+ * @version 2.0
  */
 public final class Resources {
 	private Resources() {}

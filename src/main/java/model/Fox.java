@@ -4,6 +4,7 @@ package model;
  * A class representing a Fox piece.
  * 
  * @author Abdalla El Nakla
+ * @version 2.0
  */
 public class Fox extends Piece {
 	private Direction direction;

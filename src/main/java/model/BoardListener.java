@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * 
+ * @author 
+ * @version 2.0
+ */
 public interface BoardListener {
 	/**
 	 * Handles the provided event and updates the necessary views accordingly.

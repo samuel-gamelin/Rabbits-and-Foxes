@@ -4,6 +4,7 @@ package model;
  * A class representing a Rabbit piece.
  * 
  * @author Abdalla El Nakla
+ * @version 2.0
  */
 public class Rabbit extends Piece {
 
