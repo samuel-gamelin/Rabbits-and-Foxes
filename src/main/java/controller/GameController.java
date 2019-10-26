@@ -1,6 +1,8 @@
 package controller;
 
 import model.Board;
+import model.BoardEvent;
+import model.BoardListener;
 
 /**
  * 
@@ -13,6 +15,12 @@ public class GameController implements BoardListener{
 	
 	public GameController(Board board) {
 		this.board = board;
+	}
+
+	@Override
+	public void handleBoardEvent(BoardEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
