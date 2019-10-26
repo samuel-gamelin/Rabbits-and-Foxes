@@ -25,28 +25,42 @@ public class GameView extends JFrame implements BoardListener {
 	private JMenuItem reset;
 	private JMenuItem quit;
 
+	private JButton buttons[][];
+
 	private Board board;
 	private GameController gameController;
 
 	public GameView() {
 		board = new Board();
 		board.addListener(this);
-		gameController = new GameController(board);
-		this.setContentPane(new JLabel(Resources.BOARD));
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+		gameController = new GameController(board);
+		
+		this.setContentPane(new JLabel(Resources.BOARD));
+		
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		menuBar = new JMenuBar();
 
 		start = new JMenu("Start");
 		pause = new JMenu("Pause");
 		reset = new JMenu("Reset");
 		quit = new JMenu("Quit");
+
 		menuBar.add(start);
 		menuBar.add(pause);
 		menuBar.add(reset);
 		menuBar.add(quit);
 
 		this.setJMenuBar(menuBar);
+
+		buttons = new JButton[Board.SIZE][Board.SIZE];
+		for (int i = 0; i < Board.SIZE; i++) {
+			for (int j = 0; j < Board.SIZE; j++) {
+				JButton button = new JButton("_");
+				buttons[i][j] = button;
+				this.add(button);
+			}
+		}
 
 		this.setVisible(true);
 
