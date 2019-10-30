@@ -12,13 +12,32 @@ import model.Move;
 public class GameController {
 	private Board board;
 	private Move move;
+	private boolean makeMove;
 
+	/**
+	 * 
+	 * @param board
+	 */
 	public GameController(Board board) {
 		this.board = board;
+		this.makeMove = false;
 	}
 
-	public boolean move(Move move) {
-		return board.move(move);
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public void registerMove(int x, int y) {
+		if (!makeMove) {
+			move.setxStart(x);
+			move.setyStart(y);
+			makeMove = true;
+		} else {
+			move.setxEnd(x);
+			move.setyEnd(y);
+			makeMove = false;
+			board.move(move);
+		}
 	}
-
 }

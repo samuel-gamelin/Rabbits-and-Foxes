@@ -74,6 +74,38 @@ public class Move {
 	}
 
 	/**
+	 * 
+	 * @param xStart
+	 */
+	public void setxStart(int xStart) {
+		this.xStart = xStart;
+	}
+
+	/**
+	 * 
+	 * @param yStart
+	 */
+	public void setyStart(int yStart) {
+		this.yStart = yStart;
+	}
+
+	/**
+	 * 
+	 * @param xEnd
+	 */
+	public void setxEnd(int xEnd) {
+		this.xEnd = xEnd;
+	}
+
+	/**
+	 * 
+	 * @param yEnd
+	 */
+	public void setyEnd(int yEnd) {
+		this.yEnd = yEnd;
+	}
+
+	/**
 	 * This method is used to compute the direction of movement. Since each piece
 	 * has move restrictions this method will be used to initially determine if a
 	 * move is valid.
