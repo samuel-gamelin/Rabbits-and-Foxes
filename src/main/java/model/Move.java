@@ -21,29 +21,6 @@ public class Move {
 	private int yEnd;
 
 	/**
-	 * Constructs a move object given two strings, where each string must be of
-	 * length 2 representing a position on the board. For example, '12' resolves to
-	 * (0, 1) and '33' resolves to (2, 2). Should the inputs be invalid, all
-	 * positions will be set to -1.
-	 * 
-	 * @param start - The start position, specified as a two-character string.
-	 * @param end   - The end position, specified as a two-character string.
-	 */
-	public Move(String start, String end) {
-		if (start != null && end != null && start.length() == 2 && end.length() == 2) {
-			this.xStart = Character.getNumericValue(start.charAt(0)) - 1;
-			this.yStart = Character.getNumericValue(start.charAt(1)) - 1;
-			this.xEnd = Character.getNumericValue(end.charAt(0)) - 1;
-			this.yEnd = Character.getNumericValue(end.charAt(1)) - 1;
-		} else {
-			this.xStart = -1;
-			this.yStart = -1;
-			this.xEnd = -1;
-			this.yEnd = -1;
-		}
-	}
-
-	/**
 	 * Given the position of the object being moved and where it needs to be moved
 	 * this will construct the object for the move class.
 	 * 
@@ -53,10 +30,11 @@ public class Move {
 	 * @param yEnd   - The integer value of the start y position.
 	 */
 	public Move(int xStart, int yStart, int xEnd, int yEnd) {
-		this.xStart = xStart;
-		this.yStart = yStart;
-		this.xEnd = xEnd;
-		this.yEnd = yEnd;
+		// Subtract by 1 to get the postion in the array
+		this.xStart = xStart -1;
+		this.yStart = yStart -1;
+		this.xEnd = xEnd -1;
+		this.yEnd = yEnd -1;
 	}
 
 	/**
@@ -105,7 +83,6 @@ public class Move {
 	 */
 	public int direction() {
 		int direction = -1;
-
 		if ((xStart == xEnd) && (yStart != yEnd)) {
 			direction = 1;
 		} else if ((xStart != xEnd) && (yStart == yEnd)) {
