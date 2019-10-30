@@ -31,10 +31,10 @@ public class Move {
 	 */
 	public Move(int xStart, int yStart, int xEnd, int yEnd) {
 		// Subtract by 1 to get the postion in the array
-		this.xStart = xStart -1;
-		this.yStart = yStart -1;
-		this.xEnd = xEnd -1;
-		this.yEnd = yEnd -1;
+		this.xStart = xStart;
+		this.yStart = yStart;
+		this.xEnd = xEnd;
+		this.yEnd = yEnd;
 	}
 
 	/**
