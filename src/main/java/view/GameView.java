@@ -1,7 +1,7 @@
 package view;
 
+import java.awt.event.*; 
 import javax.swing.*;
-
 import controller.GameController;
 import model.Board;
 import model.BoardEvent;
@@ -12,6 +12,7 @@ import resources.Resources;
  * This class represents the view with which the user interacts in order to play
  * the game.
  * 
+ * @author Dani Hashweh
  * @author Mohamed Radwan
  * @author Samuel Gamelin
  * @version 2.0
@@ -21,10 +22,11 @@ public class GameView extends JFrame implements BoardListener {
 
 	private JMenuBar menuBar;
 
-	private JMenuItem start;
-	private JMenuItem pause;
-	private JMenuItem reset;
-	private JMenuItem quit;
+	private JMenuItem menuStart;
+	private JMenuItem menuPause;
+	private JMenuItem menuReset;
+	private JMenuItem menuQuit;
+	private JMenuItem menuHelp; 
 
 	private JButton buttons[][];
 
@@ -40,21 +42,43 @@ public class GameView extends JFrame implements BoardListener {
 		this.setContentPane(new JLabel(Resources.BOARD));
 		this.setSize(875,925);
 		setResizable(false);
+		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		menuBar = new JMenuBar();
 
-		start = new JMenu("Start");
-		pause = new JMenu("Pause");
-		reset = new JMenu("Reset");
-		quit = new JMenu("Quit");
+		menuStart = new JMenuItem("Start");
+		menuPause = new JMenuItem("Pause");
+		menuReset = new JMenuItem("Reset");
+		menuHelp = new JMenuItem("Help");
+		menuQuit = new JMenuItem("Quit");
 
-		menuBar.add(start);
-		menuBar.add(pause);
-		menuBar.add(reset);
-		menuBar.add(quit);
-
+		menuBar.add(menuStart);
+		menuBar.add(menuPause);
+		menuBar.add(menuReset);
+		menuBar.add(menuHelp);
+		menuBar.add(menuQuit);
+		
 		this.setJMenuBar(menuBar);
 
+		
+		menuQuit.addActionListener(e-> {
+			if (JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Exit JumpIN!",
+		            JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
+		            System.exit(0);
+		});
+
+		menuHelp.addActionListener(e-> {
+			JOptionPane.showMessageDialog(this, "Start: Starts the game. \n"
+											+	"Pause: Pauses the game, and clicking it again, will resume the game. \n"
+											+ 	"Reset: Restarts the game. \n"
+											+   "Quit: Exits the application"
+					);
+		});
+		
+		menuStart.addActionListener(e-> {
+			
+		});
+		
 //		buttons = new JButton[Board.SIZE][Board.SIZE];
 //		for (int i = 0; i < Board.SIZE; i++) {
 //			for (int j = 0; j < Board.SIZE; j++) {
@@ -63,8 +87,6 @@ public class GameView extends JFrame implements BoardListener {
 //				this.add(button);
 //			}
 //		}
-
-		this.setVisible(true);
 
 	}
 
@@ -75,10 +97,5 @@ public class GameView extends JFrame implements BoardListener {
 				new GameView();
 			}
 		});
-	}
-
-	@Override
-	public void handleBoardEvent(BoardEvent e) {
-		// TODO Auto-generated method stub
 	}
 }
