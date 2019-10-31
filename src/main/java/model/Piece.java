@@ -12,7 +12,7 @@ public abstract class Piece {
 	/**
 	 * An enumeration representing the piece's type.
 	 */
-	enum PieceType {
+	public enum PieceType {
 		FOX, MUSHROOM, RABBIT
 	}
 
