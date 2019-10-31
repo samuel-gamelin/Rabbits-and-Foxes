@@ -1,6 +1,8 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.*;
 import javax.swing.*;
 import controller.GameController;
@@ -50,14 +52,17 @@ public class GameView extends JFrame implements BoardListener {
 		gameController = new GameController(board);
 
 		gameFrame.setContentPane(new JLabel(Resources.BOARD));
+		gameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		gameFrame.setSize(875, 925);
 		setResizable(false);
-		gameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		gameFrame.setLocationRelativeTo(null);
 		
-		mainMenuFrame.setBounds(100, 100, 875, 925);
 		mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//absolute layout
 		mainMenuFrame.getContentPane().setLayout(null);
+		mainMenuFrame.setBounds(100, 100, 875, 925);
+		setResizable(false);
+		mainMenuFrame.setLocationRelativeTo(null);
 		
 		JButton btnStart = new JButton("Start");
 		btnStart.setBounds(320, 249, 214, 83);
