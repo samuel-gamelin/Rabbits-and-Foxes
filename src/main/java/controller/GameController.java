@@ -24,11 +24,12 @@ public class GameController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param x
 	 * @param y
+	 * @return true if the move has been made otherwise false
 	 */
-	public void registerMove(int x, int y) {
+	public boolean registerMove(int x, int y) {
 		if (!makeMove) {
 			move.setxStart(x);
 			move.setyStart(y);
@@ -37,7 +38,9 @@ public class GameController {
 			move.setxEnd(x);
 			move.setyEnd(y);
 			makeMove = false;
-			board.move(move);
+			return board.move(move);
 		}
+		return false;
 	}
+	
 }
