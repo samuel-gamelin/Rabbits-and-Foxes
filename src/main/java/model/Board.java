@@ -424,4 +424,15 @@ public class Board {
 	public boolean addListener(BoardListener boardListener) {
 		return boardListeners.add(boardListener);
 	}
+	
+	/**
+	 * Gets the piece at the specified location.
+	 * 
+	 * @param x The x position as a 0-based index
+	 * @param y The y position as a 0-based index
+	 * @return The piece at the specified position, null if there is no piece
+	 */
+	public Piece getPiece(int x, int y) {
+		return (x < 0 || y < 0 || x >= SIZE || y >= SIZE) ? null: this.tiles[x][y].retrievePiece();
+	}
 }
