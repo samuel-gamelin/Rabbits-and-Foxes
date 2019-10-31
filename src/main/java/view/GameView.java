@@ -56,7 +56,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		// absolute layout
 		mainMenuFrame.getContentPane().setLayout(null);
 		mainMenuFrame.setBounds(100, 100, 875, 925);
-		setResizable(false);
+		mainMenuFrame.setResizable(false);
 		mainMenuFrame.setLocationRelativeTo(null);
 
 		btnStart = new JButton("Start");
@@ -76,7 +76,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		gameFrame.setContentPane(new JLabel(Resources.BOARD));
 		gameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		gameFrame.setSize(875, 925);
-		setResizable(false);
+		gameFrame.setResizable(false);
 		gameFrame.setLocationRelativeTo(null);
 
 		menuBar = new JMenuBar();
