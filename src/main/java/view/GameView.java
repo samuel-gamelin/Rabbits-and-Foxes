@@ -23,6 +23,8 @@ import resources.Resources;
  */
 public class GameView extends JFrame implements BoardListener {
 	private static final long serialVersionUID = 1L;
+	private JFrame mainMenuFrame; 
+	private JFrame gameFrame; 
 
 	private JMenuBar menuBar;
 
@@ -38,18 +40,37 @@ public class GameView extends JFrame implements BoardListener {
 	private Piece piece;
 
 	private GameController gameController;
-
-	public GameView() {
+	
+	private void initialize() {
+		mainMenuFrame = new JFrame(); 
+		gameFrame = new JFrame(); 
 		board = new Board();
 		board.addListener(this);
 
 		gameController = new GameController(board);
 
-		this.setContentPane(new JLabel(Resources.BOARD));
-		this.setSize(875, 925);
+		gameFrame.setContentPane(new JLabel(Resources.BOARD));
+		gameFrame.setSize(875, 925);
 		setResizable(false);
-		this.setVisible(true);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		gameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		mainMenuFrame.setBounds(100, 100, 875, 925);
+		mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//absolute layout
+		mainMenuFrame.getContentPane().setLayout(null);
+		
+		JButton btnStart = new JButton("Start");
+		btnStart.setBounds(320, 249, 214, 83);
+		mainMenuFrame.getContentPane().add(btnStart);
+		
+		JButton btnHelp = new JButton("Help");
+		btnHelp.setBounds(320, 375, 214, 83);
+		mainMenuFrame.getContentPane().add(btnHelp);
+		
+		JButton btnQuit = new JButton("Quit");
+		btnQuit.setBounds(320, 517, 214, 83);
+		mainMenuFrame.getContentPane().add(btnQuit);
+		
 		menuBar = new JMenuBar();
 
 		menuReset = new JMenuItem("Reset");
@@ -60,10 +81,10 @@ public class GameView extends JFrame implements BoardListener {
 		menuBar.add(menuHelp);
 		menuBar.add(menuQuit);
 
-		this.setJMenuBar(menuBar);
+		gameFrame.setJMenuBar(menuBar);
 
 		boardLayout = new GridLayout(5, 5);
-		this.setLayout(boardLayout);
+		gameFrame.setLayout(boardLayout);
 
 		buttons = new JButton[5][5];
 
@@ -92,9 +113,22 @@ public class GameView extends JFrame implements BoardListener {
 				buttons[i][j].setOpaque(false);
 				buttons[i][j].setContentAreaFilled(false);
 				buttons[i][j].setBorderPainted(false);
-				this.add(buttons[i][j]);
+				gameFrame.add(buttons[i][j]);
 			}
 		}
+		
+		btnStart.addActionListener(e -> {
+			mainMenuFrame.dispose();
+			gameFrame.setVisible(true);		
+		});
+		
+		btnHelp.addActionListener(e -> {
+			 helpText();
+		});
+		
+		menuHelp.addActionListener(e -> {
+			 helpText();
+		});
 
 		menuQuit.addActionListener(e -> {
 			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Rabbit and Foxes!",
@@ -102,22 +136,36 @@ public class GameView extends JFrame implements BoardListener {
 				System.exit(0);
 		});
 
+		
+		
 		menuHelp.addActionListener(e -> {
-			JOptionPane.showMessageDialog(this,
-					"Start: Starts the game. \n"
-							+ "Pause: Pauses the game, and clicking it again, will resume the game. \n"
-							+ "Reset: Restarts the game. \n" + "Quit: Exits the application");
+			
 		});
 
+	}
+
+	/**
+	 * Create the application gui
+	 */
+	public GameView() {
+		initialize(); 
 	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new GameView();
+				GameView gameView = new GameView();
+				gameView.mainMenuFrame.setVisible(true);
 			}
 		});
+	}
+	
+	private void helpText() {
+		JOptionPane.showMessageDialog(null,
+				"Start: Starts the game. \n"
+						+ "Pause: Pauses the game, and clicking it again, will resume the game. \n"
+						+ "Reset: Restarts the game. \n" + "Quit: Exits the application");
 	}
 
 	@Override
