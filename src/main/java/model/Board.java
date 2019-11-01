@@ -183,7 +183,7 @@ public class Board {
 	 * Notifies all listeners that the board has changed.
 	 */
 	private void notifyListeners() {
-		boardListeners.forEach(l -> l.handleBoardChange());
+		boardListeners.stream().forEach(BoardListener::handleBoardChange);
 	}
 
 	/**
