@@ -228,7 +228,8 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		} else if (e.getSource() == menuReset) {
 			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbit and Foxes!",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-						gameController.reset().addListener(this);
+						(this.board = gameController.reset()).addListener(this);
+						updateView();
 					}
 		} else if (e.getSource().getClass().equals(JButton.class)) {
 			locateButton(e.getSource());
