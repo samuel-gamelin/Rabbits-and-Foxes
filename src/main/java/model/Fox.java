@@ -188,7 +188,7 @@ public class Fox extends Piece {
 			return false;
 		}
 
-		if ((this.direction.equals(Direction.LEFT) || this.direction.equals(Direction.RIGHT)) && moveDirection == 0) { // Check to see if the fox is horizontal
+		if ((direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) && moveDirection == 0) { // Check to see if the fox is horizontal
 																				// and the move is horizontal
 			if (location && xDistance > 0) { // The other part of the fox is to the right and we are moving right
 				if (xEnd + 1 > 4) { // Check to see if the move will push the fox out of bounds
@@ -222,7 +222,7 @@ public class Fox extends Piece {
 				}
 			}
 			return true; // The move is valid for the fox
-		} else if ((this.direction.equals(Direction.UP) || this.direction.equals(Direction.DOWN)) && moveDirection == 1) { // Check to see if the fox is vertical
+		} else if ((direction.equals(Direction.UP) || direction.equals(Direction.DOWN)) && moveDirection == 1) { // Check to see if the fox is vertical
 																					// and the move is vertical
 			if (location && yDistance > 0) { // The other part of the fox is up and we are moving down
 				for (int i = yStart + 1; i <= yEnd; i++) { // Need to make sure there are no obstacles in the path
