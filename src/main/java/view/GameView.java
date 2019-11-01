@@ -253,7 +253,6 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	public void handleBoardChange() {
 		updateView();
 		if (board.isInWinningState()) {
-			//gameEndBoard(false); 
 			JOptionPane.showMessageDialog(null, "Congrats! You win!");
 			gameWinReset(board); 
 		}
