@@ -11,10 +11,9 @@ import javax.swing.ImageIcon;
  */
 public final class Resources {
 	/**
-	 * 
+	 * Making the constructor private, preventing any instantiation of this class.
 	 */
-	private Resources() {
-	}
+	private Resources() {}
 
 	// Rabbit icons
 	public static final ImageIcon RABBIT1 = new ImageIcon(Resources.class.getClassLoader().getResource("rabbit1.png"));
