@@ -58,14 +58,18 @@ public class GameController {
 		return false;
 	}
 
+
 	/**
 	 * This method is used to reset the Game. In order to ensure that the new game
 	 * will not have any old registered moves the method also clears the move array
 	 * list.
+	 * 
+	 * @return - The new board for the view to listen to it.
 	 */
-	public void reset() {
+	public Board reset() {
 		move.clear();
 		board = new Board();
+		return board;
 	}
 
 }
