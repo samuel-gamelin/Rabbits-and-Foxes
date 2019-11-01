@@ -1,17 +1,22 @@
 package view;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 import controller.GameController;
 import model.Board;
-import model.BoardEvent;
 import model.BoardListener;
 import model.Fox;
 import model.Piece;
-import model.Piece.PieceType;
 import resources.Resources;
 
 /**
@@ -108,10 +113,10 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 					else if ((piece.getPieceType()).equals(Piece.PieceType.FOX)) {
 						if (((Fox) (piece)).getDirection().equals(Fox.Direction.HORIZONTAL)
 								&& ((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-							(buttons[i][j]).setIcon(Resources.FOX_HEAD_RIGHT);
+							(buttons[i][j]).setIcon(Resources.FOX_HEAD_HORIZONTAL);
 						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.VERTICAL)
 								&& ((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-							(buttons[i][j]).setIcon(Resources.FOX_HEAD_UP);
+							(buttons[i][j]).setIcon(Resources.FOX_HEAD_VERTICAL);
 					}
 				}
 				// clear button default colours and make it transparent
@@ -142,18 +147,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	}
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				GameView gameView = new GameView();
-				gameView.mainMenuFrame.setVisible(true);
-			}
-		});
-	}
-
-	@Override
-	public void handleBoardEvent(BoardEvent e) {
-
+		SwingUtilities.invokeLater(() -> new GameView());
 	}
 
 	@Override
@@ -168,6 +162,12 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 				System.exit(0);
 		}
+
+	}
+
+	@Override
+	public void handleBoardChange() {
+		// TODO Auto-generated method stub
 
 	}
 }

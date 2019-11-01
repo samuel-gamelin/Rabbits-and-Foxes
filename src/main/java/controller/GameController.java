@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Board;
 import model.Move;
 
@@ -11,8 +14,7 @@ import model.Move;
  */
 public class GameController {
 	private Board board;
-	private Move move;
-	private boolean makeMove;
+	private List<Integer> moves;
 
 	/**
 	 * 
@@ -20,7 +22,7 @@ public class GameController {
 	 */
 	public GameController(Board board) {
 		this.board = board;
-		this.makeMove = false;
+		this.moves = new ArrayList<>();
 	}
 
 	/**
@@ -30,15 +32,13 @@ public class GameController {
 	 * @return true if the move has been made otherwise false
 	 */
 	public boolean registerMove(int x, int y) {
-		if (!makeMove) {
-			move.setxStart(x);
-			move.setyStart(y);
-			makeMove = true;
+		if (moves.size() == 0) {
+			moves.add(x);
+			moves.add(y);
 		} else {
-			move.setxEnd(x);
-			move.setyEnd(y);
-			makeMove = false;
-			return board.move(move);
+			boolean result = board.move(new Move(moves.get(0), moves.get(1), x, y));
+			moves.clear();
+			return result;
 		}
 		return false;
 	}

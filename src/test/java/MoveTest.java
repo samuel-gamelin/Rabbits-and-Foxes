@@ -17,10 +17,10 @@ public class MoveTest {
 	@Test
 	public void testIntInput() {
 		Move move = new Move(1, 2, 5, 6);
-		assertEquals(1, move.getXStart());
-		assertEquals(2, move.getYStart());
-		assertEquals(5, move.getXEnd());
-		assertEquals(6, move.getYEnd());
+		assertEquals(1, move.xStart);
+		assertEquals(2, move.yStart);
+		assertEquals(5, move.xEnd);
+		assertEquals(6, move.yEnd);
 	}
 
 	/**

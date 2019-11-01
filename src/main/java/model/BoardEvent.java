@@ -1,9 +1,10 @@
 package model;
 
 import java.util.EventObject;
+
 /**
  * 
- * @author 
+ * @author Samuel Gamelin
  * @version 2.0
  */
 public class BoardEvent extends EventObject {

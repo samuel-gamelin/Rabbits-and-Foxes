@@ -1,9 +1,9 @@
 package model;
 
 /**
- * This class represents the tiles that the pieces will be placed on. 
- * These tiles will also be placed on the board to track what is occupied
- * and what isn't. 
+ * This class represents the tiles that the pieces will be placed on. These
+ * tiles will also be placed on the board to track what is occupied and what
+ * isn't.
  * 
  * @author Dani Hashweh
  * @version 2.0
@@ -54,7 +54,7 @@ public class Tile {
 	 */
 	public Piece removePiece() {
 		Piece oldPiece = this.piece;
-		setOccupied(false);
+		this.occupied = false;
 		this.piece = null;
 		return oldPiece;
 	}
@@ -72,7 +72,7 @@ public class Tile {
 	 * @param piece Of type Piece will now be placed on the tile.
 	 */
 	public void placePiece(Piece piece) {
-		setOccupied(true);
+		this.occupied = true;
 		this.piece = piece;
 	}
 
@@ -81,23 +81,5 @@ public class Tile {
 	 */
 	public Colour getColour() {
 		return tileColour;
-	}
-
-	/**
-	 * @return A 2-character string representation of this tile. If the tile has no piece, return the string "  " (two spaces).
-	 */
-	@Override
-	public String toString() {
-		return piece != null ? piece.toShortString(): "  "; 
-	}
-
-	/**
-	 * Sets the tile to the stated occupied state.
-	 * 
-	 * @param occupied If True, Tile will become occupied, if False, the Tile will
-	 *                 become available.
-	 */
-	private void setOccupied(boolean occupied) {
-		this.occupied = occupied;
 	}
 }

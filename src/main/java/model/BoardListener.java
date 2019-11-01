@@ -1,14 +1,14 @@
 package model;
+
 /**
+ * This interface represents the behaviour that a board listener should have.
  * 
- * @author 
+ * @author Samuel Gamelin
  * @version 2.0
  */
 public interface BoardListener {
 	/**
-	 * Handles the provided event and updates the necessary views accordingly.
-	 * 
-	 * @param e The event to handle
+	 * Called when the Board changes. Updates the necessary views accordingly.
 	 */
-	void handleBoardEvent(BoardEvent e);
+	void handleBoardChange();
 }
