@@ -107,13 +107,13 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
-				buttons[i][j] = new JButton();
+				buttons[j][i] = new JButton();
 				// clear button default colours and make it transparent
-				buttons[i][j].setOpaque(false);
-				buttons[i][j].setContentAreaFilled(false);
-				buttons[i][j].setBorderPainted(false);
-				gameFrame.add(buttons[i][j]);
-				buttons[i][j].addActionListener(this);
+				buttons[j][i].setOpaque(false);
+				buttons[j][i].setContentAreaFilled(false);
+				buttons[j][i].setBorderPainted(false);
+				gameFrame.add(buttons[j][i]);
+				buttons[j][i].addActionListener(this);
 			}
 		}
 
@@ -150,7 +150,6 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 						else
 							(buttons[i][j]).setIcon(Resources.RABBIT2); 
 					}
-					// gotta fix this, we dont know where the head is, left of tail? or right of tail? ontop of tail? under tail? etc.
 					else if ((piece.getPieceType()).equals(Piece.PieceType.FOX)) {
 						if (((Fox) (piece)).getDirection().equals(Fox.Direction.UP)) {
 							if (((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
@@ -160,9 +159,9 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 						}
 						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.DOWN))
 							if (((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-									(buttons[i][j]).setIcon(Resources.FOX_HEAD_DOWN);
+									(buttons[i][j]).setIcon(Resources.FOX_HEAD_UP);
 							else 
-								(buttons[i][j]).setIcon(Resources.FOX_TAIL_DOWN);
+								(buttons[i][j]).setIcon(Resources.FOX_TAIL_UP);
 						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.LEFT))
 							if (((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
 									(buttons[i][j]).setIcon(Resources.FOX_HEAD_LEFT);
@@ -226,12 +225,11 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Rabbit and Foxes!",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 				System.exit(0);
-			// Wait for Mohamed to fix reset on his end, then we can uncomment this and it should work (hopefully).
-//		} else if (e.getSource() == menuReset) {
-//			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbit and Foxes!",
-//					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-//						gameController.reset();
-//					}
+		} else if (e.getSource() == menuReset) {
+			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbit and Foxes!",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						gameController.reset().addListener(this);
+					}
 		} else if (e.getSource().getClass().equals(JButton.class)) {
 			locateButton(e.getSource());
 			gameController.registerMove(xy[0], xy[1]);
@@ -247,7 +245,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	public void handleBoardChange() {
 		updateView();	
 		if (board.isInWinningState()) {
-			JOptionPane.showMessageDialog(null, "Congrats! You win!");
+			JOptionPane.showMessageDialog(null, "Congrats! You win!");	
 		}
 	}
 }
