@@ -21,12 +21,16 @@ public final class Resources {
 	public static final ImageIcon RABBIT2 = new ImageIcon(Resources.class.getClassLoader().getResource("rabbit2.png"));
 
 	// Fox head icons
-	public static final ImageIcon FOX_HEAD_VERTICAL = new ImageIcon(Resources.class.getClassLoader().getResource("fox-head-vertical.png"));
-	public static final ImageIcon FOX_HEAD_HORIZONTAL = new ImageIcon(Resources.class.getClassLoader().getResource("fox-head-horizontal.png"));
+	public static final ImageIcon FOX_HEAD_UP = new ImageIcon(Resources.class.getClassLoader().getResource("fox-head-up.png"));
+	public static final ImageIcon FOX_HEAD_DOWN = new ImageIcon(Resources.class.getClassLoader().getResource("fox-head-down.png"));
+	public static final ImageIcon FOX_HEAD_LEFT = new ImageIcon(Resources.class.getClassLoader().getResource("fox-head-left.png"));
+	public static final ImageIcon FOX_HEAD_RIGHT = new ImageIcon(Resources.class.getClassLoader().getResource("fox-head-right.png"));
 
 	// Fox tail icons
-	public static final ImageIcon FOX_TAIL_VERTICAL = new ImageIcon(Resources.class.getClassLoader().getResource("fox-tail-vertical.png"));
-	public static final ImageIcon FOX_TAIL_HORIZONTAL = new ImageIcon(Resources.class.getClassLoader().getResource("fox-tail-horizontal.png"));
+	public static final ImageIcon FOX_TAIL_UP = new ImageIcon(Resources.class.getClassLoader().getResource("fox-tail-up.png"));
+	public static final ImageIcon FOX_TAIL_DOWN = new ImageIcon(Resources.class.getClassLoader().getResource("fox-tail-down.png"));
+	public static final ImageIcon FOX_TAIL_LEFT = new ImageIcon(Resources.class.getClassLoader().getResource("fox-tail-left.png"));
+	public static final ImageIcon FOX_TAIL_RIGHT = new ImageIcon(Resources.class.getClassLoader().getResource("fox-tail-right.png"));
 
 	// Mushroom icon
 	public static final ImageIcon MUSHROOM = new ImageIcon(Resources.class.getClassLoader().getResource("mushroom.png"));

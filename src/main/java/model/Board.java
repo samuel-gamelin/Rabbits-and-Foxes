@@ -73,10 +73,10 @@ public class Board {
 		tiles[4][2].placePiece(new Rabbit());
 
 		// Adding the foxes (there can be 0 to 2, here we have 2)
-		tiles[3][3].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.HORIZONTAL, false));
-		tiles[4][3].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.HORIZONTAL, false));
-		tiles[1][0].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.VERTICAL, true));
-		tiles[1][1].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.VERTICAL, true));
+		tiles[3][3].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.LEFT, false));
+		tiles[4][3].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.LEFT, false));
+		tiles[1][0].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.DOWN, true));
+		tiles[1][1].placePiece(new Fox(Fox.FoxType.TAIL, Fox.Direction.DOWN, true));
 	}
 
 	/**

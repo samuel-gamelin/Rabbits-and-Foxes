@@ -111,12 +111,12 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 					// gotta fix this, we dont know where the head is, left of tail? or right of
 					// tail? ontop of tail? under tail? etc.
 					else if ((piece.getPieceType()).equals(Piece.PieceType.FOX)) {
-						if (((Fox) (piece)).getDirection().equals(Fox.Direction.HORIZONTAL)
+						if (((Fox) (piece)).getDirection().equals(Fox.Direction.LEFT)
 								&& ((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-							(buttons[i][j]).setIcon(Resources.FOX_HEAD_HORIZONTAL);
-						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.VERTICAL)
+							(buttons[i][j]).setIcon(Resources.FOX_HEAD_LEFT);
+						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.DOWN)
 								&& ((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-							(buttons[i][j]).setIcon(Resources.FOX_HEAD_VERTICAL);
+							(buttons[i][j]).setIcon(Resources.FOX_HEAD_DOWN);
 					}
 				}
 				// clear button default colours and make it transparent

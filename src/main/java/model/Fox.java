@@ -36,7 +36,7 @@ public class Fox extends Piece {
 	 * An enumeration representing the direction the fox is going
 	 */
 	public enum Direction {
-		VERTICAL, HORIZONTAL
+		LEFT, RIGHT, UP, DOWN
 	}
 
 	/**
@@ -69,8 +69,8 @@ public class Fox extends Piece {
 
 	@Override
 	public boolean move(Move move, Board board) {
-		if (direction.equals(Direction.HORIZONTAL) && move.direction() != 0
-				|| direction.equals(Direction.VERTICAL) && move.direction() != 1) {
+		if ((direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) && move.direction() != 0
+				|| (direction.equals(Direction.UP) || direction.equals(Direction.DOWN)) && move.direction() != 1) {
 			return false;
 		}
 
@@ -84,7 +84,7 @@ public class Fox extends Piece {
 		boolean location = true; // True for immediate right or up, false otherwise
 
 		// Find its head/tail
-		if (direction.equals(Direction.HORIZONTAL)) { // It's to the left or right
+		if (direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) { // It's to the left or right
 			if (xStart - 1 < 0) { // Must be to the right
 				location = true;
 			} else if (xStart + 1 > 4) { // Must be to the left
@@ -188,7 +188,7 @@ public class Fox extends Piece {
 			return false;
 		}
 
-		if (this.direction.equals(Direction.HORIZONTAL) && direction == 0) { // Check to see if the fox is horizontal
+		if ((this.direction.equals(Direction.LEFT) || this.direction.equals(Direction.RIGHT)) && direction == 0) { // Check to see if the fox is horizontal
 																				// and the move is horizontal
 			if (location && xDistance > 0) { // The other part of the fox is to the right and we are moving right
 				if (xEnd + 1 > 4) { // Check to see if the move will push the fox out of bounds
@@ -222,7 +222,7 @@ public class Fox extends Piece {
 				}
 			}
 			return true; // The move is valid for the fox
-		} else if (this.direction.equals(Direction.VERTICAL) && direction == 1) { // Check to see if the fox is vertical
+		} else if ((this.direction.equals(Direction.UP) || this.direction.equals(Direction.DOWN)) && direction == 1) { // Check to see if the fox is vertical
 																					// and the move is vertical
 			if (location && yDistance > 0) { // The other part of the fox is up and we are moving down
 				for (int i = yStart + 1; i <= yEnd; i++) { // Need to make sure there are no obstacles in the path
