@@ -1,6 +1,8 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -42,28 +44,27 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	private Board board;
 
 	private GameController gameController;
-	
+
 	private int[] xy;
-	
+
 	/**
 	 * Create the application gui
 	 */
 	public GameView() {
 		initialize();
 	}
-	
+
 	/**
 	 * 
 	 */
 	private void initialize() {
-		
+
 		board = new Board();
 		board.addListener(this);
 
 		gameController = new GameController(board);
 
 		mainMenuFrame = new JFrame("Rabbit and Foxes!");
-
 		mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// absolute layout
 		mainMenuFrame.getContentPane().setLayout(null);
@@ -118,23 +119,23 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		}
 
 		updateView();
-		
+
 		menuReset.addActionListener(this);
 		btnHelp.addActionListener(this);
 		menuHelp.addActionListener(this);
 		btnQuit.addActionListener(this);
 		menuQuit.addActionListener(this);
 		mainMenuFrame.setVisible(true);
-		
+
 		btnStart.addActionListener(e -> {
 			mainMenuFrame.dispose();
 			gameFrame.setVisible(true);
 		});
-		
+
 		xy = new int[2];
 
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -147,33 +148,31 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 						(buttons[i][j]).setIcon(Resources.MUSHROOM);
 					else if ((piece.getPieceType()).equals(Piece.PieceType.RABBIT)) {
 						if (((Rabbit) (piece)).isColour())
-							(buttons[i][j]).setIcon(Resources.RABBIT1); 
+							(buttons[i][j]).setIcon(Resources.RABBIT1);
 						else
-							(buttons[i][j]).setIcon(Resources.RABBIT2); 
-					}
-					else if ((piece.getPieceType()).equals(Piece.PieceType.FOX)) {
+							(buttons[i][j]).setIcon(Resources.RABBIT2);
+					} else if ((piece.getPieceType()).equals(Piece.PieceType.FOX)) {
 						if (((Fox) (piece)).getDirection().equals(Fox.Direction.UP)) {
 							if (((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
 								(buttons[i][j]).setIcon(Resources.FOX_HEAD_UP);
-							else 
+							else
 								(buttons[i][j]).setIcon(Resources.FOX_TAIL_UP);
-						}
-						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.DOWN))
+						} else if (((Fox) (piece)).getDirection().equals(Fox.Direction.DOWN))
 							if (((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-									(buttons[i][j]).setIcon(Resources.FOX_HEAD_UP);
-							else 
+								(buttons[i][j]).setIcon(Resources.FOX_HEAD_UP);
+							else
 								(buttons[i][j]).setIcon(Resources.FOX_TAIL_UP);
 						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.LEFT))
 							if (((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-									(buttons[i][j]).setIcon(Resources.FOX_HEAD_LEFT);
-							else 
+								(buttons[i][j]).setIcon(Resources.FOX_HEAD_LEFT);
+							else
 								(buttons[i][j]).setIcon(Resources.FOX_TAIL_LEFT);
 						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.RIGHT))
 							if (((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-									(buttons[i][j]).setIcon(Resources.FOX_HEAD_RIGHT);
-							else 
+								(buttons[i][j]).setIcon(Resources.FOX_HEAD_RIGHT);
+							else
 								(buttons[i][j]).setIcon(Resources.FOX_TAIL_RIGHT);
-						}
+					}
 				} else {
 					buttons[i][j].setIcon(null);
 					buttons[i][j].revalidate();
@@ -182,7 +181,6 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		}
 	}
 
-	
 	/**
 	 * 
 	 * @param args
@@ -190,7 +188,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> new GameView());
 	}
-	
+
 	/**
 	 * 
 	 * @param c
@@ -206,7 +204,23 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		}
 	}
 
+	//i will add javadoc, false if u want all buttons disabled, true if enabled 
+	private void gameEndBoard(boolean state) {
+		for (int i = 0; i < Board.SIZE; i++) {
+			for (int j = 0; j < Board.SIZE; j++) {
+				buttons[i][j].setEnabled(state);
+			}
+		}
+	}
 	
+	//will add javadoc, this basically resets the game once the game is won
+	//eventually when we have levels, they will be notified here. 
+	private void gameWinReset(Board board) {
+		(this.board = gameController.reset()).addListener(this);
+		updateView();
+		gameEndBoard(true);
+	}
+
 	/**
 	 * 
 	 */
@@ -214,44 +228,34 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnHelp || e.getSource() == menuHelp) {
 			JOptionPane.showMessageDialog(null,
-					"Start: Starts the game. \n"
-							+ "Reset: Restarts the game. \n" + "Quit: Exits the application");
+					"Start: Starts the game. \n" + "Reset: Restarts the game. \n" + "Quit: Exits the application");
 		} else if (e.getSource() == btnQuit || e.getSource() == menuQuit) {
 			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Rabbit and Foxes!",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 				System.exit(0);
 		} else if (e.getSource() == menuReset) {
-			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbit and Foxes!",
+			if (JOptionPane.showConfirmDialog(null,
+					"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbit and Foxes!",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-						(this.board = gameController.reset()).addListener(this);
-						updateView();
-						for (int i = 0; i < Board.SIZE; i++) {
-							for (int j = 0; j < Board.SIZE; j++) {
-								buttons[i][j].setEnabled(true);
-							}	
-						}
-					}
+				gameWinReset(this.board); 
+			}
 		} else if (e.getSource().getClass().equals(JButton.class)) {
 			locateButton(e.getSource());
 			gameController.registerMove(xy[0], xy[1]);
 		}
 	}
 
-	
 	/**
-	 * Updates whenever the Board changes. The View must be
-	 * updated to reflect the new state of the Board.
+	 * Updates whenever the Board changes. The View must be updated to reflect the
+	 * new state of the Board.
 	 */
 	@Override
 	public void handleBoardChange() {
-		updateView();	
+		updateView();
 		if (board.isInWinningState()) {
-			for (int i = 0; i < Board.SIZE; i++) {
-				for (int j = 0; j < Board.SIZE; j++) {
-					buttons[i][j].setEnabled(false);
-				}
-			}
-			JOptionPane.showMessageDialog(null, "Congrats! You win!");	
+			//gameEndBoard(false); 
+			JOptionPane.showMessageDialog(null, "Congrats! You win!");
+			gameWinReset(board); 
 		}
 	}
 }
