@@ -124,7 +124,8 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		menuHelp.addActionListener(this);
 		btnQuit.addActionListener(this);
 		menuQuit.addActionListener(this);
-
+		mainMenuFrame.setVisible(true);
+		
 		btnStart.addActionListener(e -> {
 			mainMenuFrame.dispose();
 			gameFrame.setVisible(true);
@@ -187,13 +188,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				GameView gameView = new GameView();
-				gameView.mainMenuFrame.setVisible(true);
-			}
-		});
+		SwingUtilities.invokeLater(() -> new GameView());
 	}
 	
 	/**
@@ -230,6 +225,11 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						(this.board = gameController.reset()).addListener(this);
 						updateView();
+						for (int i = 0; i < Board.SIZE; i++) {
+							for (int j = 0; j < Board.SIZE; j++) {
+								buttons[i][j].setEnabled(true);
+							}	
+						}
 					}
 		} else if (e.getSource().getClass().equals(JButton.class)) {
 			locateButton(e.getSource());
@@ -246,6 +246,11 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	public void handleBoardChange() {
 		updateView();	
 		if (board.isInWinningState()) {
+			for (int i = 0; i < Board.SIZE; i++) {
+				for (int j = 0; j < Board.SIZE; j++) {
+					buttons[i][j].setEnabled(false);
+				}
+			}
 			JOptionPane.showMessageDialog(null, "Congrats! You win!");	
 		}
 	}
