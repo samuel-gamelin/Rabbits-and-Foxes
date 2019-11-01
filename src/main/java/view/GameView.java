@@ -1,20 +1,15 @@
 package view;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 import controller.GameController;
 import model.Board;
-import model.BoardEvent;
 import model.BoardListener;
 import model.Fox;
 import model.Piece;
-import model.Piece.PieceType;
+import model.Rabbit;
 import resources.Resources;
 
 /**
@@ -50,8 +45,6 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	
 	private int[] xy;
 	
-	private int prevX, prevY;
-	
 	/**
 	 * Create the application gui
 	 */
@@ -69,7 +62,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 
 		gameController = new GameController(board);
 
-		mainMenuFrame = new JFrame();
+		mainMenuFrame = new JFrame("Rabbit and Foxes!");
 
 		mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// absolute layout
@@ -90,7 +83,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		btnQuit.setBounds(320, 517, 214, 83);
 		mainMenuFrame.getContentPane().add(btnQuit);
 
-		gameFrame = new JFrame();
+		gameFrame = new JFrame("Rabbit and Foxes!");
 
 		gameFrame.setContentPane(new JLabel(Resources.BOARD));
 		gameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -126,6 +119,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 
 		updateView();
 		
+		menuReset.addActionListener(this);
 		btnHelp.addActionListener(this);
 		menuHelp.addActionListener(this);
 		btnQuit.addActionListener(this);
@@ -137,9 +131,6 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		});
 		
 		xy = new int[2];
-		
-		prevX = -1;
-		prevY = -1;
 
 	}
 	
@@ -153,23 +144,49 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 				if ((piece != null)) {
 					if ((piece.getPieceType()).equals(Piece.PieceType.MUSHROOM))
 						(buttons[i][j]).setIcon(Resources.MUSHROOM);
-					else if ((piece.getPieceType()).equals(Piece.PieceType.RABBIT))
-						(buttons[i][j]).setIcon(Resources.RABBIT1); // change this later to know if its rabbit1 or rabbit2
+					else if ((piece.getPieceType()).equals(Piece.PieceType.RABBIT)) {
+						if (((Rabbit) (piece)).isColour())
+							(buttons[i][j]).setIcon(Resources.RABBIT1); 
+						else
+							(buttons[i][j]).setIcon(Resources.RABBIT2); 
+					}
 					// gotta fix this, we dont know where the head is, left of tail? or right of tail? ontop of tail? under tail? etc.
 					else if ((piece.getPieceType()).equals(Piece.PieceType.FOX)) {
-						if (((Fox) (piece)).getDirection().equals(Fox.Direction.UP)
-								&& ((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-							(buttons[i][j]).setIcon(Resources.FOX_HEAD_RIGHT);
-						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.DOWN)
-								&& ((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-							(buttons[i][j]).setIcon(Resources.FOX_HEAD_UP);
-					}
+						if (((Fox) (piece)).getDirection().equals(Fox.Direction.UP)) {
+							if (((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
+								(buttons[i][j]).setIcon(Resources.FOX_HEAD_UP);
+							else 
+								(buttons[i][j]).setIcon(Resources.FOX_TAIL_UP);
+						}
+						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.DOWN))
+							if (((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
+									(buttons[i][j]).setIcon(Resources.FOX_HEAD_DOWN);
+							else 
+								(buttons[i][j]).setIcon(Resources.FOX_TAIL_DOWN);
+						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.LEFT))
+							if (((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
+									(buttons[i][j]).setIcon(Resources.FOX_HEAD_LEFT);
+							else 
+								(buttons[i][j]).setIcon(Resources.FOX_TAIL_LEFT);
+						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.RIGHT))
+							if (((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
+									(buttons[i][j]).setIcon(Resources.FOX_HEAD_RIGHT);
+							else 
+								(buttons[i][j]).setIcon(Resources.FOX_TAIL_RIGHT);
+						}
+				} else {
+					buttons[i][j].setIcon(null);
+					buttons[i][j].revalidate();
 				}
 			}
 		}
-		gameFrame.revalidate();
 	}
 
+	
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -195,6 +212,10 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		}
 	}
 
+	
+	/**
+	 * 
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnHelp || e.getSource() == menuHelp) {
@@ -205,21 +226,28 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Rabbit and Foxes!",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 				System.exit(0);
+			// Wait for Mohamed to fix reset on his end, then we can uncomment this and it should work (hopefully).
+//		} else if (e.getSource() == menuReset) {
+//			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbit and Foxes!",
+//					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+//						gameController.reset();
+//					}
 		} else if (e.getSource().getClass().equals(JButton.class)) {
 			locateButton(e.getSource());
-			if (gameController.registerMove(xy[0], xy[1])) {
-				buttons[prevX][prevY].setIcon(null);
-				updateView();
-			} else {
-				prevX = xy[0];
-				prevY = xy[1];
-			}
-		} 
+			gameController.registerMove(xy[0], xy[1]);
+		}
 	}
 
+	
+	/**
+	 * Updates whenever the Board changes. The View must be
+	 * updated to reflect the new state of the Board.
+	 */
 	@Override
 	public void handleBoardChange() {
-		// TODO Auto-generated method stub
-		
+		updateView();	
+		if (board.isInWinningState()) {
+			JOptionPane.showMessageDialog(null, "Congrats! You win!");
+		}
 	}
 }
