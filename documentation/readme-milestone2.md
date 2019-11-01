@@ -1,11 +1,14 @@
 # Milestone 2
 
 ## Other Deliverables Included In This Milestone/Release
+
 - Code (including the source and a jar executable)
+  - Junit Tests
 - UML and sequence diagrams
 - Documentation (javadocs and a user manual that includes design decisions)
 
 ## Authors
+
 - Abdalla El Nakla
 - Dani Hashweh
 - John Breton
@@ -13,18 +16,17 @@
 - Samuel Gamelin
 
 ## Changes Since Previous Deliverable
-As this is the first deliverable, all changes provided here are new.
 
-<div style="text-align: justify">
-A playable GUI-based version of the game was introduced, along with supporting documentation
-including javadocs, UML, and sequence diagrams, forming the View and Controller parts of the MVC pattern.
+In this milestone the main feature that has been introduced to the game is the GUI component. The GUI component will enhance the user experience during game play. The game now features a board image which shows the user all the game pieces placed on the board. In this milestone Unit testing has also been introduced. The Unit testing is used to test the model component of the game to insure the game runs smoothly.
+
+The code for the game is designed using the MVC design pattern. During milestone 1 the model component was completed and submitted. In this milestone the view and controller have also been added. There has also been some modifications to the model based on the TA's suggestions. The modifications made will insure that delegation, encapsulation, and cohesion are fully used throughout the code. Based on code review held during the weekly meeting we have also discussed improvements on existing code. These improvements are made to remove code redundancy, duplication and code smells. This will improve the software overall.
 
 A document containing a user manual and design decisions has also been provided to allow the user
 to understand the workings of the game and the reasoning behind the design choices that were made
 in order to implement this GUI-based version of the game.
-</div>
 
 ## Known Issues
+
 - There are currently no known issues with the deliverables for milestone 2.
 
 ## Roadmap Ahead

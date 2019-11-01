@@ -2,7 +2,6 @@
 
 This GitHub repo is used for the development of a game based on JumpIN that follows the MVC design pattern.
 
-
 ## Development
 
 ##### Tools
@@ -79,15 +78,15 @@ Currently no known issues are present.
 
 ## New features
 
-- Milestone1: A fully playable text-based implementation of the game! 
-    - Parsing user input
-    - Moving pieces on the board
-    - Displaying the board to the user
-    - Identifying if a move is valid based on the game rules
-    - Creating a board and setting pieces on said board
-    - Proceeding with the game based on user input.
-    - Ability to process if the user has solved the puzzle
-    - Among other fundamental features necessary to ensure the game proceeds smoothly
+- Milestone2: A fully playable GUI implementation of the game!
+  - Parsing user input through mouse clicks
+  - Moving pieces on the board
+  - Displaying the board to the user
+  - Identifying if a move is valid based on the game rules
+  - Creating a board and setting pieces on said board
+  - Proceeding with the game based on user input.
+  - Ability to process if the user has solved the puzzle
+  - Among other fundamental features necessary to ensure the game proceeds smoothly
 
 ## The Team
 
