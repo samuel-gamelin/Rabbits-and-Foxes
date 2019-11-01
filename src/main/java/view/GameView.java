@@ -131,7 +131,8 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		menuHelp.addActionListener(this);
 		btnQuit.addActionListener(this);
 		menuQuit.addActionListener(this);
-
+		mainMenuFrame.setVisible(true);
+		
 		btnStart.addActionListener(e -> {
 			mainMenuFrame.dispose();
 			gameFrame.setVisible(true);
