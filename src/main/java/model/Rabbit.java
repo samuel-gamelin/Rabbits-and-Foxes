@@ -84,7 +84,9 @@ public class Rabbit extends Piece {
 					}
 				}
 			}
-		} else if (board.isOccupied(move.xEnd, move.yEnd)) { // Ensure the landing spot is clear
+		}
+		
+		if (board.isOccupied(move.xEnd, move.yEnd)) { // Ensure the landing spot is clear
 			return false;
 		}
 		return true;
