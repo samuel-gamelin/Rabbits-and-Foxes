@@ -111,7 +111,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 				// clear button default colours and make it transparent
 				buttons[j][i].setOpaque(false);
 				buttons[j][i].setContentAreaFilled(false);
-				buttons[j][i].setBorderPainted(false);
+				buttons[j][i].setFocusPainted(false);
 				gameFrame.add(buttons[j][i]);
 				buttons[j][i].addActionListener(this);
 			}
