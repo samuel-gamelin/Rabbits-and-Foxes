@@ -45,8 +45,6 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	
 	private int[] xy;
 	
-	private int prevX, prevY;
-	
 	/**
 	 * Create the application gui
 	 */
@@ -133,9 +131,6 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		});
 		
 		xy = new int[2];
-		
-		prevX = -1;
-		prevY = -1;
 
 	}
 	
@@ -178,7 +173,10 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 									(buttons[i][j]).setIcon(Resources.FOX_HEAD_RIGHT);
 							else 
 								(buttons[i][j]).setIcon(Resources.FOX_TAIL_RIGHT);
-					}
+						}
+				} else {
+					buttons[i][j].setIcon(null);
+					buttons[i][j].revalidate();
 				}
 			}
 		}
@@ -236,13 +234,8 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 //					}
 		} else if (e.getSource().getClass().equals(JButton.class)) {
 			locateButton(e.getSource());
-			if (gameController.registerMove(xy[0], xy[1])) {
-				buttons[prevX][prevY].setIcon(null);
-			} else {
-				prevX = xy[0];
-				prevY = xy[1];
-			}
-		} 
+			gameController.registerMove(xy[0], xy[1]);
+		}
 	}
 
 	
@@ -253,5 +246,8 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	@Override
 	public void handleBoardChange() {
 		updateView();	
+		if (board.isInWinningState()) {
+			JOptionPane.showMessageDialog(null, "Congrats! You win!");
+		}
 	}
 }
