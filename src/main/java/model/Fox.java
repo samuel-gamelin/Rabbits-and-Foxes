@@ -5,6 +5,7 @@ package model;
  * 
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
+ * @author John Breton
  * 
  * @version 2.0
  */

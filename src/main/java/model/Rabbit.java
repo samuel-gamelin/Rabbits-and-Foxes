@@ -9,8 +9,19 @@ package model;
  * @version 2.0
  */
 public class Rabbit extends Piece {
-	public Rabbit() {
+	private boolean colour;
+	
+	public Rabbit(boolean colour) {
 		super(PieceType.RABBIT);
+		this.colour = colour;
+	}
+	
+	/**
+	 * Retrieve the colour of the rabbit.
+	 * @return True if the Rabbit is brown, false if the Rabbit is white.
+	 */
+	public boolean isColour() {
+		return colour;
 	}
 
 	@Override

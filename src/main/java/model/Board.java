@@ -68,9 +68,9 @@ public class Board {
 		tiles[2][4].placePiece(new Mushroom());
 
 		// Adding the rabbits (there can be 1 to 3, here we have 3)
-		tiles[1][4].placePiece(new Rabbit());
-		tiles[3][0].placePiece(new Rabbit());
-		tiles[4][2].placePiece(new Rabbit());
+		tiles[1][4].placePiece(new Rabbit(true));
+		tiles[3][0].placePiece(new Rabbit(false));
+		tiles[4][2].placePiece(new Rabbit(false));
 
 		// Adding the foxes (there can be 0 to 2, here we have 2)
 		tiles[3][3].placePiece(new Fox(Fox.FoxType.HEAD, Fox.Direction.LEFT, false));
