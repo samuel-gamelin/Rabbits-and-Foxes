@@ -1,22 +1,20 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.*;
+import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
+import javax.swing.*;
 import controller.GameController;
 import model.Board;
+import model.BoardEvent;
 import model.BoardListener;
 import model.Fox;
 import model.Piece;
+import model.Piece.PieceType;
 import resources.Resources;
 
 /**
@@ -24,7 +22,7 @@ import resources.Resources;
  * the game.
  * 
  * @author Dani Hashweh
- * @author Samuel Gamelin
+ * @author John Breton
  * @version 2.0
  */
 public class GameView extends JFrame implements BoardListener, ActionListener {
@@ -49,10 +47,26 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	private Board board;
 
 	private GameController gameController;
-
+	
+	private int[] xy;
+	
+	private int prevX, prevY;
+	
+	/**
+	 * Create the application gui
+	 */
+	public GameView() {
+		initialize();
+	}
+	
+	/**
+	 * 
+	 */
 	private void initialize() {
+		
 		board = new Board();
 		board.addListener(this);
+
 		gameController = new GameController(board);
 
 		mainMenuFrame = new JFrame();
@@ -101,54 +115,84 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
 				buttons[i][j] = new JButton();
-				Piece piece = board.getPiece(i, j);
-				if ((piece != null)) {
-					if ((piece.getPieceType()).equals(Piece.PieceType.MUSHROOM))
-						(buttons[i][j]).setIcon(Resources.MUSHROOM);
-					else if ((piece.getPieceType()).equals(Piece.PieceType.RABBIT))
-						(buttons[i][j]).setIcon(Resources.RABBIT1); // change this later to know if its rabbit1 or
-																	// rabbit2
-					// gotta fix this, we dont know where the head is, left of tail? or right of
-					// tail? ontop of tail? under tail? etc.
-					else if ((piece.getPieceType()).equals(Piece.PieceType.FOX)) {
-						if (((Fox) (piece)).getDirection().equals(Fox.Direction.LEFT)
-								&& ((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-							(buttons[i][j]).setIcon(Resources.FOX_HEAD_LEFT);
-						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.DOWN)
-								&& ((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
-							(buttons[i][j]).setIcon(Resources.FOX_HEAD_DOWN);
-					}
-				}
 				// clear button default colours and make it transparent
 				buttons[i][j].setOpaque(false);
 				buttons[i][j].setContentAreaFilled(false);
 				buttons[i][j].setBorderPainted(false);
 				gameFrame.add(buttons[i][j]);
+				buttons[i][j].addActionListener(this);
 			}
 		}
 
+		updateView();
+		
 		btnHelp.addActionListener(this);
 		menuHelp.addActionListener(this);
 		btnQuit.addActionListener(this);
 		menuQuit.addActionListener(this);
-		mainMenuFrame.setVisible(true);
-		
+
 		btnStart.addActionListener(e -> {
 			mainMenuFrame.dispose();
 			gameFrame.setVisible(true);
 		});
+		
+		xy = new int[2];
+		
+		prevX = -1;
+		prevY = -1;
 
 	}
-
+	
 	/**
-	 * Create the application gui
+	 * 
 	 */
-	public GameView() {
-		initialize();
+	private void updateView() {
+		for (int i = 0; i < Board.SIZE; i++) {
+			for (int j = 0; j < Board.SIZE; j++) {
+				Piece piece = board.getPiece(i, j);
+				if ((piece != null)) {
+					if ((piece.getPieceType()).equals(Piece.PieceType.MUSHROOM))
+						(buttons[i][j]).setIcon(Resources.MUSHROOM);
+					else if ((piece.getPieceType()).equals(Piece.PieceType.RABBIT))
+						(buttons[i][j]).setIcon(Resources.RABBIT1); // change this later to know if its rabbit1 or rabbit2
+					// gotta fix this, we dont know where the head is, left of tail? or right of tail? ontop of tail? under tail? etc.
+					else if ((piece.getPieceType()).equals(Piece.PieceType.FOX)) {
+						if (((Fox) (piece)).getDirection().equals(Fox.Direction.UP)
+								&& ((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
+							(buttons[i][j]).setIcon(Resources.FOX_HEAD_RIGHT);
+						else if (((Fox) (piece)).getDirection().equals(Fox.Direction.DOWN)
+								&& ((Fox) (piece)).getFoxType() == (Fox.FoxType.HEAD))
+							(buttons[i][j]).setIcon(Resources.FOX_HEAD_UP);
+					}
+				}
+			}
+		}
+		gameFrame.revalidate();
 	}
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new GameView());
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				GameView gameView = new GameView();
+				gameView.mainMenuFrame.setVisible(true);
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 * @param c
+	 */
+	private void locateButton(Object b) {
+		for (int x = 0; x < buttons.length; x++) {
+			for (int y = 0; y < buttons.length; y++) {
+				if (b.equals(buttons[x][y])) {
+					xy[0] = x;
+					xy[1] = y;
+				}
+			}
+		}
 	}
 
 	@Override
@@ -156,19 +200,26 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		if (e.getSource() == btnHelp || e.getSource() == menuHelp) {
 			JOptionPane.showMessageDialog(null,
 					"Start: Starts the game. \n"
-							+ "Pause: Pauses the game, and clicking it again, will resume the game. \n"
 							+ "Reset: Restarts the game. \n" + "Quit: Exits the application");
 		} else if (e.getSource() == btnQuit || e.getSource() == menuQuit) {
 			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Rabbit and Foxes!",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 				System.exit(0);
-		}
-
+		} else if (e.getSource().getClass().equals(JButton.class)) {
+			locateButton(e.getSource());
+			if (gameController.registerMove(xy[0], xy[1])) {
+				buttons[prevX][prevY].setIcon(null);
+				updateView();
+			} else {
+				prevX = xy[0];
+				prevY = xy[1];
+			}
+		} 
 	}
 
 	@Override
 	public void handleBoardChange() {
 		// TODO Auto-generated method stub
-
+		
 	}
 }
