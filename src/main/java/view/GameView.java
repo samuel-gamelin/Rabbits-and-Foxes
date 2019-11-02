@@ -106,7 +106,7 @@ public class GameView implements BoardListener, ActionListener {
 		gamePane.add(menuBar, BorderLayout.NORTH);
 
 		// GridLayout for board frame
-		JLabel boardLabel = new JLabel(new ImageIcon(Resources.BOARD.getImage().getScaledInstance((int) sideLength, (int) sideLength, Image.SCALE_SMOOTH)));
+		JLabel boardLabel = new JLabel(Resources.BOARD);
 		boardLabel.setLayout(new GridLayout(5, 5));
 		gamePane.add(boardLabel, BorderLayout.CENTER);
 
@@ -159,7 +159,6 @@ public class GameView implements BoardListener, ActionListener {
 	 */
 	private void addMenuButton(Container pane, JButton button) {
 		pane.add(Box.createRigidArea(new Dimension(0, (int) (0.5 * sideLength / 4))));
-		System.out.println((int) (0.25 * sideLength));
 		button.setMaximumSize(new Dimension((int) sideLength / 2, (int) (0.15 * sideLength)));
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pane.add(button);
