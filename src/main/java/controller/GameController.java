@@ -58,7 +58,6 @@ public class GameController {
 		return false;
 	}
 
-
 	/**
 	 * This method is used to reset the Game. In order to ensure that the new game
 	 * will not have any old registered moves the method also clears the move array
