@@ -8,7 +8,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.*;
-
 import javax.swing.*;
 import controller.GameController;
 import model.Board;
