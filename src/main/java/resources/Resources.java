@@ -25,8 +25,8 @@ public final class Resources {
 	public static final double SIDE_LENGTH = 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
 	// Rabbit icons
-	public static final ImageIcon RABBIT1 = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("rabbit1.png")), 0.7, 0.75);
-	public static final ImageIcon RABBIT2 = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("rabbit2.png")), 0.7, 0.75);
+	public static final ImageIcon RABBIT1 = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("rabbit1.png")), 0.6, 0.75);
+	public static final ImageIcon RABBIT2 = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("rabbit2.png")), 0.6, 0.75);
 
 	// Fox head icons
 	public static final ImageIcon FOX_HEAD_UP = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("fox-head-up.png")), 0.75, 1);
