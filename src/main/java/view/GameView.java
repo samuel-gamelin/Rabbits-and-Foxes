@@ -136,6 +136,7 @@ public class GameView implements BoardListener, ActionListener {
 				buttons[j][i].setOpaque(false);
 				buttons[j][i].setContentAreaFilled(false);
 				buttons[j][i].setFocusPainted(false);
+				buttons[j][i].setBorderPainted(false);
 				boardLabel.add(buttons[j][i]);
 
 				// Register an anonymous listener on the button which notifies the controller
@@ -186,6 +187,7 @@ public class GameView implements BoardListener, ActionListener {
 		button.setFocusPainted(false);
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
 		button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 				.put(KeyStroke.getKeyStroke(Character.toLowerCase(text.charAt(0))), text);
 		button.getActionMap().put(text, new AbstractAction() {
@@ -245,7 +247,6 @@ public class GameView implements BoardListener, ActionListener {
 					}
 				} else {
 					buttons[i][j].setIcon(null);
-					//buttons[i][j].revalidate();
 				}
 			}
 		}
