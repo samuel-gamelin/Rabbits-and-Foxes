@@ -53,19 +53,19 @@ When contributing to the project please start on the issues page which is used f
 <p align="center"> 
 <img src="documentation/uml/classDiagram.png">
 </p>
-Date: October 21, 2019
+Date: November 2, 2019
 
 ## Current Sequence Diagram
 
 <p align="center"> 
 <img src="documentation/uml/sequenceDiagram.png">
 </p>
-Date: October 21, 2019
+Date: November 2, 2019
 
 ## Road Map
 
 - Creating the View and Controller portions of the game
-  - Building a graphical user interface to allow the user to pay the game interactively
+  - Building a graphical user interface to allow the user to play the game interactively
   - Implementing unit tests for the Model portion of the game
   - Continuing to implement gradual improvements
   - Continuing to document the development and design process
