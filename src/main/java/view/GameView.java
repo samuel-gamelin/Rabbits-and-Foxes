@@ -8,7 +8,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.*;
-
 import javax.swing.*;
 import controller.GameController;
 import model.Board;
@@ -159,7 +158,6 @@ public class GameView implements BoardListener, ActionListener {
 	 */
 	private void addMenuButton(Container pane, JButton button) {
 		pane.add(Box.createRigidArea(new Dimension(0, (int) (0.5 * sideLength / 4))));
-		System.out.println((int) (0.25 * sideLength));
 		button.setMaximumSize(new Dimension((int) sideLength / 2, (int) (0.15 * sideLength)));
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pane.add(button);
