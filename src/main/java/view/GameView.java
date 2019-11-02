@@ -1,7 +1,11 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.*;
 
@@ -22,8 +26,9 @@ import resources.Resources;
  * @author John Breton
  * @version 2.0
  */
-public class GameView extends JFrame implements BoardListener, ActionListener {
-	private static final long serialVersionUID = 1L;
+public class GameView implements BoardListener, ActionListener {
+	private double sideLength = 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	
 	private JFrame mainMenuFrame;
 	private JFrame gameFrame;
 
@@ -37,8 +42,6 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	private JButton btnHelp;
 	private JButton btnQuit;
 
-	private GridLayout boardLayout;
-
 	private JButton[][] buttons;
 
 	private Board board;
@@ -51,53 +54,43 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	 * Create the application gui
 	 */
 	public GameView() {
-		initialize();
-	}
-
-	/**
-	 * 
-	 */
-	private void initialize() {
-		
-		//fixes cross platform gui
+		// Forces the look and feel of the application to remain consistent across platforms
 		try {
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 		}
 
-		board = new Board();
-		board.addListener(this);
-
-		gameController = new GameController(board);
-
+		/**
+		 * 
+		 * Main menu
+		 * 
+		 */
 		mainMenuFrame = new JFrame("Rabbit and Foxes!");
+		
+		// Box Layout for main menu
+		Container mainMenuPane = mainMenuFrame.getContentPane();
+		mainMenuPane.setLayout(new BoxLayout(mainMenuPane, BoxLayout.Y_AXIS));
+		
+		btnStart = new JButton("Start");
+		btnHelp = new JButton("Help");
+		btnQuit = new JButton("Quit");
+		addMenuButton(mainMenuPane, btnStart);
+		addMenuButton(mainMenuPane, btnHelp);
+		addMenuButton(mainMenuPane, btnQuit);
+
 		mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// absolute layout
-		mainMenuFrame.getContentPane().setLayout(null);
-		mainMenuFrame.setBounds(100, 100, 875, 925);
+		mainMenuFrame.setSize((int) sideLength, (int) sideLength);
 		mainMenuFrame.setResizable(false);
 		mainMenuFrame.setLocationRelativeTo(null);
+		mainMenuFrame.setVisible(true);
 
-		btnStart = new JButton("Start");
-		btnStart.setBounds(320, 249, 214, 83);
-		mainMenuFrame.getContentPane().add(btnStart);
-
-		btnHelp = new JButton("Help");
-		btnHelp.setBounds(320, 375, 214, 83);
-		mainMenuFrame.getContentPane().add(btnHelp);
-
-		btnQuit = new JButton("Quit");
-		btnQuit.setBounds(320, 517, 214, 83);
-		mainMenuFrame.getContentPane().add(btnQuit);
-
+		/**
+		 * 
+		 * Game frame
+		 * 
+		 */
 		gameFrame = new JFrame("Rabbit and Foxes!");
-
-		gameFrame.setContentPane(new JLabel(Resources.BOARD));
-		gameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		gameFrame.setSize(875, 925);
-		gameFrame.setResizable(false);
-		gameFrame.setLocationRelativeTo(null);
 
 		menuBar = new JMenuBar();
 		menuReset = new JMenuItem("Reset");
@@ -106,21 +99,38 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		menuBar.add(menuReset);
 		menuBar.add(menuHelp);
 		menuBar.add(menuQuit);
-		gameFrame.setJMenuBar(menuBar);
+		
+		// BorderLayout for game frame
+		Container gamePane = gameFrame.getContentPane();
+		gamePane.setLayout(new BorderLayout());
+		gamePane.add(menuBar, BorderLayout.NORTH);
 
-		boardLayout = new GridLayout(5, 5);
-		gameFrame.setLayout(boardLayout);
+		// GridLayout for board frame
+		JLabel boardLabel = new JLabel(new ImageIcon(Resources.BOARD.getImage().getScaledInstance((int) sideLength, (int) sideLength, Image.SCALE_SMOOTH)));
+		boardLabel.setLayout(new GridLayout(5, 5));
+		gamePane.add(boardLabel, BorderLayout.CENTER);
+
+		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gameFrame.setResizable(false);
+		gameFrame.pack();
+		gameFrame.setLocationRelativeTo(null);
+
+		/**
+		 * 
+		 */
+		(board = new Board()).addListener(this);
+		gameController = new GameController(board);
 
 		buttons = new JButton[5][5];
 
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
 				buttons[j][i] = new JButton();
-				// clear button default colours and make it transparent
+				// Clear button default colours and make it transparent
 				buttons[j][i].setOpaque(false);
 				buttons[j][i].setContentAreaFilled(false);
 				buttons[j][i].setFocusPainted(false);
-				gameFrame.add(buttons[j][i]);
+				boardLabel.add(buttons[j][i]);
 				buttons[j][i].addActionListener(this);
 			}
 		}
@@ -132,19 +142,31 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		menuHelp.addActionListener(this);
 		btnQuit.addActionListener(this);
 		menuQuit.addActionListener(this);
-		mainMenuFrame.setVisible(true);
-
+		
 		btnStart.addActionListener(e -> {
 			mainMenuFrame.dispose();
 			gameFrame.setVisible(true);
 		});
 
 		xy = new int[2];
-
 	}
 
 	/**
+	 * Adds a button to the specified pane. Used in building the menu.
 	 * 
+	 * @param pane The pane to which to add the specified button
+	 * @param button The button to add
+	 */
+	private void addMenuButton(Container pane, JButton button) {
+		pane.add(Box.createRigidArea(new Dimension(0, (int) (0.5 * sideLength / 4))));
+		System.out.println((int) (0.25 * sideLength));
+		button.setMaximumSize(new Dimension((int) sideLength / 2, (int) (0.15 * sideLength)));
+		button.setAlignmentX(Component.CENTER_ALIGNMENT);
+		pane.add(button);
+	}
+
+	/**
+	 * Updates the visual representation of the board.
 	 */
 	private void updateView() {
 		for (int i = 0; i < Board.SIZE; i++) {
@@ -186,14 +208,6 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 				}
 			}
 		}
-	}
-
-	/**
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new GameView());
 	}
 
 	/**
@@ -263,5 +277,14 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 			JOptionPane.showMessageDialog(null, "Congrats! You win!");
 			gameWinReset(board); 
 		}
+	}
+
+	/**
+	 * Starts the Rabbits and Foxes game
+	 * 
+	 * @param args The command-line arguments
+	 */
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(() -> new GameView());
 	}
 }
