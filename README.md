@@ -78,7 +78,7 @@ Currently no known issues are present.
 
 ## New features
 
-- Milestone2: A fully playable GUI implementation of the game!
+- Milestone 2: A fully playable GUI implementation of the game!
   - Parsing user input through mouse clicks
   - Moving pieces on the board
   - Displaying the board to the user
@@ -86,7 +86,7 @@ Currently no known issues are present.
   - Creating a board and setting pieces on said board
   - Proceeding with the game based on user input.
   - Ability to process if the user has solved the puzzle
-  - Among other fundamental features necessary to ensure the game proceeds smoothly
+  - Among other fundamental features necessary to ensure the game runs smoothly
 
 ## The Team
 
