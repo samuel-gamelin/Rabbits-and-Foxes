@@ -58,6 +58,13 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	 * 
 	 */
 	private void initialize() {
+		
+		//fixes cross platform gui
+		try {
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace(System.out);
+		}
 
 		board = new Board();
 		board.addListener(this);
