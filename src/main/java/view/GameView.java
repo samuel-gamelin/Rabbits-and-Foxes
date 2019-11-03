@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -30,6 +31,7 @@ import model.Board;
 import model.BoardListener;
 import model.Fox;
 import model.Fox.Direction;
+import model.Fox.FoxType;
 import model.Mushroom;
 import model.Piece;
 import model.Rabbit;
@@ -243,32 +245,11 @@ public class GameView implements BoardListener, ActionListener {
 							(buttons[i][j]).setIcon(Resources.RABBIT2);
 						}
 					} else if (piece instanceof Fox) {
-						Direction direction = ((Fox) (piece)).getDirection();
-						boolean isHead = ((Fox) (piece)).getFoxType().equals(Fox.FoxType.HEAD);
-						if (direction.equals(Fox.Direction.UP)) {
-							if (isHead) {
-								(buttons[i][j]).setIcon(Resources.FOX_HEAD_UP);
-							} else {
-								(buttons[i][j]).setIcon(Resources.FOX_TAIL_UP);
-							}
-						} else if (direction.equals(Fox.Direction.DOWN))
-							if (isHead) {
-								(buttons[i][j]).setIcon(Resources.FOX_HEAD_DOWN);
-							} else {
-								(buttons[i][j]).setIcon(Resources.FOX_TAIL_DOWN);
-							}
-						else if (direction.equals(Fox.Direction.LEFT))
-							if (isHead) {
-								(buttons[i][j]).setIcon(Resources.FOX_HEAD_LEFT);
-							} else {
-								(buttons[i][j]).setIcon(Resources.FOX_TAIL_LEFT);
-							}
-						else if (direction.equals(Fox.Direction.RIGHT))
-							if (isHead) {
-								(buttons[i][j]).setIcon(Resources.FOX_HEAD_RIGHT);
-							} else {
-								(buttons[i][j]).setIcon(Resources.FOX_TAIL_RIGHT);
-							}
+						try {
+							(buttons[i][j]).setIcon((ImageIcon) Resources.class.getDeclaredField("FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection()).get(Resources.class));
+						} catch (Exception e) {
+							e.printStackTrace(System.out);
+						}
 					}
 				} else {
 					buttons[i][j].setIcon(null);
