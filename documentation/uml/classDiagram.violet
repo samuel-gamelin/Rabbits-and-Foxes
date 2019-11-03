@@ -427,7 +427,7 @@ TAIL</string>
     <void property="methods">
      <void property="text">
       <string>+GameController(board:Board)
-+registerMove(x:int, y:int):GameController.ClickValidity
++registerClick(x:int, y:int):GameController.ClickValidity
 +clearPendingPosition()
 +reset():Board</string>
      </void>
