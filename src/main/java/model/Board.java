@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Rabbit.RabbitColour;
+
 /**
  * This class represents a board which keeps track of tiles and pieces within
  * them. It also serves as the Model for the Rabbits and Foxes game.
@@ -68,9 +70,9 @@ public class Board {
 		tiles[2][4].placePiece(new Mushroom());
 
 		// Adding the rabbits (there can be 1 to 3, here we have 3)
-		tiles[1][4].placePiece(new Rabbit(true));
-		tiles[3][0].placePiece(new Rabbit(false));
-		tiles[4][2].placePiece(new Rabbit(false));
+		tiles[1][4].placePiece(new Rabbit(RabbitColour.BROWN));
+		tiles[3][0].placePiece(new Rabbit(RabbitColour.WHITE));
+		tiles[4][2].placePiece(new Rabbit(RabbitColour.WHITE));
 
 		// Adding the foxes (there can be 0 to 2, here we have 2)
 		Fox fox1  = new Fox(Fox.Direction.LEFT, true);
