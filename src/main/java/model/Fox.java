@@ -11,9 +11,14 @@ package model;
  */
 public class Fox extends Piece {
 	/**
-	 * The direction in which the fox is facing.
+	 * The direction in which the fox is facing
 	 */
 	private Direction direction;
+	
+	/**
+	 * Stores the otherHalf of this Fox
+	 */
+	private Fox otherHalf;
 
 	/**
 	 * The type of fox
@@ -21,8 +26,8 @@ public class Fox extends Piece {
 	private FoxType foxType;
 
 	/**
-	 * A boolean used to identify which fox parts belong together and to distinguish
-	 * one fox from another.
+	 * A boolean used to identify which fox parts belong together and to 
+	 * distinguish one fox from another.
 	 */
 	private boolean id;
 
@@ -41,17 +46,45 @@ public class Fox extends Piece {
 	}
 
 	/**
-	 * Construct a new fox given the head or tail and the direction
+	 * Construct a new Fox
 	 * 
 	 * @param foxType   The fox type of the fox, as a FoxType
 	 * @param direction The direction given for the Fox
-	 * @param id        The id of the fox, used to differentiate different foxes
+	 * @param id        The id of the fox, used to differentiate foxes
+	 * @param otherBody The location of other half of the fox. True is the fox has
+	 * 					it's other half to the right or above, false if it has it's 
+	 * 					other half to the left or below.
 	 */
-	public Fox(FoxType foxType, Direction direction, boolean id) {
+	public Fox(Direction direction, boolean id) {
 		super(PieceType.FOX);
-		this.foxType = foxType;
+		this.foxType = FoxType.HEAD;
 		this.direction = direction;
 		this.id = id;
+		this.otherHalf = new Fox(direction, id, this);
+	}
+	
+	/**
+	 * Construct the tail of a Fox. Only called after a head has been constructed, 
+	 * as shown through this constructors private visibility.
+	 * 
+	 * @param direction The direction given for the Fox
+	 * @param id 		The id of the fox, used to differentiate foxes
+	 * @param head		The head of this Fox's tail.
+	 */
+	private Fox(Direction direction, boolean id, Fox head) {
+		super(PieceType.FOX);
+		this.foxType = FoxType.TAIL;
+		this.direction = direction;
+		this.id = id;
+		this.otherHalf = head;
+	}
+	
+	/**
+	 * Returns the other half of a Fox.
+	 * @return The other half of this Fox.
+	 */
+	public Fox getOtherHalf() {
+		return this.otherHalf;
 	}
 
 	/**
@@ -74,10 +107,13 @@ public class Fox extends Piece {
 	public boolean getID() {
 		return id;
 	}
-
 	
 	/**
-	 * Attempts to move a Fox in the 
+	 * Attempt to move this Fox. Foxes can only slide
+	 * in the direction that they are facing. They cannot slide
+	 * through or onto other obstacles. The user will only select
+	 * one piece of the Fox, so extra care must be taken to ensure
+	 * both parts of the Fox are moved properly.
 	 * 
 	 * @param move The move that is being attempted.
 	 * @param board The board on which this move will take place.
@@ -85,10 +121,11 @@ public class Fox extends Piece {
 	 */
 	@Override
 	public boolean move(Move move, Board board) {
-		if ((direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) && move.direction() != 0
-				|| (direction.equals(Direction.UP) || direction.equals(Direction.DOWN)) && move.direction() != 1) {
-			return false;
-		}
+		// Initial check to ensure the move direction matches the orientation of the fox.
+		// The use of ordinals saved two conditional checks. It's understood that if the enum were to change order
+		// this would fail. However, since that scenario has no reason to occur, this implementation was kept.
+		if ((direction.ordinal() < 2 && move.direction() != 0) || (direction.ordinal() > 1 && move.direction() != 1)) 
+			return false;	
 
 		int xStart = move.xStart;
 		int yStart = move.yStart;
@@ -96,89 +133,45 @@ public class Fox extends Piece {
 		int yEnd = move.yEnd;
 		int xDistance = move.xDistance();
 		int yDistance = move.yDistance();
-
-		boolean location = true; // True for immediate right or up, false otherwise
-
-		// Find its head/tail
-		if (direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) { // It's to the left or right
-			if (xStart - 1 < 0) { // Must be to the right
-				location = true;
-			} else if (xStart + 1 > 4) { // Must be to the left
-				location = false;
-			} else { // Could be either, we need to check both
-				if (board.isOccupied(xStart - 1, yStart) && board.getPiece(xStart - 1, yStart) instanceof Fox
-						&& (((Fox) board.getPiece(xStart - 1, yStart)).id) == this.id) { // Check to the left
-					location = false;
-				} else if (board.isOccupied(xStart + 1, yStart) && board.getPiece(xStart + 1, yStart) instanceof Fox
-						&& ((Fox) board.getPiece(xStart + 1, yStart)).id == this.id) { // Must be to the right
-					location = true;
-				}
-			}
-			// We have both pieces of the fox, now we try to move them.
-			if (validatePath(move, board, location)) { // Only need to check one, since it will be either true for
-														// both or false for both
-				if (location && xDistance < 0) { // Check to see if the other part of fox is to the right and we are
-													// moving left
-					board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
+		boolean location = true;
+		
+		// Determine the location of the other half of the Fox relative to this half.
+		if ((foxType.equals(FoxType.TAIL) && (direction.equals(Direction.LEFT) || direction.equals(Direction.DOWN)))
+				|| (foxType.equals(FoxType.HEAD) && (direction.equals(Direction.RIGHT) || direction.equals(Direction.UP)))) 
+			location = false;
+		// Only need to check one, since it will be either true for both or false for both
+		if (validatePath(move, board, location)) { 
+			// Moving left and the other piece is to the right or moving right and the other piece is to the left
+			// or moving up and the other piece is below or moving down and the other piece is above.
+			if ((location && xDistance < 0) || (!location && xDistance > 0) || location && yDistance > 0 || !location && yDistance < 0) { 
+				board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
+				if (xDistance < 0) {
 					board.setPiece(board.removePiece(xStart + 1, yStart), xEnd + 1, yEnd);
-					return true;
-				} else if (location && xDistance > 0) { // Check to see if the other part of fox is to the right and we
-														// are moving right
+				} else if (xDistance > 0) {
+					board.setPiece(board.removePiece(xStart - 1, yStart), xEnd - 1, yEnd);
+				} else if (yDistance < 0) {
+					board.setPiece(board.removePiece(xStart, yStart + 1), xEnd, yEnd + 1);
+				} else {
+					board.setPiece(board.removePiece(xStart, yStart - 1), xEnd, yEnd - 1);
+				}
+				return true;
+			// Moving left and the other piece is to the left or moving right and the other piece is to the right
+			// or moving up and the other piece is above or moving down and the other piece is below.
+			} else { 															
+				if (xDistance < 0) {
+					board.setPiece(board.removePiece(xStart - 1, yStart), xEnd - 1, yEnd);
+				} else if (xDistance > 0) {
 					board.setPiece(board.removePiece(xStart + 1, yStart), xEnd + 1, yEnd);
-					board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
-					return true;
-				} else if (!location && xDistance > 0) { // Check to see if the other part of fox is to the left and we
-															// are moving right
-					board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
-					board.setPiece(board.removePiece(xStart - 1, yStart), xEnd - 1, yEnd);
-					return true;
-				} else { // We know the other part of the fox is to the left and we are moving left
-					board.setPiece(board.removePiece(xStart - 1, yStart), xEnd - 1, yEnd);
-					board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
-					return true;
-				}
-			}
-			return false; // It was an invalid move after all.
-		} else { // It's above or below it.
-			if (yStart - 1 < 0) { // Must be below
-				location = false;
-			} else if (yStart + 1 > 4) { // Must be above
-				location = true;
-			} else { // Could be either, we need to check both.
-				if (board.isOccupied(xStart, yStart - 1) && board.getPiece(xStart, yStart - 1) instanceof Fox
-						&& ((Fox) board.getPiece(xStart, yStart - 1)).id == this.id) { // Check above
-					location = true;
-				} else if (board.isOccupied(xStart, yStart + 1) && board.getPiece(xStart, yStart + 1) instanceof Fox
-						&& ((Fox) board.getPiece(xStart, yStart + 1)).id == this.id) { // Must be below
-					location = false;
-				}
-			}
-			// We have both pieces of the fox, now we try to move them.
-			if (validatePath(move, board, location)) { // Only need to check one, since it will be either true for
-														// both or false for both.
-				if (location && yDistance > 0) { // Check to see if the other part of the fox is up and we are moving
-													// down
-					board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
+				} else if (yDistance < 0) {
 					board.setPiece(board.removePiece(xStart, yStart - 1), xEnd, yEnd - 1);
-					return true;
-				} else if (location && yDistance < 0) { // Check to see if the other part of the fox is up and we are
-														// moving up
-					board.setPiece(board.removePiece(xStart, yStart - 1), xEnd, yEnd - 1);
-					board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
-					return true;
-				} else if (!location && yDistance > 0) { // Check to see if the other part of the fox is down and we are
-															// moving down
+				} else {
 					board.setPiece(board.removePiece(xStart, yStart + 1), xEnd, yEnd + 1);
-					board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
-					return true;
-				} else { // We know the other part of the fox is down and we are moving up
-					board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
-					board.setPiece(board.removePiece(xStart, yStart + 1), xEnd, yEnd + 1);
-					return true;
 				}
+				board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
+				return true;
 			}
-			return false; // It was an invalid move after all.
 		}
+		return false; // It was an invalid move after all.
 	}
 
 	/**
@@ -199,13 +192,8 @@ public class Fox extends Piece {
 		int yDistance = move.yDistance();
 		int moveDirection = move.direction();
 
-		// Static or diagonal path
-		if (moveDirection == -1) {
-			return false;
-		}
-
-		if ((direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) && moveDirection == 0) { // Check to see if the fox is horizontal
-																				// and the move is horizontal
+		// Trying to move horizontally.
+		if (moveDirection == 0) { 
 			if (location && xDistance > 0) { // The other part of the fox is to the right and we are moving right
 				if (xEnd + 1 > 4) { // Check to see if the move will push the fox out of bounds
 					return false;
@@ -238,8 +226,8 @@ public class Fox extends Piece {
 				}
 			}
 			return true; // The move is valid for the fox
-		} else if ((direction.equals(Direction.UP) || direction.equals(Direction.DOWN)) && moveDirection == 1) { // Check to see if the fox is vertical
-																					// and the move is vertical
+		// Trying to move vertically.
+		} else { // We are moving 
 			if (location && yDistance > 0) { // The other part of the fox is up and we are moving down
 				for (int i = yStart + 1; i <= yEnd; i++) { // Need to make sure there are no obstacles in the path
 					if (board.isOccupied(xStart, i)) {
@@ -273,6 +261,5 @@ public class Fox extends Piece {
 			}
 			return true; // The move is valid for the fox
 		}
-		return false; // Direction and fox orientation did not match (invalid move)
 	}
 }

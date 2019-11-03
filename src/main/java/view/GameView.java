@@ -1,30 +1,9 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
@@ -64,6 +43,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private Board board;
 
 	private GameController gameController;
+	
+	private BevelBorder selectedBorder;
+	private EmptyBorder blankBorder;
 
 	/**
 	 * Creates the application GUI.
@@ -79,6 +61,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		// Removes focus border from all buttons
 		UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
 
+		// Setting up the borders used for JButtons
+		selectedBorder = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
+		blankBorder = new EmptyBorder(0,0,0,0);
+		
 		/**
 		 * 
 		 * Main menu
@@ -154,23 +140,22 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				// Clear button default colours and make it transparent
 				buttons[j][i].setOpaque(false);
 				buttons[j][i].setContentAreaFilled(false);
-				buttons[j][i].setBorder(new EmptyBorder(0, 0, 0, 0));
+				buttons[j][i].setBorder(blankBorder);
 
 				boardLabel.add(buttons[j][i]);
+				buttons[j][i].addMouseListener(this);
 
 				// Register an anonymous listener on the button which notifies the controller
 				// whenever a move is made (i.e. a button is clicked)
 				final int x = j;
 				final int y = i;
 
-				buttons[j][i].addMouseListener(this);
-
 				// Register an anonymous listener on the button which notifies the controller
 				// whenever a move is made (i.e. a button is clicked)
 				buttons[j][i].addActionListener(e -> {
 					ClickValidity clickResult = gameController.registerClick(x, y);
 					if (clickResult.equals(ClickValidity.VALID)) {
-						buttons[x][y].setBorder(new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED));
+						buttons[x][y].setBorder(selectedBorder);
 					} else if (clickResult.equals(ClickValidity.MOVEMADE)) {
 						clearButtonBorders();
 					}
@@ -247,7 +232,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private void clearButtonBorders() {
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
-				buttons[i][j].setBorder(new EmptyBorder(0, 0, 0, 0));
+				buttons[i][j].setBorder(blankBorder);
 			}
 		}
 	}
@@ -358,8 +343,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 */
 	public void mouseEntered(MouseEvent e) {
 		if (!(e.getSource() == menuReset || e.getSource() == menuHelp || e.getSource() == menuQuit)
-				&& !((JButton) e.getSource()).getBorder()
-						.equals(new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED))) {
+				&& !((JButton) e.getSource()).getBorder().equals(selectedBorder)) {
 			((JButton) e.getSource()).setBorder(UIManager.getBorder("Button.border"));
 		}
 	}
@@ -371,9 +355,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 */
 	public void mouseExited(MouseEvent e) {
 		if (!(e.getSource() == menuReset || e.getSource() == menuHelp || e.getSource() == menuQuit)) {
-			JButton temp = ((JButton) e.getSource());
-			if (!temp.getBorder().equals(new EmptyBorder(0, 0, 0, 0))) {
-				((JButton) e.getSource()).setBorder(new EmptyBorder(0, 0, 0, 0));
+			if (((JButton) e.getSource()).getBorder().equals(selectedBorder)) {}
+			else if (!((JButton) e.getSource()).getBorder().equals(blankBorder)) {
+				((JButton) e.getSource()).setBorder(blankBorder);
 			}
 		}
 	}

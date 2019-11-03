@@ -24,15 +24,15 @@ public class FoxTest {
 	public void setUp() {
 		board = new Board();
 		
-		fox1 = new Fox(Fox.FoxType.HEAD, Fox.Direction.LEFT, false);
-		fox2 = new Fox(Fox.FoxType.TAIL, Fox.Direction.LEFT, true);
-		fox3 = new Fox(Fox.FoxType.HEAD, Fox.Direction.UP, false);
-		fox4 = new Fox(Fox.FoxType.TAIL, Fox.Direction.UP, true);
+		fox1 = new Fox(Fox.FoxType.HEAD, Fox.Direction.LEFT, false, false);
+		fox2 = new Fox(Fox.FoxType.TAIL, Fox.Direction.LEFT, true, true);
+		fox3 = new Fox(Fox.FoxType.HEAD, Fox.Direction.UP, false, false);
+		fox4 = new Fox(Fox.FoxType.TAIL, Fox.Direction.UP, true, true);
 		
-		fox5 = new Fox(Fox.FoxType.HEAD, Fox.Direction.RIGHT, false);
-		fox6 = new Fox(Fox.FoxType.TAIL, Fox.Direction.RIGHT, true);
-		fox7 = new Fox(Fox.FoxType.HEAD, Fox.Direction.DOWN, false);
-		fox8 = new Fox(Fox.FoxType.TAIL, Fox.Direction.DOWN, true);
+		fox5 = new Fox(Fox.FoxType.HEAD, Fox.Direction.RIGHT, false, true);
+		fox6 = new Fox(Fox.FoxType.TAIL, Fox.Direction.RIGHT, true, false);
+		fox7 = new Fox(Fox.FoxType.HEAD, Fox.Direction.DOWN, false, false);
+		fox8 = new Fox(Fox.FoxType.TAIL, Fox.Direction.DOWN, true, true);
 		
 	}
 	
