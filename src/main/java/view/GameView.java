@@ -30,8 +30,6 @@ import controller.GameController.ClickValidity;
 import model.Board;
 import model.BoardListener;
 import model.Fox;
-import model.Fox.Direction;
-import model.Fox.FoxType;
 import model.Mushroom;
 import model.Piece;
 import model.Rabbit;
@@ -67,13 +65,18 @@ public class GameView implements BoardListener, ActionListener {
 	 * Creates the application GUI.
 	 */
 	public GameView() {
-		// Forces the look and feel of the application to remain consistent across platforms
+		// Forces the look and feel of the application to remain consistent across
+		// platforms
 		try {
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 		}
-		UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0))); // Removes focus border from all buttons
+		UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0))); // Removes
+																											// focus
+																											// border
+																											// from all
+																											// buttons
 
 		/**
 		 * 
@@ -141,7 +144,7 @@ public class GameView implements BoardListener, ActionListener {
 				// Clear button default colours and make it transparent
 				buttons[j][i].setOpaque(false);
 				buttons[j][i].setContentAreaFilled(false);
-				
+
 				boardLabel.add(buttons[j][i]);
 
 				// Register an anonymous listener on the button which notifies the controller
@@ -162,6 +165,8 @@ public class GameView implements BoardListener, ActionListener {
 		// Configure the escape key to cancel the pending move
 		boardLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "clear");
 		boardLabel.getActionMap().put("clear", new AbstractAction() {
+			private static final long serialVersionUID = -7863091829633095216L;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clearButtonBorders();
@@ -207,8 +212,11 @@ public class GameView implements BoardListener, ActionListener {
 		button.setContentAreaFilled(false);
 		button.setOpaque(false);
 		button.setBorderPainted(false);
-		button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(Character.toLowerCase(text.charAt(0))), text);
+		button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+				.put(KeyStroke.getKeyStroke(Character.toLowerCase(text.charAt(0))), text);
 		button.getActionMap().put(text, new AbstractAction() {
+			private static final long serialVersionUID = -4044080289796171300L;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				button.doClick();
@@ -246,7 +254,9 @@ public class GameView implements BoardListener, ActionListener {
 						}
 					} else if (piece instanceof Fox) {
 						try {
-							(buttons[i][j]).setIcon((ImageIcon) Resources.class.getDeclaredField("FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection()).get(Resources.class));
+							(buttons[i][j]).setIcon((ImageIcon) Resources.class.getDeclaredField(
+									"FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())
+									.get(Resources.class));
 						} catch (Exception e) {
 							e.printStackTrace(System.out);
 						}
@@ -286,12 +296,14 @@ public class GameView implements BoardListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnHelp) {
-			JOptionPane.showMessageDialog(null, "Start: Starts the game\n" + "Help: Displays the help menu\n"
-					+ "Quit: Exits the application", "Help", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,
+					"Start: Starts the game\n" + "Help: Displays the help menu\n" + "Quit: Exits the application",
+					"Help", JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == menuHelp) {
-			JOptionPane.showMessageDialog(null, "Reset (r): Restarts the game\n"
-					+ "Help (h): Displays the help menu\n" + "Quit (q): Exits the application\n"
-					+ "Escape (ESC): Clears the pending move", "Help", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,
+					"Reset (r): Restarts the game\n" + "Help (h): Displays the help menu\n"
+							+ "Quit (q): Exits the application\n" + "Escape (ESC): Clears the pending move",
+					"Help", JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == btnQuit || e.getSource() == menuQuit) {
 			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Rabbit and Foxes!",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
