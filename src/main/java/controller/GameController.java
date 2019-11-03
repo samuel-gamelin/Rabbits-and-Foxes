@@ -27,7 +27,7 @@ public class GameController {
 	}
 
 	/**
-	 * The constructor for this classes uses a board that has been inputted by the
+	 * The constructor for this class uses a board that has been inputted by the
 	 * view (the board listener) so that it can request the model to update it. This
 	 * will ensure all three components of the MVC will be using the same board.
 	 * 
