@@ -228,7 +228,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	}
 
 	/**
-	 * Clears the bevels on all buttons.
+	 * Clears the borders on all buttons.
 	 */
 	private void clearButtonBorders() {
 		for (int i = 0; i < Board.SIZE; i++) {
@@ -327,6 +327,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		updateView();
 		if (board.isInWinningState()) {
 			gameEndBoard(false);
+			clearButtonBorders();
 			if (JOptionPane.showOptionDialog(null, "Congrats, you win! Thank you for playing. Reset or quit?",
 					"Game over!", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 					new String[] { "Reset", "Quit" }, null) == 0) {

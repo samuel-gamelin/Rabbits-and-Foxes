@@ -48,12 +48,8 @@ public class Fox extends Piece {
 	/**
 	 * Construct a new Fox
 	 * 
-	 * @param foxType   The fox type of the fox, as a FoxType
 	 * @param direction The direction given for the Fox
 	 * @param id        The id of the fox, used to differentiate foxes
-	 * @param otherBody The location of other half of the fox. True is the fox has
-	 * 					it's other half to the right or above, false if it has it's 
-	 * 					other half to the left or below.
 	 */
 	public Fox(Direction direction, boolean id) {
 		super(PieceType.FOX);
@@ -227,7 +223,7 @@ public class Fox extends Piece {
 			}
 			return true; // The move is valid for the fox
 		// Trying to move vertically.
-		} else { // We are moving 
+		} else { 
 			if (location && yDistance > 0) { // The other part of the fox is up and we are moving down
 				for (int i = yStart + 1; i <= yEnd; i++) { // Need to make sure there are no obstacles in the path
 					if (board.isOccupied(xStart, i)) {
