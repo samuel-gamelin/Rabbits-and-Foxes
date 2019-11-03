@@ -76,11 +76,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 		}
-		UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0))); // Removes
-																											// focus
-																											// border
-																											// from all
-																											// buttons
+		// Removes focus border from all buttons
+		UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
 
 		/**
 		 * 
@@ -119,11 +116,14 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.add(menuReset = createMenuBarButton("Reset"));
+		menuReset = createMenuBarButton("Reset");
+		menuHelp = createMenuBarButton("Help");
+		menuQuit = createMenuBarButton("Quit");
+		menuBar.add(menuReset);
 		menuReset.addMouseListener(this);
-		menuBar.add(menuHelp = createMenuBarButton("Help"));
+		menuBar.add(menuHelp);
 		menuHelp.addMouseListener(this);
-		menuBar.add(menuQuit = createMenuBarButton("Quit"));
+		menuBar.add(menuQuit);
 		menuQuit.addMouseListener(this);
 
 		gamePane.add(menuBar, BorderLayout.NORTH);
@@ -141,7 +141,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		gameFrame.setLocationRelativeTo(null);
 
 		// Create the board and controller
-		(board = new Board()).addListener(this);
+		board = new Board();
+		board.addListener(this);
 		gameController = new GameController(board);
 
 		// Create all buttons
@@ -300,7 +301,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * Resets the game.
 	 */
 	private void gameWinReset() {
-		(this.board = gameController.reset()).addListener(this);
+		this.board = gameController.reset();
+		this.board.addListener(this);
 		updateView();
 		gameEndBoard(true);
 	}
@@ -323,12 +325,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Rabbit and Foxes!",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 				System.exit(0);
-		} else if (e.getSource() == menuReset) {
-			if (JOptionPane.showConfirmDialog(null,
-					"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbit and Foxes!",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+		} else if ((e.getSource() == menuReset) && (JOptionPane.showConfirmDialog(null,
+				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbit and Foxes!",
+				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 				gameWinReset();
-			}
 		}
 	}
 

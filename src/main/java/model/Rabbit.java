@@ -5,6 +5,7 @@ package model;
  * 
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
+ * @author Mohamed Radwan
  * 
  * @version 2.0
  */
@@ -17,7 +18,7 @@ public class Rabbit extends Piece {
 	}
 
 	/**
-	 * Retrieve the colour of the rabbit.
+	 * Retrieve the color of the rabbit.
 	 * 
 	 * @return True if the Rabbit is brown, false if the Rabbit is white.
 	 */
@@ -67,9 +68,12 @@ public class Rabbit extends Piece {
 	}
 
 	/**
+	 * This method checks if the vertical path for the rabbit is valid.
+	 * 
 	 * @param move
 	 * @param board
-	 * @param yDistance
+	 * @param xDistance
+	 * @return True if the path is valid, otherwise false
 	 */
 	private boolean verticalMove(Move move, Board board, int yDistance) {
 		if (yDistance < 0) { // Moving up
@@ -89,11 +93,12 @@ public class Rabbit extends Piece {
 	}
 
 	/**
-	 * check that there are objects along the horizontal move
+	 * This method checks if the horizontal path for the rabbit is valid.
 	 * 
 	 * @param move
 	 * @param board
 	 * @param xDistance
+	 * @return True if the path is valid, otherwise false
 	 */
 	private boolean horizontalMove(Move move, Board board, int xDistance) {
 		if (xDistance < 0) { // Moving left
