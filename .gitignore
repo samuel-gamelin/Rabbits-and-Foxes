@@ -100,5 +100,8 @@ hs_err_pid*
 *.idea
 *.iml
 
-#VSCode
+# VSCode
 .vscode
+
+# Documentation
+documentation/javadoc
