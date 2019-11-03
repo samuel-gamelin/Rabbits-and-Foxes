@@ -38,10 +38,11 @@ public abstract class Piece {
 	/**
 	 * Moves the piece according to the specified move on the specified board.
 	 * 
-	 * @return True if the piece was successfully moved from the specified start to
-	 * 		   end positions. False otherwise.
 	 * @param move The Move object representing the move that should be verified for
-	 *             eligibility by this piece.
+	 *             eligibility by this piece
+	 * @param board The board on which the move should be made
+	 * @return True if the piece was successfully moved from the specified start to
+	 * 		   end positions, false otherwise
 	 */
 	abstract boolean move(Move move, Board board);
 }

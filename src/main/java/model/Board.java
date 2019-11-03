@@ -142,6 +142,7 @@ public class Board {
 	/**
 	 * Sets the specified piece at the specified position.
 	 * 
+	 * @param piece The piece to set at the specified position
 	 * @param x The x-coordinate of the position
 	 * @param y The y-coordinate of the position
 	 * @return True if the piece was successfully set, false otherwise
