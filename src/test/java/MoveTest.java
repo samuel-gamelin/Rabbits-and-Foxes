@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import model.Move;
@@ -7,16 +8,22 @@ import model.Move;
 /**
  * 
  * @author Mohamed
+ * @author Abdalla
  *
  */
 public class MoveTest {
+	private Move move;
+	
+	@Before
+	public void setUp() {
+		move = new Move(1, 2, 5, 6);
+	}
 
 	/**
 	 * 
 	 */
 	@Test
 	public void testIntInput() {
-		Move move = new Move(1, 2, 5, 6);
 		assertEquals(1, move.xStart);
 		assertEquals(2, move.yStart);
 		assertEquals(5, move.xEnd);
@@ -28,7 +35,6 @@ public class MoveTest {
 	 */
 	@Test
 	public void testXDistance() {
-		Move move = new Move(1, 2, 5, 6);
 		assertEquals(4, move.xDistance());
 	}
 
@@ -37,7 +43,6 @@ public class MoveTest {
 	 */
 	@Test
 	public void testYDistance() {
-		Move move = new Move(1, 2, 5, 6);
 		assertEquals(4, move.yDistance());
 	}
 
@@ -46,7 +51,6 @@ public class MoveTest {
 	 */
 	@Test
 	public void testDirection() {
-		Move move = new Move(1, 2, 5, 6);
 		assertEquals(-1, move.direction());
 		move = new Move(1, 2, 1, 6);
 		assertEquals(1, move.direction());
