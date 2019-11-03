@@ -68,6 +68,13 @@ public class Fox extends Piece {
 		return foxType;
 	}
 
+	/**
+	 * @return The ID of this Fox
+	 */
+	public boolean getID() {
+		return id;
+	}
+
 	@Override
 	public boolean move(Move move, Board board) {
 		if ((direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) && move.direction() != 0

@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -20,8 +21,11 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.border.BevelBorder;
+import javax.swing.plaf.ColorUIResource;
 
 import controller.GameController;
+import controller.GameController.ClickValidity;
 import model.Board;
 import model.BoardListener;
 import model.Fox;
@@ -61,13 +65,13 @@ public class GameView implements BoardListener, ActionListener {
 	 * Creates the application GUI.
 	 */
 	public GameView() {
-		// Forces the look and feel of the application to remain consistent across
-		// platforms
+		// Forces the look and feel of the application to remain consistent across platforms
 		try {
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 		}
+		UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0))); // Removes focus border from all buttons
 
 		/**
 		 * 
@@ -135,8 +139,7 @@ public class GameView implements BoardListener, ActionListener {
 				// Clear button default colours and make it transparent
 				buttons[j][i].setOpaque(false);
 				buttons[j][i].setContentAreaFilled(false);
-				buttons[j][i].setFocusPainted(false);
-				buttons[j][i].setBorderPainted(false);
+				
 				boardLabel.add(buttons[j][i]);
 
 				// Register an anonymous listener on the button which notifies the controller
@@ -144,10 +147,25 @@ public class GameView implements BoardListener, ActionListener {
 				final int x = j;
 				final int y = i;
 				buttons[j][i].addActionListener(e -> {
-					gameController.registerMove(x, y);
+					ClickValidity clickResult = gameController.registerClick(x, y);
+					if (clickResult.equals(ClickValidity.VALID)) {
+						buttons[x][y].setBorder(new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED));
+					} else if (clickResult.equals(ClickValidity.MOVEMADE)) {
+						clearButtonBorders();
+					}
 				});
 			}
 		}
+
+		// Configure the escape key to cancel the pending move
+		boardLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "clear");
+		boardLabel.getActionMap().put("clear", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clearButtonBorders();
+				gameController.clearPendingPosition();
+			}
+		});
 
 		updateView();
 
@@ -184,21 +202,28 @@ public class GameView implements BoardListener, ActionListener {
 	 */
 	private JButton createMenuBarButton(String text) {
 		JButton button = new JButton("<html><p style='text-align:center;'>" + text + "</p></html>");
-		button.setFocusPainted(false);
-		button.setOpaque(false);
 		button.setContentAreaFilled(false);
+		button.setOpaque(false);
 		button.setBorderPainted(false);
-		button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-				.put(KeyStroke.getKeyStroke(Character.toLowerCase(text.charAt(0))), text);
+		button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(Character.toLowerCase(text.charAt(0))), text);
 		button.getActionMap().put(text, new AbstractAction() {
-			private static final long serialVersionUID = -3061675265827831267L;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				button.doClick();
 			}
 		});
 		return button;
+	}
+
+	/**
+	 * Clears the bevels on all buttons.
+	 */
+	private void clearButtonBorders() {
+		for (int i = 0; i < Board.SIZE; i++) {
+			for (int j = 0; j < Board.SIZE; j++) {
+				buttons[i][j].setBorder(UIManager.getBorder("Button.border"));
+			}
+		}
 	}
 
 	/**
@@ -279,9 +304,13 @@ public class GameView implements BoardListener, ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnHelp || e.getSource() == menuHelp) {
-			JOptionPane.showMessageDialog(null, "Start (s): Starts the game. \n" + "Reset (r): Restarts the game. \n"
-					+ "Quit (q): Exits the application", "Help", JOptionPane.INFORMATION_MESSAGE);
+		if (e.getSource() == btnHelp) {
+			JOptionPane.showMessageDialog(null, "Start: Starts the game\n" + "Help: Displays the help menu\n"
+					+ "Quit: Exits the application", "Help", JOptionPane.INFORMATION_MESSAGE);
+		} else if (e.getSource() == menuHelp) {
+			JOptionPane.showMessageDialog(null, "Reset (r): Restarts the game\n"
+					+ "Help (h): Displays the help menu\n" + "Quit (q): Exits the application\n"
+					+ "Escape (ESC): Clears the pending move", "Help", JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == btnQuit || e.getSource() == menuQuit) {
 			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Rabbit and Foxes!",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
@@ -304,7 +333,7 @@ public class GameView implements BoardListener, ActionListener {
 		updateView();
 		if (board.isInWinningState()) {
 			gameEndBoard(false);
-			JOptionPane.showMessageDialog(null, "Congrats! You win!");
+			JOptionPane.showMessageDialog(null, "Congrats! You win!", "Game over!", JOptionPane.INFORMATION_MESSAGE);
 			gameWinReset();
 		}
 	}
