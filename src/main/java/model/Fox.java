@@ -75,6 +75,14 @@ public class Fox extends Piece {
 		return id;
 	}
 
+	
+	/**
+	 * Attempts to move a Fox in the 
+	 * 
+	 * @param move The move that is being attempted.
+	 * @param board The board on which this move will take place.
+	 * @return True if the move is successful, false otherwise.
+	 */
 	@Override
 	public boolean move(Move move, Board board) {
 		if ((direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) && move.direction() != 0
@@ -177,7 +185,7 @@ public class Fox extends Piece {
 	 * Validate the path of a move object for a Fox.
 	 * 
 	 * @param move     The move we are trying to validate.
-	 * @param fox      The fox piece we are trying to validate a move for.
+	 * @param board    The board in which the move is taking place.
 	 * @param location True if the other piece of the fox is to the right or up,
 	 *                 false otherwise.
 	 * @return True if the path for this move is valid for foxes, false otherwise.

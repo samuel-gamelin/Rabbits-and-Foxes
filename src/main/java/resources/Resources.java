@@ -23,6 +23,9 @@ public final class Resources {
 	 * A percentage (75%) of the current display's height, which will be used in calculations to determine appropriate scaling of icons.
 	 */
 	public static final double SIDE_LENGTH = 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	
+	// JFrame icon
+	public static final ImageIcon WINDOW_ICON = new ImageIcon(Resources.class.getClassLoader().getResource("window-icon.png"));
 
 	// Rabbit icons
 	public static final ImageIcon RABBIT1 = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("rabbit1.png")), 0.6, 0.75);

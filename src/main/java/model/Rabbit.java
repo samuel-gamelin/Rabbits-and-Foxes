@@ -24,6 +24,12 @@ public class Rabbit extends Piece {
 		return colour;
 	}
 
+	
+	/**
+	 * @param move 
+	 * @param board The board on which this move is taking place
+	 * @return True if the move is successful, false otherwise.
+	 */
 	@Override
 	public boolean move(Move move, Board board) {
 		if (move.direction() == -1) {
@@ -42,6 +48,7 @@ public class Rabbit extends Piece {
 	 * Validate the path of a rabbit given a move object.
 	 * 
 	 * @param move The object representing the move
+	 * @param board The board on which the move is taking place.
 	 * @return True if the path for this move is valid for rabbits, false otherwise.
 	 */
 	private boolean validatePath(Move move, Board board) {
