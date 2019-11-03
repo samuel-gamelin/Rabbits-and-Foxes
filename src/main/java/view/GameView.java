@@ -37,6 +37,7 @@ import model.Fox;
 import model.Mushroom;
 import model.Piece;
 import model.Rabbit;
+import model.Rabbit.RabbitColour;
 import resources.Resources;
 
 /**
@@ -263,7 +264,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					if (piece instanceof Mushroom) {
 						(buttons[i][j]).setIcon(Resources.MUSHROOM);
 					} else if (piece instanceof Rabbit) {
-						if (((Rabbit) (piece)).isColour()) {
+						if (((Rabbit) (piece)).isColour().equals(RabbitColour.BROWN)) {
 							(buttons[i][j]).setIcon(Resources.RABBIT1);
 						} else {
 							(buttons[i][j]).setIcon(Resources.RABBIT2);
