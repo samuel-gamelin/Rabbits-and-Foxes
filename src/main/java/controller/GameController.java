@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Board;
+import model.Fox;
 import model.Move;
 import model.Mushroom;
 
@@ -21,12 +22,16 @@ public class GameController {
 	private Board board;
 	private List<Integer> move;
 
+	public enum ClickValidity {
+		VALID, INVALID, MOVEMADE
+	}
+
 	/**
-	 * The constructor for this classes uses a board that has been inputed by the
-	 * view(the board listener) so that it can request the model to update it. This
+	 * The constructor for this classes uses a board that has been inputted by the
+	 * view (the board listener) so that it can request the model to update it. This
 	 * will ensure all three components of the MVC will be using the same board.
 	 * 
-	 * @param board
+	 * @param board The Board (model) that this controller should update
 	 */
 	public GameController(Board board) {
 		this.board = board;
@@ -34,7 +39,7 @@ public class GameController {
 	}
 
 	/**
-	 * This method is used to register the move based on the user input. It first
+	 * This method is used to register a click based on the user input. It first
 	 * checks if the button selected by the user contains an object that is not a
 	 * mushroom. If that is satisfied it adds the move to a list. When the second
 	 * move is made the method uses the original move as well as the new move to
@@ -43,19 +48,26 @@ public class GameController {
 	 * 
 	 * @param x - Represents the start of the end x value of the user's move
 	 * @param y - Represents the start of the end y value of the user's move
-	 * @return - Returns True if the move has been successful otherwise will return
-	 *         false
+	 * @return - True if the selected location is valid, false if it is the first move being made on the board or if the selected location is valid
 	 */
-	public boolean registerMove(int x, int y) {
+	public ClickValidity registerClick(int x, int y) {
 		if (move.isEmpty() && board.isOccupied(x, y) && !(board.getPiece(x, y) instanceof Mushroom)) {
 			move.add(x);
 			move.add(y);
-		} else if (!move.isEmpty()) {
-			boolean result = board.move(new Move(move.get(0), move.get(1), x, y));
+			return ClickValidity.VALID;
+		} else if (!move.isEmpty() && (!board.isOccupied(x, y) || (board.getPiece(x, y) instanceof Fox && board.getPiece(move.get(0), move.get(1)) instanceof Fox && ((Fox) board.getPiece(x, y)).getID() == ((Fox) board.getPiece(move.get(0), move.get(1))).getID()))) {
+			board.move(new Move(move.get(0), move.get(1), x, y));
 			move.clear();
-			return result;
+			return ClickValidity.MOVEMADE;
 		}
-		return false;
+		return ClickValidity.INVALID;
+	}
+
+	/**
+	 * Removes any history of a previously stored position.
+	 */
+	public void clearPendingPosition() {
+		move.clear();
 	}
 
 	/**
