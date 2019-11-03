@@ -10,23 +10,23 @@ package model;
  */
 public class Rabbit extends Piece {
 	private boolean colour;
-	
+
 	public Rabbit(boolean colour) {
 		super(PieceType.RABBIT);
 		this.colour = colour;
 	}
-	
+
 	/**
 	 * Retrieve the colour of the rabbit.
+	 * 
 	 * @return True if the Rabbit is brown, false if the Rabbit is white.
 	 */
 	public boolean isColour() {
 		return colour;
 	}
 
-	
 	/**
-	 * @param move 
+	 * @param move
 	 * @param board The board on which this move is taking place
 	 * @return True if the move is successful, false otherwise.
 	 */
@@ -47,7 +47,7 @@ public class Rabbit extends Piece {
 	/**
 	 * Validate the path of a rabbit given a move object.
 	 * 
-	 * @param move The object representing the move
+	 * @param move  The object representing the move
 	 * @param board The board on which the move is taking place.
 	 * @return True if the path for this move is valid for rabbits, false otherwise.
 	 */
@@ -56,45 +56,58 @@ public class Rabbit extends Piece {
 		int yDistance = move.yDistance();
 		int direction = move.direction();
 
-		// Static or diagonal path
-		if (direction == -1) {
+		// Rabbits must jump over at least one obstacle
+		if ((direction == -1 || Math.abs(xDistance) == 1 || Math.abs(yDistance) == 1)
+				|| (direction == 0 && !horizontalMove(move, board, xDistance))
+				|| (direction == 1 && !verticalMove(move, board, yDistance))) {
 			return false;
 		}
 
-		if (Math.abs(xDistance) == 1 || Math.abs(yDistance) == 1) { // Rabbits must jump over at least one obstacle
-			return false;
-		} else if (direction == 0) { // Horizontal move
-			if (xDistance < 0) { // Moving left
-				for (int i = move.xStart - 1; i > move.xEnd; i--) {
-					if (!board.isOccupied(i, move.yStart)) {
-						return false;
-					}
-				}
-			} else { // Moving right
-				for (int i = move.xStart + 1; i < move.xEnd; i++) {
-					if (!board.isOccupied(i, move.yStart)) {
-						return false;
-					}
+		return !board.isOccupied(move.xEnd, move.yEnd);
+	}
+
+	/**
+	 * @param move
+	 * @param board
+	 * @param yDistance
+	 */
+	private boolean verticalMove(Move move, Board board, int yDistance) {
+		if (yDistance < 0) { // Moving up
+			for (int i = move.yStart - 1; i > move.yEnd; i--) {
+				if (!board.isOccupied(move.xStart, i)) {
+					return false;
 				}
 			}
-		} else if (direction == 1) { // Vertical move
-			if (yDistance < 0) { // Moving up
-				for (int i = move.yStart - 1; i > move.yEnd; i--) {
-					if (!board.isOccupied(move.xStart, i)) {
-						return false;
-					}
-				}
-			} else { // Moving down
-				for (int i = move.yStart + 1; i < move.yEnd; i++) {
-					if (!board.isOccupied(move.xStart, i)) {
-						return false;
-					}
+		} else { // Moving down
+			for (int i = move.yStart + 1; i < move.yEnd; i++) {
+				if (!board.isOccupied(move.xStart, i)) {
+					return false;
 				}
 			}
 		}
-		
-		if (board.isOccupied(move.xEnd, move.yEnd)) { // Ensure the landing spot is clear
-			return false;
+		return true;
+	}
+
+	/**
+	 * check that there are objects along the horizontal move
+	 * 
+	 * @param move
+	 * @param board
+	 * @param xDistance
+	 */
+	private boolean horizontalMove(Move move, Board board, int xDistance) {
+		if (xDistance < 0) { // Moving left
+			for (int i = move.xStart - 1; i > move.xEnd; i--) {
+				if (!board.isOccupied(i, move.yStart)) {
+					return false;
+				}
+			}
+		} else { // Moving right
+			for (int i = move.xStart + 1; i < move.xEnd; i++) {
+				if (!board.isOccupied(i, move.yStart)) {
+					return false;
+				}
+			}
 		}
 		return true;
 	}
