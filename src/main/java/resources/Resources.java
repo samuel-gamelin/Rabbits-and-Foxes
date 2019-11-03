@@ -53,7 +53,8 @@ public final class Resources {
 	 * Returns a scaled version of the icon based on the primary display's size.
 	 * 
 	 * @param icon The icon to scale
-	 * @param isPieceIcon True if the icon represents a piece, false otherwise
+	 * @param xScale The percentage to scale the icon in the x direction
+	 * @param yScale The percentage to scale the icon in the y direction
 	 * @return A scaled version of the icon
 	 */
 	private static ImageIcon scaleIcon(ImageIcon icon, double xScale, double yScale) {

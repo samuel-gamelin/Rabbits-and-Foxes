@@ -161,12 +161,11 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				// whenever a move is made (i.e. a button is clicked)
 				final int x = j;
 				final int y = i;
-				
+
 				buttons[j][i].addMouseListener(this);
-				
 
 				// Register an anonymous listener on the button which notifies the controller
-				// whenever a move is made (i.e. a button is clicked)		
+				// whenever a move is made (i.e. a button is clicked)
 				buttons[j][i].addActionListener(e -> {
 					ClickValidity clickResult = gameController.registerClick(x, y);
 					if (clickResult.equals(ClickValidity.VALID)) {
@@ -247,7 +246,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private void clearButtonBorders() {
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
-				buttons[i][j].setBorder(new EmptyBorder(0, 0, 0, 0)); 
+				buttons[i][j].setBorder(new EmptyBorder(0, 0, 0, 0));
 			}
 		}
 	}
@@ -342,34 +341,42 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		updateView();
 		if (board.isInWinningState()) {
 			gameEndBoard(false);
-			JOptionPane.showMessageDialog(null, "Congrats! You win! Thank you for playing.", "Game over!", JOptionPane.INFORMATION_MESSAGE);
-			gameWinReset();
+			if (JOptionPane.showOptionDialog(null, "Congrats, you win! Thank you for playing. Reset or quit?",
+					"Game over!", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+					new String[] { "Reset", "Quit" }, null) == 0) {
+				gameWinReset();
+			} else {
+				System.exit(0);
+			}
 		}
 	}
-	
-	/** 
+
+	/**
 	 * Highlights a JButton when we enter the component with the mouse cursor.
 	 * 
 	 * @param e The mouse event that triggers when the mouse enters the JButton
 	 */
-	 public void mouseEntered(MouseEvent e) 
-	 {
-	    ((JButton) e.getSource()).setBorder(UIManager.getBorder("Button.border"));
-	 }
-	   
+	public void mouseEntered(MouseEvent e) {
+		if (!(e.getSource() == menuReset || e.getSource() == menuHelp || e.getSource() == menuQuit)
+				&& !((JButton) e.getSource()).getBorder()
+						.equals(new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED))) {
+			((JButton) e.getSource()).setBorder(UIManager.getBorder("Button.border"));
+		}
+	}
+
 	/**
 	 * Stops highlighting a JButton when the mouse cursor leaves the component.
 	 * 
 	 * @param e The mouse event that triggers when the mouse leaves the JButton
 	 */
-	 public void mouseExited(MouseEvent e)
-	 {
-	    JButton temp = ((JButton) e.getSource());
-	    if (temp.getBorder().equals(new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED))) {}
-	    else {
-	       ((JButton) e.getSource()).setBorder(new EmptyBorder(0, 0, 0, 0));
-	    }
-	 }
+	public void mouseExited(MouseEvent e) {
+		if (!(e.getSource() == menuReset || e.getSource() == menuHelp || e.getSource() == menuQuit)) {
+			JButton temp = ((JButton) e.getSource());
+			if (!temp.getBorder().equals(new EmptyBorder(0, 0, 0, 0))) {
+				((JButton) e.getSource()).setBorder(new EmptyBorder(0, 0, 0, 0));
+			}
+		}
+	}
 
 	/**
 	 * Starts the Rabbits and Foxes game.
