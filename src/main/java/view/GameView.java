@@ -136,7 +136,6 @@ public class GameView implements BoardListener, ActionListener {
 				buttons[j][i].setOpaque(false);
 				buttons[j][i].setContentAreaFilled(false);
 				buttons[j][i].setFocusPainted(false);
-				buttons[j][i].setBorderPainted(false);
 				boardLabel.add(buttons[j][i]);
 
 				// Register an anonymous listener on the button which notifies the controller
