@@ -107,18 +107,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		btnHelp = new JButton("Help");
 		btnQuit = new JButton("Quit");
 		addMenuButton(mainMenuPane, btnStart);
-//		btnStart.addActionListener(new ActionListener() { 
-//			public void actionPerformed(ActionEvent event) {
-//				try {
-//					Clip music = AudioSystem.getClip();
-//					music.open(AudioSystem.getAudioInputStream(Resources.MUSIC));
-//					music.start();
-//					music.loop(Clip.LOOP_CONTINUOUSLY);
-//				} catch (Exception e) { 
-//					e.printStackTrace(System.out);
-//				}
-//			}
-//		});
 		addMenuButton(mainMenuPane, btnHelp);
 		addMenuButton(mainMenuPane, btnQuit);
 
@@ -195,9 +183,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					ClickValidity clickResult = gameController.registerClick(x, y);
 					if (clickResult.equals(ClickValidity.VALID)) {
 						buttons[x][y].setBorder(selectedBorder);
-					} else if (clickResult.equals(ClickValidity.MOVEMADE)) {
+					} else if (clickResult.equals(ClickValidity.VALID_MOVEMADE)) {
 						clearButtonBorders();
-					} else if (clickResult.equals(ClickValidity.INVALID)) {
+					} else if (clickResult.equals(ClickValidity.INVALID) || clickResult.equals(ClickValidity.INVALID_MOVEMADE)) {
 						if (wrongMove == null) {
 							try {
 								wrongMove = AudioSystem.getClip();
