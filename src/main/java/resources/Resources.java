@@ -2,6 +2,8 @@ package resources;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
+
 import javax.swing.ImageIcon;
 
 import model.Board;
@@ -17,12 +19,15 @@ public final class Resources {
 	/**
 	 * Making the constructor private, preventing any instantiation of this class.
 	 */
-	private Resources() {}
+	private Resources() {}	
 
 	/**
 	 * A percentage (75%) of the current display's height, which will be used in calculations to determine appropriate scaling of icons.
 	 */
 	public static final double SIDE_LENGTH = 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	
+	// Music
+	public static final File MUSIC = loadMusic();
 	
 	// JFrame icon
 	public static final ImageIcon WINDOW_ICON = new ImageIcon(Resources.class.getClassLoader().getResource("window-icon.png"));
@@ -59,5 +64,19 @@ public final class Resources {
 	 */
 	private static ImageIcon scaleIcon(ImageIcon icon, double xScale, double yScale) {
 		return new ImageIcon(icon.getImage().getScaledInstance((int) (xScale * SIDE_LENGTH / Board.SIZE), (int) (yScale * SIDE_LENGTH / Board.SIZE), Image.SCALE_SMOOTH));
+	}
+	
+	/**
+	 * Find and prepare the music file that will be used in the game.
+	 * 
+	 * @return The music file to be used in the game.
+	 */
+	private static File loadMusic() {
+		try {
+			return new File(Resources.class.getClassLoader().getResource("./music.wav").toURI()); 
+		} catch (Exception e) {
+			e.printStackTrace(System.out);
+		}
+		return null;
 	}
 }

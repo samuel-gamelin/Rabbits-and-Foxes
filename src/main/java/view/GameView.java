@@ -3,6 +3,8 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
@@ -82,6 +84,18 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		btnHelp = new JButton("Help");
 		btnQuit = new JButton("Quit");
 		addMenuButton(mainMenuPane, btnStart);
+		btnStart.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent event) {
+				try {
+					Clip clip = AudioSystem.getClip();
+					clip.open(AudioSystem.getAudioInputStream(Resources.MUSIC));
+					clip.start();
+					clip.loop(Clip.LOOP_CONTINUOUSLY);
+				} catch (Exception e) { 
+					e.printStackTrace(System.out);
+				}
+			}
+		});
 		addMenuButton(mainMenuPane, btnHelp);
 		addMenuButton(mainMenuPane, btnQuit);
 
