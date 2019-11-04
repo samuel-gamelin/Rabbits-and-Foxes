@@ -1,3 +1,4 @@
+package model;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -13,7 +14,7 @@ import model.Move;
  */
 public class MoveTest {
 	private Move move;
-	
+
 	@Before
 	public void setUp() {
 		move = new Move(1, 2, 5, 6);
