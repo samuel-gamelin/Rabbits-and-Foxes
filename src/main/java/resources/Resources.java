@@ -29,8 +29,11 @@ public final class Resources {
 	// Music
 	public static final File MUSIC = loadFile("music.wav");
 	
+	// Incorrect move sound
+	public static final File INVALID_MOVE = loadFile("wrong.wav");
+	
 	// JFrame icon
-	public static final ImageIcon WINDOW_ICON = loadIcon("window-icon.png", 1, 1);
+	public static final ImageIcon WINDOW_ICON = loadIcon("window-icon.png", 4, 5);
 
 	// Rabbit icons
 	public static final ImageIcon RABBIT1 = loadIcon("rabbit1.png", 0.6, 0.75);

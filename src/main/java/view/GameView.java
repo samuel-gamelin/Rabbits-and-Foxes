@@ -70,6 +70,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	
 	private BevelBorder selectedBorder;
 	private EmptyBorder blankBorder;
+	
+	private Clip wrongMove;
 
 	/**
 	 * Creates the application GUI.
@@ -105,18 +107,18 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		btnHelp = new JButton("Help");
 		btnQuit = new JButton("Quit");
 		addMenuButton(mainMenuPane, btnStart);
-		btnStart.addActionListener(new ActionListener() { 
-			public void actionPerformed(ActionEvent event) {
-				try {
-					Clip clip = AudioSystem.getClip();
-					clip.open(AudioSystem.getAudioInputStream(Resources.MUSIC));
-					clip.start();
-					clip.loop(Clip.LOOP_CONTINUOUSLY);
-				} catch (Exception e) { 
-					e.printStackTrace(System.out);
-				}
-			}
-		});
+//		btnStart.addActionListener(new ActionListener() { 
+//			public void actionPerformed(ActionEvent event) {
+//				try {
+//					Clip music = AudioSystem.getClip();
+//					music.open(AudioSystem.getAudioInputStream(Resources.MUSIC));
+//					music.start();
+//					music.loop(Clip.LOOP_CONTINUOUSLY);
+//				} catch (Exception e) { 
+//					e.printStackTrace(System.out);
+//				}
+//			}
+//		});
 		addMenuButton(mainMenuPane, btnHelp);
 		addMenuButton(mainMenuPane, btnQuit);
 
@@ -131,6 +133,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 * Game frame
 		 * 
 		 */
+		
 		gameFrame = new JFrame("Rabbit and Foxes!");
 		// BorderLayout for game frame
 		Container gamePane = gameFrame.getContentPane();
@@ -194,6 +197,25 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 						buttons[x][y].setBorder(selectedBorder);
 					} else if (clickResult.equals(ClickValidity.MOVEMADE)) {
 						clearButtonBorders();
+					} else if (clickResult.equals(ClickValidity.INVALID)) {
+						if (wrongMove == null) {
+							try {
+								wrongMove = AudioSystem.getClip();
+								wrongMove.open(AudioSystem.getAudioInputStream(Resources.INVALID_MOVE));
+							} catch (Exception ex){
+								ex.printStackTrace(System.out);
+							}
+								wrongMove.start();
+							}	
+						else if (!wrongMove.isActive()) {
+							try {
+								wrongMove = AudioSystem.getClip();
+								wrongMove.open(AudioSystem.getAudioInputStream(Resources.INVALID_MOVE));
+							} catch (Exception ex){
+								ex.printStackTrace(System.out);
+							}
+							wrongMove.start();
+						}
 					}
 				});
 			}
@@ -361,7 +383,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	public void handleBoardChange() {
 		updateView();
 		if (board.isInWinningState()) {
-			gameEndBoard(false);
 			clearButtonBorders();
 			if (JOptionPane.showOptionDialog(null, "Congrats, you win! Thank you for playing. Reset or quit?",
 					"Game over!", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
