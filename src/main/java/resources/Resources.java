@@ -27,7 +27,7 @@ public final class Resources {
 	public static final double SIDE_LENGTH = 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	
 	// Music
-	public static final File MUSIC = loadMusic();
+	public static final File MUSIC = loadFile("music.wav");
 	
 	// JFrame icon
 	public static final ImageIcon WINDOW_ICON = new ImageIcon(Resources.class.getClassLoader().getResource("window-icon.png"));
@@ -71,9 +71,9 @@ public final class Resources {
 	 * 
 	 * @return The music file to be used in the game.
 	 */
-	private static File loadMusic() {
+	private static File loadFile(String path) {
 		try {
-			return new File(Resources.class.getClassLoader().getResource("./music.wav").toURI()); 
+			return new File(Resources.class.getClassLoader().getResource(path).toURI()); 
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 		}
