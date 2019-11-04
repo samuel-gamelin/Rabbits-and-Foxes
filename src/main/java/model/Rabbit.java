@@ -14,19 +14,20 @@ public class Rabbit extends Piece {
 	 * The colour of the rabbit
 	 */
 	private RabbitColour colour;
-	
+
 	/**
 	 * 
 	 * An enumeration of the colour for the rabbit
 	 */
-	public enum RabbitColour{
+	public enum RabbitColour {
 		BROWN, WHITE
 	}
-	
+
 	/**
 	 * Construct a new Rabbit
+	 * 
 	 * @param colour the colour of the rabiit
-	 *  
+	 * 
 	 */
 	public Rabbit(RabbitColour colour) {
 		super(PieceType.RABBIT);
@@ -38,12 +39,12 @@ public class Rabbit extends Piece {
 	 * 
 	 * @return the colour of the Rabbit brown or white
 	 */
-	public RabbitColour isColour() {
+	public RabbitColour getColour() {
 		return colour;
 	}
 
 	/**
-	 * @param move
+	 * @param move  The object representing the move
 	 * @param board The board on which this move is taking place
 	 * @return True if the move is successful, false otherwise.
 	 */
@@ -69,14 +70,10 @@ public class Rabbit extends Piece {
 	 * @return True if the path for this move is valid for rabbits, false otherwise.
 	 */
 	private boolean validatePath(Move move, Board board) {
-		int xDistance = move.xDistance();
-		int yDistance = move.yDistance();
-		int direction = move.direction();
-
 		// Rabbits must jump over at least one obstacle
-		if ((direction == -1 || Math.abs(xDistance) == 1 || Math.abs(yDistance) == 1)
-				|| (direction == 0 && !horizontalMove(move, board, xDistance))
-				|| (direction == 1 && !verticalMove(move, board, yDistance))) {
+		if ((move.direction() == -1 || Math.abs(move.xDistance()) == 1 || Math.abs(move.yDistance()) == 1)
+				|| (move.direction() == 0 && !horizontalMove(move, board))
+				|| (move.direction() == 1 && !verticalMove(move, board))) {
 			return false;
 		}
 
@@ -86,13 +83,12 @@ public class Rabbit extends Piece {
 	/**
 	 * This method checks if the vertical path for the rabbit is valid.
 	 * 
-	 * @param move
-	 * @param board
-	 * @param xDistance
+	 * @param move  The object representing the move
+	 * @param board The board on which the move is taking place.
 	 * @return True if the path is valid, otherwise false
 	 */
-	private boolean verticalMove(Move move, Board board, int yDistance) {
-		if (yDistance < 0) { // Moving up
+	private boolean verticalMove(Move move, Board board) {
+		if (move.yDistance() < 0) { // Moving up
 			for (int i = move.yStart - 1; i > move.yEnd; i--) {
 				if (!board.isOccupied(move.xStart, i)) {
 					return false;
@@ -111,13 +107,12 @@ public class Rabbit extends Piece {
 	/**
 	 * This method checks if the horizontal path for the rabbit is valid.
 	 * 
-	 * @param move
-	 * @param board
-	 * @param xDistance
+	 * @param move  The object representing the move
+	 * @param board The board on which the move is taking place.
 	 * @return True if the path is valid, otherwise false
 	 */
-	private boolean horizontalMove(Move move, Board board, int xDistance) {
-		if (xDistance < 0) { // Moving left
+	private boolean horizontalMove(Move move, Board board) {
+		if (move.xDistance() < 0) { // Moving left
 			for (int i = move.xStart - 1; i > move.xEnd; i--) {
 				if (!board.isOccupied(i, move.yStart)) {
 					return false;

@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Board;
 import model.Mushroom;
 import model.Rabbit;
 import model.Tile;

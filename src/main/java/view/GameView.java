@@ -294,7 +294,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					if (piece instanceof Mushroom) {
 						(buttons[i][j]).setIcon(Resources.MUSHROOM);
 					} else if (piece instanceof Rabbit) {
-						if (((Rabbit) (piece)).isColour().equals(RabbitColour.BROWN)) {
+						if (((Rabbit) (piece)).getColour().equals(RabbitColour.BROWN)) {
 							(buttons[i][j]).setIcon(Resources.RABBIT1);
 						} else {
 							(buttons[i][j]).setIcon(Resources.RABBIT2);

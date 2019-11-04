@@ -74,7 +74,7 @@ public final class Resources {
 	 */
 	private static File loadFile(String path) {
 		try {
-			return new File(Resources.class.getClassLoader().getResource(path).toURI()); 
+			return new File(Resources.class.getClassLoader().getResource(path).toURI());
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 		}

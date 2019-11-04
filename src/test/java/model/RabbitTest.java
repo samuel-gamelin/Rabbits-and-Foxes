@@ -23,8 +23,8 @@ public class RabbitTest {
 
 	@Test
 	public void testIsColour() {
-		assertEquals(Rabbit.RabbitColour.WHITE, rabbitWhite.isColour());
-		assertEquals(Rabbit.RabbitColour.BROWN, rabbitBrown.isColour());
+		assertEquals(Rabbit.RabbitColour.WHITE, rabbitWhite.getColour());
+		assertEquals(Rabbit.RabbitColour.BROWN, rabbitBrown.getColour());
 
 	}
 
