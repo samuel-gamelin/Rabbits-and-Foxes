@@ -2,7 +2,7 @@ package resources;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 
@@ -29,7 +29,7 @@ public final class Resources {
 	public static final double SIDE_LENGTH = 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
 	// Incorrect move sound
-	public static final File INVALID_MOVE = loadFile("wrong.wav");
+	public static final URL INVALID_MOVE = loadFile("wrong.wav");
 
 	// JFrame icon
 	public static final ImageIcon WINDOW_ICON = loadIcon("window-icon.png", 4, 5);
@@ -81,9 +81,9 @@ public final class Resources {
 	 * @param path The path at which the resource is located
 	 * @return The file at the specified location
 	 */
-	private static File loadFile(String path) {
+	private static URL loadFile(String path) {
 		try {
-			return new File(Resources.class.getClassLoader().getResource(path).toURI());
+			return Resources.class.getClassLoader().getResource(path);
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 		}

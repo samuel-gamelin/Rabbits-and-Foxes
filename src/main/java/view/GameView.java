@@ -191,6 +191,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 							try {
 								wrongMove = AudioSystem.getClip();
 								wrongMove.open(AudioSystem.getAudioInputStream(Resources.INVALID_MOVE));
+								clearButtonBorders(); 
+								gameController.clearPendingPosition();
 							} catch (Exception ex) {
 								ex.printStackTrace(System.out);
 							}
@@ -224,6 +226,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		btnStart.addActionListener(e -> {
 			mainMenuFrame.dispose();
 			gameFrame.setVisible(true);
+			helpDialog(); 
 		});
 	}
 
@@ -329,6 +332,16 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		updateView();
 		gameEndBoard(true);
 	}
+	
+	/**
+	 * Pops up help dialog. 
+	 */
+	private void helpDialog() {
+		JOptionPane.showMessageDialog(null,
+				"Reset (r): Restarts the game\n" + "Help (h): Displays the help menu\n"
+						+ "Quit (q): Exits the application\n" + "Escape (ESC): Clears the pending move",
+				"Help", JOptionPane.INFORMATION_MESSAGE);
+	}
 
 	/**
 	 * Handles button input for the menus.
@@ -340,10 +353,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					"Start: Starts the game\n" + "Help: Displays the help menu\n" + "Quit: Exits the application",
 					"Help", JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == menuHelp) {
-			JOptionPane.showMessageDialog(null,
-					"Reset (r): Restarts the game\n" + "Help (h): Displays the help menu\n"
-							+ "Quit (q): Exits the application\n" + "Escape (ESC): Clears the pending move",
-					"Help", JOptionPane.INFORMATION_MESSAGE);
+			helpDialog(); 
 		} else if (e.getSource() == btnQuit || e.getSource() == menuQuit) {
 			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Rabbit and Foxes!",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
