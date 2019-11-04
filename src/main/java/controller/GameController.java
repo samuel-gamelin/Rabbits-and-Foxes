@@ -23,7 +23,7 @@ public class GameController {
 	private List<Integer> move;
 
 	public enum ClickValidity {
-		VALID, INVALID, MOVEMADE
+		VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
 	}
 
 	/**
@@ -56,9 +56,12 @@ public class GameController {
 			move.add(y);
 			return ClickValidity.VALID;
 		} else if (!move.isEmpty() && (!board.isOccupied(x, y) || (board.getPiece(x, y) instanceof Fox && board.getPiece(move.get(0), move.get(1)) instanceof Fox && ((Fox) board.getPiece(x, y)).getID() == ((Fox) board.getPiece(move.get(0), move.get(1))).getID()))) {
-			board.move(new Move(move.get(0), move.get(1), x, y));
-			move.clear();
-			return ClickValidity.MOVEMADE;
+			boolean result = board.move(new Move(move.get(0), move.get(1), x, y));
+			if (result) {
+				move.clear();
+				return ClickValidity.VALID_MOVEMADE;
+			}
+			return ClickValidity.INVALID_MOVEMADE;
 		}
 		return ClickValidity.INVALID;
 	}

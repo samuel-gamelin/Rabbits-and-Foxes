@@ -26,9 +26,6 @@ public final class Resources {
 	 */
 	public static final double SIDE_LENGTH = 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	
-	// Music
-	public static final File MUSIC = loadFile("music.wav");
-	
 	// Incorrect move sound
 	public static final File INVALID_MOVE = loadFile("wrong.wav");
 	
