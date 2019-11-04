@@ -3,8 +3,6 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
 import model.Board;
 import model.Fox;
 import model.Move;
