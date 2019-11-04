@@ -50,6 +50,9 @@ public final class Resources {
 
 	// Mushroom icon
 	public static final ImageIcon MUSHROOM = loadIcon("mushroom.png", 0.75, 0.75);
+	
+	// Main menu icon
+	public static final ImageIcon MAIN_MENU_BACKGROUND = loadIcon("mainmenu.png", 5, 5);
 
 	// Board icon
 	public static final ImageIcon BOARD = loadIcon("board.png", 5, 5);

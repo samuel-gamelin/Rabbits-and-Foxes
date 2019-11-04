@@ -98,10 +98,11 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 */
 		mainMenuFrame = new JFrame("Rabbit and Foxes!");
 		mainMenuFrame.setIconImage(Resources.WINDOW_ICON.getImage());
-
+		
 		// Box Layout for main menu
-		Container mainMenuPane = mainMenuFrame.getContentPane();
+		JLabel mainMenuPane = new JLabel(Resources.MAIN_MENU_BACKGROUND);
 		mainMenuPane.setLayout(new BoxLayout(mainMenuPane, BoxLayout.Y_AXIS));
+		Container mainMenuContainer = mainMenuFrame.getContentPane();
 
 		btnStart = new JButton("Start");
 		btnHelp = new JButton("Help");
@@ -109,11 +110,13 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		addMenuButton(mainMenuPane, btnStart);
 		addMenuButton(mainMenuPane, btnHelp);
 		addMenuButton(mainMenuPane, btnQuit);
+		mainMenuContainer.add(mainMenuPane);
 
 		mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainMenuFrame.setSize((int) Resources.SIDE_LENGTH, (int) Resources.SIDE_LENGTH);
 		mainMenuFrame.setResizable(false);
 		mainMenuFrame.setLocationRelativeTo(null);
+		mainMenuFrame.pack();
 		mainMenuFrame.setVisible(true);
 
 		/**
@@ -230,7 +233,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * @param button The button to add
 	 */
 	private void addMenuButton(Container pane, JButton button) {
-		pane.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))));
+		pane.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 7))));
 		button.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 2, (int) (0.15 * Resources.SIDE_LENGTH)));
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pane.add(button);
