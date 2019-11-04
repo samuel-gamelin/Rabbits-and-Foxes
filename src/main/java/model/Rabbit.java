@@ -10,12 +10,24 @@ package model;
  * @version 2.0
  */
 public class Rabbit extends Piece {
+	/**
+	 * The colour of the rabbit
+	 */
 	private RabbitColour colour;
 	
+	/**
+	 * 
+	 * An enumeration of the colour for the rabbit
+	 */
 	public enum RabbitColour{
 		BROWN, WHITE
 	}
-
+	
+	/**
+	 * Construct a new Rabbit
+	 * @param colour the colour of the rabiit
+	 *  
+	 */
 	public Rabbit(RabbitColour colour) {
 		super(PieceType.RABBIT);
 		this.colour = colour;
@@ -24,7 +36,7 @@ public class Rabbit extends Piece {
 	/**
 	 * Retrieve the color of the rabbit.
 	 * 
-	 * @return True if the Rabbit is brown, false if the Rabbit is white.
+	 * @return the colour of the Rabbit brown or white
 	 */
 	public RabbitColour isColour() {
 		return colour;

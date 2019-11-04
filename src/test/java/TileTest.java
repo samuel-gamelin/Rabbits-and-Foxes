@@ -13,12 +13,10 @@ public class TileTest {
 	public static final int SIZE = 5;
 
 	private Tile[][] tiles;
-	private Board board;
 
 	@Before
 	public void setUp() {
 		tiles = new Tile[SIZE][SIZE];
-		board = new Board();
 		// Corner brown tiles
 		tiles[0][0] = new Tile(Tile.Colour.BROWN);
 		tiles[4][0] = new Tile(Tile.Colour.BROWN);
@@ -49,7 +47,7 @@ public class TileTest {
 
 	@Test
 	public void testRemovePiece() {
-		Rabbit rabbit1 = new Rabbit(true);
+		Rabbit rabbit1 = new Rabbit(Rabbit.RabbitColour.BROWN);
 		tiles[1][1].placePiece(rabbit1);
 		assertEquals(rabbit1, tiles[1][1].removePiece());
 
@@ -57,7 +55,7 @@ public class TileTest {
 
 	@Test
 	public void testRetrievePiece() {
-		Rabbit rabbit1 = new Rabbit(true);
+		Rabbit rabbit1 = new Rabbit(Rabbit.RabbitColour.WHITE);
 		tiles[1][1].placePiece(rabbit1);
 		assertEquals(rabbit1, tiles[1][1].retrievePiece());
 	}

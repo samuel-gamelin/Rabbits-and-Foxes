@@ -14,16 +14,16 @@ public class RabbitTest {
 	
 	@Before
 	public void setUp() {
-		rabbitBrown = new Rabbit(true);
-		rabbitWhite = new Rabbit(false);
+		rabbitBrown = new Rabbit(Rabbit.RabbitColour.BROWN);
+		rabbitWhite = new Rabbit(Rabbit.RabbitColour.WHITE);
 		board = new Board();
 		
 	}
 
 	@Test
 	public void testIsColour() {
-		assertFalse(rabbitWhite.isColour());
-		assertTrue(rabbitBrown.isColour());
+		assertEquals(Rabbit.RabbitColour.WHITE,rabbitWhite.isColour());
+		assertEquals(Rabbit.RabbitColour.BROWN,rabbitBrown.isColour());
 
 	}
 	@Test
@@ -34,5 +34,6 @@ public class RabbitTest {
 		move = new Move(1,0,1,4);
 		assertFalse(rabbitWhite.move(move, board));
 	}
+	
 
 }
