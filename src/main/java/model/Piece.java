@@ -5,13 +5,15 @@ package model;
  * 
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
+ * 
+ * @version 2.0
  */
 public abstract class Piece {
 
 	/**
 	 * An enumeration representing the piece's type.
 	 */
-	enum PieceType {
+	public enum PieceType {
 		FOX, MUSHROOM, RABBIT
 	}
 
@@ -34,14 +36,13 @@ public abstract class Piece {
 	}
 
 	/**
-	 * @return True if the piece can move the specified start to end positions.
-	 *         False otherwise.
-	 * @param move The Move object representing the move that should be verified for eligibility by this piece.
+	 * Moves the piece according to the specified move on the specified board.
+	 * 
+	 * @param move  The Move object representing the move that should be verified
+	 *              for eligibility by this piece
+	 * @param board The board on which the move should be made
+	 * @return True if the piece was successfully moved from the specified start to
+	 *         end positions, false otherwise
 	 */
-	abstract boolean canMove(Move move);
-
-	/**
-	 * @return A short, two-character string representing the piece.
-	 */
-	abstract String toShortString();
+	abstract boolean move(Move move, Board board);
 }

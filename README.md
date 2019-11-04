@@ -2,7 +2,6 @@
 
 This GitHub repo is used for the development of a game based on JumpIN that follows the MVC design pattern.
 
-
 ## Development
 
 ##### Tools
@@ -45,33 +44,31 @@ When contributing to the project please start on the issues page which is used f
 ##### Additional Tools
 
 - Contributions are made through GitHub, on this repository.
-  - Please download and install git and/or GitHub Desktop. [Download Link](https://git-scm.com/)
-- Slack is used as the main chat for this project. [Invitation Link](https://www.google.ca)
+  - Please download and install [git](https://git-scm.com/) and/or [GitHub Desktop](https://desktop.github.com/).
+- Slack is used as the main chat for this project.
 - Github Issues will be used for task and ticket tracking.
 
-## Current UML Diagram
+## Current Class Diagram
 
 <p align="center"> 
-<img src="./documentation/UMLDiagram/modelUML.png">
+<img src="documentation/uml/classDiagram.png">
 </p>
-Date: October 16, 2019
+Date: November 2, 2019
 
 ## Current Sequence Diagram
 
 <p align="center"> 
-<img src="./documentation/SequenceDiagram/SequenceDiagram.png">
+<img src="documentation/uml/sequenceDiagram.png">
 </p>
-Date: October 16, 2019
+Date: November 2, 2019
 
 ## Road Map
 
-- Create the model
-  - Parse user input
-  - Implement the board
-  - Implement piece movements
-  - Create the UML Diagram
-  - Create the Sequence Diagram
-  - Document the development and design process
+- Creating the View and Controller portions of the game
+  - Building a graphical user interface to allow the user to play the game interactively
+  - Implementing unit tests for the Model portion of the game
+  - Continuing to implement gradual improvements
+  - Continuing to document the development and design process
 
 ## Known issues
 
@@ -81,15 +78,15 @@ Currently no known issues are present.
 
 ## New features
 
-- MileStone1: A fully playable text-based implementation of the game! 
-    - Parsing user input
-    - Moving pieces on the board
-    - Displaying the board to the user
-    - Identifying if a move is valid based on the game rules
-    - Creating a board and setting pieces on said board
-    - Proceeding with the game based on user input.
-    - Ability to process if the user has solved the puzzle
-    - Among other fundamental features necessary to ensure the game proceeds smoothly
+- Milestone 2: A fully playable GUI implementation of the game!
+  - Parsing user input through mouse clicks
+  - Moving pieces on the board
+  - Displaying the board to the user
+  - Identifying if a move is valid based on the game rules
+  - Creating a board and setting pieces on said board
+  - Proceeding with the game based on user input.
+  - Ability to process if the user has solved the puzzle
+  - Among other fundamental features necessary to ensure the game runs smoothly
 
 ## The Team
 
@@ -102,6 +99,10 @@ Currently no known issues are present.
 ## Documentation
 
 Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing)
+
+## Credits for Graphical Resources
+
+The pictures and graphical resouces used in this game were obtained from https://www.smartgames.eu/uk/one-player-games/jumpin.
 
 ## License and Disclaimer
 
