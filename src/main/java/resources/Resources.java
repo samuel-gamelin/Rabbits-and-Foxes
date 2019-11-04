@@ -30,46 +30,47 @@ public final class Resources {
 	public static final File MUSIC = loadFile("music.wav");
 	
 	// JFrame icon
-	public static final ImageIcon WINDOW_ICON = new ImageIcon(Resources.class.getClassLoader().getResource("window-icon.png"));
+	public static final ImageIcon WINDOW_ICON = loadIcon("window-icon.png", 1, 1);
 
 	// Rabbit icons
-	public static final ImageIcon RABBIT1 = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("rabbit1.png")), 0.6, 0.75);
-	public static final ImageIcon RABBIT2 = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("rabbit2.png")), 0.6, 0.75);
+	public static final ImageIcon RABBIT1 = loadIcon("rabbit1.png", 0.6, 0.75);
+	public static final ImageIcon RABBIT2 = loadIcon("rabbit2.png", 0.6, 0.75);
 
 	// Fox head icons
-	public static final ImageIcon FOX_HEAD_UP = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("fox-head-up.png")), 0.75, 1);
-	public static final ImageIcon FOX_HEAD_DOWN = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("fox-head-down.png")), 0.75, 1);
-	public static final ImageIcon FOX_HEAD_LEFT = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("fox-head-left.png")), 1, 0.75);
-	public static final ImageIcon FOX_HEAD_RIGHT = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("fox-head-right.png")), 1, 0.75);
+	public static final ImageIcon FOX_HEAD_UP = loadIcon("fox-head-up.png", 0.75, 1);
+	public static final ImageIcon FOX_HEAD_DOWN = loadIcon("fox-head-down.png", 0.75, 1);
+	public static final ImageIcon FOX_HEAD_LEFT = loadIcon("fox-head-left.png", 1, 0.75);
+	public static final ImageIcon FOX_HEAD_RIGHT = loadIcon("fox-head-right.png", 1, 0.75);
 
 	// Fox tail icons
-	public static final ImageIcon FOX_TAIL_UP = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("fox-tail-up.png")), 0.7, 1);
-	public static final ImageIcon FOX_TAIL_DOWN = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("fox-tail-down.png")), 0.75, 1);
-	public static final ImageIcon FOX_TAIL_LEFT = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("fox-tail-left.png")), 1, 0.7);
-	public static final ImageIcon FOX_TAIL_RIGHT = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("fox-tail-right.png")), 1, 0.7);
+	public static final ImageIcon FOX_TAIL_UP = loadIcon("fox-tail-up.png", 0.7, 1);
+	public static final ImageIcon FOX_TAIL_DOWN = loadIcon("fox-tail-down.png", 0.75, 1);
+	public static final ImageIcon FOX_TAIL_LEFT = loadIcon("fox-tail-left.png", 1, 0.7);
+	public static final ImageIcon FOX_TAIL_RIGHT = loadIcon("fox-tail-right.png", 1, 0.7);
 
 	// Mushroom icon
-	public static final ImageIcon MUSHROOM = scaleIcon(new ImageIcon(Resources.class.getClassLoader().getResource("mushroom.png")), 0.75, 0.75);
+	public static final ImageIcon MUSHROOM = loadIcon("mushroom.png", 0.75, 0.75);
 
 	// Board icon
-	public static final ImageIcon BOARD = new ImageIcon(new ImageIcon(Resources.class.getClassLoader().getResource("board.png")).getImage().getScaledInstance((int) SIDE_LENGTH, (int) SIDE_LENGTH, Image.SCALE_SMOOTH));
+	public static final ImageIcon BOARD = loadIcon("board.png", 5, 5);
 
 	/**
-	 * Returns a scaled version of the icon based on the primary display's size.
+	 * Returns a scaled version of the icon based on the primary display's size. A scale value of 1 represents 1/5 of the width/height of the viewing area.
 	 * 
 	 * @param icon The icon to scale
 	 * @param xScale The percentage to scale the icon in the x direction
 	 * @param yScale The percentage to scale the icon in the y direction
 	 * @return A scaled version of the icon
 	 */
-	private static ImageIcon scaleIcon(ImageIcon icon, double xScale, double yScale) {
-		return new ImageIcon(icon.getImage().getScaledInstance((int) (xScale * SIDE_LENGTH / Board.SIZE), (int) (yScale * SIDE_LENGTH / Board.SIZE), Image.SCALE_SMOOTH));
+	private static ImageIcon loadIcon(String path, double xScale, double yScale) {
+		return new ImageIcon(new ImageIcon(Resources.class.getClassLoader().getResource(path)).getImage().getScaledInstance((int) (xScale * SIDE_LENGTH / Board.SIZE), (int) (yScale * SIDE_LENGTH / Board.SIZE), Image.SCALE_SMOOTH));
 	}
 	
 	/**
-	 * Find and prepare the music file that will be used in the game.
+	 * Load and return the requested file. Typically used to load in music and sound files.
 	 * 
-	 * @return The music file to be used in the game.
+	 * @param path The path at which the resource is located
+	 * @return The file at the specified location
 	 */
 	private static File loadFile(String path) {
 		try {
