@@ -9,11 +9,11 @@
 
 ## Authors
 
-- Abdalla El Nakla
-- Dani Hashweh
-- John Breton
-- Mohamed Radwan
-- Samuel Gamelin
+- [Abdalla El Nakla](mailto:abdallaelnakla@cmail.carleton.ca)
+- [Dani Hashweh](mailto:danihashweh@cmail.carleton.ca)
+- [John Breton](mailto:johnbreton@cmail.carleton.ca)
+- [Mohamed Radwan](mailto:mohamedradwan@cmail.carleton.ca)
+- [Samuel Gamelin](mailto:samuelgamelin@cmail.carleton.ca)
 
 ## Changes Since Previous Deliverable
 
