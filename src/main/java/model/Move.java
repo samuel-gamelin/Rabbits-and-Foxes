@@ -21,10 +21,10 @@ public final class Move {
 	 * Given the position of the object being moved and where it needs to be moved
 	 * this will construct the object for the move class.
 	 * 
-	 * @param xStart - The integer value of the start x position.
-	 * @param yStart - The integer value of the start y position.
-	 * @param xEnd   - The integer value of the ending x position.
-	 * @param yEnd   - The integer value of the start y position.
+	 * @param xStart The integer value of the start x position.
+	 * @param yStart The integer value of the start y position.
+	 * @param xEnd   The integer value of the ending x position.
+	 * @param yEnd   The integer value of the start y position.
 	 */
 	public Move(int xStart, int yStart, int xEnd, int yEnd) {
 		this.xStart = xStart;
@@ -38,7 +38,7 @@ public final class Move {
 	 * has move restrictions this method will be used to initially determine if a
 	 * move is valid.
 	 * 
-	 * @return direction - Horizontal = 0, Vertical = 1, Invalid = -1
+	 * @return direction Horizontal = 0, Vertical = 1, Invalid = -1
 	 *
 	 */
 	public int direction() {

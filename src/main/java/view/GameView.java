@@ -67,10 +67,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private Board board;
 
 	private GameController gameController;
-	
+
 	private BevelBorder selectedBorder;
 	private EmptyBorder blankBorder;
-	
+
 	private Clip wrongMove;
 
 	/**
@@ -89,8 +89,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		// Setting up the borders used for JButtons
 		selectedBorder = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
-		blankBorder = new EmptyBorder(0,0,0,0);
-		
+		blankBorder = new EmptyBorder(0, 0, 0, 0);
+
 		/**
 		 * 
 		 * Main menu
@@ -98,7 +98,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 */
 		mainMenuFrame = new JFrame("Rabbit and Foxes!");
 		mainMenuFrame.setIconImage(Resources.WINDOW_ICON.getImage());
-		
+
 		// Box Layout for main menu
 		JLabel mainMenuPane = new JLabel(Resources.MAIN_MENU_BACKGROUND);
 		mainMenuPane.setLayout(new BoxLayout(mainMenuPane, BoxLayout.Y_AXIS));
@@ -124,7 +124,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 * Game frame
 		 * 
 		 */
-		
+
 		gameFrame = new JFrame("Rabbit and Foxes!");
 		// BorderLayout for game frame
 		Container gamePane = gameFrame.getContentPane();
@@ -185,15 +185,16 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 						buttons[x][y].setBorder(selectedBorder);
 					} else if (clickResult.equals(ClickValidity.VALID_MOVEMADE)) {
 						clearButtonBorders();
-					} else if (clickResult.equals(ClickValidity.INVALID) || clickResult.equals(ClickValidity.INVALID_MOVEMADE)) {
+					} else if (clickResult.equals(ClickValidity.INVALID)
+							|| clickResult.equals(ClickValidity.INVALID_MOVEMADE)) {
 						if (wrongMove == null || !wrongMove.isActive()) {
 							try {
 								wrongMove = AudioSystem.getClip();
 								wrongMove.open(AudioSystem.getAudioInputStream(Resources.INVALID_MOVE));
-							} catch (Exception ex){
+							} catch (Exception ex) {
 								ex.printStackTrace(System.out);
 							}
-								wrongMove.start();
+							wrongMove.start();
 						}
 					}
 				});
@@ -225,7 +226,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			gameFrame.setVisible(true);
 		});
 	}
-	
+
 	/**
 	 * Adds a button to the specified pane. Used in building the menu.
 	 * 
@@ -350,14 +351,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		} else if ((e.getSource() == menuReset) && (JOptionPane.showConfirmDialog(null,
 				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbit and Foxes!",
 				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
-				gameWinReset();
+			gameWinReset();
 		}
 	}
 
-	/**
-	 * Updates whenever the Board changes. The View must be updated to reflect the
-	 * new state of the Board.
-	 */
 	@Override
 	public void handleBoardChange() {
 		updateView();
@@ -390,9 +387,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * @param e The mouse event that triggers when the mouse leaves the JButton
 	 */
 	public void mouseExited(MouseEvent e) {
-		if (!((JButton) e.getSource()).getBorder().equals(blankBorder) && 
-						!((JButton) e.getSource()).getBorder().equals(selectedBorder)) {
-				((JButton) e.getSource()).setBorder(blankBorder);
+		if (!((JButton) e.getSource()).getBorder().equals(blankBorder)
+				&& !((JButton) e.getSource()).getBorder().equals(selectedBorder)) {
+			((JButton) e.getSource()).setBorder(blankBorder);
 		}
 	}
 

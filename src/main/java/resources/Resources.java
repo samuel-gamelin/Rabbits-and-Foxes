@@ -19,16 +19,18 @@ public final class Resources {
 	/**
 	 * Making the constructor private, preventing any instantiation of this class.
 	 */
-	private Resources() {}	
+	private Resources() {
+	}
 
 	/**
-	 * A percentage (75%) of the current display's height, which will be used in calculations to determine appropriate scaling of icons.
+	 * A percentage (75%) of the current display's height, which will be used in
+	 * calculations to determine appropriate scaling of icons.
 	 */
 	public static final double SIDE_LENGTH = 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-	
+
 	// Incorrect move sound
 	public static final File INVALID_MOVE = loadFile("wrong.wav");
-	
+
 	// JFrame icon
 	public static final ImageIcon WINDOW_ICON = loadIcon("window-icon.png", 4, 5);
 
@@ -50,7 +52,7 @@ public final class Resources {
 
 	// Mushroom icon
 	public static final ImageIcon MUSHROOM = loadIcon("mushroom.png", 0.75, 0.75);
-	
+
 	// Main menu icon
 	public static final ImageIcon MAIN_MENU_BACKGROUND = loadIcon("mainmenu.png", 5, 5);
 
@@ -58,19 +60,23 @@ public final class Resources {
 	public static final ImageIcon BOARD = loadIcon("board.png", 5, 5);
 
 	/**
-	 * Returns a scaled version of the icon based on the primary display's size. A scale value of 1 represents 1/5 of the width/height of the viewing area.
+	 * Returns a scaled version of the icon based on the primary display's size. A
+	 * scale value of 1 represents 1/5 of the width/height of the viewing area.
 	 * 
-	 * @param icon The icon to scale
+	 * @param icon   The icon to scale
 	 * @param xScale The percentage to scale the icon in the x direction
 	 * @param yScale The percentage to scale the icon in the y direction
 	 * @return A scaled version of the icon
 	 */
 	private static ImageIcon loadIcon(String path, double xScale, double yScale) {
-		return new ImageIcon(new ImageIcon(Resources.class.getClassLoader().getResource(path)).getImage().getScaledInstance((int) (xScale * SIDE_LENGTH / Board.SIZE), (int) (yScale * SIDE_LENGTH / Board.SIZE), Image.SCALE_SMOOTH));
+		return new ImageIcon(new ImageIcon(Resources.class.getClassLoader().getResource(path)).getImage()
+				.getScaledInstance((int) (xScale * SIDE_LENGTH / Board.SIZE), (int) (yScale * SIDE_LENGTH / Board.SIZE),
+						Image.SCALE_SMOOTH));
 	}
-	
+
 	/**
-	 * Load and return the requested file. Typically used to load in music and sound files.
+	 * Load and return the requested file. Typically used to load in music and sound
+	 * files.
 	 * 
 	 * @param path The path at which the resource is located
 	 * @return The file at the specified location
