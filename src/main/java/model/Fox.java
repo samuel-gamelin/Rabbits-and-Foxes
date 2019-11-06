@@ -7,7 +7,7 @@ package model;
  * @author Samuel Gamelin
  * @author John Breton
  * 
- * @version 2.0
+ * @version 3.0
  */
 public class Fox extends Piece {
 	/**

@@ -7,7 +7,7 @@ package model;
  * @author Samuel Gamelin
  * @author Mohamed Radwan
  * 
- * @version 2.0
+ * @version 3.0
  */
 public class Rabbit extends Piece {
 	/**

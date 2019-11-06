@@ -48,7 +48,7 @@ import resources.Resources;
  * 
  * @author Dani Hashweh
  * @author John Breton
- * @version 2.0
+ * @version 3.0
  */
 public class GameView extends MouseAdapter implements BoardListener, ActionListener, MouseListener {
 	private JFrame mainMenuFrame;

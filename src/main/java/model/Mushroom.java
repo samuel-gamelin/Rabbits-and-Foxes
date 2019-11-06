@@ -6,7 +6,7 @@ package model;
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
  * 
- * @version 2.0
+ * @version 3.0
  */
 public class Mushroom extends Piece {
 
