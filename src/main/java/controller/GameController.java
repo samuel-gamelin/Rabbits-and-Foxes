@@ -16,7 +16,7 @@ import model.Mushroom;
  * method move within Board to initiate the move.
  * 
  * @author Mohamed Radwan
- * @version 2.0
+ * @version 3.0
  */
 public class GameController {
 	private Board board;
