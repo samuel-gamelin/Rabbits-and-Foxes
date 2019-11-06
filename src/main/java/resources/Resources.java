@@ -37,6 +37,7 @@ public final class Resources {
 	// Rabbit icons
 	public static final ImageIcon RABBIT1 = loadIcon("rabbit1.png", 0.6, 0.75);
 	public static final ImageIcon RABBIT2 = loadIcon("rabbit2.png", 0.6, 0.75);
+	public static final ImageIcon RABBIT3 = loadIcon("rabbit3.png", 0.6, 0.75);
 
 	// Fox head icons
 	public static final ImageIcon FOX_HEAD_UP = loadIcon("fox-head-up.png", 0.75, 1);

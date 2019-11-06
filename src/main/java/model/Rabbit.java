@@ -16,17 +16,16 @@ public class Rabbit extends Piece {
 	private RabbitColour colour;
 
 	/**
-	 * 
 	 * An enumeration of the colour for the rabbit
 	 */
 	public enum RabbitColour {
-		BROWN, WHITE
+		BROWN, WHITE, GRAY
 	}
 
 	/**
-	 * Construct a new Rabbit
+	 * Constructs a new Rabbit.
 	 * 
-	 * @param colour the colour of the rabiit
+	 * @param colour the colour of the rabbit
 	 * 
 	 */
 	public Rabbit(RabbitColour colour) {

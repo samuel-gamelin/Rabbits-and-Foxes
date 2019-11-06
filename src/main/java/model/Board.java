@@ -72,7 +72,7 @@ public class Board {
 		// Adding the rabbits (there can be 1 to 3, here we have 3)
 		tiles[1][4].placePiece(new Rabbit(RabbitColour.BROWN));
 		tiles[3][0].placePiece(new Rabbit(RabbitColour.WHITE));
-		tiles[4][2].placePiece(new Rabbit(RabbitColour.WHITE));
+		tiles[4][2].placePiece(new Rabbit(RabbitColour.GRAY));
 
 		// Adding the foxes (there can be 0 to 2, here we have 2)
 		Fox fox1  = new Fox(Fox.Direction.LEFT, true);
