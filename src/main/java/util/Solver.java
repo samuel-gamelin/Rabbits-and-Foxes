@@ -5,6 +5,8 @@ package util;
  * 
  * @author Samuel Gamelin
  * @author Mohamed Radwan
+ * 
+ * @version 3.0
  */
 public class Solver {
 }
