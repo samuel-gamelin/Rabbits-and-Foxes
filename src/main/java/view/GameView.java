@@ -187,12 +187,12 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 						clearButtonBorders();
 					} else if (clickResult.equals(ClickValidity.INVALID)
 							|| clickResult.equals(ClickValidity.INVALID_MOVEMADE)) {
+						clearButtonBorders(); 
+						gameController.clearPendingPosition();
 						if (wrongMove == null || !wrongMove.isActive()) {
 							try {
 								wrongMove = AudioSystem.getClip();
 								wrongMove.open(AudioSystem.getAudioInputStream(Resources.INVALID_MOVE));
-								clearButtonBorders(); 
-								gameController.clearPendingPosition();
 							} catch (Exception ex) {
 								ex.printStackTrace(System.out);
 							}

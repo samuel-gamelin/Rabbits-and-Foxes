@@ -32,7 +32,7 @@ public final class Resources {
 	public static final URL INVALID_MOVE = loadFile("wrong.wav");
 
 	// JFrame icon
-	public static final ImageIcon WINDOW_ICON = loadIcon("window-icon.png", 4, 5);
+	public static final ImageIcon WINDOW_ICON = loadIcon("rabbit3.png", 4, 5);
 
 	// Rabbit icons
 	public static final ImageIcon RABBIT1 = loadIcon("rabbit1.png", 0.6, 0.75);
