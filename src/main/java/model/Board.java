@@ -3,9 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Fox.Direction;
 import model.Rabbit.RabbitColour;
-import model.Tile.Colour;
 import util.Move;
 
 /**
@@ -43,9 +41,9 @@ public class Board {
 	public Board() {
 		tiles = new Tile[SIZE][SIZE];
 		boardListeners = new ArrayList<>();
-		//initializeEasy();
-		//initializeTestBoard();
-		//initializeUnsolvable();
+		// initializeEasy();
+		// initializeTestBoard();
+		// initializeUnsolvable();
 		initializeDefaultBoard();
 	}
 
@@ -59,28 +57,7 @@ public class Board {
 		this.tiles = new Tile[SIZE][SIZE];
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (board.tiles[i][j].retrievePiece() != null && board.tiles[i][j].retrievePiece() instanceof Fox) {
-					Fox fox = (Fox) board.tiles[i][j].retrievePiece();
-					Direction direction = fox.getDirection();
-					if (fox.getFoxType().equals(Fox.FoxType.HEAD)) {
-						Fox newFox = (Fox) (this.tiles[i][j] = new Tile(board.tiles[i][j])).retrievePiece();
-						if (direction.equals(Direction.UP)) {
-							this.tiles[i][j + 1] = new Tile(Colour.GREEN);
-							this.tiles[i][j + 1].placePiece(newFox.getOtherHalf());
-						} else if (direction.equals(Direction.DOWN)) {
-							this.tiles[i][j - 1] = new Tile(Colour.GREEN);
-							this.tiles[i][j - 1].placePiece(newFox.getOtherHalf());
-						} else if (direction.equals(Direction.LEFT)) {
-							this.tiles[i + 1][j] = new Tile(Colour.GREEN);
-							this.tiles[i + 1][j].placePiece(newFox.getOtherHalf());
-						} else if (direction.equals(Direction.RIGHT)) {
-							this.tiles[i - 1][j] = new Tile(Colour.GREEN);
-							this.tiles[i - 1][j].placePiece(newFox.getOtherHalf());
-						}
-					}
-				} else {
-					this.tiles[i][j] = new Tile(board.tiles[i][j]);
-				}
+				this.tiles[i][j] = new Tile(board.tiles[i][j]);
 			}
 		}
 		this.boardListeners = new ArrayList<>();
@@ -187,8 +164,7 @@ public class Board {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				Piece piece = tiles[i][j].retrievePiece();
-				if (piece != null
-						&& piece.getPieceType().equals(Piece.PieceType.RABBIT)
+				if (piece != null && piece.getPieceType().equals(Piece.PieceType.RABBIT)
 						&& !tiles[i][j].getColour().equals(Tile.Colour.BROWN)) {
 					return false;
 				}

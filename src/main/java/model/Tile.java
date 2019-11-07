@@ -1,7 +1,5 @@
 package model;
 
-import model.Fox.FoxType;
-
 /**
  * This class represents the tiles that the pieces will be placed on. These
  * tiles will also be placed on the board to track what is occupied and what
@@ -50,16 +48,7 @@ public class Tile {
 	public Tile(Tile tile) {
 		this.tileColour = tile.tileColour;
 		this.occupied = tile.occupied;
-		
-		if (tile.piece == null) {
-			this.piece = null;
-		} else if (tile.piece instanceof Mushroom) {
-			this.piece = new Mushroom();
-		} else if (tile.piece instanceof Fox && ((Fox) tile.piece).getFoxType().equals(FoxType.HEAD)) {
-			this.piece = new Fox(tile.piece);
-		} else if (tile.piece instanceof Rabbit) {
-			this.piece = new Rabbit(tile.piece);
-		}
+		this.piece = tile.piece;
 	}
 
 	/**
