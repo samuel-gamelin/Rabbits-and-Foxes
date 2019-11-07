@@ -147,7 +147,7 @@ public class Fox extends Piece {
 		int xDistance = move.xDistance();
 		int yDistance = move.yDistance();
 		boolean location = getRelativeLocation();
-		
+
 		// Only need to check one, since it will be either true for both or false for
 		// both
 		if (validatePath(move, board, location)) {
@@ -281,7 +281,7 @@ public class Fox extends Piece {
 	@Override
 	public List<Move> getPossibleMoves(Board board, int x, int y) {
 		List<Move> moves = new ArrayList<>();
-		
+
 		if (foxType.equals(FoxType.TAIL)) { // We will only generate possible moves using the head
 			return moves;
 		}
@@ -303,7 +303,7 @@ public class Fox extends Piece {
 				}
 			}
 		}
-		
+
 		return moves;
 	}
 
@@ -326,7 +326,7 @@ public class Fox extends Piece {
 		if (foxType.equals(FoxType.HEAD)) {
 			return "FH";
 		}
-		
+
 		return "FT";
 	}
 }

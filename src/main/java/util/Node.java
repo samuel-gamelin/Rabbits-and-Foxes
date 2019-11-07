@@ -35,14 +35,14 @@ public class Node {
 
 		return children;
 	}
-	
+
 	/**
 	 * @return True if this node has been visited, false otherwise
 	 */
 	public boolean isVisited() {
 		return visited;
 	}
-	
+
 	/**
 	 * Sets the visited state of this node.
 	 * 

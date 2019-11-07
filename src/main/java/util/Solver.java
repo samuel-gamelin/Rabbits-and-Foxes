@@ -3,7 +3,8 @@ package util;
 import model.Board;
 
 /**
- * This class is used to solve a board representing a state in the game of Rabbits and Foxes.
+ * This class is used to solve a board representing a state in the game of
+ * Rabbits and Foxes.
  * 
  * @author Samuel Gamelin
  * @author Mohamed Radwan
@@ -12,6 +13,6 @@ import model.Board;
  */
 public class Solver {
 	public static void BFS(Board board) {
-		
+
 	}
 }
