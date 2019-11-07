@@ -45,7 +45,8 @@ public class Board {
 		// initializeEasy();
 		// initializeTestBoard();
 		// initializeUnsolvable();
-		initializeDefaultBoard();
+		initializeVeryHardBoard();
+		// initializeDefaultBoard();
 	}
 
 	/**
@@ -86,6 +87,23 @@ public class Board {
 		Fox fox1 = new Fox(Fox.Direction.UP, true);
 		tiles[1][3].placePiece(fox1);
 		tiles[1][4].placePiece(fox1.getOtherHalf());
+	}
+	
+	private void initializeVeryHardBoard() {
+		initializeBaseBoard();
+		Fox fox1 = new Fox(Fox.Direction.RIGHT, true);
+		tiles[1][1].placePiece(fox1);
+		tiles[0][1].placePiece(fox1.getOtherHalf());
+		
+		tiles[3][1].placePiece(new Rabbit(RabbitColour.WHITE));
+		tiles[4][2].placePiece(new Rabbit(RabbitColour.BROWN));
+		tiles[3][4].placePiece(new Rabbit(RabbitColour.GRAY));
+		
+		tiles[0][3].placePiece(new Mushroom());
+		tiles[2][2].placePiece(new Mushroom());
+		tiles[0][3].placePiece(new Mushroom());
+		
+		
 	}
 
 	private void initializeUnsolvable() {
