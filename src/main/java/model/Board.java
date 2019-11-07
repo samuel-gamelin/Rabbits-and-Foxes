@@ -6,6 +6,8 @@ import java.util.List;
 import model.Fox.Direction;
 import model.Rabbit.RabbitColour;
 import model.Tile.Colour;
+import util.Move;
+import util.Position;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within

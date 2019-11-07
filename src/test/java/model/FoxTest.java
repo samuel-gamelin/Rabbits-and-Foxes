@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import model.Board;
 import model.Fox;
-import model.Move;
+import util.Move;
 
 public class FoxTest {
 

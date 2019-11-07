@@ -5,9 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.Board;
-import model.Move;
 import model.Piece;
 import model.Rabbit;
+import util.Move;
 
 public class BoardTest {
 	private Board board;

@@ -1,4 +1,4 @@
-package model;
+package util;
 
 /**
  * This class represents a single coordinate.

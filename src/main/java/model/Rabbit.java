@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.Move;
+import util.Position;
+
 /**
  * A class representing a Rabbit piece.
  * 

@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.Rabbit;
+import util.Move;
 import model.Board;
-import model.Move;
 
 public class RabbitTest {
 	private Rabbit rabbitBrown;

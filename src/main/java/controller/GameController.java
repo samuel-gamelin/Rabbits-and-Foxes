@@ -5,8 +5,8 @@ import java.util.List;
 
 import model.Board;
 import model.Fox;
-import model.Move;
 import model.Mushroom;
+import util.Move;
 
 /**
  * The controller is used to register the user's moves so that it updates the

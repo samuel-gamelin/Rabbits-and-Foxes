@@ -5,9 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.Board;
-import model.Move;
 import model.Mushroom;
 import model.Piece.PieceType;
+import util.Move;
 
 public class MushroomTest {
 	private Mushroom mushroom;

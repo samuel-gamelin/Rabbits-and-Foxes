@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.Move;
+
 /***
  * A class representing a Mushroom piece.
  * 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Board;
-import model.Move;
 
 /**
  * This class represents a node in the game tree of Rabbits and Foxes.

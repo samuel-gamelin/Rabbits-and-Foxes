@@ -1,4 +1,4 @@
-package model;
+package util;
 
 /**
  * This class represents the move coordinates for the game. Since move will be
