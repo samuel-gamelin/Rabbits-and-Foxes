@@ -51,26 +51,14 @@ public abstract class Piece {
 	abstract boolean move(Move move, Board board);
 
 	/**
+	 * @param x The x position of the current piece from which possible moves are to be determined
+	 * @param y The y position of the current piece from which possible moves are to be determined
 	 * @return The list of possible Move objects that this piece can make given the specified board.
 	 */
-	abstract List<Move> getPossibleMoves(Board board);
+	abstract List<Move> getPossibleMoves(Board board, int x, int y);
 	
 	/**
 	 * @return A short, two-character string representing the piece.
 	 */
 	abstract String toShortString();
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Piece other = (Piece) obj;
-		if (pieceType != other.pieceType)
-			return false;
-		return true;
-	}
 }

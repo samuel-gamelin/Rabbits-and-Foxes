@@ -36,7 +36,7 @@ public class Mushroom extends Piece {
 	}
 
 	@Override
-	public List<Move> getPossibleMoves(Board board) {
+	public List<Move> getPossibleMoves(Board board, int x, int y) {
 		return new ArrayList<>();
 	}
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.Move;
-import util.Position;
 
 /**
  * A class representing a Fox piece.
@@ -280,16 +279,10 @@ public class Fox extends Piece {
 	}
 
 	@Override
-	public List<Move> getPossibleMoves(Board board) {
+	public List<Move> getPossibleMoves(Board board, int x, int y) {
 		List<Move> moves = new ArrayList<>();
 		
 		if (foxType.equals(FoxType.TAIL)) { // We will only generate possible moves using the head
-			return moves;
-		}
-
-		Position position = board.findPiecePosition(this);
-
-		if (position.x == -1 || position.y == -1) {
 			return moves;
 		}
 
@@ -297,14 +290,14 @@ public class Fox extends Piece {
 
 		if (direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) { // Horizontally-sliding fox
 			for (int i = 0; i < Board.SIZE; i++) {
-				Move moveX = new Move(position.x, position.y, i, position.y);
+				Move moveX = new Move(x, y, i, y);
 				if (validatePath(moveX, board, location)) {
 					moves.add(moveX);
 				}
 			}
 		} else { // Vertically-sliding fox
 			for (int i = 0; i < Board.SIZE; i++) {
-				Move moveY = new Move(position.x, position.y, position.x, i);
+				Move moveY = new Move(x, y, x, i);
 				if (validatePath(moveY, board, location)) {
 					moves.add(moveY);
 				}
@@ -326,29 +319,6 @@ public class Fox extends Piece {
 						&& (direction.equals(Direction.RIGHT) || direction.equals(Direction.UP))))
 			location = false;
 		return location;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Fox other = (Fox) obj;
-		if (direction != other.direction)
-			return false;
-		if (foxType != other.foxType)
-			return false;
-		if (id != other.id)
-			return false;
-		if (otherHalf == null) {
-			if (other.otherHalf != null)
-				return false;
-			} else if (!otherHalf.equals(other.otherHalf))
-			return false;
-		return true;
 	}
 
 	@Override

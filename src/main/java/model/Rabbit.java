@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.Move;
-import util.Position;
 
 /**
  * A class representing a Rabbit piece.
@@ -143,18 +142,12 @@ public class Rabbit extends Piece {
 	}
 
 	@Override
-	public List<Move> getPossibleMoves(Board board) {
+	public List<Move> getPossibleMoves(Board board, int x, int y) {
 		List<Move> moves = new ArrayList<>(); 
 		
-		Position position = board.findPiecePosition(this);
-		
-		if (position.x == -1 || position.y == -1) {
-			return moves;
-		}
-		
 		for (int i = 0; i < Board.SIZE; i++) {
-			Move moveX = new Move(position.x, position.y, i, position.y);
-			Move moveY = new Move(position.x, position.y, position.x, i);
+			Move moveX = new Move(x, y, i, y);
+			Move moveY = new Move(x, y, x, i);
 			if (validatePath(moveX, board)) {
 				moves.add(moveX);
 			}
@@ -164,20 +157,6 @@ public class Rabbit extends Piece {
 		}
 		
 		return moves;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Rabbit other = (Rabbit) obj;
-		if (colour != other.colour)
-			return false;
-		return true;
 	}
 
 	@Override

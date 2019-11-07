@@ -7,7 +7,6 @@ import model.Fox.Direction;
 import model.Rabbit.RabbitColour;
 import model.Tile.Colour;
 import util.Move;
-import util.Position;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within
@@ -86,7 +85,7 @@ public class Board {
 		}
 		this.boardListeners = new ArrayList<>();
 	}
-	
+
 	private void initializeEasy() {
 		initializeBaseBoard();
 
@@ -110,7 +109,7 @@ public class Board {
 		tiles[1][3].placePiece(fox1);
 		tiles[1][4].placePiece(fox1.getOtherHalf());
 	}
-	
+
 	private void initializeUnsolvable() {
 		initializeBaseBoard();
 		tiles[2][0].placePiece(new Rabbit(RabbitColour.BROWN));
@@ -187,8 +186,9 @@ public class Board {
 	public boolean isInWinningState() {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (tiles[i][j].retrievePiece() != null
-						&& tiles[i][j].retrievePiece().getPieceType().equals(Piece.PieceType.RABBIT)
+				Piece piece = tiles[i][j].retrievePiece();
+				if (piece != null
+						&& piece.getPieceType().equals(Piece.PieceType.RABBIT)
 						&& !tiles[i][j].getColour().equals(Tile.Colour.BROWN)) {
 					return false;
 				}
@@ -291,26 +291,6 @@ public class Board {
 	}
 
 	/**
-	 * Searches for a piece on this board.
-	 * 
-	 * @param piece The piece to find
-	 * @return A Position object representing the location of the piece. If the
-	 *         piece was not found, the Position object will have (-1, -1) as its
-	 *         coordinate.
-	 */
-	public Position findPiecePosition(Piece piece) {
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				if (piece.equals(tiles[i][j].retrievePiece())) {
-					return new Position(i, j);
-				}
-			}
-		}
-
-		return new Position(-1, -1);
-	}
-
-	/**
 	 * @return A list containing all possible move objects for this board
 	 */
 	public List<Move> getPossibleMoves() {
@@ -318,8 +298,9 @@ public class Board {
 
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (tiles[i][j].retrievePiece() != null) {
-					moves.addAll(tiles[i][j].retrievePiece().getPossibleMoves(this));
+				Piece piece = tiles[i][j].retrievePiece();
+				if (piece != null) {
+					moves.addAll(piece.getPossibleMoves(this, i, j));
 				}
 			}
 		}
