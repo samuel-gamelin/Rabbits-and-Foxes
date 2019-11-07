@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /***
  * A class representing a Mushroom piece.
  * 
@@ -16,7 +19,7 @@ public class Mushroom extends Piece {
 	public Mushroom() {
 		super(PieceType.MUSHROOM);
 	}
-
+	
 	/**
 	 * Attempt to move a mushroom, which fails since they act as static obstacles in
 	 * this game.
@@ -28,5 +31,10 @@ public class Mushroom extends Piece {
 	@Override
 	public boolean move(Move move, Board board) {
 		return false;
+	}
+
+	@Override
+	public List<Move> getPossibleMoves(Board board) {
+		return new ArrayList<>();
 	}
 }

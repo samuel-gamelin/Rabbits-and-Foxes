@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A class representing a Fox piece.
  * 
@@ -76,6 +79,15 @@ public class Fox extends Piece {
 	}
 
 	/**
+	 * A copy constructor for Fox.
+	 * 
+	 * @param piece The piece to copy
+	 */
+	public Fox(Piece piece) {
+		this(((Fox) piece).direction, ((Fox) piece).id);
+	}
+
+	/**
 	 * Returns the other half of a Fox.
 	 * 
 	 * @return The other half of this Fox.
@@ -132,13 +144,8 @@ public class Fox extends Piece {
 		int yEnd = move.yEnd;
 		int xDistance = move.xDistance();
 		int yDistance = move.yDistance();
-		boolean location = true;
-
-		// Determine the location of the other half of the Fox relative to this half.
-		if ((foxType.equals(FoxType.TAIL) && (direction.equals(Direction.LEFT) || direction.equals(Direction.DOWN)))
-				|| (foxType.equals(FoxType.HEAD)
-						&& (direction.equals(Direction.RIGHT) || direction.equals(Direction.UP))))
-			location = false;
+		boolean location = getRelativeLocation();
+		
 		// Only need to check one, since it will be either true for both or false for
 		// both
 		if (validatePath(move, board, location)) {
@@ -267,5 +274,77 @@ public class Fox extends Piece {
 			}
 			return true; // The move is valid for the fox
 		}
+	}
+
+	@Override
+	public List<Move> getPossibleMoves(Board board) {
+		List<Move> moves = new ArrayList<>();
+		
+		if (foxType.equals(FoxType.TAIL)) { // We will only generate possible moves using the head
+			return moves;
+		}
+
+		Position position = board.findPiecePosition(this);
+
+		if (position.x == -1 || position.y == -1) {
+			return moves;
+		}
+
+		boolean location = getRelativeLocation();
+
+		if (direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) { // Horizontally-sliding fox
+			for (int i = 0; i < Board.SIZE; i++) {
+				Move moveX = new Move(position.x, position.y, i, position.y);
+				if (validatePath(moveX, board, location)) {
+					moves.add(moveX);
+				}
+			}
+		} else { // Vertically-sliding fox
+			for (int i = 0; i < Board.SIZE; i++) {
+				Move moveY = new Move(position.x, position.y, position.x, i);
+				if (validatePath(moveY, board, location)) {
+					moves.add(moveY);
+				}
+			}
+		}
+		
+		return moves;
+	}
+
+	/**
+	 * @return the location of the other half of the Fox relative to this half.
+	 */
+	private boolean getRelativeLocation() {
+		boolean location = true;
+
+		// Determine the location of the other half of the Fox relative to this half.
+		if ((foxType.equals(FoxType.TAIL) && (direction.equals(Direction.LEFT) || direction.equals(Direction.DOWN)))
+				|| (foxType.equals(FoxType.HEAD)
+						&& (direction.equals(Direction.RIGHT) || direction.equals(Direction.UP))))
+			location = false;
+		return location;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Fox other = (Fox) obj;
+		if (direction != other.direction)
+			return false;
+		if (foxType != other.foxType)
+			return false;
+		if (id != other.id)
+			return false;
+		if (otherHalf == null) {
+			if (other.otherHalf != null)
+				return false;
+			} else if (!otherHalf.equals(other.otherHalf))
+			return false;
+		return true;
 	}
 }

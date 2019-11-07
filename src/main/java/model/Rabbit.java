@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A class representing a Rabbit piece.
  * 
@@ -31,6 +34,15 @@ public class Rabbit extends Piece {
 	public Rabbit(RabbitColour colour) {
 		super(PieceType.RABBIT);
 		this.colour = colour;
+	}
+
+	/**
+	 * A copy constructor for Rabbit.
+	 * 
+	 * @param piece The piece to copy
+	 */
+	public Rabbit(Piece piece) {
+		this(((Rabbit) piece).colour);
 	}
 
 	/**
@@ -124,6 +136,44 @@ public class Rabbit extends Piece {
 				}
 			}
 		}
+		return true;
+	}
+
+	@Override
+	public List<Move> getPossibleMoves(Board board) {
+		List<Move> moves = new ArrayList<>(); 
+		
+		Position position = board.findPiecePosition(this);
+		
+		if (position.x == -1 || position.y == -1) {
+			return moves;
+		}
+		
+		for (int i = 0; i < Board.SIZE; i++) {
+			Move moveX = new Move(position.x, position.y, i, position.y);
+			Move moveY = new Move(position.x, position.y, position.x, i);
+			if (validatePath(moveX, board)) {
+				moves.add(moveX);
+			}
+			if (validatePath(moveY, board)) {
+				moves.add(moveY);
+			}
+		}
+		
+		return moves;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rabbit other = (Rabbit) obj;
+		if (colour != other.colour)
+			return false;
 		return true;
 	}
 }

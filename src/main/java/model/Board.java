@@ -44,6 +44,21 @@ public class Board {
 	}
 
 	/**
+	 * A copy constructor for Board. Does not retain the list of listeners from the old board. That is, it its listener list is empty.
+	 * 
+	 * @param board The board to copy
+	 */
+	public Board(Board board) {
+		this.tiles = new Tile[SIZE][SIZE];
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {	
+				this.tiles[i][j] = new Tile(board.tiles[i][j]);
+			}
+		}
+		this.boardListeners = new ArrayList<>();
+	}
+
+	/**
 	 * Initializes the board with a default configuration.
 	 */
 	private void initializeDefaultBoard() {
@@ -211,5 +226,40 @@ public class Board {
 	private boolean validateBounds(Move move) {
 		return move.xStart >= 0 && move.xStart < SIZE && move.xEnd >= 0 && move.xEnd < SIZE && move.yStart >= 0
 				&& move.yStart < SIZE && move.yEnd >= 0 && move.yEnd < SIZE;
+	}
+	
+	/**
+	 * Searches for a piece on this board.
+	 * 
+	 * @param piece The piece to find
+	 * @return A Position object representing the location of the piece. If the piece was not found, the Position object will have (-1, -1) as its coordinate.
+	 */
+	public Position findPiecePosition(Piece piece) {
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (piece.equals(tiles[i][j].retrievePiece())) {
+					return new Position(i, j);
+				}
+			}
+		}
+		
+		return new Position(-1, -1);
+	}
+
+	/**
+	 * @return A list containing all possible move objects for this board
+	 */
+	public List<Move> getPossibleMoves() {
+		List<Move> moves = new ArrayList<>(); 
+		
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (tiles[i][j].retrievePiece() != null) {
+					moves.addAll(tiles[i][j].retrievePiece().getPossibleMoves(this));
+				}
+			}
+		}
+		
+		return moves;
 	}
 }

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * This abstract class provides a high-level prototype for a piece.
  * 
@@ -45,4 +47,23 @@ public abstract class Piece {
 	 *         end positions, false otherwise
 	 */
 	abstract boolean move(Move move, Board board);
+
+	/**
+	 * @return The list of possible Move objects that this piece can make given the specified board.
+	 */
+	abstract List<Move> getPossibleMoves(Board board);
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Piece other = (Piece) obj;
+		if (pieceType != other.pieceType)
+			return false;
+		return true;
+	}
 }
