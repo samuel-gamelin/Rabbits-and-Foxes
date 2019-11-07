@@ -42,8 +42,9 @@ public class Board {
 	public Board() {
 		tiles = new Tile[SIZE][SIZE];
 		boardListeners = new ArrayList<>();
-		// initializeTestBoard();
-		initializeDefaultBoard();
+		//initializeEasy();
+		initializeTestBoard();
+		//initializeDefaultBoard();
 	}
 
 	/**
@@ -82,28 +83,21 @@ public class Board {
 		}
 		this.boardListeners = new ArrayList<>();
 	}
+	
+	private void initializeEasy() {
+		initializeBaseBoard();
+
+		tiles[1][0].placePiece(new Mushroom());
+		tiles[1][4].placePiece(new Mushroom());
+		tiles[2][0].placePiece(new Rabbit(RabbitColour.BROWN));
+		tiles[2][4].placePiece(new Rabbit(RabbitColour.GRAY));
+	}
 
 	/**
 	 * Configures the board for testing.
 	 */
 	private void initializeTestBoard() {
-		// Corner brown tiles
-		tiles[0][0] = new Tile(Tile.Colour.BROWN);
-		tiles[4][0] = new Tile(Tile.Colour.BROWN);
-		tiles[0][4] = new Tile(Tile.Colour.BROWN);
-		tiles[4][4] = new Tile(Tile.Colour.BROWN);
-
-		// Center brown tile
-		tiles[2][2] = new Tile(Tile.Colour.BROWN);
-
-		// Regular green tiles
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				if (tiles[i][j] == null) {
-					tiles[i][j] = new Tile(Tile.Colour.GREEN);
-				}
-			}
-		}
+		initializeBaseBoard();
 
 		tiles[0][1].placePiece(new Mushroom());
 		tiles[2][0].placePiece(new Rabbit(RabbitColour.BROWN));
@@ -118,23 +112,7 @@ public class Board {
 	 * Initializes the board with a default configuration.
 	 */
 	private void initializeDefaultBoard() {
-		// Corner brown tiles
-		tiles[0][0] = new Tile(Tile.Colour.BROWN);
-		tiles[4][0] = new Tile(Tile.Colour.BROWN);
-		tiles[0][4] = new Tile(Tile.Colour.BROWN);
-		tiles[4][4] = new Tile(Tile.Colour.BROWN);
-
-		// Center brown tile
-		tiles[2][2] = new Tile(Tile.Colour.BROWN);
-
-		// Regular green tiles
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				if (tiles[i][j] == null) {
-					tiles[i][j] = new Tile(Tile.Colour.GREEN);
-				}
-			}
-		}
+		initializeBaseBoard();
 
 		// Adding the mushrooms (there can be 0 to 3, here we have 2)
 		tiles[3][1].placePiece(new Mushroom());
@@ -152,6 +130,26 @@ public class Board {
 		tiles[4][3].placePiece(fox1.getOtherHalf());
 		tiles[1][0].placePiece(fox2);
 		tiles[1][1].placePiece(fox2.getOtherHalf());
+	}
+
+	private void initializeBaseBoard() {
+		// Corner brown tiles
+		tiles[0][0] = new Tile(Tile.Colour.BROWN);
+		tiles[4][0] = new Tile(Tile.Colour.BROWN);
+		tiles[0][4] = new Tile(Tile.Colour.BROWN);
+		tiles[4][4] = new Tile(Tile.Colour.BROWN);
+
+		// Center brown tile
+		tiles[2][2] = new Tile(Tile.Colour.BROWN);
+
+		// Regular green tiles
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (tiles[i][j] == null) {
+					tiles[i][j] = new Tile(Tile.Colour.GREEN);
+				}
+			}
+		}
 	}
 
 	/**

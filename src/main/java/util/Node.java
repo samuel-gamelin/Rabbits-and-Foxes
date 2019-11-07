@@ -16,6 +16,7 @@ import model.Move;
  */
 public class Node {
 	private Board board;
+	private boolean visited;
 
 	public Node(Board board) {
 		this.board = new Board(board);
@@ -34,6 +35,22 @@ public class Node {
 		}
 
 		return children;
+	}
+	
+	/**
+	 * @return True if this node has been visited, false otherwise
+	 */
+	public boolean isVisited() {
+		return visited;
+	}
+	
+	/**
+	 * Sets the visited state of this node.
+	 * 
+	 * @param visited The visited value to set
+	 */
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 
 	/**
