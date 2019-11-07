@@ -48,14 +48,17 @@ public class GameController {
 	 * 
 	 * @param x - Represents the start of the end x value of the user's move
 	 * @param y - Represents the start of the end y value of the user's move
-	 * @return - True if the selected location is valid, false if it is the first move being made on the board or if the selected location is valid
+	 * @return - True if the selected location is valid, false if it is the first
+	 *         move being made on the board or if the selected location is valid
 	 */
 	public ClickValidity registerClick(int x, int y) {
 		if (move.isEmpty() && board.isOccupied(x, y) && !(board.getPiece(x, y) instanceof Mushroom)) {
 			move.add(x);
 			move.add(y);
 			return ClickValidity.VALID;
-		} else if (!move.isEmpty() && (!board.isOccupied(x, y) || (board.getPiece(x, y) instanceof Fox && board.getPiece(move.get(0), move.get(1)) instanceof Fox && ((Fox) board.getPiece(x, y)).getID() == ((Fox) board.getPiece(move.get(0), move.get(1))).getID()))) {
+		} else if (!move.isEmpty() && (!board.isOccupied(x, y) || (board.getPiece(x, y) instanceof Fox
+				&& board.getPiece(move.get(0), move.get(1)) instanceof Fox
+				&& ((Fox) board.getPiece(x, y)).getID() == ((Fox) board.getPiece(move.get(0), move.get(1))).getID()))) {
 			boolean result = board.move(new Move(move.get(0), move.get(1), x, y));
 			if (result) {
 				move.clear();

@@ -11,11 +11,7 @@ import model.Board;
  * @version 3.0
  */
 public class Solver {
-	public static void DFS(Board board) {
-		
-	}
-	
-	public static void main(String[] args) {
+	public static void BFS(Board board) {
 		
 	}
 }

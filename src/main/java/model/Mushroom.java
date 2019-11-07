@@ -37,4 +37,9 @@ public class Mushroom extends Piece {
 	public List<Move> getPossibleMoves(Board board) {
 		return new ArrayList<>();
 	}
+
+	@Override
+	public String toShortString() {
+		return "MU";
+	}
 }

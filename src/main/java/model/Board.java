@@ -3,7 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Fox.Direction;
 import model.Rabbit.RabbitColour;
+import model.Tile.Colour;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within
@@ -40,22 +42,76 @@ public class Board {
 	public Board() {
 		tiles = new Tile[SIZE][SIZE];
 		boardListeners = new ArrayList<>();
+		// initializeTestBoard();
 		initializeDefaultBoard();
 	}
 
 	/**
-	 * A copy constructor for Board. Does not retain the list of listeners from the old board. That is, it its listener list is empty.
+	 * A copy constructor for Board. Does not retain the list of listeners from the
+	 * old board. That is, it its listener list is empty.
 	 * 
 	 * @param board The board to copy
 	 */
 	public Board(Board board) {
 		this.tiles = new Tile[SIZE][SIZE];
 		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {	
-				this.tiles[i][j] = new Tile(board.tiles[i][j]);
+			for (int j = 0; j < SIZE; j++) {
+				if (board.tiles[i][j].retrievePiece() != null && board.tiles[i][j].retrievePiece() instanceof Fox) {
+					Fox fox = (Fox) board.tiles[i][j].retrievePiece();
+					Direction direction = fox.getDirection();
+					if (fox.getFoxType().equals(Fox.FoxType.HEAD)) {
+						Fox newFox = (Fox) (this.tiles[i][j] = new Tile(board.tiles[i][j])).retrievePiece();
+						if (direction.equals(Direction.UP)) {
+							this.tiles[i][j + 1] = new Tile(Colour.GREEN);
+							this.tiles[i][j + 1].placePiece(newFox.getOtherHalf());
+						} else if (direction.equals(Direction.DOWN)) {
+							this.tiles[i][j - 1] = new Tile(Colour.GREEN);
+							this.tiles[i][j - 1].placePiece(newFox.getOtherHalf());
+						} else if (direction.equals(Direction.LEFT)) {
+							this.tiles[i + 1][j] = new Tile(Colour.GREEN);
+							this.tiles[i + 1][j].placePiece(newFox.getOtherHalf());
+						} else if (direction.equals(Direction.RIGHT)) {
+							this.tiles[i - 1][j] = new Tile(Colour.GREEN);
+							this.tiles[i - 1][j].placePiece(newFox.getOtherHalf());
+						}
+					}
+				} else {
+					this.tiles[i][j] = new Tile(board.tiles[i][j]);
+				}
 			}
 		}
 		this.boardListeners = new ArrayList<>();
+	}
+
+	/**
+	 * Configures the board for testing.
+	 */
+	private void initializeTestBoard() {
+		// Corner brown tiles
+		tiles[0][0] = new Tile(Tile.Colour.BROWN);
+		tiles[4][0] = new Tile(Tile.Colour.BROWN);
+		tiles[0][4] = new Tile(Tile.Colour.BROWN);
+		tiles[4][4] = new Tile(Tile.Colour.BROWN);
+
+		// Center brown tile
+		tiles[2][2] = new Tile(Tile.Colour.BROWN);
+
+		// Regular green tiles
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (tiles[i][j] == null) {
+					tiles[i][j] = new Tile(Tile.Colour.GREEN);
+				}
+			}
+		}
+
+		tiles[0][1].placePiece(new Mushroom());
+		tiles[2][0].placePiece(new Rabbit(RabbitColour.BROWN));
+		tiles[2][4].placePiece(new Rabbit(RabbitColour.GRAY));
+
+		Fox fox1 = new Fox(Fox.Direction.UP, true);
+		tiles[1][3].placePiece(fox1);
+		tiles[1][4].placePiece(fox1.getOtherHalf());
 	}
 
 	/**
@@ -90,7 +146,7 @@ public class Board {
 		tiles[4][2].placePiece(new Rabbit(RabbitColour.GRAY));
 
 		// Adding the foxes (there can be 0 to 2, here we have 2)
-		Fox fox1  = new Fox(Fox.Direction.LEFT, true);
+		Fox fox1 = new Fox(Fox.Direction.LEFT, true);
 		Fox fox2 = new Fox(Fox.Direction.UP, false);
 		tiles[3][3].placePiece(fox1);
 		tiles[4][3].placePiece(fox1.getOtherHalf());
@@ -162,8 +218,8 @@ public class Board {
 	 * Sets the specified piece at the specified position.
 	 * 
 	 * @param piece The piece to set at the specified position
-	 * @param x The x-coordinate of the position
-	 * @param y The y-coordinate of the position
+	 * @param x     The x-coordinate of the position
+	 * @param y     The y-coordinate of the position
 	 * @return True if the piece was successfully set, false otherwise
 	 */
 	public boolean setPiece(Piece piece, int x, int y) {
@@ -227,12 +283,14 @@ public class Board {
 		return move.xStart >= 0 && move.xStart < SIZE && move.xEnd >= 0 && move.xEnd < SIZE && move.yStart >= 0
 				&& move.yStart < SIZE && move.yEnd >= 0 && move.yEnd < SIZE;
 	}
-	
+
 	/**
 	 * Searches for a piece on this board.
 	 * 
 	 * @param piece The piece to find
-	 * @return A Position object representing the location of the piece. If the piece was not found, the Position object will have (-1, -1) as its coordinate.
+	 * @return A Position object representing the location of the piece. If the
+	 *         piece was not found, the Position object will have (-1, -1) as its
+	 *         coordinate.
 	 */
 	public Position findPiecePosition(Piece piece) {
 		for (int i = 0; i < SIZE; i++) {
@@ -242,7 +300,7 @@ public class Board {
 				}
 			}
 		}
-		
+
 		return new Position(-1, -1);
 	}
 
@@ -250,8 +308,8 @@ public class Board {
 	 * @return A list containing all possible move objects for this board
 	 */
 	public List<Move> getPossibleMoves() {
-		List<Move> moves = new ArrayList<>(); 
-		
+		List<Move> moves = new ArrayList<>();
+
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				if (tiles[i][j].retrievePiece() != null) {
@@ -259,7 +317,73 @@ public class Board {
 				}
 			}
 		}
-		
+
 		return moves;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder representation = new StringBuilder();
+
+		// Adding the top row of numbers
+		representation.append("     ");
+		for (int i = 0; i < SIZE; i++) {
+			representation.append(i + 1);
+			representation.append("        ");
+		}
+
+		for (int y = 0; y < SIZE; y++) {
+			// First row
+			representation.append("\n  ");
+			for (int x = 0; x < SIZE; x++) {
+				representation.append("|");
+				if (tiles[x][y].getColour().equals(Tile.Colour.BROWN)) {
+					representation.append("--BB--");
+				} else {
+					representation.append("------");
+				}
+				representation.append("| ");
+			}
+
+			// Second row
+			representation.append("\n  ");
+			for (int x = 0; x < SIZE; x++) {
+				representation.append("|");
+				representation.append("      ");
+				representation.append("| ");
+			}
+
+			// Third row
+			representation.append("\n" + (y + 1) + " ");
+			for (int x = 0; x < SIZE; x++) {
+				representation.append("|");
+				representation.append("  ");
+				representation.append(tiles[x][y].toString());
+				representation.append("  ");
+				representation.append("| ");
+			}
+
+			// Fourth row
+			representation.append("\n  ");
+			for (int x = 0; x < SIZE; x++) {
+				representation.append("|");
+				representation.append("      ");
+				representation.append("| ");
+			}
+
+			// Fifth row
+			representation.append("\n  ");
+			for (int x = 0; x < SIZE; x++) {
+				representation.append("|");
+				if (tiles[x][y].getColour().equals(Tile.Colour.BROWN)) {
+					representation.append("__BB__");
+				} else {
+					representation.append("______");
+				}
+				representation.append("| ");
+			}
+		}
+
+		return representation.toString();
 	}
 }

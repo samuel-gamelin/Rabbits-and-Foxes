@@ -347,4 +347,13 @@ public class Fox extends Piece {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toShortString() {
+		if (foxType.equals(FoxType.HEAD)) {
+			return "FH";
+		}
+		
+		return "FT";
+	}
 }

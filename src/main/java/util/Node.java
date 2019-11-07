@@ -16,30 +16,35 @@ import model.Move;
  */
 public class Node {
 	private Board board;
-	
+
 	public Node(Board board) {
 		this.board = new Board(board);
 	}
-	
+
 	/**
 	 * @return A list containing all children of this node
 	 */
 	public List<Node> getChildren() {
 		List<Node> children = new ArrayList<Node>();
-		
+
 		for (Move move : board.getPossibleMoves()) {
 			Board newBoard = new Board(board);
 			newBoard.move(move);
 			children.add(new Node(newBoard));
 		}
-		
+
 		return children;
 	}
-	
+
 	/**
 	 * @return True if this node's board is in a winning state. False otherwise.
 	 */
 	public boolean isWinningNode() {
 		return board.isInWinningState();
+	}
+
+	@Override
+	public String toString() {
+		return board.toString();
 	}
 }

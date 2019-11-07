@@ -176,4 +176,9 @@ public class Rabbit extends Piece {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toShortString() {
+		return "RB";
+	}
 }

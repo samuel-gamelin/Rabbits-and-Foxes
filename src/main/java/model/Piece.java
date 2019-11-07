@@ -52,6 +52,11 @@ public abstract class Piece {
 	 * @return The list of possible Move objects that this piece can make given the specified board.
 	 */
 	abstract List<Move> getPossibleMoves(Board board);
+	
+	/**
+	 * @return A short, two-character string representing the piece.
+	 */
+	abstract String toShortString();
 
 	@Override
 	public boolean equals(Object obj) {
