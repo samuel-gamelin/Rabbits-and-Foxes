@@ -143,19 +143,19 @@ public class Rabbit extends Piece {
 
 	@Override
 	public List<Move> getPossibleMoves(Board board, int x, int y) {
-		List<Move> moves = new ArrayList<>(); 
-		
+		List<Move> moves = new ArrayList<>();
+
 		for (int i = 0; i < Board.SIZE; i++) {
 			Move moveX = new Move(x, y, i, y);
 			Move moveY = new Move(x, y, x, i);
-			if (validatePath(moveX, board)) {
+			if (!board.isOccupied(moveX.xEnd, moveX.yEnd) && validatePath(moveX, board)) {
 				moves.add(moveX);
 			}
-			if (validatePath(moveY, board)) {
+			if (!board.isOccupied(moveY.xEnd, moveY.yEnd) && validatePath(moveY, board)) {
 				moves.add(moveY);
 			}
 		}
-		
+
 		return moves;
 	}
 

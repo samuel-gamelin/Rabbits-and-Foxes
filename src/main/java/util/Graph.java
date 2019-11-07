@@ -85,6 +85,6 @@ public class Graph {
 		graph.depthFirstSearch(new Node(new Board()));
 
 		System.out.println(
-				"\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - startTime));
+				"\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toNanos((System.nanoTime() - startTime)));
 	}
 }

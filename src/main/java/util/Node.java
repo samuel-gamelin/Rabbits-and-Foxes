@@ -26,13 +26,11 @@ public class Node {
 	 */
 	public List<Node> getChildren() {
 		List<Node> children = new ArrayList<>();
-
 		for (Move move : board.getPossibleMoves()) {
 			Board newBoard = new Board(board);
 			newBoard.move(move);
 			children.add(new Node(newBoard));
 		}
-
 		return children;
 	}
 
