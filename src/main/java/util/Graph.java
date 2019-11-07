@@ -24,29 +24,22 @@ public class Graph {
 	public void depthFirstSearch(Node root) {
 		ArrayDeque<Node> stack = new ArrayDeque<>();
 		stack.add(root);
-
+		int i = 0;
 		while (!stack.isEmpty()) {
 			Node currentNode = stack.pop();
-
-			if (currentNode.isWinningNode()) {
-				System.out.println("Found solution\n" + currentNode);
-				return;
-			}
-
-			if (!currentNode.isVisited()) {
+			if (!currentNode.getChildren().isEmpty() && !currentNode.isVisited()) {
 				currentNode.setVisited(true);
-			}
-
-			for (Node child : currentNode.getChildren()) {
-				if (child.isWinningNode()) {
-					System.out.println("Found solution\n" + child);
-					return;
-				} else if (!child.isVisited() && !child.getChildren().isEmpty()) {
-					stack.add(child);
+				for (Node child : currentNode.getChildren()) {
+					if (child.isWinningNode()) {
+						System.out.println("Found solution " + i + "\n" + child);
+						return;
+					} else if (!child.isVisited() && !child.getChildren().isEmpty()) {
+						stack.add(child);
+						i++;
+					}
 				}
 			}
 		}
-
 		System.out.println("No solution exists.");
 	}
 
@@ -87,8 +80,8 @@ public class Graph {
 		Graph graph = new Graph();
 		final long startTime = System.nanoTime();
 
-		//graph.depthFirstSearch(new Node(new Board()));
-		graph.breadthFirstSearch(new Node(new Board()));
+		// graph.depthFirstSearch(new Node(new Board()));
+		graph.depthFirstSearch(new Node(new Board()));
 
 		System.out.println(
 				"\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - startTime));
