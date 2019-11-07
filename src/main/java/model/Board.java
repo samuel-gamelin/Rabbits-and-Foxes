@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import model.Rabbit.RabbitColour;
@@ -271,7 +272,6 @@ public class Board {
 	 */
 	public List<Move> getPossibleMoves() {
 		List<Move> moves = new ArrayList<>();
-
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				Piece piece = tiles[i][j].retrievePiece();

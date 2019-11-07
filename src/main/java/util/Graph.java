@@ -1,6 +1,7 @@
 package util;
 
 import java.util.ArrayDeque;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 
@@ -24,21 +25,21 @@ public class Graph {
 	public void depthFirstSearch(Node root) {
 		ArrayDeque<Node> stack = new ArrayDeque<>();
 		stack.add(root);
-		int i = 0;
 		while (!stack.isEmpty()) {
 			Node currentNode = stack.pop();
-			if (!currentNode.getChildren().isEmpty() && !currentNode.isVisited()) {
+			List<Node> children = currentNode.getChildren();
+			if (!children.isEmpty() && !currentNode.isVisited()) {
 				currentNode.setVisited(true);
-				for (Node child : currentNode.getChildren()) {
+				for (Node child : children) {
 					if (child.isWinningNode()) {
-						System.out.println("Found solution " + i + "\n" + child);
+						System.out.println("Found solution \n" + child);
 						return;
-					} else if (!child.isVisited() && !child.getChildren().isEmpty()) {
+					} else {
 						stack.add(child);
-						i++;
 					}
 				}
 			}
+
 		}
 		System.out.println("No solution exists.");
 	}
