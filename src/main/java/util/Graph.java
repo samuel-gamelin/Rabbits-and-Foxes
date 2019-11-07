@@ -66,7 +66,14 @@ public class Graph {
 				System.out.println("Found solution\n" + currentNode);
 				return;
 			} else {
-				queue.addAll(currentNode.getChildren());
+				for (Node child : currentNode.getChildren()) {
+					if (child.isWinningNode()) {
+						System.out.println("Found solution\n" + child);
+						return;
+					} else if (!child.isVisited() && !child.getChildren().isEmpty()) {
+						queue.add(child);
+					}
+				}
 			}
 		}
 
@@ -80,8 +87,8 @@ public class Graph {
 		Graph graph = new Graph();
 		final long startTime = System.nanoTime();
 
-		graph.depthFirstSearch(new Node(new Board()));
-		// graph.breadthFirstSearch(new Node(new Board()));
+		//graph.depthFirstSearch(new Node(new Board()));
+		graph.breadthFirstSearch(new Node(new Board()));
 
 		System.out.println(
 				"\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - startTime));
