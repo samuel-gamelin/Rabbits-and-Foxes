@@ -101,7 +101,7 @@ public class Board {
 		
 		tiles[0][3].placePiece(new Mushroom());
 		tiles[2][2].placePiece(new Mushroom());
-		tiles[0][3].placePiece(new Mushroom());
+		tiles[3][0].placePiece(new Mushroom());
 		
 		
 	}
