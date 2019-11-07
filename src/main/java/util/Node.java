@@ -25,7 +25,7 @@ public class Node {
 	 * @return A list containing all children of this node
 	 */
 	public List<Node> getChildren() {
-		List<Node> children = new ArrayList<Node>();
+		List<Node> children = new ArrayList<>();
 
 		for (Move move : board.getPossibleMoves()) {
 			Board newBoard = new Board(board);

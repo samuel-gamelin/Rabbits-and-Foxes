@@ -1,9 +1,8 @@
 package util;
 
 import java.util.ArrayDeque;
-import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
+import java.util.concurrent.TimeUnit;
 
 import model.Board;
 
@@ -18,30 +17,30 @@ public class Graph {
 	 * 
 	 * @param root The node from which to stem the search
 	 */
-	@Deprecated
 	public void depthFirstSearch(Node root) {
-		Stack<Node> stack = new Stack<>();
+		ArrayDeque<Node> stack = new ArrayDeque<>();
 		stack.add(root);
 		
 		while (!stack.isEmpty()) {
-			Node node = stack.pop();
+			Node currentNode = stack.pop();
 			
-			if (node.isWinningNode()) {
-				System.out.println("Found solution\n" + node);
+			if (currentNode.isWinningNode()) {
+				System.out.println("Found solution\n" + currentNode);
 				return;
 			}
 			
-			if (!node.isVisited()) {
-				node.setVisited(true);
+			if (!currentNode.isVisited()) {
+				currentNode.setVisited(true);
 			}
-			
-			List<Node> children = node.getChildren();
-			for (Node child : children) {
+
+			for (Node child : currentNode.getChildren()) {
 				if (!child.isVisited()) {
 					stack.add(child);
 				}
 			}
 		}
+		
+		System.out.println("No solution exists.");
 	}
 	
 	/**
@@ -57,13 +56,14 @@ public class Graph {
 			Node currentNode = queue.remove();
 			
 			if (currentNode.isWinningNode()) {
-				System.out.println("Found solution");
-				System.out.println(currentNode);
+				System.out.println("Found solution\n" + currentNode);
 				return;
 			} else {
 				queue.addAll(currentNode.getChildren());
 			}
 		}
+		
+		System.out.println("No solution exists.");
 	}
 	
 	/*
@@ -71,6 +71,11 @@ public class Graph {
 	 */
 	public static void main(String[] args) {
 		Graph graph = new Graph();
+		final long startTime = System.nanoTime();
+		
+		//graph.depthFirstSearch(new Node(new Board()));
 		graph.breadthFirstSearch(new Node(new Board()));
+		
+		System.out.println("\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - startTime));
 	}
 }

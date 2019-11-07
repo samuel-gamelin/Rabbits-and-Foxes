@@ -45,8 +45,9 @@ public class Board {
 		tiles = new Tile[SIZE][SIZE];
 		boardListeners = new ArrayList<>();
 		//initializeEasy();
-		initializeTestBoard();
-		//initializeDefaultBoard();
+		//initializeTestBoard();
+		//initializeUnsolvable();
+		initializeDefaultBoard();
 	}
 
 	/**
@@ -108,6 +109,11 @@ public class Board {
 		Fox fox1 = new Fox(Fox.Direction.UP, true);
 		tiles[1][3].placePiece(fox1);
 		tiles[1][4].placePiece(fox1.getOtherHalf());
+	}
+	
+	private void initializeUnsolvable() {
+		initializeBaseBoard();
+		tiles[2][0].placePiece(new Rabbit(RabbitColour.BROWN));
 	}
 
 	/**
