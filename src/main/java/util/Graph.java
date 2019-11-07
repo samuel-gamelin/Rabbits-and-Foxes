@@ -45,7 +45,7 @@ public class Graph {
 	}
 	
 	/**
-	 * Performs a bread-first search on the specified node.
+	 * Performs a breadth-first search on the specified node.
 	 * 
 	 * @param root The node from which to stem the search
 	 */
