@@ -10,6 +10,7 @@ import model.Board;
  * This class models a graph in the Rabbits and Foxes game.
  * 
  * @author Samuel Gamelin
+ * @author Mohamed Radwan
  * 
  * @version 3.0
  */
@@ -37,7 +38,10 @@ public class Graph {
 			}
 
 			for (Node child : currentNode.getChildren()) {
-				if (!child.isVisited()) {
+				if (child.isWinningNode()) {
+					System.out.println("Found solution\n" + child);
+					return;
+				} else if (!child.isVisited() && !child.getChildren().isEmpty()) {
 					stack.add(child);
 				}
 			}
@@ -77,8 +81,9 @@ public class Graph {
 		final long startTime = System.nanoTime();
 
 		graph.depthFirstSearch(new Node(new Board()));
-		//graph.breadthFirstSearch(new Node(new Board()));
+		// graph.breadthFirstSearch(new Node(new Board()));
 
-		System.out.println("\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - startTime));
+		System.out.println(
+				"\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - startTime));
 	}
 }
