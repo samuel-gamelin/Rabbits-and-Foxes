@@ -1,7 +1,7 @@
 package util;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import model.Board;
 
@@ -24,12 +24,15 @@ public class Node {
 	/**
 	 * @return A list containing all children of this node
 	 */
-	public List<Node> getChildren() {
-		List<Node> children = new ArrayList<>();
-		for (Move move : board.getPossibleMoves()) {
-			Board newBoard = new Board(board);
-			newBoard.move(move);
-			children.add(new Node(newBoard));
+	public Set<Node> getChildren() {
+		Set<Node> children = new LinkedHashSet<>(); 
+		Set<Move> possibleMoves = board.getPossibleMoves();
+		if (possibleMoves != null && !possibleMoves.isEmpty()) {
+			for (Move move : possibleMoves) {
+				Board newBoard = new Board(board);
+				newBoard.move(move);
+				children.add(new Node(newBoard));
+			}
 		}
 		return children;
 	}
@@ -50,11 +53,28 @@ public class Node {
 		this.visited = visited;
 	}
 
+	
 	/**
 	 * @return True if this node's board is in a winning state. False otherwise.
 	 */
 	public boolean isWinningNode() {
 		return board.isInWinningState();
+	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((board == null) ? 0 : board.hashCode());
+		result = prime * result + (visited ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return board.equals(obj);
 	}
 
 	@Override

@@ -2,8 +2,11 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
+import model.Piece.PieceType;
 import model.Rabbit.RabbitColour;
 import util.Move;
 
@@ -45,8 +48,8 @@ public class Board {
 		// initializeEasy();
 		// initializeTestBoard();
 		// initializeUnsolvable();
-		initializeVeryHardBoard();
-		// initializeDefaultBoard();
+		// initializeVeryHardBoard();
+		initializeDefaultBoard();
 	}
 
 	/**
@@ -88,22 +91,21 @@ public class Board {
 		tiles[1][3].placePiece(fox1);
 		tiles[1][4].placePiece(fox1.getOtherHalf());
 	}
-	
+
 	private void initializeVeryHardBoard() {
 		initializeBaseBoard();
 		Fox fox1 = new Fox(Fox.Direction.RIGHT, true);
 		tiles[1][1].placePiece(fox1);
 		tiles[0][1].placePiece(fox1.getOtherHalf());
-		
+
 		tiles[3][1].placePiece(new Rabbit(RabbitColour.WHITE));
 		tiles[4][2].placePiece(new Rabbit(RabbitColour.BROWN));
 		tiles[3][4].placePiece(new Rabbit(RabbitColour.GRAY));
-		
+
 		tiles[0][3].placePiece(new Mushroom());
 		tiles[2][2].placePiece(new Mushroom());
 		tiles[3][0].placePiece(new Mushroom());
-		
-		
+
 	}
 
 	private void initializeUnsolvable() {
@@ -288,12 +290,12 @@ public class Board {
 	/**
 	 * @return A list containing all possible move objects for this board
 	 */
-	public List<Move> getPossibleMoves() {
-		List<Move> moves = new ArrayList<>();
+	public Set<Move> getPossibleMoves() {
+		Set<Move> moves = new LinkedHashSet<>();
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				Piece piece = tiles[i][j].retrievePiece();
-				if (piece != null) {
+				if (piece != null && !piece.getPieceType().equals(PieceType.MUSHROOM)) {
 					moves.addAll(piece.getPossibleMoves(this, i, j));
 				}
 			}

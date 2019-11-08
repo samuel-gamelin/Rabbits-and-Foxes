@@ -1,8 +1,8 @@
 package util;
 
 import java.util.ArrayDeque;
-import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import model.Board;
@@ -25,21 +25,22 @@ public class Graph {
 	public void depthFirstSearch(Node root) {
 		ArrayDeque<Node> stack = new ArrayDeque<>();
 		stack.add(root);
+		int i = 0;
 		while (!stack.isEmpty()) {
 			Node currentNode = stack.pop();
-			List<Node> children = currentNode.getChildren();
-			if (!children.isEmpty() && !currentNode.isVisited()) {
-				currentNode.setVisited(true);
+			Set<Node> children = currentNode.getChildren();
+			currentNode.setVisited(true);
+			if (!children.isEmpty()) {
 				for (Node child : children) {
 					if (child.isWinningNode()) {
-						System.out.println("Found solution \n" + child);
+						System.out.println("Found solution " + i + "\n" + child);
 						return;
 					} else {
 						stack.add(child);
+						i++;
 					}
 				}
 			}
-
 		}
 		System.out.println("No solution exists.");
 	}
@@ -52,20 +53,19 @@ public class Graph {
 	public void breadthFirstSearch(Node root) {
 		Queue<Node> queue = new ArrayDeque<>();
 		queue.add(root);
-
+		int i = 0;
 		while (!queue.isEmpty()) {
 			Node currentNode = queue.remove();
-
-			if (currentNode.isWinningNode()) {
-				System.out.println("Found solution\n" + currentNode);
-				return;
-			} else {
-				for (Node child : currentNode.getChildren()) {
+			Set<Node> children = currentNode.getChildren();
+			if (!children.isEmpty()) {
+				currentNode.setVisited(true);
+				for (Node child : children) {
 					if (child.isWinningNode()) {
-						System.out.println("Found solution\n" + child);
+						System.out.println("Found solution " + i + "\n" + child);
 						return;
-					} else if (!child.isVisited() && !child.getChildren().isEmpty()) {
+					} else if (!currentNode.equals(child) && !child.getChildren().isEmpty()) {
 						queue.add(child);
+						i++;
 					}
 				}
 			}
@@ -81,8 +81,8 @@ public class Graph {
 		Graph graph = new Graph();
 		final long startTime = System.nanoTime();
 
-		// graph.depthFirstSearch(new Node(new Board()));
-		graph.depthFirstSearch(new Node(new Board()));
+		 graph.depthFirstSearch(new Node(new Board()));
+		//graph.breadthFirstSearch(new Node(new Board()));
 
 		System.out.println(
 				"\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toNanos((System.nanoTime() - startTime)));
