@@ -106,12 +106,13 @@ public class Graph {
 	 */
 	public static void main(String[] args) {
 		Graph graph = new Graph();
-		final long startTime = System.nanoTime();
-
-		graph.depthFirstSearch(new Node(new Board()));
-		//graph.breadthFirstSearch(new Node(new Board()));
-
-		System.out.println(
-				"\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toNanos((System.nanoTime() - startTime)));
+//		List<Node> list = graph.depthFirstSearch(new Node(new Board()));
+//		for (Node node : list) {
+//			System.out.println(node + "\n");
+//		}
+		List<Node> list = graph.breadthFirstSearch(new Node(new Board()));
+		for (Node node : list) {
+			System.out.println(node + "\n");
+		}
 	}
 }
