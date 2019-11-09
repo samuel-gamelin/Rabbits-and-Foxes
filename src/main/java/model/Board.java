@@ -48,8 +48,8 @@ public class Board {
 		// initializeEasy();
 		// initializeTestBoard();
 		// initializeUnsolvable();
-		// initializeVeryHardBoard();
-		initializeDefaultBoard();
+		//initializeVeryHardBoard();
+		 initializeDefaultBoard();
 	}
 
 	/**

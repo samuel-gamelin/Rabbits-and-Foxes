@@ -335,36 +335,4 @@ public class Fox extends Piece {
 		return "FT";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((direction == null) ? 0 : direction.hashCode());
-		result = prime * result + ((foxType == null) ? 0 : foxType.hashCode());
-		result = prime * result + (id ? 1231 : 1237);
-		result = prime * result + ((otherHalf == null) ? 0 : otherHalf.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof Fox))
-			return false;
-		Fox other = (Fox) obj;
-		if (direction != other.direction)
-			return false;
-		if (foxType != other.foxType)
-			return false;
-		if (id != other.id)
-			return false;
-		if (otherHalf == null) {
-			if (other.otherHalf != null)
-				return false;
-		} else if (!otherHalf.equals(other.otherHalf))
-			return false;
-		return true;
-	}
-
 }

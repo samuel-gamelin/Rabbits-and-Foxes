@@ -165,25 +165,4 @@ public class Rabbit extends Piece {
 	public String toShortString() {
 		return "RB";
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((colour == null) ? 0 : colour.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof Rabbit))
-			return false;
-		Rabbit other = (Rabbit) obj;
-		if (colour != other.colour)
-			return false;
-		return true;
-	}
-
 }
