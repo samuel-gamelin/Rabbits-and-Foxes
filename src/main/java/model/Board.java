@@ -48,9 +48,10 @@ public class Board {
 		// initializeEasy();
 		// initializeTestBoard();
 		// initializeUnsolvable();
-		// initializeVeryHardBoard();
+		 initializeVeryHardBoard();
 		// initializeDefaultBoard();
-		 initializeMedBoard();
+		// initializeMedBoard();
+		// initializeMed2Board();
 
 	}
 
@@ -93,26 +94,45 @@ public class Board {
 		tiles[1][3].placePiece(fox1);
 		tiles[1][4].placePiece(fox1.getOtherHalf());
 	}
-	
+
 	private void initializeMedBoard() {
 		initializeBaseBoard();
-		
+
 		tiles[1][0].placePiece(new Rabbit(RabbitColour.BROWN));
 		tiles[3][0].placePiece(new Rabbit(RabbitColour.GRAY));
-		tiles[4][1].placePiece(new Rabbit(RabbitColour.GRAY));
-		
+		tiles[4][1].placePiece(new Rabbit(RabbitColour.WHITE));
+
 		tiles[0][1].placePiece(new Mushroom());
 		tiles[0][2].placePiece(new Mushroom());
 		tiles[0][4].placePiece(new Mushroom());
-		
-		
+
 		Fox fox1 = new Fox(Fox.Direction.UP, true);
 		tiles[1][1].placePiece(fox1);
 		tiles[1][2].placePiece(fox1.getOtherHalf());
-		
+
 		Fox fox2 = new Fox(Fox.Direction.LEFT, true);
 		tiles[1][3].placePiece(fox2);
 		tiles[2][3].placePiece(fox2.getOtherHalf());
+	}
+
+	private void initializeMed2Board() {
+		initializeBaseBoard();
+
+		tiles[1][0].placePiece(new Rabbit(RabbitColour.BROWN));
+		tiles[0][2].placePiece(new Rabbit(RabbitColour.GRAY));
+		tiles[2][2].placePiece(new Rabbit(RabbitColour.WHITE));
+
+		tiles[0][4].placePiece(new Mushroom());
+		tiles[4][0].placePiece(new Mushroom());
+		tiles[4][2].placePiece(new Mushroom());
+
+		Fox fox1 = new Fox(Fox.Direction.UP, true);
+		tiles[3][1].placePiece(fox1);
+		tiles[3][2].placePiece(fox1.getOtherHalf());
+
+		Fox fox2 = new Fox(Fox.Direction.LEFT, true);
+		tiles[3][3].placePiece(fox2);
+		tiles[4][3].placePiece(fox2.getOtherHalf());
 	}
 
 	private void initializeVeryHardBoard() {
