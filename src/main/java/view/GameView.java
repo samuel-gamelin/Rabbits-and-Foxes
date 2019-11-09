@@ -57,6 +57,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private JButton menuReset;
 	private JButton menuHelp;
 	private JButton menuQuit;
+	private JButton menuHint;
 
 	private JButton btnStart;
 	private JButton btnHelp;
@@ -132,26 +133,23 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
-		menuReset = createMenuBarButton("Reset");
+		
 		menuHelp = createMenuBarButton("Help");
+		menuHint = createMenuBarButton("Hint");
+		menuReset = createMenuBarButton("Reset");
 		menuQuit = createMenuBarButton("Quit");
-		menuBar.add(menuReset);
+		
+		menuBar.add(menuHint);
 		menuBar.add(menuHelp);
+		menuBar.add(menuReset);
 		menuBar.add(menuQuit);
-
+		
 		gamePane.add(menuBar, BorderLayout.NORTH);
 
 		// GridLayout for board frame
 		JLabel boardLabel = new JLabel(Resources.BOARD);
 		boardLabel.setLayout(new GridLayout(5, 5));
 		gamePane.add(boardLabel, BorderLayout.CENTER);
-		
-		// Button for hint
-		JButton hintButton = new JButton("Hint");
-		hintButton.addActionListener(e -> {
-			gameController.printHint();
-		});
-		gamePane.add(hintButton, BorderLayout.EAST);
 
 		// Organize the game frame
 		gameFrame.setIconImage(Resources.WINDOW_ICON.getImage());
@@ -194,7 +192,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 						clearButtonBorders();
 					} else if (clickResult.equals(ClickValidity.INVALID)
 							|| clickResult.equals(ClickValidity.INVALID_MOVEMADE)) {
-						clearButtonBorders(); 
+						clearButtonBorders();
 						gameController.clearPendingPosition();
 						if (wrongMove == null || !wrongMove.isActive()) {
 							try {
@@ -224,17 +222,18 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		updateView();
 
-		menuReset.addActionListener(this);
-		btnHelp.addActionListener(this);
-		menuHelp.addActionListener(this);
-		btnQuit.addActionListener(this);
-		menuQuit.addActionListener(this);
-
 		btnStart.addActionListener(e -> {
 			mainMenuFrame.dispose();
 			gameFrame.setVisible(true);
-			helpDialog(); 
+			helpDialog();
 		});
+		btnHelp.addActionListener(this);
+		btnQuit.addActionListener(this);
+
+		menuReset.addActionListener(this);
+		menuHelp.addActionListener(this);
+		menuQuit.addActionListener(this);
+		menuHint.addActionListener(this);
 	}
 
 	/**
@@ -341,15 +340,19 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		updateView();
 		gameEndBoard(true);
 	}
-	
+
 	/**
-	 * Pops up help dialog. 
+	 * Pops up help dialog.
 	 */
 	private void helpDialog() {
-		JOptionPane.showMessageDialog(null,
-				"Reset (r): Restarts the game\n" + "Help (h): Displays the help menu\n"
-						+ "Quit (q): Exits the application\n" + "Escape (ESC): Clears the pending move",
-				"Help", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "<html><body><p style='width: 200px; text-align: justify'>"
+				+ "Rabbits and Foxes is a game in which you must get all rabbits to safety by having them land in brown holes. "
+				+ "To do this, rabbits can only jump over other pieces and must land in an empty hole. "
+				+ "Foxes can slide along their initial direction as long as no other piece obstructs their way.<br><br>"
+				+ "Hint (h): Outlines the next best move<br>" + "Help: Displays the help menu<br>"
+				+ "Reset  (r):   Restarts the game<br>" + "Quit   (q):   Exits the application<br>"
+				+ "Escape (ESC): Clears the pending move" + "</p></body></html>", "Help",
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	/**
@@ -361,8 +364,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			JOptionPane.showMessageDialog(null,
 					"Start: Starts the game\n" + "Help: Displays the help menu\n" + "Quit: Exits the application",
 					"Help", JOptionPane.INFORMATION_MESSAGE);
+		} else if (e.getSource() == menuHint) {
+			gameController.printHint();
 		} else if (e.getSource() == menuHelp) {
-			helpDialog(); 
+			helpDialog();
 		} else if (e.getSource() == btnQuit || e.getSource() == menuQuit) {
 			if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Rabbit and Foxes!",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
