@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import util.Move;
+import util.Move.MoveDirection;
 
 /**
  * 
@@ -53,13 +54,13 @@ public class MoveTest {
 	 */
 	@Test
 	public void testDirection() {
-		assertEquals(-1, move.direction());
+		assertEquals(MoveDirection.INVALID, move.direction());
 		move = new Move(1, 2, 1, 6);
-		assertEquals(1, move.direction());
+		assertEquals(MoveDirection.VERTICAL, move.direction());
 		move = new Move(1, 1, 1, 1);
-		assertEquals(-1, move.direction());
+		assertEquals(MoveDirection.INVALID, move.direction());
 		move = new Move(4, 1, 6, 1);
-		assertEquals(0, move.direction());
+		assertEquals(MoveDirection.HORIZONTAL, move.direction());
 
 	}
 
