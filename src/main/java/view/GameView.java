@@ -145,6 +145,13 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		JLabel boardLabel = new JLabel(Resources.BOARD);
 		boardLabel.setLayout(new GridLayout(5, 5));
 		gamePane.add(boardLabel, BorderLayout.CENTER);
+		
+		// Button for hint
+		JButton hintButton = new JButton("Hint");
+		hintButton.addActionListener(e -> {
+			gameController.printHint();
+		});
+		gamePane.add(hintButton, BorderLayout.EAST);
 
 		// Organize the game frame
 		gameFrame.setIconImage(Resources.WINDOW_ICON.getImage());
