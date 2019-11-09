@@ -353,7 +353,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				+ "To do this, rabbits can only jump over other pieces and must land in an empty hole. "
 				+ "Foxes can slide along their initial direction as long as no other piece obstructs their way.<br><br>"
 				+ "Hint (h): Outlines the next best move<br>" + "Help: Displays the help menu<br>"
-				+ "Reset  (r):   Restarts the game<br>" + "Quit   (q):   Exits the application<br>"
+				+ "Reset:   Restarts the game<br>" + "Quit   (q):   Exits the application<br>"
 				+ "Escape (ESC): Clears the pending move" + "</p></body></html>", "Help",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
