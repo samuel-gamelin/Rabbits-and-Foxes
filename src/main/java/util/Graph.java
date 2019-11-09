@@ -47,7 +47,7 @@ public class Graph {
 				}
 			}
 		}
-		System.out.println("No solution exists.");
+		System.out.println("No solution exists. - " + i);
 	}
 
 	/**
@@ -59,18 +59,21 @@ public class Graph {
 		Queue<Node> queue = new ArrayDeque<>();
 		queue.add(root);
 		int i = 0;
+		Set<Node> vistied = new HashSet<>();
 		while (!queue.isEmpty()) {
 			Node currentNode = queue.remove();
-			Set<Node> children = currentNode.getChildren();
-			if (!children.isEmpty()) {
-				currentNode.setVisited(true);
-				for (Node child : children) {
-					if (child.isWinningNode()) {
-						System.out.println("Found solution " + i + "\n" + child);
-						return;
-					} else if (!currentNode.equals(child) && !child.getChildren().isEmpty()) {
-						queue.add(child);
-						i++;
+			if (!vistied.contains(currentNode)) {
+				vistied.add(currentNode);
+				Set<Node> children = currentNode.getChildren();
+				if (!children.isEmpty()) {
+					for (Node child : children) {
+						if (child.isWinningNode()) {
+							System.out.println("Found solution " + i + "\n" + child);
+							return;
+						} else {
+							queue.add(child);
+							i++;
+						}
 					}
 				}
 			}
@@ -87,7 +90,7 @@ public class Graph {
 		final long startTime = System.nanoTime();
 
 		graph.depthFirstSearch(new Node(new Board()));
-		// graph.breadthFirstSearch(new Node(new Board()));
+//		graph.breadthFirstSearch(new Node(new Board()));
 
 		System.out.println(
 				"\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toNanos((System.nanoTime() - startTime)));

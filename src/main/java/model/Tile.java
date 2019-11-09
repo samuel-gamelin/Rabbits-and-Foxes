@@ -107,9 +107,7 @@ public class Tile {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (occupied ? 1231 : 1237);
 		result = prime * result + ((piece == null) ? 0 : piece.hashCode());
-		result = prime * result + ((tileColour == null) ? 0 : tileColour.hashCode());
 		return result;
 	}
 
@@ -120,14 +118,10 @@ public class Tile {
 		if (!(obj instanceof Tile))
 			return false;
 		Tile other = (Tile) obj;
-		if (occupied != other.occupied)
-			return false;
 		if (piece == null) {
 			if (other.piece != null)
 				return false;
 		} else if (!piece.equals(other.piece))
-			return false;
-		if (tileColour != other.tileColour)
 			return false;
 		return true;
 	}
