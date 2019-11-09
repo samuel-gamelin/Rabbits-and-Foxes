@@ -134,10 +134,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
 		
-		menuHelp = createMenuBarButton("Help");
-		menuHint = createMenuBarButton("Hint");
-		menuReset = createMenuBarButton("Reset");
-		menuQuit = createMenuBarButton("Quit");
+		menuHint = createMenuBarButton("Hint", true);
+		menuHelp = createMenuBarButton("Help", false);
+		menuReset = createMenuBarButton("Reset", false);
+		menuQuit = createMenuBarButton("Quit", true);
 		
 		menuBar.add(menuHint);
 		menuBar.add(menuHelp);
@@ -255,21 +255,24 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * @param text The text inside the button
 	 * @return The newly created JButton
 	 */
-	private JButton createMenuBarButton(String text) {
+	private JButton createMenuBarButton(String text, boolean enableShortcut) {
 		JButton button = new JButton("<html><p style='text-align:center;'>" + text + "</p></html>");
 		button.setContentAreaFilled(false);
 		button.setOpaque(false);
 		button.setBorderPainted(false);
-		button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-				.put(KeyStroke.getKeyStroke(Character.toLowerCase(text.charAt(0))), text);
-		button.getActionMap().put(text, new AbstractAction() {
-			private static final long serialVersionUID = -4044080289796171300L;
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				button.doClick();
-			}
-		});
+		
+		if (enableShortcut) {
+			button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+					.put(KeyStroke.getKeyStroke(Character.toLowerCase(text.charAt(0))), text);
+			button.getActionMap().put(text, new AbstractAction() {
+				private static final long serialVersionUID = -4044080289796171300L;
+	
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					button.doClick();
+				}
+			});
+		}
 		return button;
 	}
 
