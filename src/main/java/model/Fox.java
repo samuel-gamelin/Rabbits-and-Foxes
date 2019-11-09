@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.Move;
+import util.Move.MoveDirection;
 
 /**
  * A class representing a Fox piece.
@@ -137,7 +138,8 @@ public class Fox extends Piece {
 		// enum were to change order
 		// this would fail. However, since that scenario has no reason to occur, this
 		// implementation was kept.
-		if ((direction.ordinal() < 2 && move.direction() != 0) || (direction.ordinal() > 1 && move.direction() != 1))
+		if ((direction.ordinal() < 2 && !move.direction().equals(MoveDirection.HORIZONTAL))
+				|| (direction.ordinal() > 1 && !move.direction().equals(MoveDirection.VERTICAL)))
 			return false;
 
 		int xStart = move.xStart;
@@ -205,10 +207,12 @@ public class Fox extends Piece {
 		int yEnd = move.yEnd;
 		int xDistance = move.xDistance();
 		int yDistance = move.yDistance();
-		int moveDirection = move.direction();
+		MoveDirection moveDirection = move.direction();
 
-		// Trying to move horizontally.
-		if (moveDirection == 0) {
+		if (board.isOccupied(xEnd, yEnd) && moveDirection.equals(MoveDirection.INVALID)) {
+			return false;
+		}
+		if (moveDirection.equals(MoveDirection.HORIZONTAL)) {
 			if (location && xDistance > 0) { // The other part of the fox is to the right and we are moving right
 				if (xEnd + 1 > 4) { // Check to see if the move will push the fox out of bounds
 					return false;
@@ -253,7 +257,8 @@ public class Fox extends Piece {
 				if (yEnd - 1 < 0) { // Check to see if the move will push the fox out of bounds
 					return false;
 				}
-				for (int i = yStart - 2; i >= yEnd - 1; i--) { // Need to make sure there are no obstacles in the path
+				for (int i = yStart - 2; i >= yEnd - 1; i--) { // Need to make sure there are no obstacles in the
+																// path
 					if (board.isOccupied(xStart, i)) {
 						return false;
 					}
@@ -262,7 +267,8 @@ public class Fox extends Piece {
 				if (yEnd + 1 > 4) { // Check to see if the move will push the fox out of bounds
 					return false;
 				}
-				for (int i = yStart + 2; i <= yEnd + 1; i++) { // Need to make sure there are no obstacles in the path
+				for (int i = yStart + 2; i <= yEnd + 1; i++) { // Need to make sure there are no obstacles in the
+																// path
 					if (board.isOccupied(xStart, i)) {
 						return false;
 					}
@@ -287,7 +293,6 @@ public class Fox extends Piece {
 		}
 
 		boolean location = getRelativeLocation();
-
 		if (direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) { // Horizontally-sliding fox
 			for (int i = 0; i < Board.SIZE; i++) {
 				Move moveX = new Move(x, y, i, y);

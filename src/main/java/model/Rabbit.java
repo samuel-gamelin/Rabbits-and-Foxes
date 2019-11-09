@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.Move;
+import util.Move.MoveDirection;
 
 /**
  * A class representing a Rabbit piece.
@@ -63,7 +64,7 @@ public class Rabbit extends Piece {
 	 */
 	@Override
 	public boolean move(Move move, Board board) {
-		if (move.direction() == -1) {
+		if (move.direction().equals(MoveDirection.INVALID)) {
 			return false;
 		}
 
@@ -84,9 +85,10 @@ public class Rabbit extends Piece {
 	 */
 	private boolean validatePath(Move move, Board board) {
 		// Rabbits must jump over at least one obstacle
-		if ((move.direction() == -1 || Math.abs(move.xDistance()) == 1 || Math.abs(move.yDistance()) == 1)
-				|| (move.direction() == 0 && !horizontalMove(move, board))
-				|| (move.direction() == 1 && !verticalMove(move, board))) {
+		if ((move.direction().equals(MoveDirection.INVALID) || Math.abs(move.xDistance()) == 1
+				|| Math.abs(move.yDistance()) == 1)
+				|| (move.direction().equals(MoveDirection.HORIZONTAL) && !horizontalMove(move, board))
+				|| (move.direction().equals(MoveDirection.VERTICAL) && !verticalMove(move, board))) {
 			return false;
 		}
 
