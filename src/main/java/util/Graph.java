@@ -2,7 +2,6 @@ package util;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;
-import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -49,38 +48,6 @@ public class Graph {
 			}
 		}
 		System.out.println("No solution exists: " + i);
-	}
-
-	/**
-	 * Performs a breadth-first search on the specified node.
-	 * 
-	 * @param root The node from which to stem the search
-	 */
-	public void breadthFirstSearch(Node root) {
-		Queue<Node> queue = new ArrayDeque<>();
-		queue.add(root);
-		int i = 0;
-		Set<Node> vistied = new HashSet<>();
-		while (!queue.isEmpty()) {
-			Node currentNode = queue.remove();
-			if (!vistied.contains(currentNode)) {
-				vistied.add(currentNode);
-				Set<Node> children = currentNode.getChildren();
-				if (!children.isEmpty()) {
-					for (Node child : children) {
-						if (child.isWinningNode()) {
-							System.out.println("Found solution " + i + "\n" + child);
-							return;
-						} else {
-							queue.add(child);
-							i++;
-						}
-					}
-				}
-			}
-		}
-
-		System.out.println("No solution exists.");
 	}
 
 	/*
