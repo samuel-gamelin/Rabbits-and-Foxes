@@ -73,4 +73,35 @@ public final class Move {
 	public int yDistance() {
 		return yEnd - yStart;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + xEnd;
+		result = prime * result + xStart;
+		result = prime * result + yEnd;
+		result = prime * result + yStart;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Move))
+			return false;
+		Move other = (Move) obj;
+		if (xEnd != other.xEnd)
+			return false;
+		if (xStart != other.xStart)
+			return false;
+		if (yEnd != other.yEnd)
+			return false;
+		if (yStart != other.yStart)
+			return false;
+		return true;
+	}
+	
+	
 }

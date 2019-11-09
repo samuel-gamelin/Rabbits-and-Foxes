@@ -48,10 +48,10 @@ public class Board {
 		// initializeEasy();
 		// initializeTestBoard();
 		// initializeUnsolvable();
-		 initializeVeryHardBoard();
+		// initializeVeryHardBoard();
 		// initializeDefaultBoard();
 		// initializeMedBoard();
-		// initializeMed2Board();
+		 initializeMed2Board();
 
 	}
 
@@ -338,7 +338,7 @@ public class Board {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				Piece piece = tiles[i][j].retrievePiece();
-				if (piece != null && !piece.getPieceType().equals(PieceType.MUSHROOM)) {
+				if (piece != null) {
 					moves.addAll(piece.getPossibleMoves(this, i, j));
 				}
 			}

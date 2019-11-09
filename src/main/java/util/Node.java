@@ -26,13 +26,10 @@ public class Node {
 	 */
 	public Set<Node> getChildren() {
 		Set<Node> children = new LinkedHashSet<>();
-		Set<Move> possibleMoves = board.getPossibleMoves();
-		if (possibleMoves != null && !possibleMoves.isEmpty()) {
-			for (Move move : possibleMoves) {
-				Board newBoard = new Board(board);
-				newBoard.move(move);
-				children.add(new Node(newBoard));
-			}
+		for (Move move : board.getPossibleMoves()) {
+			Board newBoard = new Board(board);
+			newBoard.move(move);
+			children.add(new Node(newBoard));
 		}
 		return children;
 	}

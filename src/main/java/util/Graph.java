@@ -34,15 +34,14 @@ public class Graph {
 				currentNode.setVisited(true);
 				vistied.add(currentNode);
 				Set<Node> children = currentNode.getChildren();
-				if (!children.isEmpty()) {
-					for (Node child : children) {
-						if (child.isWinningNode()) {
-							System.out.println("Found solution " + i + "\n" + child);
-							return;
-						} else {
-							stack.add(child);
-							i++;
-						}
+				children.removeAll(vistied);
+				for (Node child : children) {
+					if (child.isWinningNode()) {
+						System.out.println("Found solution " + i + "\n" + child);
+						return;
+					} else {
+						stack.add(child);
+						i++;
 					}
 				}
 			}
