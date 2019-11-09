@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Set;
+
 import model.Board;
 
 /**
@@ -12,7 +14,14 @@ import model.Board;
  * @version 3.0
  */
 public class Solver {
-	public static void BFS(Board board) {
 
+	private static Move extractMove(Set<Node> list) {
+		return null;
 	}
+
+	public static Move getNextBestMove(Board board) {
+		Graph graph = new Graph();
+		return extractMove(graph.depthFirstSearch(new Node(board)));
+	}
+
 }
