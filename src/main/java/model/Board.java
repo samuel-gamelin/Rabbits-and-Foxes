@@ -17,10 +17,11 @@ import util.Move;
  * @author Abdalla El Nakla
  * @author Dani Hashweh
  * @author John Breton
+ * @author Mohamed Radwan
  * 
  * @version 3.0
  */
-public class Board {
+public class Board implements Comparable<Piece> {
 	/**
 	 * The size of any side for the board.
 	 */
@@ -50,7 +51,7 @@ public class Board {
 		// initializeVeryHardBoard();
 		// initializeDefaultBoard();
 		// initializeMedBoard();
-		 initializeMed2Board();
+		initializeMed2Board();
 
 	}
 
@@ -346,6 +347,9 @@ public class Board {
 		return moves;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -354,6 +358,9 @@ public class Board {
 		return result;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -366,6 +373,9 @@ public class Board {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public String toString() {
 		StringBuilder representation = new StringBuilder();
@@ -430,5 +440,11 @@ public class Board {
 		}
 
 		return representation.toString();
+	}
+
+	@Override
+	public int compareTo(Piece o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
