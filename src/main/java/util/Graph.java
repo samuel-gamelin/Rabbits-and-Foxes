@@ -1,7 +1,12 @@
 package util;
 
 import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -21,31 +26,79 @@ public class Graph {
 	 * state is found.
 	 * 
 	 * @param root The node from which to stem the search
+	 * @return The list of nodes, in order, which form the path to the solution. If
+	 *         no solution is found, then an empty list is returned.
 	 */
-	public Set<Node> depthFirstSearch(Node root) {
+	public List<Node> depthFirstSearch(Node root) {
 		ArrayDeque<Node> stack = new ArrayDeque<>();
 		stack.add(root);
-		Set<Node> vistied = new HashSet<>();
-		int i = 0;
+
+		Set<Node> visited = new HashSet<>();
+		Map<Node, Node> parentMap = new HashMap<>();
+		List<Node> winningPathList = new LinkedList<>();
+
 		while (!stack.isEmpty()) {
 			Node currentNode = stack.pop();
-			if (!vistied.contains(currentNode)) {
-				vistied.add(currentNode);
+			if (!visited.contains(currentNode)) {
+				visited.add(currentNode);
 				Set<Node> children = currentNode.getChildren();
-				children.removeAll(vistied);
+				children.removeAll(visited);
 				for (Node child : children) {
+					parentMap.put(child, currentNode);
 					if (child.isWinningNode()) {
-						System.out.println("Found solution " + i + "\n" + child);
-						return null;
+						Node node = child;
+						while (node != null) {
+							winningPathList.add(0, node);
+							node = parentMap.get(node);
+						}
+						System.out.println(winningPathList.size());
+						return winningPathList;
 					} else {
 						stack.add(child);
-						i++;
 					}
 				}
 			}
 		}
-		System.out.println("No solution exists: " + i);
-		return null;
+		return winningPathList;
+	}
+
+	/**
+	 * Performs a breadth-first search on the specified node.
+	 * 
+	 * @param root The node from which to stem the search
+	 * @return 
+	 */
+	public List<Node> breadthFirstSearch(Node root) {
+		Queue<Node> queue = new ArrayDeque<>();
+		queue.add(root);
+		
+		Set<Node> visited = new HashSet<>();
+		Map<Node, Node> parentMap = new HashMap<>();
+		List<Node> winningPathList = new LinkedList<>();
+		
+		while (!queue.isEmpty()) {
+			Node currentNode = queue.remove();
+			if (!visited.contains(currentNode)) {
+				visited.add(currentNode);
+				Set<Node> children = currentNode.getChildren();
+				children.removeAll(visited);
+				for (Node child : children) {
+					parentMap.put(child, currentNode);
+					if (child.isWinningNode()) {
+						Node node = child;
+						while (node != null) {
+							winningPathList.add(0, node);
+							node = parentMap.get(node);
+						}
+						System.out.println(winningPathList.size());
+						return winningPathList;
+					} else {
+						queue.add(child);
+					}
+				}
+			}
+		}
+		return winningPathList;
 	}
 
 	/*
@@ -54,9 +107,11 @@ public class Graph {
 	public static void main(String[] args) {
 		Graph graph = new Graph();
 		final long startTime = System.nanoTime();
+
 		graph.depthFirstSearch(new Node(new Board()));
+		//graph.breadthFirstSearch(new Node(new Board()));
 
 		System.out.println(
-				"\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toSeconds((System.nanoTime() - startTime)));
+				"\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toNanos((System.nanoTime() - startTime)));
 	}
 }
