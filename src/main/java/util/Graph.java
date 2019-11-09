@@ -1,6 +1,7 @@
 package util;
 
 import java.util.ArrayDeque;
+import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -25,19 +26,23 @@ public class Graph {
 	public void depthFirstSearch(Node root) {
 		ArrayDeque<Node> stack = new ArrayDeque<>();
 		stack.add(root);
+		Set<Node> vistied = new HashSet<>();
 		int i = 0;
 		while (!stack.isEmpty()) {
 			Node currentNode = stack.pop();
-			Set<Node> children = currentNode.getChildren();
-			currentNode.setVisited(true);
-			if (!children.isEmpty()) {
-				for (Node child : children) {
-					if (child.isWinningNode()) {
-						System.out.println("Found solution " + i + "\n" + child);
-						return;
-					} else {
-						stack.add(child);
-						i++;
+			if (!vistied.contains(currentNode)) {
+				currentNode.setVisited(true);
+				vistied.add(currentNode);
+				Set<Node> children = currentNode.getChildren();
+				if (!children.isEmpty()) {
+					for (Node child : children) {
+						if (child.isWinningNode()) {
+							System.out.println("Found solution " + i + "\n" + child);
+							return;
+						} else {
+							stack.add(child);
+							i++;
+						}
 					}
 				}
 			}
@@ -81,8 +86,8 @@ public class Graph {
 		Graph graph = new Graph();
 		final long startTime = System.nanoTime();
 
-		 graph.depthFirstSearch(new Node(new Board()));
-		//graph.breadthFirstSearch(new Node(new Board()));
+		graph.depthFirstSearch(new Node(new Board()));
+		// graph.breadthFirstSearch(new Node(new Board()));
 
 		System.out.println(
 				"\nExecution time (in seconds): " + TimeUnit.NANOSECONDS.toNanos((System.nanoTime() - startTime)));

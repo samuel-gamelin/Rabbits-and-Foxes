@@ -61,22 +61,6 @@ public class Node {
 		return board.isInWinningState();
 	}
 	
-	
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((board == null) ? 0 : board.hashCode());
-		result = prime * result + (visited ? 1231 : 1237);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return board.equals(obj);
-	}
-
 	@Override
 	public String toString() {
 		return board.toString();

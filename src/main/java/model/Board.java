@@ -303,6 +303,34 @@ public class Board {
 
 		return moves;
 	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((boardListeners == null) ? 0 : boardListeners.hashCode());
+		result = prime * result + Arrays.deepHashCode(tiles);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Board))
+			return false;
+		Board other = (Board) obj;
+		if (boardListeners == null) {
+			if (other.boardListeners != null)
+				return false;
+		} else if (!boardListeners.equals(other.boardListeners))
+			return false;
+		if (!Arrays.deepEquals(tiles, other.tiles))
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {
