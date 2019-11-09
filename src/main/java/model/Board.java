@@ -181,19 +181,19 @@ public class Board {
 
 	private void initializeBaseBoard() {
 		// Corner brown tiles
-		tiles[0][0] = new Tile(Tile.Colour.BROWN);
-		tiles[4][0] = new Tile(Tile.Colour.BROWN);
-		tiles[0][4] = new Tile(Tile.Colour.BROWN);
-		tiles[4][4] = new Tile(Tile.Colour.BROWN);
+		tiles[0][0] = new Tile(Tile.TileColour.BROWN);
+		tiles[4][0] = new Tile(Tile.TileColour.BROWN);
+		tiles[0][4] = new Tile(Tile.TileColour.BROWN);
+		tiles[4][4] = new Tile(Tile.TileColour.BROWN);
 
 		// Center brown tile
-		tiles[2][2] = new Tile(Tile.Colour.BROWN);
+		tiles[2][2] = new Tile(Tile.TileColour.BROWN);
 
 		// Regular green tiles
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				if (tiles[i][j] == null) {
-					tiles[i][j] = new Tile(Tile.Colour.GREEN);
+					tiles[i][j] = new Tile(Tile.TileColour.GREEN);
 				}
 			}
 		}
@@ -228,7 +228,7 @@ public class Board {
 			for (int j = 0; j < SIZE; j++) {
 				Piece piece = tiles[i][j].retrievePiece();
 				if (piece != null && piece.getPieceType().equals(Piece.PieceType.RABBIT)
-						&& !tiles[i][j].getColour().equals(Tile.Colour.BROWN)) {
+						&& !tiles[i][j].getColour().equals(Tile.TileColour.BROWN)) {
 					return false;
 				}
 			}
@@ -382,7 +382,7 @@ public class Board {
 			representation.append("\n  ");
 			for (int x = 0; x < SIZE; x++) {
 				representation.append("|");
-				if (tiles[x][y].getColour().equals(Tile.Colour.BROWN)) {
+				if (tiles[x][y].getColour().equals(Tile.TileColour.BROWN)) {
 					representation.append("--BB--");
 				} else {
 					representation.append("------");
@@ -420,7 +420,7 @@ public class Board {
 			representation.append("\n  ");
 			for (int x = 0; x < SIZE; x++) {
 				representation.append("|");
-				if (tiles[x][y].getColour().equals(Tile.Colour.BROWN)) {
+				if (tiles[x][y].getColour().equals(Tile.TileColour.BROWN)) {
 					representation.append("__BB__");
 				} else {
 					representation.append("______");

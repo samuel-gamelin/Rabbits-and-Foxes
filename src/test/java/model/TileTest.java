@@ -19,19 +19,19 @@ public class TileTest {
 	public void setUp() {
 		tiles = new Tile[SIZE][SIZE];
 		// Corner brown tiles
-		tiles[0][0] = new Tile(Tile.Colour.BROWN);
-		tiles[4][0] = new Tile(Tile.Colour.BROWN);
-		tiles[0][4] = new Tile(Tile.Colour.BROWN);
-		tiles[4][4] = new Tile(Tile.Colour.BROWN);
+		tiles[0][0] = new Tile(Tile.TileColour.BROWN);
+		tiles[4][0] = new Tile(Tile.TileColour.BROWN);
+		tiles[0][4] = new Tile(Tile.TileColour.BROWN);
+		tiles[4][4] = new Tile(Tile.TileColour.BROWN);
 
 		// Center brown tile
-		tiles[2][2] = new Tile(Tile.Colour.BROWN);
+		tiles[2][2] = new Tile(Tile.TileColour.BROWN);
 
 		// Regular green tiles
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				if (tiles[i][j] == null) {
-					tiles[i][j] = new Tile(Tile.Colour.GREEN);
+					tiles[i][j] = new Tile(Tile.TileColour.GREEN);
 				}
 			}
 		}
@@ -63,15 +63,15 @@ public class TileTest {
 
 	@Test
 	public void testColor() {
-		assertEquals(Tile.Colour.BROWN, tiles[0][0].getColour());
-		assertEquals(Tile.Colour.BROWN, tiles[2][2].getColour());
-		assertEquals(Tile.Colour.BROWN, tiles[4][0].getColour());
-		assertEquals(Tile.Colour.BROWN, tiles[0][4].getColour());
-		assertEquals(Tile.Colour.BROWN, tiles[4][4].getColour());
+		assertEquals(Tile.TileColour.BROWN, tiles[0][0].getColour());
+		assertEquals(Tile.TileColour.BROWN, tiles[2][2].getColour());
+		assertEquals(Tile.TileColour.BROWN, tiles[4][0].getColour());
+		assertEquals(Tile.TileColour.BROWN, tiles[0][4].getColour());
+		assertEquals(Tile.TileColour.BROWN, tiles[4][4].getColour());
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				if (tiles[i][j] == null) {
-					assertEquals(Tile.Colour.GREEN, tiles[i][j].getColour());
+					assertEquals(Tile.TileColour.GREEN, tiles[i][j].getColour());
 				}
 
 			}

@@ -380,7 +380,7 @@ GREEN</string>
     <void property="name">
      <void property="text">
       <string>&lt;&lt;enumeration&gt;&gt;
-&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;Colour</string>
+&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;&amp;thinsp;TileColour</string>
      </void>
     </void>
    </object>

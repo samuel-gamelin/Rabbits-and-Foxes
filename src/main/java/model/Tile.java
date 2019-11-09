@@ -12,7 +12,7 @@ public class Tile {
 	/**
 	 * A Colour that will represent the colour of the tile.
 	 */
-	private Colour tileColour;
+	private TileColour tileColour;
 
 	/**
 	 * A boolean that will represent if the tile is occupied or not.
@@ -27,7 +27,7 @@ public class Tile {
 	/**
 	 * An enumeration representing this tile's colour (either brown or green).
 	 */
-	public enum Colour {
+	public enum TileColour {
 		BROWN, GREEN
 	}
 
@@ -36,7 +36,7 @@ public class Tile {
 	 * 
 	 * @param tileColour The colour of the tile as type Colour.
 	 */
-	public Tile(Colour tileColour) {
+	public Tile(TileColour tileColour) {
 		this.tileColour = tileColour;
 	}
 
@@ -90,7 +90,7 @@ public class Tile {
 	/**
 	 * @return The colour of this tile
 	 */
-	public Colour getColour() {
+	public TileColour getColour() {
 		return tileColour;
 	}
 
