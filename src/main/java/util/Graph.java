@@ -27,12 +27,14 @@ public class Graph {
 		ArrayDeque<Node> stack = new ArrayDeque<>();
 		stack.add(root);
 		Set<Node> vistied = new HashSet<>();
+		Set<Node> winningPath = new HashSet<>();
 		int i = 0;
 		while (!stack.isEmpty()) {
 			Node currentNode = stack.pop();
+			winningPath.add(currentNode);
 			if (!vistied.contains(currentNode)) {
-				currentNode.setVisited(true);
 				vistied.add(currentNode);
+				winningPath.remove(currentNode);
 				Set<Node> children = currentNode.getChildren();
 				children.removeAll(vistied);
 				for (Node child : children) {
@@ -46,7 +48,7 @@ public class Graph {
 				}
 			}
 		}
-		System.out.println("No solution exists. - " + i);
+		System.out.println("No solution exists: " + i);
 	}
 
 	/**
