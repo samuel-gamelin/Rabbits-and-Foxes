@@ -93,12 +93,43 @@ public class Tile {
 	public Colour getColour() {
 		return tileColour;
 	}
-	
+
 	/**
-	 * @return A 2-character string representation of this tile. If the tile has no piece, return the string "  " (two spaces).
+	 * @return A 2-character string representation of this tile. If the tile has no
+	 *         piece, return the string " " (two spaces).
 	 */
 	@Override
 	public String toString() {
-		return piece != null ? piece.toShortString(): "  "; 
+		return piece != null ? piece.toShortString() : "  ";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (occupied ? 1231 : 1237);
+		result = prime * result + ((piece == null) ? 0 : piece.hashCode());
+		result = prime * result + ((tileColour == null) ? 0 : tileColour.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Tile))
+			return false;
+		Tile other = (Tile) obj;
+		if (occupied != other.occupied)
+			return false;
+		if (piece == null) {
+			if (other.piece != null)
+				return false;
+		} else if (!piece.equals(other.piece))
+			return false;
+		if (tileColour != other.tileColour)
+			return false;
+		return true;
+	}
+
 }

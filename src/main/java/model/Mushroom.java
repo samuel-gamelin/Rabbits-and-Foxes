@@ -21,7 +21,7 @@ public class Mushroom extends Piece {
 	public Mushroom() {
 		super(PieceType.MUSHROOM);
 	}
-	
+
 	/**
 	 * Attempt to move a mushroom, which fails since they act as static obstacles in
 	 * this game.
@@ -44,4 +44,5 @@ public class Mushroom extends Piece {
 	public String toShortString() {
 		return "MU";
 	}
+
 }

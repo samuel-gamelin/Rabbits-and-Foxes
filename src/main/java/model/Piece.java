@@ -51,12 +51,15 @@ public abstract class Piece {
 	abstract boolean move(Move move, Board board);
 
 	/**
-	 * @param x The x position of the current piece from which possible moves are to be determined
-	 * @param y The y position of the current piece from which possible moves are to be determined
-	 * @return The list of possible Move objects that this piece can make given the specified board.
+	 * @param x The x position of the current piece from which possible moves are to
+	 *          be determined
+	 * @param y The y position of the current piece from which possible moves are to
+	 *          be determined
+	 * @return The list of possible Move objects that this piece can make given the
+	 *         specified board.
 	 */
 	abstract List<Move> getPossibleMoves(Board board, int x, int y);
-	
+
 	/**
 	 * @return A short, two-character string representing the piece.
 	 */

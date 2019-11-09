@@ -150,10 +150,10 @@ public class Rabbit extends Piece {
 		for (int i = 0; i < Board.SIZE; i++) {
 			Move moveX = new Move(x, y, i, y);
 			Move moveY = new Move(x, y, x, i);
-			if (!board.isOccupied(moveX.xEnd, moveX.yEnd) && validatePath(moveX, board)) {
+			if (i != x && !board.isOccupied(moveX.xEnd, moveX.yEnd) && validatePath(moveX, board)) {
 				moves.add(moveX);
 			}
-			if (!board.isOccupied(moveY.xEnd, moveY.yEnd) && validatePath(moveY, board)) {
+			if (i != y && !board.isOccupied(moveY.xEnd, moveY.yEnd) && validatePath(moveY, board)) {
 				moves.add(moveY);
 			}
 		}
@@ -165,4 +165,25 @@ public class Rabbit extends Piece {
 	public String toShortString() {
 		return "RB";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((colour == null) ? 0 : colour.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Rabbit))
+			return false;
+		Rabbit other = (Rabbit) obj;
+		if (colour != other.colour)
+			return false;
+		return true;
+	}
+
 }
