@@ -7,6 +7,7 @@ import model.Board;
 import model.Fox;
 import model.Mushroom;
 import util.Move;
+import util.Solver;
 
 /**
  * The controller is used to register the user's moves so that it updates the
@@ -87,6 +88,14 @@ public class GameController {
 		move.clear();
 		board = new Board();
 		return board;
+	}
+
+	/**
+	 * For testing only. To be removed.
+	 */
+	public void printHint() {
+		Move move = Solver.getNextBestMove(this.board);
+		System.out.println("(" + (move.xStart + 1) + ", " + (move.yStart + 1) + ") to (" + (move.xEnd + 1) + ", " + (move.yEnd + 1) + ")");
 	}
 
 }
