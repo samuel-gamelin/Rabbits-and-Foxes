@@ -49,6 +49,7 @@ import util.Move;
  * 
  * @author Dani Hashweh
  * @author John Breton
+ * @author Samuel Gamelin
  * @version 3.0
  */
 public class GameView extends MouseAdapter implements BoardListener, ActionListener, MouseListener {
@@ -405,6 +406,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					"Game over!", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 					new String[] { "Reset", "Quit" }, null) == 0) {
 				gameWinReset();
+				clearButtonBorders();
 			} else {
 				System.exit(0);
 			}
