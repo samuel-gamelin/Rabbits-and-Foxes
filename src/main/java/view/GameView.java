@@ -393,6 +393,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
 				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 			gameWinReset();
+			clearButtonBorders();
 		}
 	}
 
@@ -406,7 +407,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					"Game over!", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 					new String[] { "Reset", "Quit" }, null) == 0) {
 				gameWinReset();
-				clearButtonBorders();
 			} else {
 				System.exit(0);
 			}
