@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import model.Rabbit.RabbitColour;
@@ -19,7 +20,7 @@ import util.Move;
  * 
  * @version 3.0
  */
-public class Board implements Comparable<Piece> {
+public class Board {
 	/**
 	 * The size of any side for the board.
 	 */
@@ -345,6 +346,16 @@ public class Board implements Comparable<Piece> {
 		return moves;
 	}
 
+	/**
+	 * Used to remove unwanted fox movements
+	 * 
+	 * @param board
+	 * @return
+	 */
+	public boolean compareBoard(Board board) {
+		return true;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -429,11 +440,5 @@ public class Board implements Comparable<Piece> {
 		}
 
 		return representation.toString();
-	}
-
-	@Override
-	public int compareTo(Piece o) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }

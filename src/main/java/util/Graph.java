@@ -66,16 +66,16 @@ public class Graph {
 	 * Performs a breadth-first search on the specified node.
 	 * 
 	 * @param root The node from which to stem the search
-	 * @return 
+	 * @return
 	 */
 	public List<Node> breadthFirstSearch(Node root) {
 		Queue<Node> queue = new ArrayDeque<>();
 		queue.add(root);
-		
+
 		Set<Node> visited = new HashSet<>();
 		Map<Node, Node> parentMap = new HashMap<>();
 		List<Node> winningPathList = new LinkedList<>();
-		
+
 		while (!queue.isEmpty()) {
 			Node currentNode = queue.remove();
 			if (!visited.contains(currentNode)) {
@@ -83,17 +83,19 @@ public class Graph {
 				Set<Node> children = currentNode.getChildren();
 				children.removeAll(visited);
 				for (Node child : children) {
-					parentMap.put(child, currentNode);
-					if (child.isWinningNode()) {
-						Node node = child;
-						while (node != null) {
-							winningPathList.add(0, node);
-							node = parentMap.get(node);
+					if (child.compareNode(currentNode)) {
+						parentMap.put(child, currentNode);
+						if (child.isWinningNode()) {
+							Node node = child;
+							while (node != null) {
+								winningPathList.add(0, node);
+								node = parentMap.get(node);
+							}
+							System.out.println(winningPathList.size());
+							return winningPathList;
+						} else {
+							queue.add(child);
 						}
-						System.out.println(winningPathList.size());
-						return winningPathList;
-					} else {
-						queue.add(child);
 					}
 				}
 			}

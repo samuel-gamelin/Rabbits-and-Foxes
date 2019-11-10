@@ -21,6 +21,13 @@ public class Node {
 	}
 
 	/**
+	 * @return the board
+	 */
+	public Board getBoard() {
+		return board;
+	}
+
+	/**
 	 * @return A list containing all children of this node
 	 */
 	public Set<Node> getChildren() {
@@ -32,12 +39,13 @@ public class Node {
 		}
 		return children;
 	}
-	
+
 	/**
 	 * Determines the move object required to go from this node to a specified node.
 	 * 
 	 * @param node The node to attempt to go to
-	 * @return The move object from this node to the specified one. Should there be no such move, a move object with an invalid direction is returned.
+	 * @return The move object from this node to the specified one. Should there be
+	 *         no such move, a move object with an invalid direction is returned.
 	 */
 	public Move getMoveTo(Node node) {
 		for (Move move : board.getPossibleMoves()) {
@@ -82,6 +90,10 @@ public class Node {
 		} else if (!board.equals(other.board))
 			return false;
 		return true;
+	}
+
+	public boolean compareNode(Node currentNode) {
+		return board.compareBoard(currentNode.getBoard());
 	}
 
 }
