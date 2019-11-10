@@ -93,8 +93,8 @@ public class GameController {
 	/**
 	 * For testing only. To be removed.
 	 */
-	public void printHint() {
-		Move move = Solver.getNextBestMove(this.board);
+	public Move printHint() {
+		return Solver.getNextBestMove(this.board);
 //		System.out.println("(" + (move.xStart + 1) + ", " + (move.yStart + 1) + ") to (" + (move.xEnd + 1) + ", " + (move.yEnd + 1) + ")");
 	}
 
