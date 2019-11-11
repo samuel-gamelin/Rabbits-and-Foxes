@@ -91,9 +91,4 @@ public class Node {
 			return false;
 		return true;
 	}
-
-	public boolean compareNode(Node currentNode) {
-		return board.compareBoard(currentNode.getBoard());
-	}
-
 }

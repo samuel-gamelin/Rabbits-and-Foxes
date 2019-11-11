@@ -84,19 +84,17 @@ public class Graph {
 				Set<Node> children = currentNode.getChildren();
 				children.removeAll(visited);
 				for (Node child : children) {
-					if (child.compareNode(currentNode)) {
-						parentMap.put(child, currentNode);
-						if (child.isWinningNode()) {
-							Node node = child;
-							while (node != null) {
-								winningPathList.add(0, node);
-								node = parentMap.get(node);
-							}
-							System.out.println(winningPathList.size());
-							return winningPathList;
-						} else {
-							queue.add(child);
+					parentMap.put(child, currentNode);
+					if (child.isWinningNode()) {
+						Node node = child;
+						while (node != null) {
+							winningPathList.add(0, node);
+							node = parentMap.get(node);
 						}
+						System.out.println(winningPathList.size());
+						return winningPathList;
+					} else {
+						queue.add(child);
 					}
 				}
 			}
@@ -109,7 +107,7 @@ public class Graph {
 	 */
 	public static void main(String[] args) {
 		Graph graph = new Graph();
-//		List<Node> list = graph.depthFirstSearch(new Node(new Board()));
+//		List<Node> list = graph.depthFirstSearch(new Node(new Board()));https://www.messenger.com/t/1886792101386012
 //		for (Node node : list) {
 //			System.out.println(node + "\n");
 //		}
