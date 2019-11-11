@@ -2,11 +2,20 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
+import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
+
+import model.Piece.PieceType;
 import model.Rabbit.RabbitColour;
 import util.Move;
+import util.Node;
+import util.Location;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within
@@ -47,10 +56,10 @@ public class Board {
 		// initializeEasy();
 		// initializeTestBoard();
 		// initializeUnsolvable();
-		// initializeVeryHardBoard();
+		initializeVeryHardBoard();
 		// initializeDefaultBoard();
 		// initializeMedBoard();
-		initializeMed2Board();
+		// initializeMed2Board();
 
 	}
 
@@ -344,16 +353,6 @@ public class Board {
 		}
 
 		return moves;
-	}
-
-	/**
-	 * Used to remove unwanted fox movements
-	 * 
-	 * @param board
-	 * @return
-	 */
-	public boolean compareBoard(Board board) {
-		return true;
 	}
 
 	@Override
