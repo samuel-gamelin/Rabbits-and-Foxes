@@ -94,8 +94,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		// Setting up the borders used for JButtons
 		selectedBorder = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
-		hintBorderStart = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
-		hintBorderEnd = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
+		hintBorderStart = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
+		hintBorderEnd = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
 		blankBorder = new EmptyBorder(0, 0, 0, 0);
 
 		/**
@@ -165,7 +165,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		gameFrame.setLocationRelativeTo(null);
 
 		// Create the board and controller
-		board = new Board();
+		board = Resources.getLevel(GameController.getCurrentLevel());
 		board.addListener(this);
 		gameController = new GameController(board);
 
@@ -402,10 +402,18 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	public void handleBoardChange() {
 		updateView();
 		if (board.isInWinningState()) {
+			try {
+				Clip victory = AudioSystem.getClip();
+				victory.open(AudioSystem.getAudioInputStream(Resources.SOLVED));
+				victory.start();
+			} catch (Exception ex) {
+				ex.printStackTrace(System.out);
+			}
+			GameController.incrementLevel();
 			clearButtonBorders();
-			if (JOptionPane.showOptionDialog(null, "Congrats, you win! Thank you for playing. Reset or quit?",
-					"Game over!", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-					new String[] { "Reset", "Quit" }, null) == 0) {
+			if (JOptionPane.showOptionDialog(null, "Congrats, you solved it! Would you like to go to the next puzzle?",
+					"Solved!", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+					new String[] { "Next", "Quit" }, null) == 0) {
 				gameWinReset();
 			} else {
 				System.exit(0);

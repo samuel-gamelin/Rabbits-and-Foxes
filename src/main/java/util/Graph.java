@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import model.Board;
+import resources.Resources;
 
 /**
  * This class models a graph in the Rabbits and Foxes game.
@@ -112,7 +113,7 @@ public class Graph {
 //		for (Node node : list) {
 //			System.out.println(node + "\n");
 //		}
-		List<Node> list = graph.breadthFirstSearch(new Node(new Board()));
+		List<Node> list = graph.breadthFirstSearch(new Node(new Board(Resources.getLevel(6))));
 		for (Node node : list) {
 			System.out.println(node + "\n");
 		}

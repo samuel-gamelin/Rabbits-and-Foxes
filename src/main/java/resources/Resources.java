@@ -2,9 +2,14 @@ package resources;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.FileReader;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import model.Board;
 
@@ -13,6 +18,7 @@ import model.Board;
  * game.
  * 
  * @author Samuel Gamelin
+ * @author John Breton
  * @version 3.0
  */
 public final class Resources {
@@ -30,6 +36,9 @@ public final class Resources {
 
 	// Incorrect move sound
 	public static final URL INVALID_MOVE = loadFile("wrong.wav");
+	
+	// Level solved sound
+	public static final URL SOLVED = loadFile("solved.wav");
 
 	// JFrame icon
 	public static final ImageIcon WINDOW_ICON = loadIcon("rabbit3.png", 4, 5);
@@ -89,5 +98,25 @@ public final class Resources {
 			e.printStackTrace(System.out);
 		}
 		return null;
+	}
+	
+	/**
+	 * Load and return a new Board based on the current level.
+	 * The levels are loaded from a JSONArray.
+	 * 
+	 * @param level The current level to load.
+	 * @return The Board associated with the passed level.
+	 */
+	public static Board getLevel(int level) {
+		try {
+			Object o = new JSONParser().parse(new FileReader("src/main/resources/Levels/LevelData.json"));
+			JSONArray ja = (JSONArray) o;
+			JSONObject jo = (JSONObject) ja.get(level - 1);
+			Board board = new Board((String)jo.get("Level " + level));
+			return board;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

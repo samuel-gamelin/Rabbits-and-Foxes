@@ -6,6 +6,7 @@ import java.util.List;
 import model.Board;
 import model.Fox;
 import model.Mushroom;
+import resources.Resources;
 import util.Move;
 import util.Solver;
 
@@ -22,6 +23,7 @@ import util.Solver;
 public class GameController {
 	private Board board;
 	private List<Integer> move;
+	private static int currLevel = 1;
 
 	public enum ClickValidity {
 		VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
@@ -86,7 +88,7 @@ public class GameController {
 	 */
 	public Board reset() {
 		move.clear();
-		board = new Board();
+		board = Resources.getLevel(currLevel);
 		return board;
 	}
 
@@ -96,6 +98,22 @@ public class GameController {
 	public Move printHint() {
 		return Solver.getNextBestMove(this.board);
 //		System.out.println("(" + (move.xStart + 1) + ", " + (move.yStart + 1) + ") to (" + (move.xEnd + 1) + ", " + (move.yEnd + 1) + ")");
+	}
+	
+	/**
+	 * Return the current level of the game.
+	 * 
+	 * @return The current level of the game, as an int.
+	 */
+	public static int getCurrentLevel() {
+		return currLevel;
+	}
+	
+	/**
+	 * Increment the current level of the game by 1.
+	 */
+	public static void incrementLevel() {
+		currLevel++;
 	}
 
 }

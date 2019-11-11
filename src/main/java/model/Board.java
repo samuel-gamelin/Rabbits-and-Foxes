@@ -38,25 +38,56 @@ public class Board {
 	private List<BoardListener> boardListeners;
 
 	/**
-	 * Creates a board object and initializes it with the default game
-	 * configuration.
+	 * Creates a board object and initializes the pieces specified
+	 * by the passed String.
+	 * 
+	 * @param board The String representation of the Board that is being created.
 	 */
-	public Board() {
+	public Board(String str) {
 		tiles = new Tile[SIZE][SIZE];
 		boardListeners = new ArrayList<>();
-		// initializeEasy();
-		// initializeTestBoard();
-		// initializeUnsolvable();
-		// initializeVeryHardBoard();
-		// initializeDefaultBoard();
-		// initializeMedBoard();
-		initializeMed2Board();
-
+		String[] currBoard = str.split(" ");
+		initializeBaseBoard();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (!currBoard[5*i + j].substring(0,1).equals("X")) {
+					if (currBoard[5*i + j].substring(0,1).equals("M")) {
+							tiles[i][j].placePiece(new Mushroom());
+					} else if (currBoard[5*i + j].substring(0,1).equals("R")) {
+						if (currBoard[5*i + j].substring(2,3).equals("G")) {
+							tiles[i][j].placePiece(new Rabbit(RabbitColour.GRAY));
+						} else if (currBoard[5*i + j].substring(2,3).equals("W")) {
+							tiles[i][j].placePiece(new Rabbit(RabbitColour.WHITE));
+						} else {
+							tiles[i][j].placePiece(new Rabbit(RabbitColour.BROWN));
+						}
+					} else if (currBoard[5*i + j].substring(0,2).equals("FH")) {
+						if (currBoard[5*i + j].substring(2,3).equals("U")) {
+							Fox f = new Fox(Fox.Direction.UP, currBoard[5*i + j].substring(3,4).equals("1") ? true : false);
+							tiles[i][j].placePiece(f);
+							tiles[i][j + 1].placePiece(f.getOtherHalf());
+						} else if (currBoard[5*i + j].substring(2,3).equals("L")) {
+							Fox f = new Fox(Fox.Direction.LEFT, currBoard[5*i + j].substring(3,4).equals("1") ? true : false); 
+							tiles[i][j].placePiece(f);
+							tiles[i + 1][j].placePiece(f.getOtherHalf());
+						} else if (currBoard[5*i + j].substring(2,3).equals("R")) {
+							Fox f = new Fox(Fox.Direction.RIGHT, currBoard[5*i + j].substring(3,4).equals("1") ? true : false);
+							tiles[i][j].placePiece(f);
+							tiles[i - 1][j].placePiece(f.getOtherHalf());
+						} else {
+							Fox f = new Fox(Fox.Direction.DOWN, currBoard[5*i + j].substring(3,4).equals("1") ? true : false);
+							tiles[i][j].placePiece(f);
+							tiles[i][j - 1].placePiece(f.getOtherHalf());
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
 	 * A copy constructor for Board. Does not retain the list of listeners from the
-	 * old board. That is, it its listener list is empty.
+	 * old board. That is, it empties its listener list.
 	 * 
 	 * @param board The board to copy
 	 */
@@ -68,115 +99,6 @@ public class Board {
 			}
 		}
 		this.boardListeners = new ArrayList<>();
-	}
-
-	private void initializeEasy() {
-		initializeBaseBoard();
-
-		tiles[1][0].placePiece(new Mushroom());
-		tiles[1][4].placePiece(new Mushroom());
-		tiles[2][0].placePiece(new Rabbit(RabbitColour.BROWN));
-		tiles[2][4].placePiece(new Rabbit(RabbitColour.GRAY));
-	}
-
-	/**
-	 * Configures the board for testing.
-	 */
-	private void initializeTestBoard() {
-		initializeBaseBoard();
-
-		tiles[0][1].placePiece(new Mushroom());
-		tiles[2][0].placePiece(new Rabbit(RabbitColour.BROWN));
-		tiles[2][4].placePiece(new Rabbit(RabbitColour.GRAY));
-
-		Fox fox1 = new Fox(Fox.Direction.UP, true);
-		tiles[1][3].placePiece(fox1);
-		tiles[1][4].placePiece(fox1.getOtherHalf());
-	}
-
-	private void initializeMedBoard() {
-		initializeBaseBoard();
-
-		tiles[1][0].placePiece(new Rabbit(RabbitColour.BROWN));
-		tiles[3][0].placePiece(new Rabbit(RabbitColour.GRAY));
-		tiles[4][1].placePiece(new Rabbit(RabbitColour.WHITE));
-
-		tiles[0][1].placePiece(new Mushroom());
-		tiles[0][2].placePiece(new Mushroom());
-		tiles[0][4].placePiece(new Mushroom());
-
-		Fox fox1 = new Fox(Fox.Direction.UP, true);
-		tiles[1][1].placePiece(fox1);
-		tiles[1][2].placePiece(fox1.getOtherHalf());
-
-		Fox fox2 = new Fox(Fox.Direction.LEFT, true);
-		tiles[1][3].placePiece(fox2);
-		tiles[2][3].placePiece(fox2.getOtherHalf());
-	}
-
-	private void initializeMed2Board() {
-		initializeBaseBoard();
-
-		tiles[1][0].placePiece(new Rabbit(RabbitColour.BROWN));
-		tiles[0][2].placePiece(new Rabbit(RabbitColour.GRAY));
-		tiles[2][2].placePiece(new Rabbit(RabbitColour.WHITE));
-
-		tiles[0][4].placePiece(new Mushroom());
-		tiles[4][0].placePiece(new Mushroom());
-		tiles[4][2].placePiece(new Mushroom());
-
-		Fox fox1 = new Fox(Fox.Direction.UP, true);
-		tiles[3][1].placePiece(fox1);
-		tiles[3][2].placePiece(fox1.getOtherHalf());
-
-		Fox fox2 = new Fox(Fox.Direction.LEFT, true);
-		tiles[3][3].placePiece(fox2);
-		tiles[4][3].placePiece(fox2.getOtherHalf());
-	}
-
-	private void initializeVeryHardBoard() {
-		initializeBaseBoard();
-		Fox fox1 = new Fox(Fox.Direction.RIGHT, true);
-		tiles[1][1].placePiece(fox1);
-		tiles[0][1].placePiece(fox1.getOtherHalf());
-
-		tiles[3][1].placePiece(new Rabbit(RabbitColour.WHITE));
-		tiles[4][2].placePiece(new Rabbit(RabbitColour.BROWN));
-		tiles[3][4].placePiece(new Rabbit(RabbitColour.GRAY));
-
-		tiles[0][3].placePiece(new Mushroom());
-		tiles[2][2].placePiece(new Mushroom());
-		tiles[3][0].placePiece(new Mushroom());
-
-	}
-
-	private void initializeUnsolvable() {
-		initializeBaseBoard();
-		tiles[2][0].placePiece(new Rabbit(RabbitColour.BROWN));
-	}
-
-	/**
-	 * Initializes the board with a default configuration.
-	 */
-	private void initializeDefaultBoard() {
-		initializeBaseBoard();
-
-		// Adding the mushrooms (there can be 0 to 3, here we have 2)
-		tiles[3][1].placePiece(new Mushroom());
-		tiles[2][4].placePiece(new Mushroom());
-
-		// Adding the rabbits (there can be 1 to 3, here we have 3)
-		tiles[1][4].placePiece(new Rabbit(RabbitColour.BROWN));
-		tiles[3][0].placePiece(new Rabbit(RabbitColour.WHITE));
-		tiles[4][2].placePiece(new Rabbit(RabbitColour.GRAY));
-
-		// Adding the foxes (there can be 0 to 2, here we have 2)
-		Fox fox1 = new Fox(Fox.Direction.LEFT, true);
-		Fox fox2 = new Fox(Fox.Direction.UP, false);
-		tiles[3][3].placePiece(fox1);
-		tiles[4][3].placePiece(fox1.getOtherHalf());
-		tiles[1][0].placePiece(fox2);
-		tiles[1][1].placePiece(fox2.getOtherHalf());
 	}
 
 	private void initializeBaseBoard() {
@@ -440,5 +362,34 @@ public class Board {
 		}
 
 		return representation.toString();
+	}
+
+	/**
+	 * Creates a simple String of the board to be stored in a JSON Object.
+	 * 
+	 * This method will be used for the level editor. 
+	 * Please do not mark this method as a part of Milestone 3.
+	 * 
+	 * @return A simple String representation of this board.
+	 */
+	public String toSimpleString() {
+		StringBuilder str = new StringBuilder();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if(tiles[i][j].isOccupied()) {
+					Piece piece = tiles[i][j].retrievePiece();
+					if (piece.getPieceType().equals(Piece.PieceType.RABBIT)) {
+						str.append(((Rabbit) piece).toShortString() + ((Rabbit) piece).getColour().toString().charAt(0) + " ");
+					} else if (piece.getPieceType().equals(Piece.PieceType.FOX)) {
+						str.append(((Fox) piece).toShortString() + ((Fox) piece).getDirection().toString().charAt(0) + " ");
+					} else  {
+						str.append(((Mushroom) piece).toShortString() + " ");
+					} 
+				} else {
+					str.append("X ");
+				}
+			}
+		}
+		return str.toString().trim();
 	}
 }
