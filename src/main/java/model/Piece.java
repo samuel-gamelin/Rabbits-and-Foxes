@@ -58,7 +58,7 @@ public abstract class Piece {
 	 * @return The list of possible Move objects that this piece can make given the
 	 *         specified board.
 	 */
-	abstract List<Move> getPossibleMoves(Board board, int x, int y);
+	public abstract List<Move> getPossibleMoves(Board board, int x, int y);
 
 	/**
 	 * @return A short, two-character string representing the piece.
