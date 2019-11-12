@@ -9,9 +9,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import model.Board;
-import resources.Resources;
-
 /**
  * This class models a graph in the Rabbits and Foxes game.
  * 
