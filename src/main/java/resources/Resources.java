@@ -58,7 +58,7 @@ public final class Resources {
 	public static final ImageIcon FOX_TAIL_UP = loadIcon("fox-tail-up.png", 0.7, 1);
 	public static final ImageIcon FOX_TAIL_DOWN = loadIcon("fox-tail-down.png", 0.75, 1);
 	public static final ImageIcon FOX_TAIL_LEFT = loadIcon("fox-tail-left.png", 1, 0.7);
-	public static final ImageIcon FOX_TAIL_RIGHT = loadIcon("fox-tail-right.png", 1, 0.7);
+	public static final ImageIcon FOX_TAIL_RIGHT = loadIcon("fox-tail-right.png", 1.03, 0.7);
 
 	// Mushroom icon
 	public static final ImageIcon MUSHROOM = loadIcon("mushroom.png", 0.75, 0.75);

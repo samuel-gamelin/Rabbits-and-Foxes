@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import model.Board;
 import resources.Resources;
@@ -98,20 +97,5 @@ public class Graph {
 			}
 		}
 		return winningPathList;
-	}
-
-	/*
-	 * Testing.
-	 */
-	public static void main(String[] args) {
-		Graph graph = new Graph();
-//		List<Node> list = graph.depthFirstSearch(new Node(new Board()));https://www.messenger.com/t/1886792101386012
-//		for (Node node : list) {
-//			System.out.println(node + "\n");
-//		}
-		List<Node> list = graph.breadthFirstSearch(new Node(new Board(Resources.getLevel(6))));
-		for (Node node : list) {
-			System.out.println(node + "\n");
-		}
 	}
 }

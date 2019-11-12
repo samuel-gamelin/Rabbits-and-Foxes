@@ -26,7 +26,7 @@ public class Solver {
 	 */
 	public static Move getNextBestMove(Board board) {
 		Graph graph = new Graph();
-		List<Node> winningNodePath = cleanListOfBoards(graph.breadthFirstSearch(new Node(board)));
+		List<Node> winningNodePath = cleanNodeList(graph.breadthFirstSearch(new Node(board)));
 
 		System.out.println("Removed:  " + winningNodePath.size() + "\n");
 
@@ -40,15 +40,15 @@ public class Solver {
 	/**
 	 * Cleans the list from unwanted fox moves (repeated moves with the same fox).
 	 * 
-	 * @param nodes
+	 * @param nodeList
 	 * @return
 	 */
-	public static List<Node> cleanListOfBoards(List<Node> nodes) {
-		if (nodes.size() < 3) {
-			return nodes;
+	public static List<Node> cleanNodeList(List<Node> nodeList) {
+		if (nodeList.size() < 3) {
+			return nodeList;
 		}
 
-		ListIterator<Node> iterator = nodes.listIterator();
+		ListIterator<Node> iterator = nodeList.listIterator();
 
 		while (iterator.hasNext()) {
 			Node node1 = iterator.next(), node2 = null, node3 = null;
@@ -74,14 +74,14 @@ public class Solver {
 						iterator.previous();
 					}
 				} else {
-					return nodes;
+					return nodeList;
 				}
 			} else {
-				return nodes;
+				return nodeList;
 			}
 		}
 
-		return nodes;
+		return nodeList;
 	}
 
 }
