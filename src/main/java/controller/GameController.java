@@ -79,17 +79,10 @@ public class GameController {
 	 * 
 	 * @param x - represents the start of the x value of the piece selected
 	 * @param y - represents the start of the y value of the piece selected
-	 * @return List<Move> of all possible moves for the selected piece.
+	 * @return a list of all possible moves for the selected piece.
 	 */
 	public List<Move> getPossibleMoves(int x, int y) {
-		List<Move> allMoves = new ArrayList<>();
-
-		if (board.getPiece(x, y) != null) {
-			Piece piece = board.getPiece(x, y);
-			allMoves.addAll(piece.getPossibleMoves(board, x, y));
-		}
-
-		return allMoves;
+		return board.getPiece(x, y) != null ?  board.getPiece(x, y).getPossibleMoves(board, x, y) : new ArrayList<>();
 	}
 
 	/**
