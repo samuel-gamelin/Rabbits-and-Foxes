@@ -191,6 +191,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				// Register an anonymous listener on the button which notifies the controller
 				// whenever a move is made (i.e. a button is clicked)
 				buttons[j][i].addActionListener(e -> {
+					//disables hint button once a piece is clicked. 
+					toggleHint(false); 
 					ClickValidity clickResult = gameController.registerClick(x, y);
 					if (clickResult.equals(ClickValidity.VALID)) {
 						buttons[x][y].setBorder(selectedBorder);
@@ -200,7 +202,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 							|| clickResult.equals(ClickValidity.INVALID_MOVEMADE)) {
 						clearButtonBorders();
 						gameController.clearPendingPosition();
-						enableHint();
+						//makes menu hint button visible if a invalid move is made
+						toggleHint(true);
 						if (wrongMove == null || !wrongMove.isActive()) {
 							try {
 								wrongMove = AudioSystem.getClip();
@@ -211,8 +214,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 							wrongMove.start();
 						}
 					}
+					
 				});
-				enableHint();
+
 			}
 		}
 
@@ -225,6 +229,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			public void actionPerformed(ActionEvent e) {
 				clearButtonBorders();
 				gameController.clearPendingPosition();
+				//if esc is clicked, hint button becomes visible again
+				toggleHint(true); 
 			}
 		});
 
@@ -247,8 +253,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	/**
 	 * Enables hint button once a move is made (invalid/valid). 
 	 */
-	private void enableHint() {
-		menuHint.setEnabled(true);
+	private void toggleHint(boolean state) {
+		menuHint.setEnabled(state);
 	}
 
 	/**
@@ -334,7 +340,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				}
 			}
 		}
-		enableHint();
+		//makes hint visible when a valid move is made. 
+		toggleHint(true);
 	}
 
 	/**
@@ -384,7 +391,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					"Start: Starts the game\n" + "Help: Displays the help menu\n" + "Quit: Exits the application",
 					"Help", JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == menuHint) {
-			menuHint.setEnabled(false);
+			//disables hint button once its clicked. 
+			toggleHint(false);
 			Move bestMove = gameController.getNextBestMove();
 			buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
 			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
