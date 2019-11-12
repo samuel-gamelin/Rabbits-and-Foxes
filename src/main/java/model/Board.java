@@ -2,16 +2,10 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import model.Piece.PieceType;
 import model.Rabbit.RabbitColour;
 import util.Move;
-import util.Node;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within
@@ -43,44 +37,44 @@ public class Board {
 	private List<BoardListener> boardListeners;
 
 	/**
-	 * Creates a board object and initializes the pieces specified
-	 * by the passed String.
+	 * Creates a board object and initializes the pieces specified by the passed
+	 * String.
 	 * 
 	 * @param board The String representation of the Board that is being created.
 	 */
 	public Board(String str) {
 		tiles = new Tile[SIZE][SIZE];
 		boardListeners = new ArrayList<>();
-		String[] currBoard = str.split(" ");
+		String[] currBoard = str.split("\\s+");
 		initializeBaseBoard();
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (!currBoard[5*i + j].substring(0,1).equals("X")) {
-					if (currBoard[5*i + j].substring(0,1).equals("M")) {
-							tiles[i][j].placePiece(new Mushroom());
-					} else if (currBoard[5*i + j].substring(0,1).equals("R")) {
-						if (currBoard[5*i + j].substring(2,3).equals("G")) {
+				if (!currBoard[5 * i + j].substring(0, 1).equals("X")) {
+					if (currBoard[5 * i + j].substring(0, 1).equals("M")) {
+						tiles[i][j].placePiece(new Mushroom());
+					} else if (currBoard[5 * i + j].substring(0, 1).equals("R")) {
+						if (currBoard[5 * i + j].substring(2, 3).equals("G")) {
 							tiles[i][j].placePiece(new Rabbit(RabbitColour.GRAY));
-						} else if (currBoard[5*i + j].substring(2,3).equals("W")) {
+						} else if (currBoard[5 * i + j].substring(2, 3).equals("W")) {
 							tiles[i][j].placePiece(new Rabbit(RabbitColour.WHITE));
 						} else {
 							tiles[i][j].placePiece(new Rabbit(RabbitColour.BROWN));
 						}
-					} else if (currBoard[5*i + j].substring(0,2).equals("FH")) {
-						if (currBoard[5*i + j].substring(2,3).equals("U")) {
-							Fox f = new Fox(Fox.Direction.UP, currBoard[5*i + j].substring(3,4).equals("1") ? true : false);
+					} else if (currBoard[5 * i + j].substring(0, 2).equals("FH")) {
+						if (currBoard[5 * i + j].substring(2, 3).equals("U")) {
+							Fox f = new Fox(Fox.Direction.UP, currBoard[5 * i + j].substring(3, 4).equals("1"));
 							tiles[i][j].placePiece(f);
 							tiles[i][j + 1].placePiece(f.getOtherHalf());
-						} else if (currBoard[5*i + j].substring(2,3).equals("L")) {
-							Fox f = new Fox(Fox.Direction.LEFT, currBoard[5*i + j].substring(3,4).equals("1") ? true : false); 
+						} else if (currBoard[5 * i + j].substring(2, 3).equals("L")) {
+							Fox f = new Fox(Fox.Direction.LEFT, currBoard[5 * i + j].substring(3, 4).equals("1"));
 							tiles[i][j].placePiece(f);
 							tiles[i + 1][j].placePiece(f.getOtherHalf());
-						} else if (currBoard[5*i + j].substring(2,3).equals("R")) {
-							Fox f = new Fox(Fox.Direction.RIGHT, currBoard[5*i + j].substring(3,4).equals("1") ? true : false);
+						} else if (currBoard[5 * i + j].substring(2, 3).equals("R")) {
+							Fox f = new Fox(Fox.Direction.RIGHT, currBoard[5 * i + j].substring(3, 4).equals("1"));
 							tiles[i][j].placePiece(f);
 							tiles[i - 1][j].placePiece(f.getOtherHalf());
 						} else {
-							Fox f = new Fox(Fox.Direction.DOWN, currBoard[5*i + j].substring(3,4).equals("1") ? true : false);
+							Fox f = new Fox(Fox.Direction.DOWN, currBoard[5 * i + j].substring(3, 4).equals("1"));
 							tiles[i][j].placePiece(f);
 							tiles[i][j - 1].placePiece(f.getOtherHalf());
 						}
@@ -106,6 +100,9 @@ public class Board {
 		this.boardListeners = new ArrayList<>();
 	}
 
+	/**
+	 * Initializes the base configuration for any board (green and brown tiles).
+	 */
 	private void initializeBaseBoard() {
 		// Corner brown tiles
 		tiles[0][0] = new Tile(Tile.TileColour.BROWN);
@@ -362,8 +359,8 @@ public class Board {
 	/**
 	 * Creates a simple String of the board to be stored in a JSON Object.
 	 * 
-	 * This method will be used for the level editor. 
-	 * Please do not mark this method as a part of Milestone 3.
+	 * This method will be used for the level editor. Please do not mark this method
+	 * as a part of Milestone 3.
 	 * 
 	 * @return A simple String representation of this board.
 	 */
@@ -371,15 +368,17 @@ public class Board {
 		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if(tiles[i][j].isOccupied()) {
+				if (tiles[i][j].isOccupied()) {
 					Piece piece = tiles[i][j].retrievePiece();
 					if (piece.getPieceType().equals(Piece.PieceType.RABBIT)) {
-						str.append(((Rabbit) piece).toShortString() + ((Rabbit) piece).getColour().toString().charAt(0) + " ");
+						str.append(((Rabbit) piece).toShortString() + ((Rabbit) piece).getColour().toString().charAt(0)
+								+ " ");
 					} else if (piece.getPieceType().equals(Piece.PieceType.FOX)) {
-						str.append(((Fox) piece).toShortString() + ((Fox) piece).getDirection().toString().charAt(0) + " ");
-					} else  {
+						str.append(((Fox) piece).toShortString() + ((Fox) piece).getDirection().toString().charAt(0)
+								+ " ");
+					} else {
 						str.append(((Mushroom) piece).toShortString() + " ");
-					} 
+					}
 				} else {
 					str.append("X ");
 				}

@@ -23,16 +23,16 @@ import util.Solver;
 public class GameController {
 	private Board board;
 	private List<Integer> move;
-	private static int currLevel = 1;
+	private static int currLevel = 6;
 
 	public enum ClickValidity {
 		VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
 	}
 
 	/**
-	 * The constructor for this class uses a board that has been inputted by the
-	 * view (the board listener) so that it can request the model to update it. This
-	 * will ensure all three components of the MVC will be using the same board.
+	 * The constructor for this class uses a board that has been inputed by the view
+	 * (the board listener) so that it can request the model to update it. This will
+	 * ensure all three components of the MVC will be using the same board.
 	 * 
 	 * @param board The Board (model) that this controller should update
 	 */
@@ -93,11 +93,10 @@ public class GameController {
 	}
 
 	/**
-	 * For testing only. To be removed.
+	 * @return The next best move for the specified board
 	 */
-	public Move printHint() {
-		return Solver.getNextBestMove(this.board);
-//		System.out.println("(" + (move.xStart + 1) + ", " + (move.yStart + 1) + ") to (" + (move.xEnd + 1) + ", " + (move.yEnd + 1) + ")");
+	public Move getNextBestMove() {
+		return Solver.getNextBestMove(board);
 	}
 	
 	/**

@@ -139,17 +139,17 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
-		
+
 		menuHint = createMenuBarButton("Hint", true);
 		menuHelp = createMenuBarButton("Help", false);
 		menuReset = createMenuBarButton("Reset", false);
 		menuQuit = createMenuBarButton("Quit", true);
-		
+
 		menuBar.add(menuHint);
 		menuBar.add(menuHelp);
 		menuBar.add(menuReset);
 		menuBar.add(menuQuit);
-		
+
 		gamePane.add(menuBar, BorderLayout.NORTH);
 
 		// GridLayout for board frame
@@ -266,13 +266,13 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		button.setContentAreaFilled(false);
 		button.setOpaque(false);
 		button.setBorderPainted(false);
-		
+
 		if (enableShortcut) {
 			button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 					.put(KeyStroke.getKeyStroke(Character.toLowerCase(text.charAt(0))), text);
 			button.getActionMap().put(text, new AbstractAction() {
 				private static final long serialVersionUID = -4044080289796171300L;
-	
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					button.doClick();
@@ -374,7 +374,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					"Start: Starts the game\n" + "Help: Displays the help menu\n" + "Quit: Exits the application",
 					"Help", JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == menuHint) {
-			Move bestMove = gameController.printHint();
+			Move bestMove = gameController.getNextBestMove();
 			buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
 			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
 		} else if (e.getSource() == menuHelp) {
@@ -385,8 +385,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				System.exit(0);
 			}
 		} else if (e.getSource() == btnQuit) {
-			if (JOptionPane.showConfirmDialog(mainMenuFrame, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(mainMenuFrame, "Are you sure you want to exit?",
+					"Exit Rabbits and Foxes!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				System.exit(0);
 			}
 		} else if ((e.getSource() == menuReset) && (JOptionPane.showConfirmDialog(gameFrame,
@@ -396,7 +396,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			clearButtonBorders();
 		}
 	}
-
 
 	@Override
 	public void handleBoardChange() {
@@ -409,11 +408,15 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			} catch (Exception ex) {
 				ex.printStackTrace(System.out);
 			}
-			GameController.incrementLevel();
 			clearButtonBorders();
-			if (JOptionPane.showOptionDialog(null, "Congrats, you solved it! Would you like to go to the next puzzle?",
-					"Solved!", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-					new String[] { "Next", "Quit" }, null) == 0) {
+			int choice = JOptionPane.showOptionDialog(gameFrame,
+					"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+					new String[] { "Next", "Reset", "Quit" }, null);
+			if (choice == 0) {
+				GameController.incrementLevel();
+				gameWinReset();
+			} else if (choice == 1) {
 				gameWinReset();
 			} else {
 				System.exit(0);
@@ -427,9 +430,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * @param e The mouse event that triggers when the mouse enters the JButton
 	 */
 	public void mouseEntered(MouseEvent e) {
-		if (!((JButton) e.getSource()).getBorder().equals(selectedBorder) && 
-				!((JButton) e.getSource()).getBorder().equals(hintBorderStart) &&
-					!((JButton) e.getSource()).getBorder().equals(hintBorderEnd)) {
+		if (!((JButton) e.getSource()).getBorder().equals(selectedBorder)
+				&& !((JButton) e.getSource()).getBorder().equals(hintBorderStart)
+				&& !((JButton) e.getSource()).getBorder().equals(hintBorderEnd)) {
 			((JButton) e.getSource()).setBorder(UIManager.getBorder("Button.border"));
 		}
 	}
@@ -440,10 +443,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * @param e The mouse event that triggers when the mouse leaves the JButton
 	 */
 	public void mouseExited(MouseEvent e) {
-		if (!((JButton) e.getSource()).getBorder().equals(blankBorder) && 
-				!((JButton) e.getSource()).getBorder().equals(selectedBorder) && 
-					!((JButton) e.getSource()).getBorder().equals(hintBorderStart) &&
-						!((JButton) e.getSource()).getBorder().equals(hintBorderEnd)) {
+		if (!((JButton) e.getSource()).getBorder().equals(blankBorder)
+				&& !((JButton) e.getSource()).getBorder().equals(selectedBorder)
+				&& !((JButton) e.getSource()).getBorder().equals(hintBorderStart)
+				&& !((JButton) e.getSource()).getBorder().equals(hintBorderEnd)) {
 			((JButton) e.getSource()).setBorder(blankBorder);
 		}
 	}

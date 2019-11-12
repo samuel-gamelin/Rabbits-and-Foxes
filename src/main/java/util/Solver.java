@@ -1,11 +1,11 @@
 package util;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import model.Board;
-import sun.misc.Cleaner;
+import model.Fox;
+import model.Piece;
 
 /**
  * This class is used to solve a board representing a state in the game of
@@ -28,6 +28,8 @@ public class Solver {
 		Graph graph = new Graph();
 		List<Node> winningNodePath = cleanListOfBoards(graph.breadthFirstSearch(new Node(board)));
 
+		System.out.println("Removed:  " + winningNodePath.size() + "\n");
+
 		if (winningNodePath.size() < 2) {
 			return new Move(-1, -1, -1, -1);
 		}
@@ -36,15 +38,50 @@ public class Solver {
 	}
 
 	/**
-	 * Cleans the list from unwanted fox moves
+	 * Cleans the list from unwanted fox moves (repeated moves with the same fox).
 	 * 
-	 * @param list
+	 * @param nodes
 	 * @return
 	 */
-	public static List<Node> cleanListOfBoards(List<Node> list) {
-		List<Node> toBeRemovedNodes = new LinkedList<>();
-		list.removeAll(toBeRemovedNodes);
-		return list;
+	public static List<Node> cleanListOfBoards(List<Node> nodes) {
+		if (nodes.size() < 3) {
+			return nodes;
+		}
+
+		ListIterator<Node> iterator = nodes.listIterator();
+
+		while (iterator.hasNext()) {
+			Node node1 = iterator.next(), node2 = null, node3 = null;
+			Move from1to2, from2to3;
+
+			if (iterator.hasNext()) {
+				node2 = iterator.next();
+				from1to2 = node1.getMoveTo(node2);
+
+				if (iterator.hasNext()) {
+					node3 = iterator.next();
+					from2to3 = node2.getMoveTo(node3);
+
+					Piece piece1 = node1.getBoard().getPiece(from1to2.xStart, from1to2.yStart);
+					Piece piece2 = node2.getBoard().getPiece(from2to3.xStart, from2to3.yStart);
+
+					iterator.previous();
+					iterator.previous();
+
+					if (piece1 instanceof Fox && piece2 instanceof Fox
+							&& ((Fox) piece1).getID() == ((Fox) piece2).getID()) {
+						iterator.remove();
+						iterator.previous();
+					}
+				} else {
+					return nodes;
+				}
+			} else {
+				return nodes;
+			}
+		}
+
+		return nodes;
 	}
 
 }

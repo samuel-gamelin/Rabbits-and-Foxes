@@ -52,7 +52,6 @@ public class Graph {
 							winningPathList.add(0, node);
 							node = parentMap.get(node);
 						}
-						System.out.println(winningPathList.size());
 						return winningPathList;
 					} else {
 						stack.add(child);
@@ -91,7 +90,6 @@ public class Graph {
 							winningPathList.add(0, node);
 							node = parentMap.get(node);
 						}
-						System.out.println(winningPathList.size());
 						return winningPathList;
 					} else {
 						queue.add(child);

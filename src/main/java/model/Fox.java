@@ -296,14 +296,14 @@ public class Fox extends Piece {
 		if (direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) { // Horizontally-sliding fox
 			for (int i = 0; i < Board.SIZE; i++) {
 				Move moveX = new Move(x, y, i, y);
-				if (i != x && !board.isOccupied(moveX.xEnd, moveX.yEnd) && validatePath(moveX, board, location)) {
+				if (i != x && validatePath(moveX, board, location)) {
 					moves.add(moveX);
 				}
 			}
 		} else { // Vertically-sliding fox
 			for (int i = 0; i < Board.SIZE; i++) {
 				Move moveY = new Move(x, y, x, i);
-				if (i != y && !board.isOccupied(moveY.xEnd, moveY.yEnd) && validatePath(moveY, board, location)) {
+				if (i != y && validatePath(moveY, board, location)) {
 					moves.add(moveY);
 				}
 			}
