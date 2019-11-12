@@ -2,10 +2,10 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import model.Board;
 import model.Fox;
 import model.Mushroom;
+import model.Piece;
 import resources.Resources;
 import util.Move;
 import util.Solver;
@@ -18,6 +18,7 @@ import util.Solver;
  * method move within Board to initiate the move.
  * 
  * @author Mohamed Radwan
+ * @author Dani Hashweh
  * @version 3.0
  */
 public class GameController {
@@ -71,6 +72,24 @@ public class GameController {
 		}
 		return ClickValidity.INVALID;
 	}
+	/**
+	 * This method returns a list of all possible moves for the piece selected in the view. 
+	 * 
+	 * @param x - represents the start of the x value of the piece selected
+	 * @param y - represents the start of the y value of the piece selected
+	 * @return List<Move> of all possible moves for the selected piece. 
+	 */
+	public List<Move> allPossibleMoves(int x, int y) {
+		// checks if the piece is not null, this prevents an exception that when the
+		// user clicks on the end location this method will run with the Piece being a
+		// hole (which is invalid).
+		if (board.getPiece(x, y) != null) {
+			Piece piece = board.getPiece(x, y);
+			List<Move> allMoves = piece.getPossibleMoves(board, x, y);
+			return allMoves;
+		} else
+			return null;
+	}
 
 	/**
 	 * Removes any history of a previously stored position.
@@ -98,7 +117,7 @@ public class GameController {
 	public Move getNextBestMove() {
 		return Solver.getNextBestMove(board);
 	}
-	
+
 	/**
 	 * Return the current level of the game.
 	 * 
@@ -107,7 +126,7 @@ public class GameController {
 	public static int getCurrentLevel() {
 		return currLevel;
 	}
-	
+
 	/**
 	 * Increment the current level of the game by 1.
 	 */
