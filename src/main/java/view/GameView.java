@@ -200,6 +200,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 							|| clickResult.equals(ClickValidity.INVALID_MOVEMADE)) {
 						clearButtonBorders();
 						gameController.clearPendingPosition();
+						enableHint();
 						if (wrongMove == null || !wrongMove.isActive()) {
 							try {
 								wrongMove = AudioSystem.getClip();
@@ -211,6 +212,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 						}
 					}
 				});
+				enableHint();
 			}
 		}
 
@@ -240,6 +242,13 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		menuHelp.addActionListener(this);
 		menuQuit.addActionListener(this);
 		menuHint.addActionListener(this);
+	}
+
+	/**
+	 * Enables hint button once a move is made (invalid/valid). 
+	 */
+	private void enableHint() {
+		menuHint.setEnabled(true);
 	}
 
 	/**
@@ -325,6 +334,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				}
 			}
 		}
+		enableHint();
 	}
 
 	/**
@@ -374,6 +384,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					"Start: Starts the game\n" + "Help: Displays the help menu\n" + "Quit: Exits the application",
 					"Help", JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == menuHint) {
+			menuHint.setEnabled(false);
 			Move bestMove = gameController.getNextBestMove();
 			buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
 			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
