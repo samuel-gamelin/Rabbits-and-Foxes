@@ -61,6 +61,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private JButton menuHelp;
 	private JButton menuQuit;
 	private JButton menuHint;
+	private JButton menuUndo;
+	private JButton menuRedo;
 
 	private JButton btnStart;
 	private JButton btnHelp;
@@ -135,7 +137,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 * 
 		 */
 
-		gameFrame = new JFrame("Rabbit and Foxes!");
+		gameFrame = new JFrame("Rabbit and Foxes!" + " Level: " + getLevelName());
 		// BorderLayout for game frame
 		Container gamePane = gameFrame.getContentPane();
 		gamePane.setLayout(new BorderLayout());
@@ -144,13 +146,17 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		JMenuBar menuBar = new JMenuBar();
 
 		menuHint = createMenuBarButton("Hint", true);
-		menuHelp = createMenuBarButton("Help", false);
+		menuUndo = createMenuBarButton("Undo", true);
+		menuRedo = createMenuBarButton("Redo", true);
 		menuReset = createMenuBarButton("Reset", false);
+		menuHelp = createMenuBarButton("Help", false);
 		menuQuit = createMenuBarButton("Quit", true);
 
 		menuBar.add(menuHint);
-		menuBar.add(menuHelp);
+		menuBar.add(menuUndo);
+		menuBar.add(menuRedo);
 		menuBar.add(menuReset);
+		menuBar.add(menuHelp);
 		menuBar.add(menuQuit);
 
 		gamePane.add(menuBar, BorderLayout.NORTH);
@@ -168,7 +174,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		gameFrame.setLocationRelativeTo(null);
 
 		// Create the board and controller
-		board = Resources.getLevel(GameController.getCurrentLevel());
+		board = Resources.getLevel(getLevelName());
 		board.addListener(this);
 		gameController = new GameController(board);
 
@@ -198,7 +204,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					toggleHint(false);
 					ClickValidity clickResult = gameController.registerClick(x, y);
 
-					//highlights all possible moves for the selected piece. 
+					// highlights all possible moves for the selected piece.
 					List<Move> allMoves = gameController.allPossibleMoves(x, y);
 					if (allMoves != null) {
 						for (int k = 0; k < allMoves.size(); k++) {
@@ -449,6 +455,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					new String[] { "Next", "Reset", "Quit" }, null);
 			if (choice == 0) {
 				GameController.incrementLevel();
+				gameFrame.setTitle("Rabbit and Foxes!" + " Level: " + getLevelName());
 				gameWinReset();
 			} else if (choice == 1) {
 				gameWinReset();
@@ -456,6 +463,17 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				System.exit(0);
 			}
 		}
+	}
+
+	/**
+	 * Returns the current level that will be shown in the frame title.
+	 * 
+	 * @return current level
+	 */
+	private int getLevelName() {
+		// eventually when the user makes their own levels this will have to be
+		// customizable to return int or string.
+		return GameController.getCurrentLevel();
 	}
 
 	/**
