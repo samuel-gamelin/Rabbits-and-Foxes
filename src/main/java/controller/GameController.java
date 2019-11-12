@@ -90,6 +90,13 @@ public class GameController {
 		} else
 			return null;
 	}
+	
+	/**
+	 * @return True if a move is pending, false otherwise
+	 */
+	public boolean movePending() {
+		return move.size() > 0;
+	}
 
 	/**
 	 * Removes any history of a previously stored position.

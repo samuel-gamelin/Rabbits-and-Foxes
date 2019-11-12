@@ -194,8 +194,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				// Register an anonymous listener on the button which notifies the controller
 				// whenever a move is made (i.e. a button is clicked)
 				buttons[j][i].addActionListener(e -> {
-					// disables hint button once a piece is clicked.
-					toggleHint(false);
 					ClickValidity clickResult = gameController.registerClick(x, y);
 
 					//highlights all possible moves for the selected piece. 
@@ -215,8 +213,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 							|| clickResult.equals(ClickValidity.INVALID_MOVEMADE)) {
 						clearButtonBorders();
 						gameController.clearPendingPosition();
-						// makes menu hint button visible if a invalid move is made
-						toggleHint(true);
 						if (wrongMove == null || !wrongMove.isActive()) {
 							try {
 								wrongMove = AudioSystem.getClip();
@@ -242,8 +238,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			public void actionPerformed(ActionEvent e) {
 				clearButtonBorders();
 				gameController.clearPendingPosition();
-				// if esc is clicked, hint button becomes visible again
-				toggleHint(true);
 			}
 		});
 
@@ -318,6 +312,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private void clearButtonBorders() {
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
+				if (gameController.movePending() && buttons[i][j].getBorder().equals(selectedBorder)) {
+					continue;
+				}
 				buttons[i][j].setBorder(blankBorder);
 			}
 		}
@@ -355,8 +352,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				}
 			}
 		}
-		// makes hint visible when a valid move is made.
-		toggleHint(true);
 	}
 
 	/**
@@ -409,7 +404,12 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			// disables hint button once its clicked.
 			toggleHint(false);
 			Move bestMove = gameController.getNextBestMove();
-			buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
+			// makes hint button visible when next best move is acquired.
+			toggleHint(true);
+			clearButtonBorders();
+			if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(selectedBorder)) {
+				buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
+			}
 			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
 		} else if (e.getSource() == menuHelp) {
 			helpDialog();
