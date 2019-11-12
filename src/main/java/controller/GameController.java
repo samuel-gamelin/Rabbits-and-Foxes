@@ -82,10 +82,6 @@ public class GameController {
 	 * @return List<Move> of all possible moves for the selected piece.
 	 */
 	public List<Move> getPossibleMoves(int x, int y) {
-		// checks if the piece is not null, this prevents an exception that when the
-		// user clicks on the end location this method will run with the Piece being a
-		// hole (which is invalid).
-
 		List<Move> allMoves = new ArrayList<>();
 
 		if (board.getPiece(x, y) != null) {
