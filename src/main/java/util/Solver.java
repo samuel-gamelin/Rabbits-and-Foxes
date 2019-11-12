@@ -18,6 +18,11 @@ import model.Piece;
  */
 public class Solver {
 	/**
+	 * Keeps track of the most recently visited node.
+	 */
+	private static Node lastNonDuplicatedNode;
+
+	/**
 	 * Determines the next best move, given a board object.
 	 * 
 	 * @param board The board whose next best move is to be determined
@@ -26,13 +31,20 @@ public class Solver {
 	 */
 	public static Move getNextBestMove(Board board) {
 		Graph graph = new Graph();
-		List<Node> winningNodePath = cleanNodeList(graph.breadthFirstSearch(new Node(board)));
+		Node node = new Node(board);
+		List<Node> winningNodePath = cleanNodeList(graph.depthFirstSearch(node));
 
 		if (winningNodePath.size() < 2) {
 			return new Move(-1, -1, -1, -1);
 		}
 
-		return winningNodePath.get(0).getMoveTo(winningNodePath.get(1));
+		if (lastNonDuplicatedNode != null && lastNonDuplicatedNode.equals(winningNodePath.get(1)) && winningNodePath.size() > 2) {
+			return winningNodePath.get(1).getMoveTo(winningNodePath.get(2));
+		} else {
+			lastNonDuplicatedNode = node;
+			return winningNodePath.get(0).getMoveTo(winningNodePath.get(1));
+		}
+
 	}
 
 	/**

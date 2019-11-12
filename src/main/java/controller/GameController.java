@@ -23,7 +23,7 @@ import util.Solver;
 public class GameController {
 	private Board board;
 	private List<Integer> move;
-	private static int currLevel = 6;
+	private static int currLevel = 1;
 
 	public enum ClickValidity {
 		VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
