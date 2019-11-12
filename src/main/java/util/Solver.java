@@ -28,8 +28,6 @@ public class Solver {
 		Graph graph = new Graph();
 		List<Node> winningNodePath = cleanNodeList(graph.breadthFirstSearch(new Node(board)));
 
-		System.out.println("Removed:  " + winningNodePath.size() + "\n");
-
 		if (winningNodePath.size() < 2) {
 			return new Move(-1, -1, -1, -1);
 		}
