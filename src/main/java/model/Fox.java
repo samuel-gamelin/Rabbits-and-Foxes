@@ -287,8 +287,10 @@ public class Fox extends Piece {
 	@Override
 	public List<Move> getPossibleMoves(Board board, int x, int y) {
 		List<Move> moves = new ArrayList<>();
-
-		if (foxType.equals(FoxType.TAIL)) { // We will only generate possible moves using the head
+		
+		// We will not compute possible moves if the Fox represents a tail and the caller is not the solver.
+		if (foxType.equals(FoxType.TAIL)
+				&& !Thread.currentThread().getStackTrace()[2].getClassName().equals("controller.GameController")) {
 			return moves;
 		}
 

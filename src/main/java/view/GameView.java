@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.List;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -203,12 +202,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					ClickValidity clickResult = gameController.registerClick(x, y);
 
 					// highlights all possible moves for the selected piece.
-					List<Move> allMoves = gameController.allPossibleMoves(x, y);
-					if (allMoves != null) {
-						for (int k = 0; k < allMoves.size(); k++) {
-							buttons[allMoves.get(k).xStart][allMoves.get(k).yStart].setBorder(hintBorderStart);
-							buttons[allMoves.get(k).xEnd][allMoves.get(k).yEnd].setBorder(possiblePositionBorder);
-						}
+					for (Move move : gameController.getPossibleMoves(x, y)) {
+						buttons[move.xStart][move.yStart].setBorder(hintBorderStart);
+						buttons[move.xEnd][move.yEnd].setBorder(possiblePositionBorder);
+
 					}
 
 					if (clickResult.equals(ClickValidity.VALID)) {

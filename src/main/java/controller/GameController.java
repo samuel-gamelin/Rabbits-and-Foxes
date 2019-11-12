@@ -72,25 +72,30 @@ public class GameController {
 		}
 		return ClickValidity.INVALID;
 	}
+
 	/**
-	 * This method returns a list of all possible moves for the piece selected in the view. 
+	 * This method returns a list of all possible moves for the piece selected in
+	 * the view.
 	 * 
 	 * @param x - represents the start of the x value of the piece selected
 	 * @param y - represents the start of the y value of the piece selected
-	 * @return List<Move> of all possible moves for the selected piece. 
+	 * @return List<Move> of all possible moves for the selected piece.
 	 */
-	public List<Move> allPossibleMoves(int x, int y) {
+	public List<Move> getPossibleMoves(int x, int y) {
 		// checks if the piece is not null, this prevents an exception that when the
 		// user clicks on the end location this method will run with the Piece being a
 		// hole (which is invalid).
+
+		List<Move> allMoves = new ArrayList<>();
+
 		if (board.getPiece(x, y) != null) {
 			Piece piece = board.getPiece(x, y);
-			List<Move> allMoves = piece.getPossibleMoves(board, x, y);
-			return allMoves;
-		} else
-			return null;
+			allMoves.addAll(piece.getPossibleMoves(board, x, y));
+		}
+
+		return allMoves;
 	}
-	
+
 	/**
 	 * @return True if a move is pending, false otherwise
 	 */

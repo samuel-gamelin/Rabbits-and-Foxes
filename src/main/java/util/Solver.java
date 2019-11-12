@@ -38,7 +38,8 @@ public class Solver {
 			return new Move(-1, -1, -1, -1);
 		}
 
-		if (lastNonDuplicatedNode != null && lastNonDuplicatedNode.equals(winningNodePath.get(1)) && winningNodePath.size() > 2) {
+		if (lastNonDuplicatedNode != null && lastNonDuplicatedNode.equals(winningNodePath.get(1))
+				&& winningNodePath.size() > 2) {
 			return winningNodePath.get(1).getMoveTo(winningNodePath.get(2));
 		} else {
 			lastNonDuplicatedNode = node;
