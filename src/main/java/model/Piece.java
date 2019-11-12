@@ -48,7 +48,7 @@ public abstract class Piece {
 	 * @return True if the piece was successfully moved from the specified start to
 	 *         end positions, false otherwise
 	 */
-	abstract boolean move(Move move, Board board);
+	public abstract boolean move(Move move, Board board);
 
 	/**
 	 * @param x The x position of the current piece from which possible moves are to
@@ -63,5 +63,5 @@ public abstract class Piece {
 	/**
 	 * @return A short, two-character string representing the piece.
 	 */
-	abstract String toShortString();
+	public abstract String toShortString();
 }
