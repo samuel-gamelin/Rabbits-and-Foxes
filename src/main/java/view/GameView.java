@@ -211,11 +211,11 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					if (clickResult.equals(ClickValidity.VALID)) {
 						buttons[x][y].setBorder(selectedBorder);
 					} else if (clickResult.equals(ClickValidity.VALID_MOVEMADE)) {
+						//clears button borders when the move is valid. 
 						clearButtonBorders();
 					} else if (clickResult.equals(ClickValidity.INVALID)
 							|| clickResult.equals(ClickValidity.INVALID_MOVEMADE)) {
-						clearButtonBorders();
-						gameController.clearPendingPosition();
+						clearMove(); 
 						if (wrongMove == null || !wrongMove.isActive()) {
 							try {
 								wrongMove = AudioSystem.getClip();
@@ -231,6 +231,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 			}
 		}
+		
+		
 
 		// Configure the escape key to cancel the pending move
 		boardLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "clear");
@@ -239,9 +241,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clearButtonBorders();
-				gameController.clearPendingPosition();
+				clearMove();
 			}
+
 		});
 
 		updateView();
@@ -281,6 +283,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pane.add(button);
 	}
+	
 
 	/**
 	 * Creates and returns a JButton suitable for the game's menu bar.
@@ -315,12 +318,17 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private void clearButtonBorders() {
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
-				if (gameController.movePending() && buttons[i][j].getBorder().equals(selectedBorder)) {
-					continue;
-				}
 				buttons[i][j].setBorder(blankBorder);
 			}
 		}
+	}
+	
+	/**
+	 * Clears button borders and clears the pending position 
+	 */
+	private void clearMove() {
+		clearButtonBorders();
+		gameController.clearPendingPosition();
 	}
 
 	/**
@@ -403,13 +411,12 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			JOptionPane.showMessageDialog(mainMenuFrame,
 					"Start: Starts the game\n" + "Help: Displays the help menu\n" + "Quit: Exits the application",
 					"Help", JOptionPane.INFORMATION_MESSAGE);
-		} else if (e.getSource() == menuHint) {
+		} else if (e.getSource() == menuHint) { 
 			// disables hint button once its clicked.
 			toggleHint(false);
 			Move bestMove = gameController.getNextBestMove();
 			// makes hint button visible when next best move is acquired.
 			toggleHint(true);
-			clearButtonBorders();
 			if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(selectedBorder)) {
 				buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
 			}
@@ -438,6 +445,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	public void handleBoardChange() {
 		updateView();
 		if (board.isInWinningState()) {
+			//clears button borders when the level is finished. 
+			clearButtonBorders();
 			try {
 				Clip victory = AudioSystem.getClip();
 				victory.open(AudioSystem.getAudioInputStream(Resources.SOLVED));
@@ -445,7 +454,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			} catch (Exception ex) {
 				ex.printStackTrace(System.out);
 			}
-			clearButtonBorders();
 			int choice = JOptionPane.showOptionDialog(gameFrame,
 					"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
