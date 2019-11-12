@@ -251,7 +251,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	}
 
 	/**
-	 * Enables hint button once a move is made (invalid/valid). 
+	 * Sets the hint button to enabled/disabled 
+	 * 
+	 * @param state true will enable the button, false will disable the button. 
 	 */
 	private void toggleHint(boolean state) {
 		menuHint.setEnabled(state);
