@@ -128,5 +128,21 @@ public class GameController {
 	public static void incrementLevel() {
 		currLevel++;
 	}
+	
+	
+	/**
+	 * Gets the the total levels available in the LevelData.json file 
+	 * @return The total number of levels in the game as an int.
+	 */
+	public static int getTotalLevels() {
+		return Resources.getNumberOfLevels();
+	}
+	
+	/**
+	 * Sets the current level to the first level. 
+	 */
+	public static void setFirstLevel() {
+		GameController.currLevel = 1; 
+	}
 
 }
