@@ -2,10 +2,10 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import model.Board;
 import model.Fox;
 import model.Mushroom;
-import model.Piece;
 import resources.Resources;
 import util.Move;
 import util.Solver;
@@ -19,6 +19,7 @@ import util.Solver;
  * 
  * @author Mohamed Radwan
  * @author Dani Hashweh
+ * @author Samuel Gamelin
  * @version 3.0
  */
 public class GameController {
