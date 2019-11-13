@@ -67,10 +67,16 @@ public class Solver {
 		List<Node> removeFromList = new ArrayList<>();
 		boolean samePiece = true;
 
-		for (int i = 0; i < nodeList.size() - 3 && samePiece; i++) {
+		for (int i = 0; i < nodeList.size() - 3; i++) {
 			Node node1 = nodeList.get(i);
 			Node node2 = nodeList.get(i + 1);
 			Node node3 = nodeList.get(i + 2);
+			System.out.println("Node1 ");
+			System.out.println(node1 + "\n");
+			System.out.println("Node2 ");
+			System.out.println(node2 + "\n");
+			System.out.println("Node3 ");
+			System.out.println(node3 + "\n");
 
 			Move from1to2 = node1.getMoveTo(node2);
 			Move from2to3 = node2.getMoveTo(node3);
@@ -78,7 +84,7 @@ public class Solver {
 			Piece piece1 = node1.getBoard().getPiece(from1to2.xStart, from1to2.yStart);
 			Piece piece2 = node2.getBoard().getPiece(from2to3.xStart, from2to3.yStart);
 
-			if (piece1 instanceof Fox && piece2 instanceof Fox && ((Fox) piece1).equals((Fox) piece2)) {
+			if (piece1 instanceof Fox && piece2 instanceof Fox && ((Fox) piece1).getID() == ((Fox) piece2).getID()) {
 				removeFromList.add(node2);
 			} else {
 				samePiece = false;
