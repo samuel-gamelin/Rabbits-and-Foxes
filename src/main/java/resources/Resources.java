@@ -2,7 +2,9 @@ package resources;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -10,6 +12,7 @@ import javax.swing.ImageIcon;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import model.Board;
 
@@ -109,13 +112,40 @@ public final class Resources {
 	 */
 	public static Board getLevel(int level) {
 		try {
-			Object o = new JSONParser().parse(new FileReader("src/main/resources/Levels/LevelData.json"));
-			JSONArray ja = (JSONArray) o;
+			JSONArray ja = newParser();
 			JSONObject jo = (JSONObject) ja.get(level - 1);
 			return new Board((String) jo.get("Level " + level));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	/**
+	 * Creates the JSONArray that will be used when reading from the LevelData file. 
+	 * 
+	 * @return JSONArray containing the data from the .json file given. 
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws FileNotFoundException
+	 */
+	private static JSONArray newParser() throws IOException, ParseException, FileNotFoundException {
+		Object o = new JSONParser().parse(new FileReader("src/main/resources/Levels/LevelData.json"));
+		JSONArray ja = (JSONArray) o;
+		return ja;
+	}
+	
+	/**
+	 * Provides the gameController with the number of levels provided in the levels file. 
+	 * @return the total number of levels in the game as an int. 
+	 */
+	public static int getNumberOfLevels() {
+		JSONArray ja = null;
+		try {
+			ja = newParser();
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+		return ja.size(); 
 	}
 }
