@@ -54,11 +54,6 @@ public class Node {
 				return move;
 			}
 		}
-
-		System.out.println(this + "\n\n\n");
-		System.out.println(node);
-
-		System.out.println("returned invalid move from getMoveTo");
 		return new Move(-1, -1, -1, -1);
 	}
 

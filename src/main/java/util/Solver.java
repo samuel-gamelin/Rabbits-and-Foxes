@@ -18,11 +18,6 @@ import model.Piece;
  */
 public class Solver {
 	/**
-	 * Keeps track of the most recently visited node.
-	 */
-	private static Node lastNonDuplicatedNode;
-
-	/**
 	 * Private constructor since solver cannot be instantiated
 	 */
 	private Solver() {
@@ -44,13 +39,7 @@ public class Solver {
 			return new Move(-1, -1, -1, -1);
 		}
 
-		if (lastNonDuplicatedNode != null && lastNonDuplicatedNode.equals(winningNodePath.get(1))
-				&& winningNodePath.size() > 2) {
-			return winningNodePath.get(1).getMoveTo(winningNodePath.get(2));
-		} else {
-			lastNonDuplicatedNode = node;
-			return winningNodePath.get(0).getMoveTo(winningNodePath.get(1));
-		}
+		return winningNodePath.get(0).getMoveTo(winningNodePath.get(1));
 
 	}
 
