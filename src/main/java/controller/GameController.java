@@ -25,7 +25,7 @@ import util.Solver;
 public class GameController {
 	private Board board;
 	private List<Integer> move;
-	private static int currLevel = 1;
+	private static int currLevel = 4;
 
 	public enum ClickValidity {
 		VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
@@ -80,14 +80,10 @@ public class GameController {
 	 * 
 	 * @param x - represents the start of the x value of the piece selected
 	 * @param y - represents the start of the y value of the piece selected
-	 * @return List<Move> of all possible moves for the selected piece.
+	 * @return List of all possible moves for the selected piece.
 	 */
 	public List<Move> getPossibleMoves(int x, int y) {
-		// checks if the piece is not null, this prevents an exception that when the
-		// user clicks on the end location this method will run with the Piece being a
-		// hole (which is invalid).
-
-		return board.getPiece(x, y) != null ?  board.getPiece(x, y).getPossibleMoves(board, x, y) : new ArrayList<>();
+		return board.getPiece(x, y) != null ? board.getPiece(x, y).getPossibleMoves(board, x, y) : new ArrayList<>();
 	}
 
 	/**

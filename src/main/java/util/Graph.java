@@ -17,7 +17,7 @@ import java.util.Set;
  * 
  * @version 3.0
  */
-public class Graph {
+public class Graph extends Thread{
 	/**
 	 * Performs a depth-first search on the specified node. Exits when a winning
 	 * state is found.
@@ -36,7 +36,40 @@ public class Graph {
 
 		while (!stack.isEmpty()) {
 			Node currentNode = stack.pop();
-			if (!visited.contains(currentNode)) {
+			if (!visited.contains(currentNode) || currentNode != null) {
+				visited.add(currentNode);
+				Set<Node> children = currentNode.getChildren();
+				children.removeAll(visited);
+				for (Node child : children) {
+					parentMap.put(child, currentNode);
+					if (child.isWinningNode()) {
+						Node node = child;
+						while (node != null) {
+							winningPathList.add(0, node);
+							node = parentMap.get(node);
+						}
+						return winningPathList;
+					} else {
+						stack.add(child);
+					}
+				}
+			}
+		}
+		return winningPathList;
+	}
+
+	public List<Node> depthFirstSearchRecursive(Node root) {
+
+		ArrayDeque<Node> stack = new ArrayDeque<>();
+		stack.add(root);
+
+		Set<Node> visited = new HashSet<>();
+		Map<Node, Node> parentMap = new HashMap<>();
+		List<Node> winningPathList = new LinkedList<>();
+
+		while (!stack.isEmpty()) {
+			Node currentNode = stack.pop();
+			if (!visited.contains(currentNode) || currentNode != null) {
 				visited.add(currentNode);
 				Set<Node> children = currentNode.getChildren();
 				children.removeAll(visited);

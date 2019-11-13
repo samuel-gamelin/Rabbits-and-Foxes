@@ -36,7 +36,7 @@ public final class Resources {
 
 	// Incorrect move sound
 	public static final URL INVALID_MOVE = loadFile("wrong.wav");
-	
+
 	// Level solved sound
 	public static final URL SOLVED = loadFile("solved.wav");
 
@@ -99,10 +99,10 @@ public final class Resources {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Load and return a new Board based on the current level.
-	 * The levels are loaded from a JSONArray.
+	 * Load and return a new Board based on the current level. The levels are loaded
+	 * from a JSONArray.
 	 * 
 	 * @param level The current level to load.
 	 * @return The Board associated with the passed level.
@@ -112,8 +112,7 @@ public final class Resources {
 			Object o = new JSONParser().parse(new FileReader("src/main/resources/Levels/LevelData.json"));
 			JSONArray ja = (JSONArray) o;
 			JSONObject jo = (JSONObject) ja.get(level - 1);
-			Board board = new Board((String)jo.get("Level " + level));
-			return board;
+			return new Board((String) jo.get("Level " + level));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

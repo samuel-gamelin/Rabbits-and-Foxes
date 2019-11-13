@@ -67,7 +67,6 @@ public class Rabbit extends Piece {
 		if (move.direction().equals(MoveDirection.INVALID)) {
 			return false;
 		}
-
 		if (validatePath(move, board)) {
 			board.removePiece(move.xStart, move.yStart);
 			board.setPiece(this, move.xEnd, move.yEnd);
@@ -127,13 +126,13 @@ public class Rabbit extends Piece {
 	 * @return True if the path is valid, otherwise false
 	 */
 	private boolean horizontalMove(Move move, Board board) {
-		if (move.xDistance() < 0) { // Moving left
+		if (move.xDistance() < 0) {
 			for (int i = move.xStart - 1; i > move.xEnd; i--) {
 				if (!board.isOccupied(i, move.yStart)) {
 					return false;
 				}
 			}
-		} else { // Moving right
+		} else {
 			for (int i = move.xStart + 1; i < move.xEnd; i++) {
 				if (!board.isOccupied(i, move.yStart)) {
 					return false;
@@ -146,7 +145,6 @@ public class Rabbit extends Piece {
 	@Override
 	public List<Move> getPossibleMoves(Board board, int x, int y) {
 		List<Move> moves = new ArrayList<>();
-
 		for (int i = 0; i < Board.SIZE; i++) {
 			Move moveX = new Move(x, y, i, y);
 			Move moveY = new Move(x, y, x, i);
@@ -157,7 +155,6 @@ public class Rabbit extends Piece {
 				moves.add(moveY);
 			}
 		}
-
 		return moves;
 	}
 

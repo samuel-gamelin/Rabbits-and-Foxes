@@ -12,6 +12,7 @@ import util.Move.MoveDirection;
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
  * @author John Breton
+ * @author Mohamed Radwan
  * 
  * @version 3.0
  */

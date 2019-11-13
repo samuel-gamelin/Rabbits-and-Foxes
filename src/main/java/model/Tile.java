@@ -6,6 +6,7 @@ package model;
  * isn't.
  * 
  * @author Dani Hashweh
+ * @author Mohamed Radwan
  * @version 3.0
  */
 public class Tile {
