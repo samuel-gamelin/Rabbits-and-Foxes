@@ -76,7 +76,8 @@ public class Solver {
 			Piece piece1 = node1.getBoard().getPiece(from1to2.xStart, from1to2.yStart);
 			Piece piece2 = node2.getBoard().getPiece(from2to3.xStart, from2to3.yStart);
 
-			if (piece1 instanceof Fox && piece2 instanceof Fox && ((Fox) piece1).getID() == ((Fox) piece2).getID()) {
+			if (piece1 instanceof Fox && piece2 instanceof Fox && ((Fox) piece1).getID() == ((Fox) piece2).getID()
+					&& !removeFromList.contains(node2)) {
 				removeFromList.add(node2);
 			}
 		}
