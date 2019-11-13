@@ -22,6 +22,12 @@ public class Solver {
 	private static Node lastNonDuplicatedNode;
 
 	/**
+	 * Private constructor since solver cannot be instantiated
+	 */
+	private Solver() {
+	}
+
+	/**
 	 * Determines the next best move, given a board object.
 	 * 
 	 * @param board The board whose next best move is to be determined
@@ -33,7 +39,7 @@ public class Solver {
 		Node node = new Node(board);
 		List<Node> winningNodePath = cleanNodeList(graph.depthFirstSearch(node));
 
-		if (winningNodePath.size() < 2) {
+		if (winningNodePath == null || winningNodePath.size() < 2) {
 			return new Move(-1, -1, -1, -1);
 		}
 
@@ -69,6 +75,7 @@ public class Solver {
 
 			Piece piece1 = node1.getBoard().getPiece(from1to2.xStart, from1to2.yStart);
 			Piece piece2 = node2.getBoard().getPiece(from2to3.xStart, from2to3.yStart);
+
 			if (piece1 instanceof Fox && piece2 instanceof Fox && ((Fox) piece1).getID() == ((Fox) piece2).getID()) {
 				removeFromList.add(node2);
 			}
