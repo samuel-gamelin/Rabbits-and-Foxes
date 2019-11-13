@@ -33,11 +33,9 @@ public class Node {
 	public Set<Node> getChildren() {
 		Set<Node> children = new HashSet<>();
 		for (Move move : board.getPossibleMoves()) {
-			if (move != null) {
-				Board newBoard = new Board(board);
-				newBoard.move(move);
-				children.add(new Node(newBoard));
-			}
+			Board newBoard = new Board(board);
+			newBoard.move(move);
+			children.add(new Node(newBoard));
 		}
 		return children;
 	}
