@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,11 +21,13 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -66,6 +70,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private JButton btnStart;
 	private JButton btnHelp;
 	private JButton btnQuit;
+
+	private static JCheckBox chkPath;
+	private boolean pathSelection;
 
 	private JButton[][] buttons;
 
@@ -202,20 +209,21 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					ClickValidity clickResult = gameController.registerClick(x, y);
 
 					// highlights all possible moves for the selected piece.
-					for (Move move : gameController.getPossibleMoves(x, y)) {
-						buttons[move.xStart][move.yStart].setBorder(hintBorderStart);
-						buttons[move.xEnd][move.yEnd].setBorder(possiblePositionBorder);
-
+					if (chkPath.isSelected()) {
+						for (Move move : gameController.getPossibleMoves(x, y)) {
+							buttons[move.xStart][move.yStart].setBorder(hintBorderStart);
+							buttons[move.xEnd][move.yEnd].setBorder(possiblePositionBorder);
+						}
 					}
 
 					if (clickResult.equals(ClickValidity.VALID)) {
 						buttons[x][y].setBorder(selectedBorder);
 					} else if (clickResult.equals(ClickValidity.VALID_MOVEMADE)) {
-						//clears button borders when the move is valid. 
+						// clears button borders when the move is valid.
 						clearButtonBorders();
 					} else if (clickResult.equals(ClickValidity.INVALID)
 							|| clickResult.equals(ClickValidity.INVALID_MOVEMADE)) {
-						clearMove(); 
+						clearMove();
 						if (wrongMove == null || !wrongMove.isActive()) {
 							try {
 								wrongMove = AudioSystem.getClip();
@@ -231,8 +239,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 			}
 		}
-		
-		
 
 		// Configure the escape key to cancel the pending move
 		boardLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "clear");
@@ -283,7 +289,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pane.add(button);
 	}
-	
 
 	/**
 	 * Creates and returns a JButton suitable for the game's menu bar.
@@ -322,9 +327,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			}
 		}
 	}
-	
+
 	/**
-	 * Clears button borders and clears the pending position 
+	 * Clears button borders and clears the pending position
 	 */
 	private void clearMove() {
 		clearButtonBorders();
@@ -392,14 +397,51 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * Pops up help dialog.
 	 */
 	private void helpDialog() {
-		JOptionPane.showMessageDialog(gameFrame, "<html><body><p style='width: 200px; text-align: justify'>"
+
+		JPanel panel = new JPanel();
+		pathCheckBoxSetup();
+
+		panel.add(new JLabel("Show possible moves?"));
+
+		if (pathSelection)
+			chkPath.setSelected(pathSelection);
+		else
+			chkPath.setSelected(pathSelection);
+		
+		panel.add(chkPath);
+
+		panel.add(Box.createHorizontalStrut(25)); // space between components
+
+		panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>"
 				+ "Rabbits and Foxes is a game in which you must get all rabbits to safety by having them land in brown holes. "
 				+ "To do this, rabbits can only jump over other pieces and must land in an empty hole. "
 				+ "Foxes can slide along their initial direction as long as no other piece obstructs their way.<br><br>"
 				+ "Hint (h): Outlines the next best move<br>" + "Help: Displays the help menu<br>"
 				+ "Reset:   Restarts the game<br>" + "Quit   (q):   Exits the application<br>"
-				+ "Escape (ESC): Clears the pending move" + "</p></body></html>", "Help",
-				JOptionPane.INFORMATION_MESSAGE);
+				+ "Escape (ESC): Clears the pending move" + "</p></body></html>"));
+
+		JOptionPane.showMessageDialog(gameFrame, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	/**
+	 * Sets up the JCheckBox that will be used in the help dialog to see if the user
+	 * wants possible moves shown or not.
+	 */
+	private void pathCheckBoxSetup() {
+		chkPath = new JCheckBox();
+		chkPath.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					chkPath.setSelected(true);
+					// saves the checkbox selection
+					pathSelection = true;
+				} else {
+					chkPath.setSelected(false);
+					pathSelection = false;
+				}
+			}
+		});
 	}
 
 	/**
@@ -411,7 +453,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			JOptionPane.showMessageDialog(mainMenuFrame,
 					"Start: Starts the game\n" + "Help: Displays the help menu\n" + "Quit: Exits the application",
 					"Help", JOptionPane.INFORMATION_MESSAGE);
-		} else if (e.getSource() == menuHint) { 
+		} else if (e.getSource() == menuHint) {
 			// disables hint button once its clicked.
 			toggleHint(false);
 			Move bestMove = gameController.getNextBestMove();
@@ -445,7 +487,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	public void handleBoardChange() {
 		updateView();
 		if (board.isInWinningState()) {
-			//clears button borders when the level is finished. 
+			// clears button borders when the level is finished.
 			clearButtonBorders();
 			try {
 				Clip victory = AudioSystem.getClip();
