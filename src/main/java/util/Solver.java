@@ -1,8 +1,7 @@
 package util;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
-
 import model.Board;
 import model.Fox;
 import model.Piece;
@@ -55,44 +54,26 @@ public class Solver {
 	 * @return
 	 */
 	public static List<Node> cleanNodeList(List<Node> nodeList) {
-		if (nodeList.size() < 3) {
+		if (nodeList == null || nodeList.size() < 3) {
 			return nodeList;
 		}
+		List<Node> removeFromList = new LinkedList<>();
 
-		ListIterator<Node> iterator = nodeList.listIterator();
+		for (int i = 0; i < nodeList.size() - 3; i++) {
+			Node node1 = nodeList.get(i);
+			Node node2 = nodeList.get(i + 1);
+			Node node3 = nodeList.get(i + 2);
 
-		while (iterator.hasNext()) {
-			Node node1 = iterator.next(), node2 = null, node3 = null;
-			Move from1to2, from2to3;
+			Move from1to2 = node1.getMoveTo(node2);
+			Move from2to3 = node2.getMoveTo(node3);
 
-			if (iterator.hasNext()) {
-				node2 = iterator.next();
-				from1to2 = node1.getMoveTo(node2);
-
-				if (iterator.hasNext()) {
-					node3 = iterator.next();
-					from2to3 = node2.getMoveTo(node3);
-
-					Piece piece1 = node1.getBoard().getPiece(from1to2.xStart, from1to2.yStart);
-					Piece piece2 = node2.getBoard().getPiece(from2to3.xStart, from2to3.yStart);
-
-					iterator.previous();
-					iterator.previous();
-
-					if (piece1 instanceof Fox && piece2 instanceof Fox
-							&& ((Fox) piece1).getID() == ((Fox) piece2).getID()) {
-						iterator.remove();
-						iterator.previous();
-					}
-				} else {
-					return nodeList;
-				}
-			} else {
-				return nodeList;
+			Piece piece1 = node1.getBoard().getPiece(from1to2.xStart, from1to2.yStart);
+			Piece piece2 = node2.getBoard().getPiece(from2to3.xStart, from2to3.yStart);
+			if (piece1 instanceof Fox && piece2 instanceof Fox && ((Fox) piece1).getID() == ((Fox) piece2).getID()) {
+				removeFromList.add(node2);
 			}
 		}
-
+		nodeList.removeAll(removeFromList);
 		return nodeList;
 	}
-
 }
