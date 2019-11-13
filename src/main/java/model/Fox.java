@@ -288,12 +288,6 @@ public class Fox extends Piece {
 	@Override
 	public List<Move> getPossibleMoves(Board board, int x, int y) {
 		List<Move> moves = new ArrayList<>();
-		
-		// We will not compute possible moves if the Fox represents a tail and the caller is not the solver.
-		if (foxType.equals(FoxType.TAIL)
-				&& !Thread.currentThread().getStackTrace()[2].getClassName().equals("controller.GameController")) {
-			return moves;
-		}
 
 		boolean location = getRelativeLocation();
 		if (direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) { // Horizontally-sliding fox
