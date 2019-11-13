@@ -322,8 +322,6 @@ public class Fox extends Piece {
 			location = false;
 		return location;
 	}
-	
-	
 
 	@Override
 	public int hashCode() {
