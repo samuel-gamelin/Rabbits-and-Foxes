@@ -290,22 +290,42 @@ public class Fox extends Piece {
 		List<Move> moves = new ArrayList<>();
 
 		boolean location = getRelativeLocation();
-		if (direction.equals(Direction.LEFT) || direction.equals(Direction.RIGHT)) { // Horizontally-sliding fox
-			for (int i = 0; i < Board.SIZE; i++) {
+
+		// Horizontal sliding
+		if (foxType.equals(FoxType.TAIL) && direction.equals(Direction.LEFT)
+				|| foxType.equals(FoxType.HEAD) && direction.equals(Direction.RIGHT)) {
+			for (int i = x + 1; i < Board.SIZE; i++) {
 				Move moveX = new Move(x, y, i, y);
-				if (i != x && validatePath(moveX, board, location)) {
+				if (validatePath(moveX, board, location)) {
 					moves.add(moveX);
 				}
 			}
-		} else { // Vertically-sliding fox
-			for (int i = 0; i < Board.SIZE; i++) {
+		} else if (foxType.equals(FoxType.TAIL) && direction.equals(Direction.RIGHT)
+				|| foxType.equals(FoxType.HEAD) && direction.equals(Direction.LEFT)) {
+			for (int i = x - 1; i >= 0; i--) {
+				Move moveX = new Move(x, y, i, y);
+				if (validatePath(moveX, board, location)) {
+					moves.add(moveX);
+				}
+			}
+			// vertical
+		} else if (foxType.equals(FoxType.TAIL) && direction.equals(Direction.UP)
+				|| foxType.equals(FoxType.HEAD) && direction.equals(Direction.DOWN)) {
+			for (int i = y + 1; i < Board.SIZE; i++) {
 				Move moveY = new Move(x, y, x, i);
-				if (i != y && validatePath(moveY, board, location)) {
+				if (validatePath(moveY, board, location)) {
+					moves.add(moveY);
+				}
+			}
+		} else if (foxType.equals(FoxType.TAIL) && direction.equals(Direction.DOWN)
+				|| foxType.equals(FoxType.HEAD) && direction.equals(Direction.UP)) {
+			for (int i = y - 1; i >= 0; i--) {
+				Move moveY = new Move(x, y, x, i);
+				if (validatePath(moveY, board, location)) {
 					moves.add(moveY);
 				}
 			}
 		}
-
 		return moves;
 	}
 

@@ -2,6 +2,7 @@ package util;
 
 import java.util.List;
 import java.util.ArrayList;
+
 import model.Board;
 import model.Fox;
 import model.Piece;
@@ -63,28 +64,29 @@ public class Solver {
 		if (nodeList == null || nodeList.size() < 3) {
 			return nodeList;
 		}
-		List<Node> removeFromList = new ArrayList<>();
-		boolean samePiece = true;
+		List<Node> newList = new ArrayList<>();
 
-		for (int i = 0; i < nodeList.size() - 3 && samePiece; i++) {
-			Node node1 = nodeList.get(i);
-			Node node2 = nodeList.get(i + 1);
-			Node node3 = nodeList.get(i + 2);
+		for (Node node : nodeList) {
+			newList.add(node);
+			if (newList.size() == 3) {
+				Node node1 = newList.get(0);
+				Node node2 = newList.get(1);
+				Node node3 = newList.get(2);
+				Move from1to2 = node1.getMoveTo(node2);
+				Move from2to3 = node2.getMoveTo(node3);
 
-			Move from1to2 = node1.getMoveTo(node2);
-			Move from2to3 = node2.getMoveTo(node3);
+				Piece piece1 = node1.getBoard().getPiece(from1to2.xStart, from1to2.yStart);
+				Piece piece2 = node2.getBoard().getPiece(from2to3.xStart, from2to3.yStart);
 
-			Piece piece1 = node1.getBoard().getPiece(from1to2.xStart, from1to2.yStart);
-			Piece piece2 = node2.getBoard().getPiece(from2to3.xStart, from2to3.yStart);
+				if (piece1 instanceof Fox && piece2 instanceof Fox && ((Fox) piece1).equals((Fox) piece2)) {
+					newList.remove(node2);
+				} else {
+					return newList;
+				}
 
-			if (piece1 instanceof Fox && piece2 instanceof Fox && ((Fox) piece1).equals((Fox) piece2)
-					&& !removeFromList.contains(node2)) {
-				removeFromList.add(node2);
-			} else {
-				samePiece = false;
 			}
 		}
-		nodeList.removeAll(removeFromList);
-		return nodeList;
+
+		return newList;
 	}
 }
