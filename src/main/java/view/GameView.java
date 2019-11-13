@@ -9,7 +9,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -88,6 +87,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 	private Clip wrongMove;
 
+	public static final String GAME_NAME = "Rabbit and Foxes!";
+
 	/**
 	 * Creates the application GUI.
 	 */
@@ -114,7 +115,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 * Main menu
 		 * 
 		 */
-		mainMenuFrame = new JFrame("Rabbit and Foxes!");
+		mainMenuFrame = new JFrame(GAME_NAME);
 		mainMenuFrame.setIconImage(Resources.WINDOW_ICON.getImage());
 
 		// Box Layout for main menu
@@ -143,7 +144,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 * 
 		 */
 
-		gameFrame = new JFrame("Rabbit and Foxes!" + " Level: " + getLevelName());
+		gameFrame = new JFrame(GAME_NAME + " Level: " + getLevelName());
 		// BorderLayout for game frame
 		Container gamePane = gameFrame.getContentPane();
 		gamePane.setLayout(new BorderLayout());
@@ -426,17 +427,14 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 */
 	private void pathCheckBoxSetup() {
 		chkPath = new JCheckBox();
-		chkPath.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					chkPath.setSelected(true);
-					// saves the checkbox selection
-					pathSelection = true;
-				} else {
-					chkPath.setSelected(false);
-					pathSelection = false;
-				}
+		chkPath.addItemListener(e -> {
+			if (e.getStateChange() == ItemEvent.SELECTED) {
+				chkPath.setSelected(true);
+				// saves the checkbox selection
+				pathSelection = true;
+			} else {
+				chkPath.setSelected(false);
+				pathSelection = false;
 			}
 		});
 	}
@@ -499,7 +497,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					new String[] { "Next", "Reset", "Quit" }, null);
 			if (choice == 0) {
 				GameController.incrementLevel();
-				gameFrame.setTitle("Rabbit and Foxes!" + " Level: " + getLevelName());
+				gameFrame.setTitle(GAME_NAME + " Level: " + getLevelName());
 				gameWinReset();
 			} else if (choice == 1) {
 				gameWinReset();
