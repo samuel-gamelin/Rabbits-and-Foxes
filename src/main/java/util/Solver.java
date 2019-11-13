@@ -1,8 +1,7 @@
 package util;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.ArrayList;
 import model.Board;
 import model.Fox;
 import model.Piece;
@@ -17,6 +16,11 @@ import model.Piece;
  * @version 3.0
  */
 public class Solver {
+	/**
+	 * Keeps track of the most recently visited node.
+	 */
+	private static Node lastNonDuplicatedNode;
+
 	/**
 	 * Private constructor since solver cannot be instantiated
 	 */
@@ -39,7 +43,13 @@ public class Solver {
 			return new Move(-1, -1, -1, -1);
 		}
 
-		return winningNodePath.get(0).getMoveTo(winningNodePath.get(1));
+		if (lastNonDuplicatedNode != null && lastNonDuplicatedNode.equals(winningNodePath.get(1))
+				&& winningNodePath.size() > 2) {
+			return winningNodePath.get(1).getMoveTo(winningNodePath.get(2));
+		} else {
+			lastNonDuplicatedNode = node;
+			return winningNodePath.get(0).getMoveTo(winningNodePath.get(1));
+		}
 
 	}
 
@@ -54,8 +64,9 @@ public class Solver {
 			return nodeList;
 		}
 		List<Node> removeFromList = new ArrayList<>();
+		boolean samePiece = true;
 
-		for (int i = 0; i < nodeList.size() - 3; i++) {
+		for (int i = 0; i < nodeList.size() - 3 && samePiece; i++) {
 			Node node1 = nodeList.get(i);
 			Node node2 = nodeList.get(i + 1);
 			Node node3 = nodeList.get(i + 2);
@@ -66,9 +77,11 @@ public class Solver {
 			Piece piece1 = node1.getBoard().getPiece(from1to2.xStart, from1to2.yStart);
 			Piece piece2 = node2.getBoard().getPiece(from2to3.xStart, from2to3.yStart);
 
-			if (piece1 instanceof Fox && piece2 instanceof Fox && ((Fox) piece1).getID() == ((Fox) piece2).getID()
+			if (piece1 instanceof Fox && piece2 instanceof Fox && ((Fox) piece1).equals((Fox) piece2)
 					&& !removeFromList.contains(node2)) {
 				removeFromList.add(node2);
+			} else {
+				samePiece = false;
 			}
 		}
 		nodeList.removeAll(removeFromList);
