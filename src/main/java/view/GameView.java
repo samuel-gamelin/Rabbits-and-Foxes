@@ -403,11 +403,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		panel.add(new JLabel("Show possible moves?"));
 
-		if (pathSelection)
-			chkPath.setSelected(pathSelection);
-		else
-			chkPath.setSelected(pathSelection);
-		
+		chkPath.setSelected(pathSelection);
+
 		panel.add(chkPath);
 
 		panel.add(Box.createHorizontalStrut(25)); // space between components
