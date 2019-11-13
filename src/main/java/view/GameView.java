@@ -491,20 +491,49 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			} catch (Exception ex) {
 				ex.printStackTrace(System.out);
 			}
-			int choice = JOptionPane.showOptionDialog(gameFrame,
-					"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-					new String[] { "Next", "Reset", "Quit" }, null);
-			if (choice == 0) {
-				GameController.incrementLevel();
-				gameFrame.setTitle(GAME_NAME + " Level: " + getLevelName());
-				gameWinReset();
-			} else if (choice == 1) {
-				gameWinReset();
-			} else {
-				System.exit(0);
+
+			int choice = 0;
+
+			if (GameController.getCurrentLevel() != GameController.getTotalLevels()) {
+				choice = JOptionPane.showOptionDialog(gameFrame,
+						"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+						new String[] { "Next", "Reset", "Quit" }, null);
+
+				if (choice == 0) {
+					if (GameController.getCurrentLevel() != GameController.getTotalLevels()) {
+						GameController.incrementLevel();
+						setGameFrameLevel();
+					}
+				} else if (choice == 1) {
+					gameWinReset();
+				} else {
+					System.exit(0);
+				}
+			}
+
+			else {
+				int result = JOptionPane.showOptionDialog(gameFrame,
+						"You have finished the game! Would you like to go to the main menu or exit?", "End Game",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+						new String[] { "Main Menu", "Quit" }, null);
+				if (result == 0) {
+					GameController.setFirstLevel();
+					setGameFrameLevel();
+					gameFrame.setVisible(false);
+					mainMenuFrame.setVisible(true);
+				}
+				else System.exit(0);
 			}
 		}
+	}
+
+	/**
+	 * Sets up the next level 
+	 */
+	private void setGameFrameLevel() {
+		gameFrame.setTitle(GAME_NAME + " Level: " + getLevelName());
+		gameWinReset();
 	}
 
 	/**
