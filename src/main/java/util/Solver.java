@@ -67,7 +67,7 @@ public class Solver {
 		List<Node> removeFromList = new ArrayList<>();
 		boolean samePiece = true;
 
-		for (int i = 0; i < nodeList.size() - 3; i++) {
+		for (int i = 0; i < nodeList.size() - 3 && samePiece; i++) {
 			Node node1 = nodeList.get(i);
 			Node node2 = nodeList.get(i + 1);
 			Node node3 = nodeList.get(i + 2);
