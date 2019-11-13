@@ -1,5 +1,6 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import model.Board;
@@ -63,7 +64,7 @@ public class Solver {
 		if (nodeList == null || nodeList.size() < 3) {
 			return nodeList;
 		}
-		List<Node> removeFromList = new LinkedList<>();
+		List<Node> removeFromList = new ArrayList<>();
 
 		for (int i = 0; i < nodeList.size() - 3; i++) {
 			Node node1 = nodeList.get(i);
