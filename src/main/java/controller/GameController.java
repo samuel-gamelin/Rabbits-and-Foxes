@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import model.Board;
 import model.Fox;
@@ -27,6 +28,10 @@ public class GameController {
 	private List<Integer> move;
 	private static int currLevel = 1;
 
+	// Stacks for undo and redo
+	private static Stack<Move> undoMoveStack;
+	private static Stack<Move> redoMoveStack;
+
 	public enum ClickValidity {
 		VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
 	}
@@ -41,6 +46,8 @@ public class GameController {
 	public GameController(Board board) {
 		this.board = board;
 		this.move = new ArrayList<>();
+		undoMoveStack = new Stack<Move>();
+		redoMoveStack = new Stack<Move>();
 	}
 
 	/**
@@ -64,9 +71,12 @@ public class GameController {
 		} else if (!move.isEmpty() && (!board.isOccupied(x, y) || (board.getPiece(x, y) instanceof Fox
 				&& board.getPiece(move.get(0), move.get(1)) instanceof Fox
 				&& ((Fox) board.getPiece(x, y)).getID() == ((Fox) board.getPiece(move.get(0), move.get(1))).getID()))) {
-			boolean result = board.move(new Move(move.get(0), move.get(1), x, y));
+			Move movePiece = new Move(move.get(0), move.get(1), x, y);
+			boolean result = board.move(movePiece);
 			if (result) {
 				move.clear();
+				redoMoveStack.clear();
+				undoMoveStack.add(movePiece);
 				return ClickValidity.VALID_MOVEMADE;
 			}
 			return ClickValidity.INVALID_MOVEMADE;
@@ -112,6 +122,39 @@ public class GameController {
 	public Move getNextBestMove() {
 		return Solver.getNextBestMove(board);
 	}
+	/**
+	 * The undoMove is popped from the stack, and then added into the 
+	 * reverseMove stack. the undoMove is then reversed and set into the board to move
+	 * 
+	 * @return True if there is a move to undo, false otherwise
+	 */
+
+	public boolean undoMove() {
+		if(!undoMoveStack.isEmpty()) {
+			Move undoMove = undoMoveStack.pop();
+			redoMoveStack.add(undoMove);
+			Move reverseMove = undoMove.reverseMove();
+			board.move(reverseMove);
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * The redoMove is popped from the stack, and then added into the 
+	 * undoMove stack. the redoMove is the set into the board. 
+	 * 
+	 * @return True if there is a move to redo, false otherwise
+	 */
+
+	public boolean redoMove() {
+		if (!redoMoveStack.isEmpty()) {
+			Move redoMove = redoMoveStack.pop();
+			undoMoveStack.add(redoMove);
+			board.move(redoMove);
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Return the current level of the game.
@@ -126,23 +169,25 @@ public class GameController {
 	 * Increment the current level of the game by 1.
 	 */
 	public static void incrementLevel() {
+		redoMoveStack.clear();
+		undoMoveStack.clear();
 		currLevel++;
 	}
-	
-	
+
 	/**
-	 * Gets the the total levels available in the LevelData.json file 
+	 * Gets the the total levels available in the LevelData.json file
+	 * 
 	 * @return The total number of levels in the game as an int.
 	 */
 	public static int getTotalLevels() {
 		return Resources.getNumberOfLevels();
 	}
-	
+
 	/**
-	 * Sets the current level to the first level. 
+	 * Sets the current level to the first level.
 	 */
 	public static void setFirstLevel() {
-		GameController.currLevel = 1; 
+		GameController.currLevel = 1;
 	}
 
 }

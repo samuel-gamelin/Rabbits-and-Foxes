@@ -73,4 +73,13 @@ public final class Move {
 	public int yDistance() {
 		return yEnd - yStart;
 	}
+	/**
+	 * This method creates a new Move, with the end and start coordinates flipped for an Undo move
+	 * 
+	 * @return a new reversedMove
+	 */
+
+	public Move reverseMove() {
+		return new Move(xEnd, yEnd, xStart, yStart);
+	}
 }

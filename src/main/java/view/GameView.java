@@ -255,6 +255,26 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		updateView();
 
+		menuUndo.addActionListener(e -> {
+			// Calling undoMove, attaching the button
+			if (!gameController.undoMove()) {
+				JOptionPane.showMessageDialog(mainMenuFrame, "No moves to undo", "Information",
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				gameController.undoMove();
+			}
+
+		});
+		menuRedo.addActionListener(e -> {
+			if (!gameController.redoMove()) {
+				JOptionPane.showMessageDialog(mainMenuFrame, "No moves to Redo", "Information",
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				// calling redoMove, attaching the button
+				gameController.redoMove();
+			}
+		});
+
 		btnStart.addActionListener(e -> {
 			mainMenuFrame.dispose();
 			gameFrame.setVisible(true);
@@ -522,14 +542,14 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					setGameFrameLevel();
 					gameFrame.setVisible(false);
 					mainMenuFrame.setVisible(true);
-				}
-				else System.exit(0);
+				} else
+					System.exit(0);
 			}
 		}
 	}
 
 	/**
-	 * Sets up the next level 
+	 * Sets up the next level
 	 */
 	private void setGameFrameLevel() {
 		gameFrame.setTitle(GAME_NAME + " Level: " + getLevelName());
