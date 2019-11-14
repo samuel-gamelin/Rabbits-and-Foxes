@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
@@ -29,9 +30,9 @@ import util.Solver;
 public class GameController {
 	private Board board;
 	private List<Integer> move;
-	private static int currLevel = 4;
-	private static Stack<Move> undoMoveStack;
-	private static Stack<Move> redoMoveStack;
+	private static int currLevel = 1;
+	private static Deque<Move> undoMoveStack;
+	private static Deque<Move> redoMoveStack;
 
 	public enum ClickValidity {
 		VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
@@ -47,8 +48,8 @@ public class GameController {
 	public GameController(Board board) {
 		this.board = board;
 		this.move = new ArrayList<>();
-		undoMoveStack = new Stack<>();
-		redoMoveStack = new Stack<>();
+		undoMoveStack = new ArrayDeque<>();
+		redoMoveStack = new ArrayDeque<>();
 	}
 
 	/**
