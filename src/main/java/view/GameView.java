@@ -258,21 +258,17 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		menuUndo.addActionListener(e -> {
 			// Calling undoMove, attaching the button
 			if (!gameController.undoMove()) {
-				JOptionPane.showMessageDialog(mainMenuFrame, "No moves to undo", "Information",
+				JOptionPane.showMessageDialog(gameFrame, "No moves to undo", "Information",
 						JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				gameController.undoMove();
 			}
 
 		});
 		menuRedo.addActionListener(e -> {
 			if (!gameController.redoMove()) {
-				JOptionPane.showMessageDialog(mainMenuFrame, "No moves to Redo", "Information",
+				JOptionPane.showMessageDialog(gameFrame, "No moves to Redo", "Information",
 						JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				// calling redoMove, attaching the button
-				gameController.redoMove();
 			}
+			
 		});
 
 		btnStart.addActionListener(e -> {
