@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.Stack;
 
 import model.Board;
 import model.Fox;
@@ -29,8 +30,8 @@ public class GameController {
 	private Board board;
 	private List<Integer> move;
 	private static int currLevel = 1;
-	private static Deque<Move> undoMoveStack = new ArrayDeque<>();
-	private static Deque<Move> redoMoveStack = new ArrayDeque<>();
+	private static Stack<Move> undoMoveStack = new Stack<>();
+	private static Stack<Move> redoMoveStack = new Stack<>();
 
 	public enum ClickValidity {
 		VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
