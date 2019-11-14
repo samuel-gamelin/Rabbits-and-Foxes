@@ -132,7 +132,7 @@ public class GameController {
 	public boolean undoMove() {
 		if (!undoMoveStack.isEmpty()) {// If the stack is not empty
 			Move undoMove = undoMoveStack.pop();
-			redoMoveStack.add(undoMove);
+			redoMoveStack.push(undoMove);
 			Move reverseMove = undoMove.reverseMove();
 			board.move(reverseMove);
 			return true;
@@ -150,7 +150,7 @@ public class GameController {
 	public boolean redoMove() {
 		if (!redoMoveStack.isEmpty()) {
 			Move redoMove = redoMoveStack.pop();
-			undoMoveStack.add(redoMove);
+			undoMoveStack.push(redoMove);
 			board.move(redoMove);
 			return true;
 		}
