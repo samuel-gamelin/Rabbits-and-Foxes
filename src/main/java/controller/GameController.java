@@ -21,6 +21,7 @@ import util.Solver;
  * @author Mohamed Radwan
  * @author Dani Hashweh
  * @author Samuel Gamelin
+ * @author Abdalla
  * @version 3.0
  */
 public class GameController {
@@ -130,7 +131,7 @@ public class GameController {
 	 */
 
 	public boolean undoMove() {
-		if(!undoMoveStack.isEmpty()) {
+		if(!undoMoveStack.isEmpty()) {//If the stack is not empty
 			Move undoMove = undoMoveStack.pop();
 			redoMoveStack.add(undoMove);
 			Move reverseMove = undoMove.reverseMove();
