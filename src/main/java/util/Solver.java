@@ -35,20 +35,14 @@ public class Solver {
 	public static Move getNextBestMove(Board board) {
 		Graph graph = new Graph();
 		Node node = new Node(board);
-
 		if (lastHint == null || !lastHint.contains(node)) {
-			lastHint = cleanNodeList(graph.depthFirstSearch(node));
+			lastHint = cleanNodeList(graph.breadthFirstSearch(node));
 			System.out.println("Recalculate");
 		}
 		if (lastHint != null) {
-			System.out.println(lastHint.size());
-			for (int i = 0; i < lastHint.indexOf(node); i++) {
-				lastHint.remove(0);
-			}
-			if (lastHint.size() > 1) {
-				Move move = lastHint.get(0).getMoveTo(lastHint.get(1));
-				lastHint.remove(0);
-				return move;
+			int boardOne = lastHint.indexOf(node);
+			if (lastHint.size() > boardOne) {
+				return lastHint.get(boardOne).getMoveTo(lastHint.get(boardOne + 1));
 			}
 		}
 		return new Move(-1, -1, -1, -1);
