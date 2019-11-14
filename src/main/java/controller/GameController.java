@@ -26,7 +26,7 @@ import util.Solver;
 public class GameController {
 	private Board board;
 	private List<Integer> move;
-	private static int currLevel = 1;
+	private static int currLevel = 4;
 
 	// Stacks for undo and redo
 	private static Stack<Move> undoMoveStack;
