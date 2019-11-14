@@ -1,6 +1,8 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
@@ -28,8 +30,6 @@ public class GameController {
 	private Board board;
 	private List<Integer> move;
 	private static int currLevel = 4;
-
-	// Stacks for undo and redo
 	private static Stack<Move> undoMoveStack;
 	private static Stack<Move> redoMoveStack;
 
@@ -47,8 +47,8 @@ public class GameController {
 	public GameController(Board board) {
 		this.board = board;
 		this.move = new ArrayList<>();
-		undoMoveStack = new Stack<Move>();
-		redoMoveStack = new Stack<Move>();
+		undoMoveStack = new Stack<>();
+		redoMoveStack = new Stack<>();
 	}
 
 	/**
@@ -123,15 +123,16 @@ public class GameController {
 	public Move getNextBestMove() {
 		return Solver.getNextBestMove(board);
 	}
+
 	/**
-	 * The undoMove is popped from the stack, and then added into the 
-	 * reverseMove stack. the undoMove is then reversed and set into the board to move
+	 * The undoMove is popped from the stack, and then added into the reverseMove
+	 * stack. the undoMove is then reversed and set into the board to move
 	 * 
 	 * @return True if there is a move to undo, false otherwise
 	 */
 
 	public boolean undoMove() {
-		if(!undoMoveStack.isEmpty()) {//If the stack is not empty
+		if (!undoMoveStack.isEmpty()) {// If the stack is not empty
 			Move undoMove = undoMoveStack.pop();
 			redoMoveStack.add(undoMove);
 			Move reverseMove = undoMove.reverseMove();
@@ -140,9 +141,10 @@ public class GameController {
 		}
 		return false;
 	}
+
 	/**
-	 * The redoMove is popped from the stack, and then added into the 
-	 * undoMove stack. the redoMove is the set into the board. 
+	 * The redoMove is popped from the stack, and then added into the undoMove
+	 * stack. the redoMove is the set into the board.
 	 * 
 	 * @return True if there is a move to redo, false otherwise
 	 */

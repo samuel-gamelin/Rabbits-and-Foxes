@@ -122,9 +122,9 @@ public final class Resources {
 	}
 
 	/**
-	 * Creates the JSONArray that will be used when reading from the LevelData file. 
+	 * Creates the JSONArray that will be used when reading from the LevelData file.
 	 * 
-	 * @return JSONArray containing the data from the .json file given. 
+	 * @return JSONArray containing the data from the .json file given.
 	 * @throws IOException
 	 * @throws ParseException
 	 * @throws FileNotFoundException
@@ -134,10 +134,12 @@ public final class Resources {
 		JSONArray ja = (JSONArray) o;
 		return ja;
 	}
-	
+
 	/**
-	 * Provides the gameController with the number of levels provided in the levels file. 
-	 * @return the total number of levels in the game as an int. 
+	 * Provides the gameController with the number of levels provided in the levels
+	 * file.
+	 * 
+	 * @return the total number of levels in the game as an int.
 	 */
 	public static int getNumberOfLevels() {
 		JSONArray ja = null;
@@ -146,6 +148,6 @@ public final class Resources {
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
-		return ja.size(); 
+		return ja.size();
 	}
 }

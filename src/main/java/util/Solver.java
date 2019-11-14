@@ -17,10 +17,7 @@ import model.Piece;
  * @version 3.0
  */
 public class Solver {
-	/**
-	 * Keeps track of the most recently visited node.
-	 */
-	private static Node lastNonDuplicatedNode;
+	private static List<Node> lastHint;
 
 	/**
 	 * Private constructor since solver cannot be instantiated
@@ -38,20 +35,22 @@ public class Solver {
 	public static Move getNextBestMove(Board board) {
 		Graph graph = new Graph();
 		Node node = new Node(board);
-		List<Node> winningNodePath = cleanNodeList(graph.depthFirstSearch(node));
 
-		if (winningNodePath == null || winningNodePath.size() < 2) {
-			return new Move(-1, -1, -1, -1);
-		}
-
-		if (lastNonDuplicatedNode != null && lastNonDuplicatedNode.equals(winningNodePath.get(1))
-				&& winningNodePath.size() > 2) {
-			return winningNodePath.get(1).getMoveTo(winningNodePath.get(2));
+		if (lastHint == null || !lastHint.contains(node)) {
+			lastHint = cleanNodeList(graph.depthFirstSearch(node));
+			System.out.println("Recalculate");
 		} else {
-			lastNonDuplicatedNode = node;
-			return winningNodePath.get(0).getMoveTo(winningNodePath.get(1));
+			System.out.println(lastHint.size());
+			for (int i = 0; i < lastHint.indexOf(node); i++) {
+				lastHint.remove(0);
+			}
+			if (lastHint.size() > 1) {
+				Move move = lastHint.get(0).getMoveTo(lastHint.get(1));
+				lastHint.remove(0);
+				return move;
+			}
 		}
-
+		return new Move(-1, -1, -1, -1);
 	}
 
 	/**
@@ -65,18 +64,11 @@ public class Solver {
 			return nodeList;
 		}
 		List<Node> removeFromList = new ArrayList<>();
-		boolean samePiece = true;
 
-		for (int i = 0; i < nodeList.size() - 3 && samePiece; i++) {
+		for (int i = 0; i < nodeList.size() - 3; i++) {
 			Node node1 = nodeList.get(i);
 			Node node2 = nodeList.get(i + 1);
 			Node node3 = nodeList.get(i + 2);
-			System.out.println("Node1 ");
-			System.out.println(node1 + "\n");
-			System.out.println("Node2 ");
-			System.out.println(node2 + "\n");
-			System.out.println("Node3 ");
-			System.out.println(node3 + "\n");
 
 			Move from1to2 = node1.getMoveTo(node2);
 			Move from2to3 = node2.getMoveTo(node3);
@@ -86,8 +78,6 @@ public class Solver {
 
 			if (piece1 instanceof Fox && piece2 instanceof Fox && ((Fox) piece1).getID() == ((Fox) piece2).getID()) {
 				removeFromList.add(node2);
-			} else {
-				samePiece = false;
 			}
 		}
 
