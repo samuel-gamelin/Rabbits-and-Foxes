@@ -39,7 +39,8 @@ public class Solver {
 		if (lastHint == null || !lastHint.contains(node)) {
 			lastHint = cleanNodeList(graph.depthFirstSearch(node));
 			System.out.println("Recalculate");
-		} else {
+		}
+		if (lastHint != null) {
 			System.out.println(lastHint.size());
 			for (int i = 0; i < lastHint.indexOf(node); i++) {
 				lastHint.remove(0);
