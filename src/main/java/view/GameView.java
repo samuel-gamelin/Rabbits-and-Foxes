@@ -70,7 +70,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private JButton btnHelp;
 	private JButton btnQuit;
 
-	private static JCheckBox chkPath;
+	private JCheckBox chkPath;
 	private boolean pathSelection;
 
 	private JButton[][] buttons;
@@ -268,7 +268,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				JOptionPane.showMessageDialog(gameFrame, "No moves to Redo", "Information",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
-			
+
 		});
 
 		btnStart.addActionListener(e -> {
@@ -538,8 +538,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					setGameFrameLevel();
 					gameFrame.setVisible(false);
 					mainMenuFrame.setVisible(true);
-				} else
+				} else {
 					System.exit(0);
+				}
 			}
 		}
 	}
@@ -598,6 +599,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * @param args The command-line arguments
 	 */
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new GameView());
+		SwingUtilities.invokeLater(GameView::new);
 	}
 }

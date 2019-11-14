@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+
 import model.Board;
 
 /**
@@ -129,10 +130,9 @@ public final class Resources {
 	 * @throws ParseException
 	 * @throws FileNotFoundException
 	 */
-	private static JSONArray newParser() throws IOException, ParseException, FileNotFoundException {
+	private static JSONArray newParser() throws IOException, ParseException {
 		Object o = new JSONParser().parse(new FileReader("src/main/resources/Levels/LevelData.json"));
-		JSONArray ja = (JSONArray) o;
-		return ja;
+		return (JSONArray) o;
 	}
 
 	/**
@@ -148,6 +148,9 @@ public final class Resources {
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
-		return ja.size();
+		if (ja != null) {
+			return ja.size();
+		}
+		return -1;
 	}
 }

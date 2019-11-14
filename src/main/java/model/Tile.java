@@ -122,8 +122,9 @@ public class Tile {
 		if (piece == null) {
 			if (other.piece != null)
 				return false;
-		} else if (!piece.equals(other.piece))
+		} else if (!piece.equals(other.piece)) {
 			return false;
+		}
 		return true;
 	}
 

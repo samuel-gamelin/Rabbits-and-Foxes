@@ -285,8 +285,9 @@ public class Board {
 		if (!(obj instanceof Board))
 			return false;
 		Board other = (Board) obj;
-		if (!Arrays.deepEquals(tiles, other.tiles))
+		if (!Arrays.deepEquals(tiles, other.tiles)) {
 			return false;
+		}
 		return true;
 	}
 
