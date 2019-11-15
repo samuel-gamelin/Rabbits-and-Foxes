@@ -30,6 +30,7 @@ public class GameController {
 	private List<Integer> move;
 	private ArrayDeque<Move> undoMoveStack;
 	private ArrayDeque<Move> redoMoveStack;
+	private int count = 1;
 
 	/**
 	 * An enumeration representing the validity of a click from the user.
@@ -79,9 +80,16 @@ public class GameController {
 			if (result) {
 				move.clear();
 				redoMoveStack.clear();
-				undoMoveStack.push(movePiece);
+				if (count != getCurrentLevel()) {
+					undoMoveStack.clear();
+					count++;
+				} else {
+					undoMoveStack.push(movePiece);
+				}
 				return ClickValidity.VALID_MOVEMADE;
+
 			}
+
 			return ClickValidity.INVALID_MOVEMADE;
 		}
 		return ClickValidity.INVALID;
@@ -114,10 +122,10 @@ public class GameController {
 	 * @return The new board for the view to listen to it.
 	 */
 	public Board reset() {
+		board = Resources.getLevel(currentLevel);
 		move.clear();
 		undoMoveStack.clear();
 		redoMoveStack.clear();
-		board = Resources.getLevel(currentLevel);
 		return board;
 	}
 
