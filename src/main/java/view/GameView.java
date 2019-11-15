@@ -145,7 +145,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 */
 		
 		// Create the board and controller
-		board = Resources.getLevel(5);
+		board = Resources.getLevel(1);
 		board.addListener(this);
 		gameController = new GameController(board);
 
