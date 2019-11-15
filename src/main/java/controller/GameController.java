@@ -30,7 +30,7 @@ public class GameController {
 	private List<Integer> move;
 	private ArrayDeque<Move> undoMoveStack;
 	private ArrayDeque<Move> redoMoveStack;
-	private int count = 1;
+	private int prevLevel = 1;
 
 	/**
 	 * An enumeration representing the validity of a click from the user.
@@ -80,9 +80,9 @@ public class GameController {
 			if (result) {
 				move.clear();
 				redoMoveStack.clear();
-				if (count != getCurrentLevel()) {
+				if (prevLevel != getCurrentLevel()) {
 					undoMoveStack.clear();
-					count++;
+					prevLevel = getCurrentLevel();
 				} else {
 					undoMoveStack.push(movePiece);
 				}
