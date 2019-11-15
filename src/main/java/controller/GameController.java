@@ -141,8 +141,7 @@ public class GameController {
 		if (!undoMoveStack.isEmpty()) {// If the stack is not empty
 			Move undoMove = undoMoveStack.pop();
 			redoMoveStack.push(undoMove);
-			Move reverseMove = undoMove.reverseMove();
-			board.move(reverseMove);
+			board.move(new Move(undoMove.xEnd, undoMove.yEnd, undoMove.xStart, undoMove.yStart));
 			return true;
 		}
 		return false;
