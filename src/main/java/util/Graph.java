@@ -22,7 +22,8 @@ public class Graph {
 	 * Performs a breadth-first search on the specified node.
 	 * 
 	 * @param root The node from which to stem the search
-	 * @return
+	 * @return The list of nodes that form the winning path. Should there be no
+	 *         winning path, this list will be empty.
 	 */
 	public List<Node> breadthFirstSearch(Node root) {
 		Queue<Node> queue = new ArrayDeque<>();

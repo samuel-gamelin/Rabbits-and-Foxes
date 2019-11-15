@@ -1,7 +1,7 @@
 package util;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Board;
 import model.Fox;
@@ -37,7 +37,6 @@ public class Solver {
 		Node node = new Node(board);
 		if (lastHint == null || !lastHint.contains(node)) {
 			lastHint = cleanNodeList(graph.breadthFirstSearch(node));
-			System.out.println("Recalculate");
 		}
 		if (lastHint != null) {
 			int boardOne = lastHint.indexOf(node);
@@ -49,10 +48,10 @@ public class Solver {
 	}
 
 	/**
-	 * Cleans the list from unwanted fox moves (repeated moves with the same fox).
+	 * Cleans the list from unwanted fox moves (repeated, consecutive moves with the same fox).
 	 * 
-	 * @param nodeList
-	 * @return
+	 * @param nodeList The list of nodes to clean
+	 * @return A list of nodes where unwanted nodes have been removed
 	 */
 	public static List<Node> cleanNodeList(List<Node> nodeList) {
 		if (nodeList == null || nodeList.size() < 3) {

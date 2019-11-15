@@ -40,7 +40,7 @@ public class Board {
 	 * Creates a board object and initializes the pieces specified by the passed
 	 * String.
 	 * 
-	 * @param board The String representation of the Board that is being created.
+	 * @param str The String representation of the Board that is being created.
 	 */
 	public Board(String str) {
 		tiles = new Tile[SIZE][SIZE];

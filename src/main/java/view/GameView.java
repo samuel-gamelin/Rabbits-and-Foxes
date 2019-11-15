@@ -143,8 +143,13 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 * Game frame
 		 * 
 		 */
+		
+		// Create the board and controller
+		board = Resources.getLevel(5);
+		board.addListener(this);
+		gameController = new GameController(board);
 
-		gameFrame = new JFrame(GAME_NAME + " Level: " + getLevelName());
+		gameFrame = new JFrame(GAME_NAME + " Level: 1");
 		// BorderLayout for game frame
 		Container gamePane = gameFrame.getContentPane();
 		gamePane.setLayout(new BorderLayout());
@@ -179,11 +184,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		gameFrame.setResizable(false);
 		gameFrame.pack();
 		gameFrame.setLocationRelativeTo(null);
-
-		// Create the board and controller
-		board = Resources.getLevel(getLevelName());
-		board.addListener(this);
-		gameController = new GameController(board);
 
 		// Create all buttons
 		buttons = new JButton[5][5];
@@ -315,8 +315,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 */
 	private JButton createMenuBarButton(String text, boolean enableShortcut) {
 		JButton button = new JButton("<html><p style='text-align:center;'>" + text + "</p></html>");
-		button.setContentAreaFilled(false);
-		button.setOpaque(false);
+		button.setBackground(Color.WHITE);
 		button.setBorderPainted(false);
 
 		if (enableShortcut) {
@@ -510,15 +509,15 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 			int choice = 0;
 
-			if (GameController.getCurrentLevel() != GameController.getTotalLevels()) {
+			if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
 				choice = JOptionPane.showOptionDialog(gameFrame,
 						"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 						new String[] { "Next", "Reset", "Quit" }, null);
 
 				if (choice == 0) {
-					if (GameController.getCurrentLevel() != GameController.getTotalLevels()) {
-						GameController.incrementLevel();
+					if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
+						gameController.incrementLevel();
 						setGameFrameLevel();
 					}
 				} else if (choice == 1) {
@@ -534,7 +533,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 						new String[] { "Main Menu", "Quit" }, null);
 				if (result == 0) {
-					GameController.setFirstLevel();
+					gameController.setToFirstLevel();
 					setGameFrameLevel();
 					gameFrame.setVisible(false);
 					mainMenuFrame.setVisible(true);
@@ -552,16 +551,12 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		gameFrame.setTitle(GAME_NAME + " Level: " + getLevelName());
 		gameWinReset();
 	}
-
+	
 	/**
-	 * Returns the current level that will be shown in the frame title.
-	 * 
-	 * @return current level
+	 * @return The current level
 	 */
 	private int getLevelName() {
-		// eventually when the user makes their own levels this will have to be
-		// customizable to return int or string.
-		return GameController.getCurrentLevel();
+		return gameController.getCurrentLevel();
 	}
 
 	/**

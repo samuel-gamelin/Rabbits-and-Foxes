@@ -2,9 +2,7 @@ package controller;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 import model.Board;
 import model.Fox;
@@ -23,16 +21,19 @@ import util.Solver;
  * @author Mohamed Radwan
  * @author Dani Hashweh
  * @author Samuel Gamelin
- * @author Abdalla
+ * @author Abdalla El Nakla
  * @version 3.0
  */
 public class GameController {
 	private Board board;
+	private int currentLevel;
 	private List<Integer> move;
-	private static int currLevel = 1;
-	private static Stack<Move> undoMoveStack = new Stack<>();
-	private static Stack<Move> redoMoveStack = new Stack<>();
+	private ArrayDeque<Move> undoMoveStack;
+	private ArrayDeque<Move> redoMoveStack;
 
+	/**
+	 * An enumeration representing the validity of a click from the user.
+	 */
 	public enum ClickValidity {
 		VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
 	}
@@ -46,7 +47,10 @@ public class GameController {
 	 */
 	public GameController(Board board) {
 		this.board = board;
+		this.currentLevel = 1;
 		this.move = new ArrayList<>();
+		this.undoMoveStack = new ArrayDeque<>();
+		this.redoMoveStack = new ArrayDeque<>();
 	}
 
 	/**
@@ -57,10 +61,10 @@ public class GameController {
 	 * pass them to the model. The model will then update the board which will
 	 * update the view for the user.
 	 * 
-	 * @param x - Represents the start of the end x value of the user's move
-	 * @param y - Represents the start of the end y value of the user's move
-	 * @return - True if the selected location is valid, false if it is the first
-	 *         move being made on the board or if the selected location is valid
+	 * @param x Represents the start of the end x value of the user's move
+	 * @param y Represents the start of the end y value of the user's move
+	 * @return True if the selected location is valid, false if it is the first move
+	 *         being made on the board or if the selected location is valid
 	 */
 	public ClickValidity registerClick(int x, int y) {
 		if (move.isEmpty() && board.isOccupied(x, y) && !(board.getPiece(x, y) instanceof Mushroom)) {
@@ -75,7 +79,7 @@ public class GameController {
 			if (result) {
 				move.clear();
 				redoMoveStack.clear();
-				undoMoveStack.add(movePiece);
+				undoMoveStack.push(movePiece);
 				return ClickValidity.VALID_MOVEMADE;
 			}
 			return ClickValidity.INVALID_MOVEMADE;
@@ -87,8 +91,8 @@ public class GameController {
 	 * This method returns a list of all possible moves for the piece selected in
 	 * the view.
 	 * 
-	 * @param x - represents the start of the x value of the piece selected
-	 * @param y - represents the start of the y value of the piece selected
+	 * @param x represents the start of the x value of the piece selected
+	 * @param y represents the start of the y value of the piece selected
 	 * @return List of all possible moves for the selected piece.
 	 */
 	public List<Move> getPossibleMoves(int x, int y) {
@@ -107,16 +111,20 @@ public class GameController {
 	 * will not have any old registered moves the method also clears the move array
 	 * list.
 	 * 
-	 * @return - The new board for the view to listen to it.
+	 * @return The new board for the view to listen to it.
 	 */
 	public Board reset() {
 		move.clear();
-		board = Resources.getLevel(currLevel);
+		undoMoveStack.clear();
+		redoMoveStack.clear();
+		board = Resources.getLevel(currentLevel);
 		return board;
 	}
 
 	/**
-	 * @return The next best move for the specified board
+	 * Returns the next best move based on this controller's current board.
+	 * 
+	 * @return The next best move
 	 */
 	public Move getNextBestMove() {
 		return Solver.getNextBestMove(board);
@@ -146,7 +154,6 @@ public class GameController {
 	 * 
 	 * @return True if there is a move to redo, false otherwise
 	 */
-
 	public boolean redoMove() {
 		if (!redoMoveStack.isEmpty()) {
 			Move redoMove = redoMoveStack.pop();
@@ -158,37 +165,27 @@ public class GameController {
 	}
 
 	/**
-	 * Return the current level of the game.
+	 * Returns the current level of the game.
 	 * 
-	 * @return The current level of the game, as an int.
+	 * @return The current level of the game
 	 */
-	public static int getCurrentLevel() {
-		return currLevel;
+	public int getCurrentLevel() {
+		return currentLevel;
 	}
 
 	/**
 	 * Increment the current level of the game by 1.
 	 */
-	public static void incrementLevel() {
+	public void incrementLevel() {
 		redoMoveStack.clear();
 		undoMoveStack.clear();
-		currLevel++;
-	}
-
-	/**
-	 * Gets the the total levels available in the LevelData.json file
-	 * 
-	 * @return The total number of levels in the game as an int.
-	 */
-	public static int getTotalLevels() {
-		return Resources.getNumberOfLevels();
+		currentLevel++;
 	}
 
 	/**
 	 * Sets the current level to the first level.
 	 */
-	public static void setFirstLevel() {
-		GameController.currLevel = 1;
+	public void setToFirstLevel() {
+		currentLevel = 1;
 	}
-
 }

@@ -2,7 +2,6 @@ package resources;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +12,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 
 import model.Board;
 
@@ -31,6 +29,11 @@ public final class Resources {
 	 */
 	private Resources() {
 	}
+	
+	/**
+	 * The total number of levels available.
+	 */
+	public static final int NUMBER_OF_LEVELS = getNumberOfLevels();
 
 	/**
 	 * A percentage (75%) of the current display's height, which will be used in
@@ -113,9 +116,9 @@ public final class Resources {
 	 */
 	public static Board getLevel(int level) {
 		try {
-			JSONArray ja = newParser();
-			JSONObject jo = (JSONObject) ja.get(level - 1);
-			return new Board((String) jo.get("Level " + level));
+			return new Board((String) ((JSONObject) (((JSONArray) new JSONParser()
+					.parse(new FileReader("src/main/resources/Levels/LevelData.json"))).get(level - 1)))
+							.get("Level " + level));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -123,34 +126,15 @@ public final class Resources {
 	}
 
 	/**
-	 * Creates the JSONArray that will be used when reading from the LevelData file.
+	 * Provides the number of levels available in the LevelData.json file.
 	 * 
-	 * @return JSONArray containing the data from the .json file given.
-	 * @throws IOException
-	 * @throws ParseException
-	 * @throws FileNotFoundException
+	 * @return The total number of levels in the game
 	 */
-	private static JSONArray newParser() throws IOException, ParseException {
-		Object o = new JSONParser().parse(new FileReader("src/main/resources/Levels/LevelData.json"));
-		return (JSONArray) o;
-	}
-
-	/**
-	 * Provides the gameController with the number of levels provided in the levels
-	 * file.
-	 * 
-	 * @return the total number of levels in the game as an int.
-	 */
-	public static int getNumberOfLevels() {
-		JSONArray ja = null;
+	private static int getNumberOfLevels() {
 		try {
-			ja = newParser();
+			return ((JSONArray) new JSONParser().parse(new FileReader("LevelData.json"))).size();
 		} catch (IOException | ParseException e) {
-			e.printStackTrace();
+			return -1;
 		}
-		if (ja != null) {
-			return ja.size();
-		}
-		return -1;
 	}
 }
