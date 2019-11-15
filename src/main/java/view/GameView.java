@@ -11,10 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -55,7 +52,7 @@ import util.Move;
  * @author Samuel Gamelin
  * @version 3.0
  */
-public class GameView extends MouseAdapter implements BoardListener, ActionListener, MouseListener {
+public class GameView extends MouseAdapter implements BoardListener, ActionListener {
 	private JFrame mainMenuFrame;
 	private JFrame gameFrame;
 
@@ -84,8 +81,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private BevelBorder hintBorderEnd;
 	private BevelBorder possiblePositionBorder;
 	private EmptyBorder blankBorder;
-
-	private Clip wrongMove;
 
 	public static final String GAME_NAME = "Rabbit and Foxes!";
 
@@ -116,12 +111,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 * 
 		 */
 		mainMenuFrame = new JFrame(GAME_NAME);
-		mainMenuFrame.setIconImage(Resources.WINDOW_ICON.getImage());
 
 		// Box Layout for main menu
 		JLabel mainMenuPane = new JLabel(Resources.MAIN_MENU_BACKGROUND);
 		mainMenuPane.setLayout(new BoxLayout(mainMenuPane, BoxLayout.Y_AXIS));
-		Container mainMenuContainer = mainMenuFrame.getContentPane();
 
 		btnStart = new JButton("Start");
 		btnHelp = new JButton("Help");
@@ -129,13 +122,13 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		addMenuButton(mainMenuPane, btnStart);
 		addMenuButton(mainMenuPane, btnHelp);
 		addMenuButton(mainMenuPane, btnQuit);
-		mainMenuContainer.add(mainMenuPane);
+		mainMenuFrame.add(mainMenuPane);
 
+		mainMenuFrame.setIconImage(Resources.WINDOW_ICON.getImage());
 		mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainMenuFrame.setSize((int) Resources.SIDE_LENGTH, (int) Resources.SIDE_LENGTH);
 		mainMenuFrame.setResizable(false);
-		mainMenuFrame.setLocationRelativeTo(null);
 		mainMenuFrame.pack();
+		mainMenuFrame.setLocationRelativeTo(null);
 		mainMenuFrame.setVisible(true);
 
 		/**
@@ -143,16 +136,13 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 * Game frame
 		 * 
 		 */
-		
+
 		// Create the board and controller
 		board = Resources.getLevel(1);
 		board.addListener(this);
 		gameController = new GameController(board);
 
 		gameFrame = new JFrame(GAME_NAME + " Level: 1");
-		// BorderLayout for game frame
-		Container gamePane = gameFrame.getContentPane();
-		gamePane.setLayout(new BorderLayout());
 
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -171,12 +161,12 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		menuBar.add(menuHelp);
 		menuBar.add(menuQuit);
 
-		gamePane.add(menuBar, BorderLayout.NORTH);
+		gameFrame.add(menuBar, BorderLayout.NORTH);
 
 		// GridLayout for board frame
 		JLabel boardLabel = new JLabel(Resources.BOARD);
 		boardLabel.setLayout(new GridLayout(5, 5));
-		gamePane.add(boardLabel, BorderLayout.CENTER);
+		gameFrame.add(boardLabel, BorderLayout.CENTER);
 
 		// Organize the game frame
 		gameFrame.setIconImage(Resources.WINDOW_ICON.getImage());
@@ -217,22 +207,15 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 						}
 					}
 
-					if (clickResult.equals(ClickValidity.VALID)) {
+					if (clickResult == ClickValidity.VALID) {
 						buttons[x][y].setBorder(selectedBorder);
-					} else if (clickResult.equals(ClickValidity.VALID_MOVEMADE)) {
+					} else if (clickResult == ClickValidity.VALID_MOVEMADE) {
 						// clears button borders when the move is valid.
 						clearButtonBorders();
-					} else if (clickResult.equals(ClickValidity.INVALID)
-							|| clickResult.equals(ClickValidity.INVALID_MOVEMADE)) {
+					} else if (clickResult == ClickValidity.INVALID || clickResult == ClickValidity.INVALID_MOVEMADE) {
 						clearMove();
-						if (wrongMove == null || !wrongMove.isActive()) {
-							try {
-								wrongMove = AudioSystem.getClip();
-								wrongMove.open(AudioSystem.getAudioInputStream(Resources.INVALID_MOVE));
-							} catch (Exception ex) {
-								ex.printStackTrace(System.out);
-							}
-							wrongMove.start();
+						if (!Resources.INVALID_MOVE.isActive()) {
+							Resources.INVALID_MOVE.start();
 						}
 					}
 
@@ -244,8 +227,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		// Configure the escape key to cancel the pending move
 		boardLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "clear");
 		boardLabel.getActionMap().put("clear", new AbstractAction() {
-			private static final long serialVersionUID = -7863091829633095216L;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clearMove();
@@ -322,8 +303,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 					.put(KeyStroke.getKeyStroke(Character.toLowerCase(text.charAt(0))), text);
 			button.getActionMap().put(text, new AbstractAction() {
-				private static final long serialVersionUID = -4044080289796171300L;
-
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					button.doClick();
@@ -363,9 +342,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					if (piece instanceof Mushroom) {
 						(buttons[i][j]).setIcon(Resources.MUSHROOM);
 					} else if (piece instanceof Rabbit) {
-						if (((Rabbit) (piece)).getColour().equals(RabbitColour.BROWN)) {
+						if (((Rabbit) (piece)).getColour() == RabbitColour.BROWN) {
 							(buttons[i][j]).setIcon(Resources.RABBIT1);
-						} else if (((Rabbit) (piece)).getColour().equals(RabbitColour.WHITE)) {
+						} else if (((Rabbit) (piece)).getColour() == RabbitColour.WHITE) {
 							(buttons[i][j]).setIcon(Resources.RABBIT2);
 						} else {
 							(buttons[i][j]).setIcon(Resources.RABBIT3);
@@ -497,15 +476,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	public void handleBoardChange() {
 		updateView();
 		if (board.isInWinningState()) {
-			// clears button borders when the level is finished.
 			clearButtonBorders();
-			try {
-				Clip victory = AudioSystem.getClip();
-				victory.open(AudioSystem.getAudioInputStream(Resources.SOLVED));
-				victory.start();
-			} catch (Exception ex) {
-				ex.printStackTrace(System.out);
-			}
+			Resources.SOLVED.start();
 
 			int choice = 0;
 
@@ -551,7 +523,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		gameFrame.setTitle(GAME_NAME + " Level: " + getLevelName());
 		gameWinReset();
 	}
-	
+
 	/**
 	 * @return The current level
 	 */
@@ -564,6 +536,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * 
 	 * @param e The mouse event that triggers when the mouse enters the JButton
 	 */
+	@Override
 	public void mouseEntered(MouseEvent e) {
 		if (!((JButton) e.getSource()).getBorder().equals(selectedBorder)
 				&& !((JButton) e.getSource()).getBorder().equals(hintBorderStart)
@@ -578,6 +551,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * 
 	 * @param e The mouse event that triggers when the mouse leaves the JButton
 	 */
+	@Override
 	public void mouseExited(MouseEvent e) {
 		if (!((JButton) e.getSource()).getBorder().equals(blankBorder)
 				&& !((JButton) e.getSource()).getBorder().equals(selectedBorder)

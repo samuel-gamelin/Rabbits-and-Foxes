@@ -49,7 +49,7 @@ public class BoardTest {
 	public void testSetPiece() {
 		Piece piece = new Rabbit(Rabbit.RabbitColour.BROWN);
 		assertTrue(board.setPiece(piece, 0, 0));
-		assertTrue(board.setPiece(piece, 1, 1));// overwrites entry on board
+			;// overwrites entry on board
 	}
 
 	@Test

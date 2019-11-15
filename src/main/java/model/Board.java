@@ -151,8 +151,8 @@ public class Board {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				Piece piece = tiles[i][j].retrievePiece();
-				if (piece != null && piece.getPieceType().equals(Piece.PieceType.RABBIT)
-						&& !tiles[i][j].getColour().equals(Tile.TileColour.BROWN)) {
+				if (piece != null && piece.getPieceType() == Piece.PieceType.RABBIT
+						&& (tiles[i][j].getColour() != Tile.TileColour.BROWN)) {
 					return false;
 				}
 			}
@@ -280,81 +280,13 @@ public class Board {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!(obj instanceof Board))
-			return false;
-		Board other = (Board) obj;
-		if (!Arrays.deepEquals(tiles, other.tiles)) {
+		}
+		if (!(obj instanceof Board)) {
 			return false;
 		}
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder representation = new StringBuilder();
-
-		// Adding the top row of numbers
-		representation.append("     ");
-		for (int i = 0; i < SIZE; i++) {
-			representation.append(i + 1);
-			representation.append("        ");
-		}
-
-		for (int y = 0; y < SIZE; y++) {
-			// First row
-			representation.append("\n  ");
-			for (int x = 0; x < SIZE; x++) {
-				representation.append("|");
-				if (tiles[x][y].getColour().equals(Tile.TileColour.BROWN)) {
-					representation.append("--BB--");
-				} else {
-					representation.append("------");
-				}
-				representation.append("| ");
-			}
-
-			// Second row
-			representation.append("\n  ");
-			for (int x = 0; x < SIZE; x++) {
-				representation.append("|");
-				representation.append("      ");
-				representation.append("| ");
-			}
-
-			// Third row
-			representation.append("\n" + (y + 1) + " ");
-			for (int x = 0; x < SIZE; x++) {
-				representation.append("|");
-				representation.append("  ");
-				representation.append(tiles[x][y].toString());
-				representation.append("  ");
-				representation.append("| ");
-			}
-
-			// Fourth row
-			representation.append("\n  ");
-			for (int x = 0; x < SIZE; x++) {
-				representation.append("|");
-				representation.append("      ");
-				representation.append("| ");
-			}
-
-			// Fifth row
-			representation.append("\n  ");
-			for (int x = 0; x < SIZE; x++) {
-				representation.append("|");
-				if (tiles[x][y].getColour().equals(Tile.TileColour.BROWN)) {
-					representation.append("__BB__");
-				} else {
-					representation.append("______");
-				}
-				representation.append("| ");
-			}
-		}
-
-		return representation.toString();
+		return Arrays.deepEquals(tiles, ((Board) obj).tiles);
 	}
 
 	/**
@@ -371,10 +303,10 @@ public class Board {
 			for (int j = 0; j < SIZE; j++) {
 				if (tiles[i][j].isOccupied()) {
 					Piece piece = tiles[i][j].retrievePiece();
-					if (piece.getPieceType().equals(Piece.PieceType.RABBIT)) {
+					if (piece.getPieceType() == Piece.PieceType.RABBIT) {
 						str.append(((Rabbit) piece).toShortString() + ((Rabbit) piece).getColour().toString().charAt(0)
 								+ " ");
-					} else if (piece.getPieceType().equals(Piece.PieceType.FOX)) {
+					} else if (piece.getPieceType() == Piece.PieceType.FOX) {
 						str.append(((Fox) piece).toShortString() + ((Fox) piece).getDirection().toString().charAt(0)
 								+ " ");
 					} else {

@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
 import javax.swing.ImageIcon;
 
 import org.json.simple.JSONArray;
@@ -25,12 +28,6 @@ import model.Board;
  */
 public final class Resources {
 	/**
-	 * Making the constructor private, preventing any instantiation of this class.
-	 */
-	private Resources() {
-	}
-	
-	/**
 	 * The total number of levels available.
 	 */
 	public static final int NUMBER_OF_LEVELS = getNumberOfLevels();
@@ -39,13 +36,16 @@ public final class Resources {
 	 * A percentage (75%) of the current display's height, which will be used in
 	 * calculations to determine appropriate scaling of icons.
 	 */
-	public static final double SIDE_LENGTH = 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() > Toolkit
+			.getDefaultToolkit().getScreenSize().getHeight()
+					? 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight()
+					: 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 
 	// Incorrect move sound
-	public static final URL INVALID_MOVE = loadFile("wrong.wav");
+	public static final Clip INVALID_MOVE = loadClip(loadFile("wrong.wav"));
 
 	// Level solved sound
-	public static final URL SOLVED = loadFile("solved.wav");
+	public static final Clip SOLVED = loadClip(loadFile("solved.wav"));
 
 	// JFrame icon
 	public static final ImageIcon WINDOW_ICON = loadIcon("rabbit3.png", 4, 5);
@@ -75,6 +75,12 @@ public final class Resources {
 
 	// Board icon
 	public static final ImageIcon BOARD = loadIcon("board.png", 5, 5);
+
+	/**
+	 * Making the constructor private, preventing any instantiation of this class.
+	 */
+	private Resources() {
+	}
 
 	/**
 	 * Returns a scaled version of the icon based on the primary display's size. A
@@ -108,6 +114,30 @@ public final class Resources {
 	}
 
 	/**
+	 * Loads and returns an audio clip used for sound playback.
+	 * 
+	 * @param path The path of the audio resource
+	 * @return The audio clip at the specified path. Null if no such path exists.
+	 */
+	private static Clip loadClip(URL path) {
+		try {
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(path));
+			clip.addLineListener(e -> {
+				if (e.getType() == LineEvent.Type.STOP) {
+					clip.stop();
+					clip.flush();
+					clip.setFramePosition(0);
+				}
+			});
+			return clip;
+		} catch (Exception ex) {
+			ex.printStackTrace(System.out);
+			return null;
+		}
+	}
+
+	/**
 	 * Load and return a new Board based on the current level. The levels are loaded
 	 * from a JSONArray.
 	 * 
@@ -120,7 +150,7 @@ public final class Resources {
 					.parse(new FileReader("src/main/resources/Levels/LevelData.json"))).get(level - 1)))
 							.get("Level " + level));
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			return null;
 		}
 	}

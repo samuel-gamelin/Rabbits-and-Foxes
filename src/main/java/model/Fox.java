@@ -139,9 +139,10 @@ public class Fox extends Piece {
 		// enum were to change order
 		// this would fail. However, since that scenario has no reason to occur, this
 		// implementation was kept.
-		if ((direction.ordinal() < 2 && !move.direction().equals(MoveDirection.HORIZONTAL))
-				|| (direction.ordinal() > 1 && !move.direction().equals(MoveDirection.VERTICAL)))
+		if ((direction.ordinal() < 2 && move.direction() != MoveDirection.HORIZONTAL)
+				|| (direction.ordinal() > 1 && move.direction() != MoveDirection.VERTICAL)) {
 			return false;
+		}
 
 		int xStart = move.xStart;
 		int yStart = move.yStart;
@@ -158,8 +159,8 @@ public class Fox extends Piece {
 			// piece is to the left
 			// or moving up and the other piece is below or moving down and the other piece
 			// is above.
-			if ((location && xDistance < 0) || (!location && xDistance > 0) || location && yDistance > 0
-					|| !location && yDistance < 0) {
+			if ((location && xDistance < 0) || (!location && xDistance > 0) || (location && yDistance > 0)
+					|| (!location && yDistance < 0)) {
 				board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
 				if (xDistance < 0) {
 					board.setPiece(board.removePiece(xStart + 1, yStart), xEnd + 1, yEnd);
@@ -170,7 +171,6 @@ public class Fox extends Piece {
 				} else {
 					board.setPiece(board.removePiece(xStart, yStart - 1), xEnd, yEnd - 1);
 				}
-				return true;
 				// Moving left and the other piece is to the left or moving right and the other
 				// piece is to the right
 				// or moving up and the other piece is above or moving down and the other piece
@@ -186,8 +186,8 @@ public class Fox extends Piece {
 					board.setPiece(board.removePiece(xStart, yStart + 1), xEnd, yEnd + 1);
 				}
 				board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
-				return true;
 			}
+			return true;
 		}
 		return false; // It was an invalid move after all.
 	}
@@ -210,10 +210,10 @@ public class Fox extends Piece {
 		int yDistance = move.yDistance();
 		MoveDirection moveDirection = move.direction();
 
-		if (board.isOccupied(xEnd, yEnd) && moveDirection.equals(MoveDirection.INVALID)) {
+		if (board.isOccupied(xEnd, yEnd) && moveDirection == MoveDirection.INVALID) {
 			return false;
 		}
-		if (moveDirection.equals(MoveDirection.HORIZONTAL)) {
+		if (moveDirection == MoveDirection.HORIZONTAL) {
 			if (location && xDistance > 0) { // The other part of the fox is to the right and we are moving right
 				if (xEnd + 1 > 4) { // Check to see if the move will push the fox out of bounds
 					return false;
@@ -292,16 +292,16 @@ public class Fox extends Piece {
 		boolean location = getRelativeLocation();
 
 		// Horizontal sliding
-		if (foxType.equals(FoxType.TAIL) && direction.equals(Direction.LEFT)
-				|| foxType.equals(FoxType.HEAD) && direction.equals(Direction.RIGHT)) {
+		if ((foxType == FoxType.TAIL && direction == Direction.LEFT)
+				|| (foxType == FoxType.HEAD && direction == Direction.RIGHT)) {
 			for (int i = x + 1; i < Board.SIZE; i++) {
 				Move moveX = new Move(x, y, i, y);
 				if (validatePath(moveX, board, location)) {
 					moves.add(moveX);
 				}
 			}
-		} else if (foxType.equals(FoxType.TAIL) && direction.equals(Direction.RIGHT)
-				|| foxType.equals(FoxType.HEAD) && direction.equals(Direction.LEFT)) {
+		} else if ((foxType == FoxType.TAIL && direction == Direction.RIGHT)
+				|| (foxType == FoxType.HEAD && direction == Direction.LEFT)) {
 			for (int i = x - 1; i >= 0; i--) {
 				Move moveX = new Move(x, y, i, y);
 				if (validatePath(moveX, board, location)) {
@@ -309,16 +309,16 @@ public class Fox extends Piece {
 				}
 			}
 			// vertical
-		} else if (foxType.equals(FoxType.TAIL) && direction.equals(Direction.UP)
-				|| foxType.equals(FoxType.HEAD) && direction.equals(Direction.DOWN)) {
+		} else if ((foxType == FoxType.TAIL && direction == Direction.UP)
+				|| (foxType == FoxType.HEAD && direction == Direction.DOWN)) {
 			for (int i = y + 1; i < Board.SIZE; i++) {
 				Move moveY = new Move(x, y, x, i);
 				if (validatePath(moveY, board, location)) {
 					moves.add(moveY);
 				}
 			}
-		} else if (foxType.equals(FoxType.TAIL) && direction.equals(Direction.DOWN)
-				|| foxType.equals(FoxType.HEAD) && direction.equals(Direction.UP)) {
+		} else if ((foxType == FoxType.TAIL && direction == Direction.DOWN)
+				|| (foxType == FoxType.HEAD && direction == Direction.UP)) {
 			for (int i = y - 1; i >= 0; i--) {
 				Move moveY = new Move(x, y, x, i);
 				if (validatePath(moveY, board, location)) {
@@ -336,16 +336,16 @@ public class Fox extends Piece {
 		boolean location = true;
 
 		// Determine the location of the other half of the Fox relative to this half.
-		if ((foxType.equals(FoxType.TAIL) && (direction.equals(Direction.LEFT) || direction.equals(Direction.DOWN)))
-				|| (foxType.equals(FoxType.HEAD)
-						&& (direction.equals(Direction.RIGHT) || direction.equals(Direction.UP))))
+		if ((foxType == FoxType.TAIL && (direction == Direction.LEFT || direction == Direction.DOWN))
+				|| (foxType == FoxType.HEAD && (direction == Direction.RIGHT || direction == Direction.UP))) {
 			location = false;
+		}
 		return location;
 	}
 
 	@Override
 	public String toShortString() {
-		if (foxType.equals(FoxType.HEAD)) {
+		if (foxType == FoxType.HEAD) {
 			return "FH";
 		}
 
