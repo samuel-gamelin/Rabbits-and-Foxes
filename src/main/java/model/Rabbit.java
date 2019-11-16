@@ -40,15 +40,6 @@ public class Rabbit extends Piece {
 	}
 
 	/**
-	 * A copy constructor for Rabbit.
-	 * 
-	 * @param piece The piece to copy
-	 */
-	public Rabbit(Piece piece) {
-		this(((Rabbit) piece).colour);
-	}
-
-	/**
 	 * Factory method to create a Rabbit based on the based String. For example, the
 	 * String should be of the form "RBG".
 	 * 
