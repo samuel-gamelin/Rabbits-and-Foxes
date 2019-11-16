@@ -80,27 +80,28 @@ public class Board {
 			return null;
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (currBoard[5 * i + j].equals(EMPTY))
-					;
-				else if (currBoard[5 * i + j].length() == 2) {
-					board.tiles[i][j].placePiece(new Mushroom());
-				} else if (currBoard[5 * i + j].length() == 3) {
-					board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
-				} else if (currBoard[5 * i + j].substring(1, 2).equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
-					Fox f = Fox.createFox(currBoard[5 * i + j]);
-					board.tiles[i][j].placePiece(f);
-					switch (f.getDirection()) {
-					case DOWN:
-						board.tiles[i][j - 1].placePiece(f.getOtherHalf());
-						break;
-					case LEFT:
-						board.tiles[i + 1][j].placePiece(f.getOtherHalf());
-						break;
-					case RIGHT:
-						board.tiles[i - 1][j].placePiece(f.getOtherHalf());
-						break;
-					default:
-						board.tiles[i][j + 1].placePiece(f.getOtherHalf());
+				if (!currBoard[5 * i + j].equals(EMPTY)) {
+					if (currBoard[5 * i + j].length() == 2) {
+						board.tiles[i][j].placePiece(new Mushroom());
+					} else if (currBoard[5 * i + j].length() == 3) {
+						board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
+					} else if (currBoard[5 * i + j].substring(1, 2)
+							.equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
+						Fox f = Fox.createFox(currBoard[5 * i + j]);
+						board.tiles[i][j].placePiece(f);
+						switch (f.getDirection()) {
+						case DOWN:
+							board.tiles[i][j - 1].placePiece(f.getOtherHalf());
+							break;
+						case LEFT:
+							board.tiles[i + 1][j].placePiece(f.getOtherHalf());
+							break;
+						case RIGHT:
+							board.tiles[i - 1][j].placePiece(f.getOtherHalf());
+							break;
+						default:
+							board.tiles[i][j + 1].placePiece(f.getOtherHalf());
+						}
 					}
 				}
 			}
