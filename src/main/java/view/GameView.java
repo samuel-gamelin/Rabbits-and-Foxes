@@ -290,12 +290,13 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * @param parent  The parent component of this option dialog
 	 * @param message The message to display
 	 * @param title   The title of the dialog box
-	 * @param options The options to be provided in the dialog
+	 * @param options The options to be provided in the dialog - the initial option
+	 *                selected is the first element of the provided object array
 	 * @return The choice made by the user
 	 */
 	private int displayOptionDialog(Component parent, String message, String title, Object[] options) {
 		return JOptionPane.showOptionDialog(parent, message, title, JOptionPane.DEFAULT_OPTION,
-				JOptionPane.PLAIN_MESSAGE, null, options, null);
+				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 	}
 
 	/**
@@ -453,7 +454,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		} else if (e.getSource() == menuUndo && !gameController.undoMove()) {
 			displayMessageDialog(gameFrame, "No moves to undo", "Undo Move");
 		} else if (e.getSource() == menuRedo && !gameController.redoMove()) {
-			displayMessageDialog(gameFrame, "No moves to Redo", "Redo Move");
+			displayMessageDialog(gameFrame, "No moves to redo", "Redo Move");
 		}
 	}
 
