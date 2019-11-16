@@ -92,12 +92,14 @@ public class Fox extends Piece {
 	}
 	
 	/**
+	 * Factory method to create a Fox based on the based String.
+	 * For example, the String should be of the form "FHU1".
 	 * 
-	 * @param str
-	 * @return
+	 * @param str The String to build the Fox from. Must be of length 4.
+	 * @return A newly created Fox based on the passed String.
 	 */
 	public static Fox createFox(String str) {
-		if (str == null) 
+		if (str == null || str.length() != 4) 
 			return null;
 		
 		Direction dir;
@@ -234,81 +236,63 @@ public class Fox extends Piece {
 		int yEnd = move.yEnd;
 		int xDistance = move.xDistance();
 		int yDistance = move.yDistance();
-		MoveDirection moveDirection = move.direction();
-
-		if (board.isOccupied(xEnd, yEnd) && moveDirection == MoveDirection.INVALID) {
-			return false;
-		}
-		if (moveDirection == MoveDirection.HORIZONTAL) {
-			if (location && xDistance > 0) { // The other part of the fox is to the right and we are moving right
-				if (xEnd + 1 > 4) { // Check to see if the move will push the fox out of bounds
+		
+		// Initial check to see if the move can be valid.		
+		if (board.isOccupied(xEnd, yEnd) ||
+				(location && xEnd + 1 > 4) || (!location && xEnd - 1 < 0) || 
+					(!location && yEnd + 1 > 4) || (location && yEnd - 1 < 0)) 
+			return false; 
+		
+		// The other part of the fox is to the right and we are moving right
+		if (location && xDistance > 0) { 
+			for (int i = xStart + 2; i <= xEnd + 1; i++) { 
+				if (board.isOccupied(i, yStart)) 
 					return false;
-				}
-				for (int i = xStart + 2; i <= xEnd + 1; i++) { // Need to make sure there are no obstacles in the path
-					if (board.isOccupied(i, yStart)) {
-						return false;
-					}
-				}
-			} else if (location && xDistance < 0) { // The other part of the fox is to the right and we are moving left
-				for (int i = xStart - 1; i >= xEnd; i--) { // Need to make sure there are no obstacles in the path
-					if (board.isOccupied(i, yStart)) {
-						return false;
-					}
-				}
-			} else if (!location && xDistance > 0) { // The other part of the fox is to the left and we are moving right
-				for (int i = xStart + 1; i <= xEnd; i++) { // Need to make sure there are no obstacles in the path
-					if (board.isOccupied(i, yStart)) {
-						return false;
-					}
-				}
-			} else { // We know that the other part of the fox is to the left and we are moving left
-				if (xEnd - 1 < 0) { // Check to see if the move will push the fox out of bounds
-					return false;
-				}
-				for (int i = xStart - 2; i >= xEnd - 1; i--) {
-					if (board.isOccupied(i, yStart)) {
-						return false;
-					}
-				}
 			}
-			return true; // The move is valid for the fox
-			// Trying to move vertically.
-		} else {
-			if (location && yDistance > 0) { // The other part of the fox is up and we are moving down
-				for (int i = yStart + 1; i <= yEnd; i++) { // Need to make sure there are no obstacles in the path
-					if (board.isOccupied(xStart, i)) {
-						return false;
-					}
-				}
-			} else if (location && yDistance < 0) { // The other part of the fox is up and we are moving up
-				if (yEnd - 1 < 0) { // Check to see if the move will push the fox out of bounds
+		// The other part of the fox is to the right and we are moving left
+		} else if (location && xDistance < 0) { 
+			for (int i = xStart - 1; i >= xEnd; i--) { 
+				if (board.isOccupied(i, yStart)) 
 					return false;
-				}
-				for (int i = yStart - 2; i >= yEnd - 1; i--) { // Need to make sure there are no obstacles in the
-																// path
-					if (board.isOccupied(xStart, i)) {
-						return false;
-					}
-				}
-			} else if (!location && yDistance > 0) { // The other part of the fox is down and we are moving down
-				if (yEnd + 1 > 4) { // Check to see if the move will push the fox out of bounds
-					return false;
-				}
-				for (int i = yStart + 2; i <= yEnd + 1; i++) { // Need to make sure there are no obstacles in the
-																// path
-					if (board.isOccupied(xStart, i)) {
-						return false;
-					}
-				}
-			} else { // We know the other part of the fox is down and we are moving up
-				for (int i = yStart - 1; i >= yEnd; i--) { // Need to make sure there are no obstacles in the path
-					if (board.isOccupied(xStart, i)) {
-						return false;
-					}
-				}
 			}
-			return true; // The move is valid for the fox
+		// The other part of the fox is to the left and we are moving right
+		} else if (!location && xDistance > 0) { 
+			for (int i = xStart + 1; i <= xEnd; i++) { 
+				if (board.isOccupied(i, yStart)) 
+					return false;
+			}
+		// The other part of the fox is the the left and we are moving left
+		} else if (!location && xDistance < 0) {
+			for (int i = xStart - 2; i >= xEnd - 1; i--) {
+				if (board.isOccupied(i, yStart)) 
+					return false;
+			}
+		// The other part of the fox is up and we are moving down
+		} else if (location && yDistance > 0) { 
+			for (int i = yStart + 1; i <= yEnd; i++) { 
+				if (board.isOccupied(xStart, i)) 
+					return false;
+			}
+		// The other part of the fox is up and we are moving up
+		} else if (location && yDistance < 0) { 
+			for (int i = yStart - 2; i >= yEnd - 1; i--) { 
+				if (board.isOccupied(xStart, i)) 
+					return false;
+			}
+		// The other part of the fox is down and we are moving down
+		} else if (!location && yDistance > 0) { 
+			for (int i = yStart + 2; i <= yEnd + 1; i++) { 
+				if (board.isOccupied(xStart, i)) 
+					return false;
+			}
+		// We know the other part of the fox is down and we are moving up
+		} else { 
+			for (int i = yStart - 1; i >= yEnd; i--) { 
+				if (board.isOccupied(xStart, i)) 
+					return false;
+			}
 		}
+		return true; 
 	}
 
 	@Override
@@ -341,8 +325,7 @@ public class Fox extends Piece {
 					moves.add(moveY);
 				}
 			}
-		} else if ((foxType == FoxType.TAIL && direction == Direction.DOWN)
-				|| (foxType == FoxType.HEAD && direction == Direction.UP)) {
+		} else {
 			for (int i = y - 1; i >= 0; i--) {
 				Move moveY = new Move(x, y, x, i);
 				if (validatePath(moveY, board, location)) {

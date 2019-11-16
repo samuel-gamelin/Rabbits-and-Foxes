@@ -70,6 +70,7 @@ public class Board {
 	 * String. This is a factory method.
 	 * 
 	 * @param str The String representation of the Board that is being created.
+	 * 			  Must be of length 25.
 	 * @return The newly constructed Board based on the passed String.
 	 */
 	public static Board createBoard(String str) {
@@ -80,27 +81,26 @@ public class Board {
 		
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (!currBoard[5 * i + j].substring(0, 1).equals(EMPTY)) {
-					if (currBoard[5 * i + j].equals("MU")) {
-						board.tiles[i][j].placePiece(new Mushroom());
-					} else if (currBoard[5 * i + j].substring(0, 1).equals("R")) {
-						board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
-					} else if (currBoard[5 * i + j].substring(0, 2).equals("FH")) {
-						Fox f = Fox.createFox(currBoard[5 * i + j]);
-						board.tiles[i][j].placePiece(f);
-						switch ((Fox.Direction) f.getDirection()) {
-							case DOWN:
-								board.tiles[i][j - 1].placePiece(f.getOtherHalf());
-								break;
-							case LEFT:
-								board.tiles[i + 1][j].placePiece(f.getOtherHalf());
-								break;
-							case RIGHT:
-								board.tiles[i - 1][j].placePiece(f.getOtherHalf());
-								break;
-							default:
-								board.tiles[i][j + 1].placePiece(f.getOtherHalf());
-						}
+				if (currBoard[5 * i + j].equals(EMPTY)); 
+				else if (currBoard[5 * i + j].length() == 2) {
+					board.tiles[i][j].placePiece(new Mushroom());
+				} else if (currBoard[5 * i + j].length() == 3) {
+					board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
+				} else if (currBoard[5 * i + j].toString().substring(1,2).equals(Fox.FoxType.HEAD.toString().substring(0,1))) {
+					Fox f = Fox.createFox(currBoard[5 * i + j]);
+					board.tiles[i][j].placePiece(f);
+					switch (f.getDirection()) {
+						case DOWN:
+							board.tiles[i][j - 1].placePiece(f.getOtherHalf());
+							break;
+						case LEFT:
+							board.tiles[i + 1][j].placePiece(f.getOtherHalf());
+							break;
+						case RIGHT:
+							board.tiles[i - 1][j].placePiece(f.getOtherHalf());
+							break;
+						default:
+							board.tiles[i][j + 1].placePiece(f.getOtherHalf());
 					}
 				}
 			}
@@ -154,7 +154,8 @@ public class Board {
 
 	/**
 	 * Checks to see if the Board is in a winning state. If no rabbits are
-	 * present on the Board, the Board 
+	 * present on the Board, the game can't be played, so the Board is not
+	 * in a winning state.
 	 * 
 	 * @return True if the board is in a winning state, false otherwise
 	 */
@@ -288,8 +289,7 @@ public class Board {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Arrays.deepHashCode(tiles);
-		return result;
+		return prime * result + Arrays.deepHashCode(tiles);
 	}
 
 	@Override
@@ -304,22 +304,16 @@ public class Board {
 	}
 
 	/**
-	 * Creates a simple String of the board to be stored in a JSON Object.
-	 * 
-	 * This method will be used for the level editor. Please do not mark this method
-	 * as a part of Milestone 3.
-	 * 
-	 * @return A simple String representation of this board.
+	 * Create a String of the board to be stored in a JSON Object.
+	 *
+	 * @return A String representation of this board.
 	 */
-	public String toSimpleString() {
+	@Override
+	public String toString() {
 		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (tiles[i][j].isOccupied()) {
-					str.append(tiles[i][j].retrievePiece().toString() + " ");
-				} else {
-					str.append(EMPTY + " ");
-				}
+				str.append(tiles[i][j].toString() + " ");
 			}
 		}
 		return str.toString().trim();

@@ -11,22 +11,22 @@ package model;
  */
 public class Tile {
 	/**
-	 * A Colour that will represent the colour of the tile.
+	 * Represents the colour of the Tile.
 	 */
 	private TileColour tileColour;
 
 	/**
-	 * A boolean that will represent if the tile is occupied or not.
+	 * Represents if the Tile is occupied.
 	 */
 	private boolean occupied;
 
 	/**
-	 * A piece of type Piece that will be placed on the tile.
+	 * A Piece that occupies the Tile.
 	 */
 	private Piece piece;
 
 	/**
-	 * An enumeration representing this tile's colour (either brown or green).
+	 * An enumeration representing this Tile's colour (either brown or green).
 	 */
 	public enum TileColour {
 		BROWN, GREEN
@@ -35,7 +35,7 @@ public class Tile {
 	/**
 	 * Constructs the Tile based on the passed-in tileColour.
 	 * 
-	 * @param tileColour The colour of the tile as type Colour.
+	 * @param tileColour The TileColour of the tile.
 	 */
 	public Tile(TileColour tileColour) {
 		this.tileColour = tileColour;
@@ -53,7 +53,9 @@ public class Tile {
 	}
 
 	/**
-	 * @return True if the Tile is occupied, False if the Tile is not occupied.
+	 * Determine if there is a Piece on this Tile.
+	 * 
+	 * @return True if the Tile is occupied, false otherwise.
 	 */
 	public boolean isOccupied() {
 		return occupied;
@@ -72,7 +74,10 @@ public class Tile {
 	}
 
 	/**
-	 * @return the current Piece placed on the Tile.
+	 * Gets the Piece currently occupying this Tile.
+	 * Will return null if there is no Piece on this Tile.
+	 * 
+	 * @return The current Piece placed on the Tile.
 	 */
 	public Piece retrievePiece() {
 		return piece;
@@ -94,13 +99,21 @@ public class Tile {
 	public TileColour getColour() {
 		return tileColour;
 	}
+	
+	/**
+	 * @return A two to four character string representation of this tile. 
+	 * If the tile has no piece, return the String used to represent empty on a board.
+	 */
+	@Override
+	public String toString() {
+		return piece != null ? piece.toString() : Board.EMPTY;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((piece == null) ? 0 : piece.hashCode());
-		return result;
+		return prime * result + ((piece == null) ? 0 : piece.hashCode());
 	}
 
 	@Override

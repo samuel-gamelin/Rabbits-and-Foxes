@@ -5,19 +5,21 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.createBoard;
+import model.Board;
 import model.Fox;
 import util.Move;
 
 public class FoxTest {
 
-	private createBoard board;
+	private Board board;
+
+	private final String TESTBOARD = "RBG MU X X X FHU1 FTU1 X X X X X RBB X X X X X X X X X X X X";
 	private Fox fox1;
 	private Fox fox2;
 
 	@Before
 	public void setUp() {
-		board = new createBoard();
+		board = Board.createBoard(TESTBOARD);
 		fox1 = new Fox(Fox.Direction.UP, true);
 		fox2 = new Fox(Fox.Direction.LEFT, false);
 	}

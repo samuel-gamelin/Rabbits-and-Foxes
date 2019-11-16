@@ -24,6 +24,7 @@ public class BoardTest {
 		assertNotNull(emptyBoard);
 		assertEquals(emptyBoard, new Board(emptyBoard));
 		assertNull(Board.createBoard("This is a test of malformed strings being passed to the facotry method."));
+		assertNotNull(board);
 	}
 
 	@Test
@@ -82,8 +83,8 @@ public class BoardTest {
 	@Test
 	public void testToString() {
 		Board emptyBoard = Board.createBoard("X X X X X X X X X X X X X X X X X X X X X X X X X");
-		assertEquals(emptyBoard.toSimpleString(), "X X X X X X X X X X X X X X X X X X X X X X X X X");
-		assertEquals(board.toSimpleString(), TESTBOARD);
+		assertEquals(emptyBoard.toString(), "X X X X X X X X X X X X X X X X X X X X X X X X X");
+		assertEquals(board.toString(), TESTBOARD);
 	}
 
 	@Test

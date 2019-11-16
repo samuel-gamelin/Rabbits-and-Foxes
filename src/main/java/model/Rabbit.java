@@ -49,12 +49,14 @@ public class Rabbit extends Piece {
 	}
 	
 	/**
+	 * Factory method to create a Rabbit based on the based String.
+	 * For example, the String should be of the form "RBG".
 	 * 
-	 * @param str
-	 * @return
+	 * @param str The String to build the Rabbit from. Must be of length 3.
+	 * @return A newly created Rabbit based on the passed String.
 	 */
 	public static Rabbit createRabbit(String str) {
-		if (str == null) 
+		if (str == null || str.length() != 3) 
 			return null;
 		
 		RabbitColour col;
