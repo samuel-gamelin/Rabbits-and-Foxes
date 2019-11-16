@@ -24,6 +24,11 @@ public class Board {
 	 * The size of any side for the board.
 	 */
 	public static final int SIZE = 5;
+	
+	/**
+	 * A String used to represent an empty tile on the board.
+	 */
+	public static final String EMPTY = "X";
 
 	/**
 	 * A 2D array of tiles used to manage all tiles on the board.
@@ -35,55 +40,16 @@ public class Board {
 	 * appropriate.
 	 */
 	private List<BoardListener> boardListeners;
-
+	
 	/**
-	 * Creates a board object and initializes the pieces specified by the passed
-	 * String.
-	 * 
-	 * @param str The String representation of the Board that is being created.
+	 * Construct an empty board
 	 */
-	public Board(String str) {
-		tiles = new Tile[SIZE][SIZE];
-		boardListeners = new ArrayList<>();
-		String[] currBoard = str.split("\\s+");
+	public Board() {
+		this.tiles = new Tile[SIZE][SIZE];
+		this.boardListeners = new ArrayList<>();
 		initializeBaseBoard();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				if (!currBoard[5 * i + j].substring(0, 1).equals("X")) {
-					if (currBoard[5 * i + j].substring(0, 1).equals("M")) {
-						tiles[i][j].placePiece(new Mushroom());
-					} else if (currBoard[5 * i + j].substring(0, 1).equals("R")) {
-						if (currBoard[5 * i + j].substring(2, 3).equals("G")) {
-							tiles[i][j].placePiece(new Rabbit(RabbitColour.GRAY));
-						} else if (currBoard[5 * i + j].substring(2, 3).equals("W")) {
-							tiles[i][j].placePiece(new Rabbit(RabbitColour.WHITE));
-						} else {
-							tiles[i][j].placePiece(new Rabbit(RabbitColour.BROWN));
-						}
-					} else if (currBoard[5 * i + j].substring(0, 2).equals("FH")) {
-						if (currBoard[5 * i + j].substring(2, 3).equals("U")) {
-							Fox f = new Fox(Fox.Direction.UP, currBoard[5 * i + j].substring(3, 4).equals("1"));
-							tiles[i][j].placePiece(f);
-							tiles[i][j + 1].placePiece(f.getOtherHalf());
-						} else if (currBoard[5 * i + j].substring(2, 3).equals("L")) {
-							Fox f = new Fox(Fox.Direction.LEFT, currBoard[5 * i + j].substring(3, 4).equals("1"));
-							tiles[i][j].placePiece(f);
-							tiles[i + 1][j].placePiece(f.getOtherHalf());
-						} else if (currBoard[5 * i + j].substring(2, 3).equals("R")) {
-							Fox f = new Fox(Fox.Direction.RIGHT, currBoard[5 * i + j].substring(3, 4).equals("1"));
-							tiles[i][j].placePiece(f);
-							tiles[i - 1][j].placePiece(f.getOtherHalf());
-						} else {
-							Fox f = new Fox(Fox.Direction.DOWN, currBoard[5 * i + j].substring(3, 4).equals("1"));
-							tiles[i][j].placePiece(f);
-							tiles[i][j - 1].placePiece(f.getOtherHalf());
-						}
-					}
-				}
-			}
-		}
 	}
-
+	
 	/**
 	 * A copy constructor for Board. Does not retain the list of listeners from the
 	 * old board. That is, it empties its listener list.
@@ -98,6 +64,49 @@ public class Board {
 			}
 		}
 		this.boardListeners = new ArrayList<>();
+	}
+
+	/**
+	 * Create a board object and initializes the pieces specified by the passed
+	 * String. This is a factory method.
+	 * 
+	 * @param str The String representation of the Board that is being created.
+	 * @return The newly constructed Board based on the passed String.
+	 */
+	public static Board createBoard(String str) {
+		Board board = new Board();
+		String[] currBoard = str.split("\\s+");
+		if (currBoard.length != 25) 
+			return null;
+		
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (!currBoard[5 * i + j].substring(0, 1).equals(EMPTY)) {
+					if (currBoard[5 * i + j].equals("MU")) {
+						board.tiles[i][j].placePiece(new Mushroom());
+					} else if (currBoard[5 * i + j].substring(0, 1).equals("R")) {
+						board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
+					} else if (currBoard[5 * i + j].substring(0, 2).equals("FH")) {
+						Fox f = Fox.createFox(currBoard[5 * i + j]);
+						board.tiles[i][j].placePiece(f);
+						switch ((Fox.Direction) f.getDirection()) {
+							case DOWN:
+								board.tiles[i][j - 1].placePiece(f.getOtherHalf());
+								break;
+							case LEFT:
+								board.tiles[i + 1][j].placePiece(f.getOtherHalf());
+								break;
+							case RIGHT:
+								board.tiles[i - 1][j].placePiece(f.getOtherHalf());
+								break;
+							default:
+								board.tiles[i][j + 1].placePiece(f.getOtherHalf());
+						}
+					}
+				}
+			}
+		}
+		return board;
 	}
 
 	/**
@@ -145,19 +154,25 @@ public class Board {
 	}
 
 	/**
+	 * Checks to see if the Board is in a winning state. If no rabbits are
+	 * present on the Board, the Board 
+	 * 
 	 * @return True if the board is in a winning state, false otherwise
 	 */
 	public boolean isInWinningState() {
+		int rabbitCount = 0;
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				Piece piece = tiles[i][j].retrievePiece();
-				if (piece != null && piece.getPieceType() == Piece.PieceType.RABBIT
-						&& (tiles[i][j].getColour() != Tile.TileColour.BROWN)) {
-					return false;
+				if (piece != null && piece.getPieceType() == Piece.PieceType.RABBIT) {
+					rabbitCount++;
+					if (tiles[i][j].getColour() != Tile.TileColour.BROWN) {
+						return false;
+					}
 				}
 			}
 		}
-		return true;
+		return rabbitCount != 0;
 	}
 
 	/**
@@ -302,18 +317,9 @@ public class Board {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				if (tiles[i][j].isOccupied()) {
-					Piece piece = tiles[i][j].retrievePiece();
-					if (piece.getPieceType() == Piece.PieceType.RABBIT) {
-						str.append(((Rabbit) piece).toShortString() + ((Rabbit) piece).getColour().toString().charAt(0)
-								+ " ");
-					} else if (piece.getPieceType() == Piece.PieceType.FOX) {
-						str.append(((Fox) piece).toShortString() + ((Fox) piece).getDirection().toString().charAt(0)
-								+ " ");
-					} else {
-						str.append(((Mushroom) piece).toShortString() + " ");
-					}
+					str.append(tiles[i][j].retrievePiece().toString() + " ");
 				} else {
-					str.append("X ");
+					str.append(EMPTY + " ");
 				}
 			}
 		}

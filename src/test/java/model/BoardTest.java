@@ -6,25 +6,24 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.Board;
-import model.Piece;
 import model.Rabbit;
 import util.Move;
 
 public class BoardTest {
 	private Board board;
-	private final String TESTBOARD = "RBG MU X X X FHU1 X X X X FTU1 X RBB X X X X X X X X X X X X";
+	private final String TESTBOARD = "RBG MU X X X FHU1 FTU1 X X X X X RBB X X X X X X X X X X X X";
 
 	@Before
 	public void setUp() {
-		board = new Board(TESTBOARD);
+		board = Board.createBoard(TESTBOARD);
 	}
 
 	@Test
 	public void testBoardConstructor() {
-		assertNotNull(board);
-		// Fix malformed strings in Board (need factory method, not constructor).
-		// Opinion: Have constructor initialize an empty Board.
-		assertNull(new Board("This is a test of malformed strings being passed to the constructor."));
+		Board emptyBoard = new Board();
+		assertNotNull(emptyBoard);
+		assertEquals(emptyBoard, new Board(emptyBoard));
+		assertNull(Board.createBoard("This is a test of malformed strings being passed to the facotry method."));
 	}
 
 	@Test
@@ -76,13 +75,14 @@ public class BoardTest {
 	@Test
 	public void testGetPossibleMoves() {
 		assertFalse(board.getPossibleMoves().isEmpty());
-		Board emptyBoard = new Board("X X X X X X X X X X X X X X X X X X X X X X X X X");
+		Board emptyBoard = Board.createBoard("X X X X X X X X X X X X X X X X X X X X X X X X X");
 		assertTrue(emptyBoard.getPossibleMoves().isEmpty());
 	}
 	
 	@Test
 	public void testToString() {
-		// Will pass once toString is rewritten for pieces and Board.
+		Board emptyBoard = Board.createBoard("X X X X X X X X X X X X X X X X X X X X X X X X X");
+		assertEquals(emptyBoard.toSimpleString(), "X X X X X X X X X X X X X X X X X X X X X X X X X");
 		assertEquals(board.toSimpleString(), TESTBOARD);
 	}
 

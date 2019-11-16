@@ -47,6 +47,29 @@ public class Rabbit extends Piece {
 	public Rabbit(Piece piece) {
 		this(((Rabbit) piece).colour);
 	}
+	
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static Rabbit createRabbit(String str) {
+		if (str == null) 
+			return null;
+		
+		RabbitColour col;
+		switch(str.substring(2,3)) {
+			case "G" :
+				col = RabbitColour.GRAY;
+				break;
+			case "B" :
+				col = RabbitColour.BROWN;
+				break;
+			default:
+				col = RabbitColour.WHITE;
+		}
+		return new Rabbit(col);
+	}
 
 	/**
 	 * Retrieve the color of the rabbit.
@@ -158,8 +181,14 @@ public class Rabbit extends Piece {
 		return moves;
 	}
 
+	/**
+	 * Returns a String representation of this Rabbit, along with all 
+	 * associated information contained within.
+	 * 
+	 * @return A short three character String representing this Rabbit.
+	 */
 	@Override
-	public String toShortString() {
-		return "RB";
+	public String toString() {
+		return "RB" + this.getColour().toString().substring(0,1);
 	}
 }

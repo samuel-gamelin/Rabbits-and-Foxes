@@ -65,7 +65,7 @@ public abstract class Piece {
 	public abstract List<Move> getPossibleMoves(Board board, int x, int y);
 
 	/**
-	 * @return A short, two-character string representing the piece.
+	 * @return A short, two to four character string representing the piece.
 	 */
-	public abstract String toShortString();
+	public abstract String toString();
 }

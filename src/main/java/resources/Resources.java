@@ -146,7 +146,7 @@ public final class Resources {
 	 */
 	public static Board getLevel(int level) {
 		try {
-			return new Board((String) ((JSONObject) (((JSONArray) new JSONParser()
+			return Board.createBoard((String) ((JSONObject) (((JSONArray) new JSONParser()
 					.parse(new FileReader("src/main/resources/Levels/LevelData.json"))).get(level - 1)))
 							.get("Level " + level));
 		} catch (Exception e) {

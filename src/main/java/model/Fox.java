@@ -90,6 +90,32 @@ public class Fox extends Piece {
 	public Fox(Piece piece) {
 		this(((Fox) piece).direction, ((Fox) piece).id);
 	}
+	
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static Fox createFox(String str) {
+		if (str == null) 
+			return null;
+		
+		Direction dir;
+		switch (str.substring(2,3)) {
+			case "L" :
+				dir = Direction.LEFT;
+				break;
+			case "R" :
+				dir = Direction.RIGHT;
+				break;
+			case "U" :
+				dir = Direction.UP;
+				break;
+			default :
+				dir = Direction.DOWN;
+		}
+		return new Fox(dir, str.substring(3,4).equals("1") ? true : false);
+	}
 
 	/**
 	 * Returns the other half of a Fox.
@@ -330,26 +356,26 @@ public class Fox extends Piece {
 	}
 
 	/**
+	 * Determine the location of the other half of the Fox relative to this half.
+	 * 
 	 * @return the location of the other half of the Fox relative to this half.
 	 */
 	private boolean getRelativeLocation() {
-		boolean location = true;
-
-		// Determine the location of the other half of the Fox relative to this half.
-		if ((foxType == FoxType.TAIL && (direction == Direction.LEFT || direction == Direction.DOWN))
-				|| (foxType == FoxType.HEAD && (direction == Direction.RIGHT || direction == Direction.UP))) {
-			location = false;
-		}
-		return location;
+		return !((foxType == FoxType.TAIL && (direction == Direction.LEFT || direction == Direction.DOWN))
+				|| (foxType == FoxType.HEAD && (direction == Direction.RIGHT || direction == Direction.UP)));
 	}
 
+	/**
+	 * Returns a String representation of this Fox, along with all 
+	 * associated information contained within.
+	 * 
+	 * @return A short four character representation encoding the information of this Fox.
+	 */
 	@Override
-	public String toShortString() {
+	public String toString() {
 		if (foxType == FoxType.HEAD) {
-			return "FH";
+			return "FH" + this.getDirection().toString().substring(0,1) + (this.getID() ? 1 : 0);
 		}
-
-		return "FT";
+		return "FT" + this.getDirection().toString().substring(0,1) + (this.getID() ? 1 : 0);
 	}
-
 }

@@ -95,15 +95,6 @@ public class Tile {
 		return tileColour;
 	}
 
-	/**
-	 * @return A 2-character string representation of this tile. If the tile has no
-	 *         piece, return the string " " (two spaces).
-	 */
-	@Override
-	public String toString() {
-		return piece != null ? piece.toShortString() : "  ";
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

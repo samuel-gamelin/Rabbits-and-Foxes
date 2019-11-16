@@ -41,7 +41,7 @@ public class Mushroom extends Piece {
 	}
 
 	@Override
-	public String toShortString() {
+	public String toString() {
 		return "MU";
 	}
 

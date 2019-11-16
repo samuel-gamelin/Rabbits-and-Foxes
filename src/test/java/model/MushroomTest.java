@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Board;
+import model.createBoard;
 import model.Mushroom;
 import model.Piece.PieceType;
 import util.Move;
@@ -26,7 +26,7 @@ public class MushroomTest {
 	@Test
 	public void testMove() {
 		Move move = new Move(1, 2, 3, 4);
-		Board board = new Board();
+		createBoard board = new createBoard();
 		assertFalse(mushroom.move(move, board));
 	}
 

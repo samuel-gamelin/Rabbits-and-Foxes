@@ -7,18 +7,18 @@ import org.junit.Test;
 
 import model.Rabbit;
 import util.Move;
-import model.Board;
+import model.createBoard;
 
 public class RabbitTest {
 	private Rabbit rabbitBrown;
 	private Rabbit rabbitWhite;
-	private Board board;
+	private createBoard board;
 
 	@Before
 	public void setUp() {
 		rabbitBrown = new Rabbit(Rabbit.RabbitColour.BROWN);
 		rabbitWhite = new Rabbit(Rabbit.RabbitColour.WHITE);
-		board = new Board();
+		board = new createBoard();
 
 	}
 
