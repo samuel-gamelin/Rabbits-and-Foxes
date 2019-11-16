@@ -9,6 +9,13 @@ import model.Board;
 import model.Rabbit;
 import util.Move;
 
+/**
+ * Tests for the Board class.
+ * 
+ * @author Abdalla El Nakla
+ * @author John Breton
+ */
+
 public class BoardTest {
 	private Board board;
 	private final String TESTBOARD = "RBG MU X X X FHU1 FTU1 X X X X X RBB X X X X X X X X X X X X";

@@ -81,15 +81,6 @@ public class Fox extends Piece {
 		this.id = id;
 		this.otherHalf = head;
 	}
-
-	/**
-	 * A copy constructor for Fox.
-	 * 
-	 * @param piece The piece to copy
-	 */
-	public Fox(Piece piece) {
-		this(((Fox) piece).direction, ((Fox) piece).id);
-	}
 	
 	/**
 	 * Factory method to create a Fox based on the based String.
@@ -167,8 +158,8 @@ public class Fox extends Piece {
 		// enum were to change order
 		// this would fail. However, since that scenario has no reason to occur, this
 		// implementation was kept.
-		if ((direction.ordinal() < 2 && move.direction() != MoveDirection.HORIZONTAL)
-				|| (direction.ordinal() > 1 && move.direction() != MoveDirection.VERTICAL)) {
+		if ((move == null) || ((direction.ordinal() < 2 && move.direction() != MoveDirection.HORIZONTAL)
+				|| (direction.ordinal() > 1 && move.direction() != MoveDirection.VERTICAL))) {
 			return false;
 		}
 
@@ -238,7 +229,7 @@ public class Fox extends Piece {
 		int yDistance = move.yDistance();
 		
 		// Initial check to see if the move can be valid.		
-		if ((board.isOccupied(xEnd, yEnd) && !(board.getPiece(xEnd, yEnd) instanceof Fox)) ||
+		if (board == null || (board.isOccupied(xEnd, yEnd) && !(board.getPiece(xEnd, yEnd) instanceof Fox)) ||
 				(location && xEnd + 1 > 4) || (!location && xEnd - 1 < 0) || 
 					(!location && yEnd + 1 > 4) || (location && yEnd - 1 < 0)) 
 			return false; 

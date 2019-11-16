@@ -80,13 +80,12 @@ public class Rabbit extends Piece {
 	 */
 	@Override
 	public boolean move(Move move, Board board) {
-		if (move.direction().equals(MoveDirection.INVALID)) {
-			return false;
-		}
-		if (validatePath(move, board)) {
-			board.removePiece(move.xStart, move.yStart);
-			board.setPiece(this, move.xEnd, move.yEnd);
-			return true;
+		if (move != null && board != null && !move.direction().equals(MoveDirection.INVALID)) {
+			if (validatePath(move, board)) {
+				board.removePiece(move.xStart, move.yStart);
+				board.setPiece(this, move.xEnd, move.yEnd);
+				return true;
+			}
 		}
 		return false;
 	}

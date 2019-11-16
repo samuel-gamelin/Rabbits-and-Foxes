@@ -140,7 +140,10 @@ public class Board {
 	 *         the move was unsuccessful
 	 */
 	public boolean move(Move move) {
-		if (tiles[move.xStart][move.yStart].retrievePiece().move(move, this)) {
+		if (move == null)
+			return false;
+		Piece piece = tiles[move.xStart][move.yStart].retrievePiece();
+		if (piece != null && piece.move(move, this)) {
 			notifyListeners();
 			return true;
 		}
