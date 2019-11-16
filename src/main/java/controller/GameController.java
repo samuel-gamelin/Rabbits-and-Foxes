@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Board;
-import model.Fox;
 import model.Mushroom;
 import resources.Resources;
 import util.Move;
@@ -27,7 +26,7 @@ import util.Solver;
 public class GameController {
 	private Board board;
 	private int currentLevel;
-	private List<Integer> move;
+	private List<Integer> moveList;
 	private ArrayDeque<Move> undoMoveStack;
 	private ArrayDeque<Move> redoMoveStack;
 	private int prevLevel = 1;
@@ -49,7 +48,7 @@ public class GameController {
 	public GameController(Board board) {
 		this.board = board;
 		this.currentLevel = 1;
-		this.move = new ArrayList<>();
+		this.moveList = new ArrayList<>();
 		this.undoMoveStack = new ArrayDeque<>();
 		this.redoMoveStack = new ArrayDeque<>();
 	}
@@ -68,17 +67,14 @@ public class GameController {
 	 *         being made on the board or if the selected location is valid
 	 */
 	public ClickValidity registerClick(int x, int y) {
-		if (move.isEmpty() && board.isOccupied(x, y) && !(board.getPiece(x, y) instanceof Mushroom)) {
-			move.add(x);
-			move.add(y);
+		if (moveList.isEmpty() && board.isOccupied(x, y) && !(board.getPiece(x, y) instanceof Mushroom)) {
+			moveList.add(x);
+			moveList.add(y);
 			return ClickValidity.VALID;
-		} else if (!move.isEmpty() && (!board.isOccupied(x, y) || (board.getPiece(x, y) instanceof Fox
-				&& board.getPiece(move.get(0), move.get(1)) instanceof Fox
-				&& ((Fox) board.getPiece(x, y)).getID() == ((Fox) board.getPiece(move.get(0), move.get(1))).getID()))) {
-			Move movePiece = new Move(move.get(0), move.get(1), x, y);
-			boolean result = board.move(movePiece);
-			if (result) {
-				move.clear();
+		} else if (!moveList.isEmpty()) {
+			Move movePiece = new Move(moveList.get(0), moveList.get(1), x, y);
+			if (board.move(movePiece)) {
+				moveList.clear();
 				redoMoveStack.clear();
 				if (prevLevel != getCurrentLevel()) {
 					undoMoveStack.clear();
@@ -87,9 +83,7 @@ public class GameController {
 					undoMoveStack.push(movePiece);
 				}
 				return ClickValidity.VALID_MOVEMADE;
-
 			}
-
 			return ClickValidity.INVALID_MOVEMADE;
 		}
 		return ClickValidity.INVALID;
@@ -111,7 +105,7 @@ public class GameController {
 	 * Removes any history of a previously stored position.
 	 */
 	public void clearPendingPosition() {
-		move.clear();
+		moveList.clear();
 	}
 
 	/**
@@ -123,7 +117,7 @@ public class GameController {
 	 */
 	public Board reset() {
 		board = Resources.getLevel(currentLevel);
-		move.clear();
+		moveList.clear();
 		undoMoveStack.clear();
 		redoMoveStack.clear();
 		return board;
@@ -184,8 +178,6 @@ public class GameController {
 	 * Increment the current level of the game by 1.
 	 */
 	public void incrementLevel() {
-		redoMoveStack.clear();
-		undoMoveStack.clear();
 		currentLevel++;
 	}
 
