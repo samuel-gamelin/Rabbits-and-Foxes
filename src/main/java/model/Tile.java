@@ -74,8 +74,8 @@ public class Tile {
 	}
 
 	/**
-	 * Gets the Piece currently occupying this Tile.
-	 * Will return null if there is no Piece on this Tile.
+	 * Gets the Piece currently occupying this Tile. Will return null if there is no
+	 * Piece on this Tile.
 	 * 
 	 * @return The current Piece placed on the Tile.
 	 */
@@ -99,10 +99,11 @@ public class Tile {
 	public TileColour getColour() {
 		return tileColour;
 	}
-	
+
 	/**
-	 * @return A two to four character string representation of this tile. 
-	 * If the tile has no piece, return the String used to represent empty on a board.
+	 * @return A two to four character string representation of this tile. If the
+	 *         tile has no piece, return the String used to represent empty on a
+	 *         board.
 	 */
 	@Override
 	public String toString() {
@@ -131,5 +132,4 @@ public class Tile {
 		}
 		return true;
 	}
-
 }

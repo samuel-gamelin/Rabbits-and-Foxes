@@ -21,8 +21,8 @@ import org.json.simple.parser.ParseException;
 import model.Board;
 
 /**
- * This class provides a simple way to access graphical resources used by the
- * game.
+ * This class provides a simple way to access audio and graphical resources used
+ * by the game.
  * 
  * @author Samuel Gamelin
  * @author John Breton
@@ -45,10 +45,10 @@ public final class Resources {
 					: 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 
 	// Incorrect move sound
-	public static final Clip INVALID_MOVE = loadClip(loadFile("wrong.wav"));
+	public static final Clip INVALID_MOVE = loadClip(getFileURL("wrong.wav"));
 
 	// Level solved sound
-	public static final Clip SOLVED = loadClip(loadFile("solved.wav"));
+	public static final Clip SOLVED = loadClip(getFileURL("solved.wav"));
 
 	// JFrame icon
 	public static final ImageIcon WINDOW_ICON = loadIcon("rabbit3.png", 4, 5);
@@ -107,7 +107,7 @@ public final class Resources {
 	 * @param path The path at which the resource is located
 	 * @return The file at the specified location
 	 */
-	private static URL loadFile(String path) {
+	private static URL getFileURL(String path) {
 		return Thread.currentThread().getContextClassLoader().getResource(path);
 	}
 
@@ -134,6 +134,22 @@ public final class Resources {
 			return null;
 		}
 	}
+	
+	/**
+	 * Provides the number of levels available in the LevelData.json file.
+	 * 
+	 * @return The total number of levels in the game. Returns -1 if no valid
+	 *         LevelData.json file is found.
+	 */
+	private static int getNumberOfLevels() {
+		try {
+			return ((JSONArray) new JSONParser().parse(new FileReader("src/main/resources/Levels/LevelData.json")))
+					.size();
+		} catch (IOException | ParseException e) {
+			e.printStackTrace(System.out);
+			return -1;
+		}
+	}
 
 	/**
 	 * Load and return a new Board based on the current level. The levels are loaded
@@ -151,22 +167,6 @@ public final class Resources {
 		} catch (IOException | ParseException e) {
 			e.printStackTrace(System.out);
 			return null;
-		}
-	}
-
-	/**
-	 * Provides the number of levels available in the LevelData.json file.
-	 * 
-	 * @return The total number of levels in the game. Returns -1 if no valid
-	 *         LevelData.json file is found.
-	 */
-	private static int getNumberOfLevels() {
-		try {
-			return ((JSONArray) new JSONParser().parse(new FileReader("src/main/resources/Levels/LevelData.json")))
-					.size();
-		} catch (IOException | ParseException e) {
-			e.printStackTrace(System.out);
-			return -1;
 		}
 	}
 }
