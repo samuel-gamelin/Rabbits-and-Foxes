@@ -163,35 +163,35 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		// Create all buttons
 		buttons = new JButton[5][5];
 
-		for (int i = 0; i < Board.SIZE; i++) {
-			for (int j = 0; j < Board.SIZE; j++) {
-				buttons[j][i] = new JButton();
+		for (int y = 0; y < Board.SIZE; y++) {
+			for (int x = 0; x < Board.SIZE; x++) {
+				buttons[x][y] = new JButton();
 				// Clear button default colours and make it transparent
-				buttons[j][i].setOpaque(false);
-				buttons[j][i].setContentAreaFilled(false);
-				buttons[j][i].setBorder(blankBorder);
+				buttons[x][y].setOpaque(false);
+				buttons[x][y].setContentAreaFilled(false);
+				buttons[x][y].setBorder(blankBorder);
 
-				gameContentPane.add(buttons[j][i]);
-				buttons[j][i].addMouseListener(this);
+				gameContentPane.add(buttons[x][y]);
+				buttons[x][y].addMouseListener(this);
 
-				final int x = j;
-				final int y = i;
+				final int xCopy = x;
+				final int yCopy = y;
 
 				// Register an anonymous listener on the button which notifies the controller
 				// whenever a move is made (i.e. a button is clicked)
-				buttons[j][i].addActionListener(e -> {
-					ClickValidity clickResult = gameController.registerClick(x, y);
+				buttons[x][y].addActionListener(e -> {
+					ClickValidity clickResult = gameController.registerClick(xCopy, yCopy);
 
 					// Highlights all possible moves for the selected piece.
 					if (chkPath.isSelected()) {
-						gameController.getPossibleMoves(x, y).parallelStream().forEach(move -> {
+						gameController.getPossibleMoves(xCopy, yCopy).parallelStream().forEach(move -> {
 							buttons[move.xStart][move.yStart].setBorder(hintBorderStart);
 							buttons[move.xEnd][move.yEnd].setBorder(possiblePositionBorder);
 						});
 					}
 
 					if (clickResult == ClickValidity.VALID) {
-						buttons[x][y].setBorder(selectedBorder);
+						buttons[xCopy][yCopy].setBorder(selectedBorder);
 					} else if (clickResult == ClickValidity.VALID_MOVEMADE) {
 						clearButtonBorders();
 					} else {
@@ -347,31 +347,31 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * Updates the visual representation of the board.
 	 */
 	private void updateView() {
-		for (int i = 0; i < Board.SIZE; i++) {
-			for (int j = 0; j < Board.SIZE; j++) {
-				Piece piece = board.getPiece(i, j);
+		for (int x = 0; x < Board.SIZE; x++) {
+			for (int y = 0; y < Board.SIZE; y++) {
+				Piece piece = board.getPiece(x, y);
 				if (piece != null) {
 					if (piece instanceof Mushroom) {
-						buttons[i][j].setIcon(Resources.MUSHROOM);
+						buttons[x][y].setIcon(Resources.MUSHROOM);
 					} else if (piece instanceof Rabbit) {
 						if (((Rabbit) (piece)).getColour() == RabbitColour.BROWN) {
-							buttons[i][j].setIcon(Resources.RABBIT1);
+							buttons[x][y].setIcon(Resources.RABBIT1);
 						} else if (((Rabbit) (piece)).getColour() == RabbitColour.WHITE) {
-							buttons[i][j].setIcon(Resources.RABBIT2);
+							buttons[x][y].setIcon(Resources.RABBIT2);
 						} else {
-							buttons[i][j].setIcon(Resources.RABBIT3);
+							buttons[x][y].setIcon(Resources.RABBIT3);
 						}
 					} else {
 						try {
-							buttons[i][j].setIcon((ImageIcon) Resources.class.getDeclaredField(
+							buttons[x][y].setIcon((ImageIcon) Resources.class.getDeclaredField(
 									"FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())
 									.get(Resources.class));
-						} catch (Exception e) {
+						} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
 							e.printStackTrace(System.out);
 						}
 					}
 				} else {
-					buttons[i][j].setIcon(null);
+					buttons[x][y].setIcon(null);
 				}
 			}
 		}

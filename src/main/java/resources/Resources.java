@@ -9,6 +9,8 @@ import java.net.URL;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 
 import org.json.simple.JSONArray;
@@ -33,8 +35,9 @@ public final class Resources {
 	public static final int NUMBER_OF_LEVELS = getNumberOfLevels();
 
 	/**
-	 * A percentage (75%) of the current display's height, which will be used in
-	 * calculations to determine appropriate scaling of icons.
+	 * A percentage (75%) of the current display's height (or width, depending on
+	 * which is greater), which will be used in calculations to determine
+	 * appropriate scaling of icons and GUI elements.
 	 */
 	public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() > Toolkit
 			.getDefaultToolkit().getScreenSize().getHeight()
@@ -92,7 +95,7 @@ public final class Resources {
 	 * @return A scaled version of the icon
 	 */
 	private static ImageIcon loadIcon(String path, double xScale, double yScale) {
-		return new ImageIcon(new ImageIcon(Resources.class.getClassLoader().getResource(path)).getImage()
+		return new ImageIcon(new ImageIcon(Thread.currentThread().getContextClassLoader().getResource(path)).getImage()
 				.getScaledInstance((int) (xScale * SIDE_LENGTH / Board.SIZE), (int) (yScale * SIDE_LENGTH / Board.SIZE),
 						Image.SCALE_SMOOTH));
 	}
@@ -105,12 +108,7 @@ public final class Resources {
 	 * @return The file at the specified location
 	 */
 	private static URL loadFile(String path) {
-		try {
-			return Resources.class.getClassLoader().getResource(path);
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-		}
-		return null;
+		return Thread.currentThread().getContextClassLoader().getResource(path);
 	}
 
 	/**
@@ -131,8 +129,8 @@ public final class Resources {
 				}
 			});
 			return clip;
-		} catch (Exception ex) {
-			ex.printStackTrace(System.out);
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			e.printStackTrace(System.out);
 			return null;
 		}
 	}
@@ -141,15 +139,16 @@ public final class Resources {
 	 * Load and return a new Board based on the current level. The levels are loaded
 	 * from a JSONArray.
 	 * 
-	 * @param level The current level to load.
-	 * @return The Board associated with the passed level.
+	 * @param level The level to load.
+	 * @return The Board associated with the passed-in level. Null if the level does
+	 *         not exist.
 	 */
 	public static Board getLevel(int level) {
 		try {
 			return Board.createBoard((String) ((JSONObject) (((JSONArray) new JSONParser()
 					.parse(new FileReader("src/main/resources/Levels/LevelData.json"))).get(level - 1)))
 							.get("Level " + level));
-		} catch (Exception e) {
+		} catch (IOException | ParseException e) {
 			e.printStackTrace(System.out);
 			return null;
 		}
@@ -158,12 +157,15 @@ public final class Resources {
 	/**
 	 * Provides the number of levels available in the LevelData.json file.
 	 * 
-	 * @return The total number of levels in the game
+	 * @return The total number of levels in the game. Returns -1 if no valid
+	 *         LevelData.json file is found.
 	 */
 	private static int getNumberOfLevels() {
 		try {
-			return ((JSONArray) new JSONParser().parse(new FileReader("LevelData.json"))).size();
+			return ((JSONArray) new JSONParser().parse(new FileReader("src/main/resources/Levels/LevelData.json")))
+					.size();
 		} catch (IOException | ParseException e) {
+			e.printStackTrace(System.out);
 			return -1;
 		}
 	}
