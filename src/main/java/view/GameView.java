@@ -53,19 +53,10 @@ import util.Move;
  * @version 3.0
  */
 public class GameView extends MouseAdapter implements BoardListener, ActionListener {
-	private JFrame mainMenuFrame;
-	private JFrame gameFrame;
+	private JFrame mainMenuFrame, gameFrame;
 
-	private JButton menuReset;
-	private JButton menuHelp;
-	private JButton menuQuit;
-	private JButton menuHint;
-	private JButton menuUndo;
-	private JButton menuRedo;
-
-	private JButton btnStart;
-	private JButton btnHelp;
-	private JButton btnQuit;
+	private JButton menuReset, menuHelp, menuQuit, menuHint, menuUndo, menuRedo;
+	private JButton btnStart, btnHelp, btnQuit;
 
 	private JCheckBox chkPath;
 	private boolean pathSelection;
@@ -76,10 +67,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 	private GameController gameController;
 
-	private BevelBorder selectedBorder;
-	private BevelBorder hintBorderStart;
-	private BevelBorder hintBorderEnd;
-	private BevelBorder possiblePositionBorder;
+	private BevelBorder selectedBorder, hintBorderStart, hintBorderEnd, possiblePositionBorder;
 	private EmptyBorder blankBorder;
 
 	public static final String GAME_NAME = "Rabbit and Foxes!";
