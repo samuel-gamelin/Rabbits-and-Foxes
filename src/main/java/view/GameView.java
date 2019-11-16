@@ -486,6 +486,11 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keystroke), actionName);
 		}
 		component.getActionMap().put(actionName, new AbstractAction() {
+			/**
+			 * Generated Serial ID
+			 */
+			private static final long serialVersionUID = 2208360823861350604L;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				method.run();
