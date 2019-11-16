@@ -73,8 +73,7 @@ public class Node {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((board == null) ? 0 : board.hashCode());
-		return result;
+		return prime * result + ((board == null) ? 0 : board.hashCode());
 	}
 
 	@Override

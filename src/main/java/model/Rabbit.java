@@ -47,28 +47,28 @@ public class Rabbit extends Piece {
 	public Rabbit(Piece piece) {
 		this(((Rabbit) piece).colour);
 	}
-	
+
 	/**
-	 * Factory method to create a Rabbit based on the based String.
-	 * For example, the String should be of the form "RBG".
+	 * Factory method to create a Rabbit based on the based String. For example, the
+	 * String should be of the form "RBG".
 	 * 
 	 * @param str The String to build the Rabbit from. Must be of length 3.
 	 * @return A newly created Rabbit based on the passed String.
 	 */
 	public static Rabbit createRabbit(String str) {
-		if (str == null || str.length() != 3) 
+		if (str == null || str.length() != 3)
 			return null;
-		
+
 		RabbitColour col;
-		switch(str.substring(2,3)) {
-			case "G" :
-				col = RabbitColour.GRAY;
-				break;
-			case "B" :
-				col = RabbitColour.BROWN;
-				break;
-			default:
-				col = RabbitColour.WHITE;
+		switch (str.substring(2, 3)) {
+		case "G":
+			col = RabbitColour.GRAY;
+			break;
+		case "B":
+			col = RabbitColour.BROWN;
+			break;
+		default:
+			col = RabbitColour.WHITE;
 		}
 		return new Rabbit(col);
 	}
@@ -108,14 +108,12 @@ public class Rabbit extends Piece {
 	 * @return True if the path for this move is valid for rabbits, false otherwise.
 	 */
 	private boolean validatePath(Move move, Board board) {
-		// Rabbits must jump over at least one obstacle
 		if ((move.direction().equals(MoveDirection.INVALID) || Math.abs(move.xDistance()) == 1
 				|| Math.abs(move.yDistance()) == 1)
 				|| (move.direction().equals(MoveDirection.HORIZONTAL) && !horizontalMove(move, board))
 				|| (move.direction().equals(MoveDirection.VERTICAL) && !verticalMove(move, board))) {
 			return false;
 		}
-
 		return !board.isOccupied(move.xEnd, move.yEnd);
 	}
 
@@ -127,13 +125,13 @@ public class Rabbit extends Piece {
 	 * @return True if the path is valid, otherwise false
 	 */
 	private boolean verticalMove(Move move, Board board) {
-		if (move.yDistance() < 0) { // Moving up
+		if (move.yDistance() < 0) {
 			for (int i = move.yStart - 1; i > move.yEnd; i--) {
 				if (!board.isOccupied(move.xStart, i)) {
 					return false;
 				}
 			}
-		} else { // Moving down
+		} else {
 			for (int i = move.yStart + 1; i < move.yEnd; i++) {
 				if (!board.isOccupied(move.xStart, i)) {
 					return false;
@@ -184,13 +182,13 @@ public class Rabbit extends Piece {
 	}
 
 	/**
-	 * Returns a String representation of this Rabbit, along with all 
-	 * associated information contained within.
+	 * Returns a String representation of this Rabbit, along with all associated
+	 * information contained within.
 	 * 
 	 * @return A short three character String representing this Rabbit.
 	 */
 	@Override
 	public String toString() {
-		return "RB" + this.getColour().toString().substring(0,1);
+		return "RB" + this.getColour().toString().substring(0, 1);
 	}
 }

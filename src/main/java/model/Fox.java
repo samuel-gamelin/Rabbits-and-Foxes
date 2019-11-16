@@ -238,12 +238,11 @@ public class Fox extends Piece {
 		int yDistance = move.yDistance();
 		
 		// Initial check to see if the move can be valid.		
-		if ((board.isOccupied(xEnd, yEnd) && !(board.getPiece(xEnd, yEnd) instanceof Fox)) ||
+		if (board.isOccupied(xEnd, yEnd) ||
 				(location && xEnd + 1 > 4) || (!location && xEnd - 1 < 0) || 
-					(!location && yEnd + 1 > 4) || (location && yEnd - 1 < 0)) {
+					(!location && yEnd + 1 > 4) || (location && yEnd - 1 < 0)) 
 			return false; 
-		}
-			
+		
 		// The other part of the fox is to the right and we are moving right
 		if (location && xDistance > 0) { 
 			for (int i = xStart + 2; i <= xEnd + 1; i++) { 

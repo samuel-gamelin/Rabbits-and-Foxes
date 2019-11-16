@@ -23,7 +23,7 @@ public class Board {
 	 * The size of any side for the board.
 	 */
 	public static final int SIZE = 5;
-	
+
 	/**
 	 * A String used to represent an empty tile on the board.
 	 */
@@ -39,7 +39,7 @@ public class Board {
 	 * appropriate.
 	 */
 	private List<BoardListener> boardListeners;
-	
+
 	/**
 	 * Construct an empty board
 	 */
@@ -48,7 +48,7 @@ public class Board {
 		this.boardListeners = new ArrayList<>();
 		initializeBaseBoard();
 	}
-	
+
 	/**
 	 * A copy constructor for Board. Does not retain the list of listeners from the
 	 * old board. That is, it empties its listener list.
@@ -69,38 +69,38 @@ public class Board {
 	 * Create a board object and initializes the pieces specified by the passed
 	 * String. This is a factory method.
 	 * 
-	 * @param str The String representation of the Board that is being created.
-	 * 			  Must be of length 25.
+	 * @param str The String representation of the Board that is being created. Must
+	 *            be of length 25.
 	 * @return The newly constructed Board based on the passed String.
 	 */
 	public static Board createBoard(String str) {
 		Board board = new Board();
 		String[] currBoard = str.split("\\s+");
-		if (currBoard.length != 25) 
+		if (currBoard.length != 25)
 			return null;
-		
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (currBoard[5 * i + j].equals(EMPTY)); 
+				if (currBoard[5 * i + j].equals(EMPTY))
+					;
 				else if (currBoard[5 * i + j].length() == 2) {
 					board.tiles[i][j].placePiece(new Mushroom());
 				} else if (currBoard[5 * i + j].length() == 3) {
 					board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
-				} else if (currBoard[5 * i + j].toString().substring(1,2).equals(Fox.FoxType.HEAD.toString().substring(0,1))) {
+				} else if (currBoard[5 * i + j].substring(1, 2).equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
 					Fox f = Fox.createFox(currBoard[5 * i + j]);
 					board.tiles[i][j].placePiece(f);
 					switch (f.getDirection()) {
-						case DOWN:
-							board.tiles[i][j - 1].placePiece(f.getOtherHalf());
-							break;
-						case LEFT:
-							board.tiles[i + 1][j].placePiece(f.getOtherHalf());
-							break;
-						case RIGHT:
-							board.tiles[i - 1][j].placePiece(f.getOtherHalf());
-							break;
-						default:
-							board.tiles[i][j + 1].placePiece(f.getOtherHalf());
+					case DOWN:
+						board.tiles[i][j - 1].placePiece(f.getOtherHalf());
+						break;
+					case LEFT:
+						board.tiles[i + 1][j].placePiece(f.getOtherHalf());
+						break;
+					case RIGHT:
+						board.tiles[i - 1][j].placePiece(f.getOtherHalf());
+						break;
+					default:
+						board.tiles[i][j + 1].placePiece(f.getOtherHalf());
 					}
 				}
 			}
@@ -139,12 +139,6 @@ public class Board {
 	 *         the move was unsuccessful
 	 */
 	public boolean move(Move move) {
-		// Do a preliminary check on the move (i.e. making sure it is in bounds, and
-		// that the starting tile actually has a piece)
-		if (move == null || !validateBounds(move) || !tiles[move.xStart][move.yStart].isOccupied()) {
-			return false;
-		}
-
 		if (tiles[move.xStart][move.yStart].retrievePiece().move(move, this)) {
 			notifyListeners();
 			return true;
@@ -153,9 +147,9 @@ public class Board {
 	}
 
 	/**
-	 * Checks to see if the Board is in a winning state. If no rabbits are
-	 * present on the Board, the game can't be played, so the Board is not
-	 * in a winning state.
+	 * Checks to see if the Board is in a winning state. If no rabbits are present
+	 * on the Board, the game can't be played, so the Board is not in a winning
+	 * state.
 	 * 
 	 * @return True if the board is in a winning state, false otherwise
 	 */
@@ -207,7 +201,7 @@ public class Board {
 	 * @return True if the piece was successfully set, false otherwise
 	 */
 	public boolean setPiece(Piece piece, int x, int y) {
-		if (validatePosition(x, y) && piece != null) {
+		if (piece != null && validatePosition(x, y)) {
 			tiles[x][y].placePiece(piece);
 			return true;
 		}
@@ -258,17 +252,6 @@ public class Board {
 	}
 
 	/**
-	 * Validates the bounds on the given move object.
-	 * 
-	 * @param move The move object's whose bounds are to be validated
-	 * @return True if the move is within the board's bounds, false otherwise
-	 */
-	private boolean validateBounds(Move move) {
-		return move.xStart >= 0 && move.xStart < SIZE && move.xEnd >= 0 && move.xEnd < SIZE && move.yStart >= 0
-				&& move.yStart < SIZE && move.yEnd >= 0 && move.yEnd < SIZE;
-	}
-
-	/**
 	 * @return A list containing all possible move objects for this board
 	 */
 	public List<Move> getPossibleMoves() {
@@ -281,7 +264,6 @@ public class Board {
 				}
 			}
 		}
-
 		return moves;
 	}
 

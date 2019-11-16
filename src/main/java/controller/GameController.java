@@ -25,11 +25,9 @@ import util.Solver;
  */
 public class GameController {
 	private Board board;
-	private int currentLevel;
+	private int currentLevel, prevLevel = 1;
 	private List<Integer> moveList;
-	private ArrayDeque<Move> undoMoveStack;
-	private ArrayDeque<Move> redoMoveStack;
-	private int prevLevel = 1;
+	private ArrayDeque<Move> undoMoveStack, redoMoveStack;
 
 	/**
 	 * An enumeration representing the validity of a click from the user.
