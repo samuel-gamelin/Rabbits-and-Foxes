@@ -317,7 +317,6 @@ public class Fox extends Piece {
 
 		boolean location = getRelativeLocation();
 
-		// Horizontal sliding
 		if ((foxType == FoxType.TAIL && direction == Direction.LEFT)
 				|| (foxType == FoxType.HEAD && direction == Direction.RIGHT)) {
 			for (int i = x + 1; i < Board.SIZE; i++) {
@@ -334,7 +333,6 @@ public class Fox extends Piece {
 					moves.add(moveX);
 				}
 			}
-			// vertical
 		} else if ((foxType == FoxType.TAIL && direction == Direction.UP)
 				|| (foxType == FoxType.HEAD && direction == Direction.DOWN)) {
 			for (int i = y + 1; i < Board.SIZE; i++) {
