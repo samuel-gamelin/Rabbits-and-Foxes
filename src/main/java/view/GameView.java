@@ -107,22 +107,20 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		/**
 		 * 
-		 * Main menu
+		 * Main menu frame
 		 * 
 		 */
 		mainMenuFrame = new JFrame(GAME_NAME);
-
-		// Box Layout for main menu
-		JLabel mainMenuPane = new JLabel(Resources.MAIN_MENU_BACKGROUND);
-		mainMenuPane.setLayout(new BoxLayout(mainMenuPane, BoxLayout.Y_AXIS));
+		mainMenuFrame.setContentPane(new JLabel(Resources.MAIN_MENU_BACKGROUND));
+		mainMenuFrame.getContentPane().setLayout(new BoxLayout(mainMenuFrame.getContentPane(), BoxLayout.Y_AXIS));
 
 		btnStart = new JButton("Start");
 		btnHelp = new JButton("Help");
 		btnQuit = new JButton("Quit");
-		addMenuButton(mainMenuPane, btnStart);
-		addMenuButton(mainMenuPane, btnHelp);
-		addMenuButton(mainMenuPane, btnQuit);
-		mainMenuFrame.add(mainMenuPane);
+
+		addMainMenuButton(mainMenuFrame, btnStart);
+		addMainMenuButton(mainMenuFrame, btnHelp);
+		addMainMenuButton(mainMenuFrame, btnQuit);
 
 		mainMenuFrame.setIconImage(Resources.WINDOW_ICON.getImage());
 		mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -142,7 +140,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		board.addListener(this);
 		gameController = new GameController(board);
 
-		gameFrame = new JFrame(GAME_NAME + " Level: 1");
+		gameFrame = new JFrame(GAME_NAME + " Level: " + gameController.getCurrentLevel());
 
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -161,12 +159,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		menuBar.add(menuHelp);
 		menuBar.add(menuQuit);
 
-		gameFrame.add(menuBar, BorderLayout.NORTH);
-
-		// GridLayout for board frame
-		JLabel boardLabel = new JLabel(Resources.BOARD);
-		boardLabel.setLayout(new GridLayout(5, 5));
-		gameFrame.add(boardLabel, BorderLayout.CENTER);
+		gameFrame.setJMenuBar(menuBar);
+		gameFrame.setContentPane(new JLabel(Resources.BOARD));
+		gameFrame.getContentPane().setLayout(new GridLayout(5, 5));
 
 		// Organize the game frame
 		gameFrame.setIconImage(Resources.WINDOW_ICON.getImage());
@@ -174,6 +169,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		gameFrame.setResizable(false);
 		gameFrame.pack();
 		gameFrame.setLocationRelativeTo(null);
+
+		JLabel gameContentPane = (JLabel) gameFrame.getContentPane();
 
 		// Create all buttons
 		buttons = new JButton[5][5];
@@ -186,11 +183,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				buttons[j][i].setContentAreaFilled(false);
 				buttons[j][i].setBorder(blankBorder);
 
-				boardLabel.add(buttons[j][i]);
+				gameContentPane.add(buttons[j][i]);
 				buttons[j][i].addMouseListener(this);
 
-				// Register an anonymous listener on the button which notifies the controller
-				// whenever a move is made (i.e. a button is clicked)
 				final int x = j;
 				final int y = i;
 
@@ -199,63 +194,43 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				buttons[j][i].addActionListener(e -> {
 					ClickValidity clickResult = gameController.registerClick(x, y);
 
-					// highlights all possible moves for the selected piece.
+					// Highlights all possible moves for the selected piece.
 					if (chkPath.isSelected()) {
-						for (Move move : gameController.getPossibleMoves(x, y)) {
+						gameController.getPossibleMoves(x, y).parallelStream().forEach(move -> {
 							buttons[move.xStart][move.yStart].setBorder(hintBorderStart);
 							buttons[move.xEnd][move.yEnd].setBorder(possiblePositionBorder);
-						}
+						});
 					}
 
 					if (clickResult == ClickValidity.VALID) {
 						buttons[x][y].setBorder(selectedBorder);
 					} else if (clickResult == ClickValidity.VALID_MOVEMADE) {
-						// clears button borders when the move is valid.
 						clearButtonBorders();
-					} else if (clickResult == ClickValidity.INVALID || clickResult == ClickValidity.INVALID_MOVEMADE) {
+					} else {
 						clearMove();
 						if (!Resources.INVALID_MOVE.isActive()) {
 							Resources.INVALID_MOVE.start();
 						}
 					}
-
 				});
 
 			}
 		}
 
-		// Configure the escape key to cancel the pending move
-		boardLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "clear");
-		boardLabel.getActionMap().put("clear", new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				clearMove();
-			}
-
+		// Configure the escape key to cancel the pending move, setup the check box and
+		bindKeyStroke(gameContentPane, "ESCAPE", "clear", this::clearMove);
+		chkPath = new JCheckBox();
+		chkPath.addItemListener(e -> {
+			pathSelection = e.getStateChange() == ItemEvent.SELECTED;
+			chkPath.setSelected(pathSelection);
 		});
-
 		updateView();
 
-		menuUndo.addActionListener(e -> {
-			// Calling undoMove, attaching the button
-			if (!gameController.undoMove()) {
-				JOptionPane.showMessageDialog(gameFrame, "No moves to undo", "Information",
-						JOptionPane.INFORMATION_MESSAGE);
-			}
-
-		});
-		menuRedo.addActionListener(e -> {
-			if (!gameController.redoMove()) {
-				JOptionPane.showMessageDialog(gameFrame, "No moves to Redo", "Information",
-						JOptionPane.INFORMATION_MESSAGE);
-			}
-
-		});
-
+		// Attach action listeners to buttons
 		btnStart.addActionListener(e -> {
-			mainMenuFrame.dispose();
+			mainMenuFrame.setVisible(false);
 			gameFrame.setVisible(true);
-			helpDialog();
+			displayHelpDialog();
 		});
 		btnHelp.addActionListener(this);
 		btnQuit.addActionListener(this);
@@ -264,24 +239,17 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		menuHelp.addActionListener(this);
 		menuQuit.addActionListener(this);
 		menuHint.addActionListener(this);
+		menuUndo.addActionListener(this);
+		menuRedo.addActionListener(this);
 	}
 
 	/**
-	 * Sets the hint button to enabled/disabled
-	 * 
-	 * @param state true will enable the button, false will disable the button.
-	 */
-	private void toggleHint(boolean state) {
-		menuHint.setEnabled(state);
-	}
-
-	/**
-	 * Adds a button to the specified pane. Used in building the menu.
+	 * Adds a button to the specified pane. Used in building the main menu.
 	 * 
 	 * @param pane   The pane to which to add the specified button
 	 * @param button The button to add
 	 */
-	private void addMenuButton(Container pane, JButton button) {
+	private void addMainMenuButton(Container pane, JButton button) {
 		pane.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 7))));
 		button.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 2, (int) (0.15 * Resources.SIDE_LENGTH)));
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -300,16 +268,79 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		button.setBorderPainted(false);
 
 		if (enableShortcut) {
-			button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-					.put(KeyStroke.getKeyStroke(Character.toLowerCase(text.charAt(0))), text);
-			button.getActionMap().put(text, new AbstractAction() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					button.doClick();
-				}
-			});
+			bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(0))), text, button::doClick);
 		}
 		return button;
+	}
+
+	/**
+	 * Displays an informational message dialog.
+	 * 
+	 * @param parent  The parent component of this option dialog
+	 * @param message The message to display
+	 * @param title   The title of the dialog box
+	 */
+	private void displayMessageDialog(Component parent, String message, String title) {
+		JOptionPane.showMessageDialog(parent, message, title, JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	/**
+	 * Displays an option dialog, returning the choice selected by the user.
+	 * 
+	 * @param parent  The parent component of this option dialog
+	 * @param message The message to display
+	 * @param title   The title of the dialog box
+	 * @param options The options to be provided in the dialog
+	 * @return The choice made by the user
+	 */
+	private int displayOptionDialog(Component parent, String message, String title, Object[] options) {
+		return JOptionPane.showOptionDialog(parent, message, title, JOptionPane.DEFAULT_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, options, null);
+	}
+
+	/**
+	 * Pops up the in-game help dialog.
+	 */
+	private void displayHelpDialog() {
+		JPanel panel = new JPanel(new BorderLayout(0, 15));
+
+		panel.add(new JLabel("Show possible moves?"), BorderLayout.CENTER);
+		panel.add(chkPath, BorderLayout.EAST);
+
+		panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>"
+				+ "Rabbits and Foxes is a game in which you must get all rabbits to safety by having them land in brown holes. "
+				+ "To do this, rabbits can only jump over other pieces and must land in an empty hole. "
+				+ "Foxes can slide along their initial direction as long as no other piece obstructs their way.<br><br>"
+				+ "Hint (h): Outlines the next best move<br>" + "Help: Displays the help menu<br>"
+				+ "Reset:   Restarts the game<br>" + "Quit   (q):   Exits the application<br>"
+				+ "Escape (ESC): Clears the pending move" + "</p></body></html>"), BorderLayout.NORTH);
+
+		JOptionPane.showMessageDialog(gameFrame, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	/**
+	 * Clears button borders and the pending position.
+	 */
+	private void clearMove() {
+		clearButtonBorders();
+		gameController.clearPendingPosition();
+	}
+
+	/**
+	 * Resets the game.
+	 */
+	private void resetGame() {
+		board = gameController.reset();
+		board.addListener(this);
+		clearButtonBorders();
+		updateView();
+	}
+
+	/**
+	 * Updates the game frame's title with the new level name.
+	 */
+	private void updateFrameTitle() {
+		gameFrame.setTitle(GAME_NAME + " Level: " + gameController.getCurrentLevel());
 	}
 
 	/**
@@ -324,14 +355,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	}
 
 	/**
-	 * Clears button borders and clears the pending position
-	 */
-	private void clearMove() {
-		clearButtonBorders();
-		gameController.clearPendingPosition();
-	}
-
-	/**
 	 * Updates the visual representation of the board.
 	 */
 	private void updateView() {
@@ -340,18 +363,18 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				Piece piece = board.getPiece(i, j);
 				if (piece != null) {
 					if (piece instanceof Mushroom) {
-						(buttons[i][j]).setIcon(Resources.MUSHROOM);
+						buttons[i][j].setIcon(Resources.MUSHROOM);
 					} else if (piece instanceof Rabbit) {
 						if (((Rabbit) (piece)).getColour() == RabbitColour.BROWN) {
-							(buttons[i][j]).setIcon(Resources.RABBIT1);
+							buttons[i][j].setIcon(Resources.RABBIT1);
 						} else if (((Rabbit) (piece)).getColour() == RabbitColour.WHITE) {
-							(buttons[i][j]).setIcon(Resources.RABBIT2);
+							buttons[i][j].setIcon(Resources.RABBIT2);
 						} else {
-							(buttons[i][j]).setIcon(Resources.RABBIT3);
+							buttons[i][j].setIcon(Resources.RABBIT3);
 						}
-					} else if (piece instanceof Fox) {
+					} else {
 						try {
-							(buttons[i][j]).setIcon((ImageIcon) Resources.class.getDeclaredField(
+							buttons[i][j].setIcon((ImageIcon) Resources.class.getDeclaredField(
 									"FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())
 									.get(Resources.class));
 						} catch (Exception e) {
@@ -365,149 +388,37 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		}
 	}
 
-	/**
-	 * Enables or disables all buttons, depending on the specified state.
-	 * 
-	 * @param state The state in which all buttons should be set
-	 */
-	private void gameEndBoard(boolean state) {
-		for (int i = 0; i < Board.SIZE; i++) {
-			for (int j = 0; j < Board.SIZE; j++) {
-				buttons[i][j].setEnabled(state);
-			}
-		}
-	}
-
-	/**
-	 * Resets the game.
-	 */
-	private void gameWinReset() {
-		this.board = gameController.reset();
-		this.board.addListener(this);
-		updateView();
-		gameEndBoard(true);
-	}
-
-	/**
-	 * Pops up help dialog.
-	 */
-	private void helpDialog() {
-
-		JPanel panel = new JPanel();
-		pathCheckBoxSetup();
-
-		panel.add(new JLabel("Show possible moves?"));
-
-		chkPath.setSelected(pathSelection);
-
-		panel.add(chkPath);
-
-		panel.add(Box.createHorizontalStrut(25)); // space between components
-
-		panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>"
-				+ "Rabbits and Foxes is a game in which you must get all rabbits to safety by having them land in brown holes. "
-				+ "To do this, rabbits can only jump over other pieces and must land in an empty hole. "
-				+ "Foxes can slide along their initial direction as long as no other piece obstructs their way.<br><br>"
-				+ "Hint (h): Outlines the next best move<br>" + "Help: Displays the help menu<br>"
-				+ "Reset:   Restarts the game<br>" + "Quit   (q):   Exits the application<br>"
-				+ "Escape (ESC): Clears the pending move" + "</p></body></html>"));
-
-		JOptionPane.showMessageDialog(gameFrame, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
-	}
-
-	/**
-	 * Sets up the JCheckBox that will be used in the help dialog to see if the user
-	 * wants possible moves shown or not.
-	 */
-	private void pathCheckBoxSetup() {
-		chkPath = new JCheckBox();
-		chkPath.addItemListener(e -> {
-			if (e.getStateChange() == ItemEvent.SELECTED) {
-				chkPath.setSelected(true);
-				// saves the checkbox selection
-				pathSelection = true;
-			} else {
-				chkPath.setSelected(false);
-				pathSelection = false;
-			}
-		});
-	}
-
-	/**
-	 * Handles button input for the menus.
-	 */
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnHelp) {
-			JOptionPane.showMessageDialog(mainMenuFrame,
-					"Start: Starts the game\n" + "Help: Displays the help menu\n" + "Quit: Exits the application",
-					"Help", JOptionPane.INFORMATION_MESSAGE);
-		} else if (e.getSource() == menuHint) {
-			// disables hint button once its clicked.
-			toggleHint(false);
-			Move bestMove = gameController.getNextBestMove();
-			// makes hint button visible when next best move is acquired.
-			toggleHint(true);
-			if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(selectedBorder)) {
-				buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
-			}
-			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
-		} else if (e.getSource() == menuHelp) {
-			helpDialog();
-		} else if (e.getSource() == menuQuit) {
-			if (JOptionPane.showConfirmDialog(gameFrame, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				System.exit(0);
-			}
-		} else if (e.getSource() == btnQuit) {
-			if (JOptionPane.showConfirmDialog(mainMenuFrame, "Are you sure you want to exit?",
-					"Exit Rabbits and Foxes!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				System.exit(0);
-			}
-		} else if ((e.getSource() == menuReset) && (JOptionPane.showConfirmDialog(gameFrame,
-				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
-				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
-			gameWinReset();
-			clearButtonBorders();
-		}
-	}
-
 	@Override
 	public void handleBoardChange() {
 		updateView();
 		if (board.isInWinningState()) {
-			clearButtonBorders();
 			Resources.SOLVED.start();
-
-			int choice = 0;
+			clearButtonBorders();
 
 			if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
-				choice = JOptionPane.showOptionDialog(gameFrame,
+				int choice = displayOptionDialog(gameFrame,
 						"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-						new String[] { "Next", "Reset", "Quit" }, null);
+						new String[] { "Next", "Reset", "Quit" });
 
 				if (choice == 0) {
-					if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
-						gameController.incrementLevel();
-						setGameFrameLevel();
-					}
+					gameController.incrementLevel();
+					updateFrameTitle();
+					resetGame();
 				} else if (choice == 1) {
-					gameWinReset();
+					resetGame();
 				} else {
 					System.exit(0);
 				}
-			}
-
-			else {
-				int result = JOptionPane.showOptionDialog(gameFrame,
+			} else {
+				if (displayOptionDialog(gameFrame,
 						"You have finished the game! Would you like to go to the main menu or exit?", "End Game",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-						new String[] { "Main Menu", "Quit" }, null);
-				if (result == 0) {
+						new String[] { "Main Menu", "Quit" }) == 0) {
 					gameController.setToFirstLevel();
-					setGameFrameLevel();
+					updateFrameTitle();
+					resetGame();
 					gameFrame.setVisible(false);
+					gameFrame.setLocationRelativeTo(null);
+					mainMenuFrame.setLocationRelativeTo(null);
 					mainMenuFrame.setVisible(true);
 				} else {
 					System.exit(0);
@@ -517,31 +428,43 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	}
 
 	/**
-	 * Sets up the next level
+	 * Handles button input for the menus.
 	 */
-	private void setGameFrameLevel() {
-		gameFrame.setTitle(GAME_NAME + " Level: " + getLevelName());
-		gameWinReset();
-	}
-
-	/**
-	 * @return The current level
-	 */
-	private int getLevelName() {
-		return gameController.getCurrentLevel();
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnHelp) {
+			displayMessageDialog(mainMenuFrame,
+					"Start: Starts the game\nHelp: Displays the help menu\nQuit: Exits the application", "Help");
+		} else if (e.getSource() == menuHint) {
+			Move bestMove = gameController.getNextBestMove();
+			if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(selectedBorder)) {
+				buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
+			}
+			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
+		} else if (e.getSource() == menuHelp) {
+			displayHelpDialog();
+		} else if ((e.getSource() == menuQuit || e.getSource() == btnQuit) && displayOptionDialog(null,
+				"Are you sure you want to exit?", "Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
+			System.exit(0);
+		} else if ((e.getSource() == menuReset) && (displayOptionDialog(gameFrame,
+				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
+				new String[] { "Yes", "No" }) == 0)) {
+			resetGame();
+		} else if (e.getSource() == menuUndo && !gameController.undoMove()) {
+			displayMessageDialog(gameFrame, "No moves to undo", "Undo Move");
+		} else if (e.getSource() == menuRedo && !gameController.redoMove()) {
+			displayMessageDialog(gameFrame, "No moves to Redo", "Redo Move");
+		}
 	}
 
 	/**
 	 * Highlights a JButton when we enter the component with the mouse cursor.
 	 * 
-	 * @param e The mouse event that triggers when the mouse enters the JButton
+	 * @param e The mouse event that is triggered when the mouse enters the JButton
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		if (!((JButton) e.getSource()).getBorder().equals(selectedBorder)
-				&& !((JButton) e.getSource()).getBorder().equals(hintBorderStart)
-				&& !((JButton) e.getSource()).getBorder().equals(hintBorderEnd)
-				&& !((JButton) e.getSource()).getBorder().equals(possiblePositionBorder)) {
+		if (((JButton) e.getSource()).getBorder().equals(blankBorder)) {
 			((JButton) e.getSource()).setBorder(UIManager.getBorder("Button.border"));
 		}
 	}
@@ -549,17 +472,37 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	/**
 	 * Stops highlighting a JButton when the mouse cursor leaves the component.
 	 * 
-	 * @param e The mouse event that triggers when the mouse leaves the JButton
+	 * @param e The mouse event that is triggered when the mouse leaves the JButton
 	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
-		if (!((JButton) e.getSource()).getBorder().equals(blankBorder)
-				&& !((JButton) e.getSource()).getBorder().equals(selectedBorder)
-				&& !((JButton) e.getSource()).getBorder().equals(hintBorderStart)
-				&& !((JButton) e.getSource()).getBorder().equals(hintBorderEnd)
-				&& !((JButton) e.getSource()).getBorder().equals(possiblePositionBorder)) {
+		if (((JButton) e.getSource()).getBorder().equals(UIManager.getBorder("Button.border"))) {
 			((JButton) e.getSource()).setBorder(blankBorder);
 		}
+	}
+
+	/**
+	 * Binds the specified keystroke to the specified JComponent.
+	 * 
+	 * @param component  The component on which the keystroke should be bound
+	 * @param keystroke  The keystroke to bind
+	 * @param actionName The name of keystroke action
+	 * @param method     The method to execute when the keystroke is activated
+	 */
+	private void bindKeyStroke(JComponent component, String keystroke, String actionName, Runnable method) {
+		if (keystroke.length() == 1) {
+			component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keystroke.charAt(0)),
+					actionName);
+		} else {
+			component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keystroke), actionName);
+		}
+		component.getActionMap().put(actionName, new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				method.run();
+			}
+
+		});
 	}
 
 	/**
