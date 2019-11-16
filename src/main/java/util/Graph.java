@@ -26,6 +26,10 @@ public class Graph {
 	 *         winning path, this list will be empty.
 	 */
 	public List<Node> breadthFirstSearch(Node root) {
+		if (root.isWinningNode()) {
+			return new LinkedList<>();
+		}
+
 		Queue<Node> queue = new ArrayDeque<>();
 		queue.add(root);
 

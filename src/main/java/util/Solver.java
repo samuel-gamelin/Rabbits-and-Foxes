@@ -33,12 +33,18 @@ public class Solver {
 	 *         with an invalid direction is returned.
 	 */
 	public static Move getNextBestMove(Board board) {
+		if (board == null) {
+			return new Move(-1, -1, -1, -1);
+		}
+
 		Graph graph = new Graph();
 		Node node = new Node(board);
+
 		if (lastHint == null || !lastHint.contains(node)) {
 			lastHint = cleanNodeList(graph.breadthFirstSearch(node));
 		}
-		if (lastHint != null) {
+
+		if (!lastHint.isEmpty()) {
 			int boardOne = lastHint.indexOf(node);
 			if (lastHint.size() > boardOne) {
 				return lastHint.get(boardOne).getMoveTo(lastHint.get(boardOne + 1));
@@ -48,7 +54,8 @@ public class Solver {
 	}
 
 	/**
-	 * Cleans the list from unwanted fox moves (repeated, consecutive moves with the same fox).
+	 * Cleans the list from unwanted fox moves (repeated, consecutive moves with the
+	 * same fox).
 	 * 
 	 * @param nodeList The list of nodes to clean
 	 * @return A list of nodes where unwanted nodes have been removed
