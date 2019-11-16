@@ -133,7 +133,7 @@ public class Board {
 	public boolean move(Move move) {
 		// Do a preliminary check on the move (i.e. making sure it is in bounds, and
 		// that the starting tile actually has a piece)
-		if (!validateBounds(move) || !tiles[move.xStart][move.yStart].isOccupied()) {
+		if (move == null || !validateBounds(move) || !tiles[move.xStart][move.yStart].isOccupied()) {
 			return false;
 		}
 
