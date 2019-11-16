@@ -86,11 +86,13 @@ public class Tile {
 	/**
 	 * Places piece and sets occupied to true
 	 * 
-	 * @param piece Of type Piece will now be placed on the tile.
+	 * @param piece The piece to place on the tile
 	 */
 	public void placePiece(Piece piece) {
-		this.occupied = true;
-		this.piece = piece;
+		if (piece != null) {
+			this.occupied = true;
+			this.piece = piece;
+		}
 	}
 
 	/**
@@ -114,22 +116,30 @@ public class Tile {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		return prime * result + ((piece == null) ? 0 : piece.hashCode());
+		result = prime * result + (occupied ? 1231 : 1237);
+		result = prime * result + ((piece == null) ? 0 : piece.hashCode());
+		result = prime * result + ((tileColour == null) ? 0 : tileColour.hashCode());
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!(obj instanceof Tile))
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
 			return false;
 		Tile other = (Tile) obj;
+		if (occupied != other.occupied)
+			return false;
 		if (piece == null) {
 			if (other.piece != null)
 				return false;
-		} else if (!piece.equals(other.piece)) {
+		} else if (!piece.equals(other.piece))
 			return false;
-		}
+		if (tileColour != other.tileColour)
+			return false;
 		return true;
 	}
 }
