@@ -107,7 +107,7 @@ public class Fox extends Piece {
 			default :
 				dir = Direction.DOWN;
 		}
-		return new Fox(dir, str.substring(3,4).equals("1") ? true : false);
+		return new Fox(dir, str.substring(3,4).equals("1"));
 	}
 
 	/**
