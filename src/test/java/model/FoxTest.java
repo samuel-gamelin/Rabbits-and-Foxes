@@ -30,7 +30,6 @@ public class FoxTest {
 		fox1 = new Fox(Fox.Direction.UP, true);
 		fox2 = new Fox(Fox.Direction.LEFT, false);
 		board.setPiece(fox1, 0, 1);
-		System.out.println(board);
 	}
 	
 	@Test
