@@ -19,7 +19,6 @@ This GitHub repo is used for the development of a game based on JumpIN that foll
     This will create a folder called SYSC-3110.
 2.  Open the Eclipse IDE, and click File -> Open Projects from File System.
 3.  From that window, click on the "Directory" button next to the "Import source" box, and select the "SYSC-3110" folder that was just created. Click "Finish".
-4.  You will have to add JUnit 4 to your classpath to run the tests. To do so, right-click on the project name, then click "Build Path -> Add Libraries". Select JUnit, hit "Next", select JUnit 4 and click "Finish".
 
 ##### Rules for Contributions:
 
@@ -29,7 +28,7 @@ When contributing to the project please start on the issues page which is used f
   - Only commit code to the corresponding milestone.
   - Please document your commits with changes and updates.
   - Add test cases for the updates made.
-  - Merging to master will occur on weekly bases under the review of all developers on the project.
+  - Merging to master will occur once every two weeks under the review of all developers on the project.
 - Pull requests:
   - Open a pull request to the corresponding milestone.
   - Document your code.
@@ -50,17 +49,17 @@ When contributing to the project please start on the issues page which is used f
 
 ## Current Class Diagram
 
-<p align="center"> 
+<p align="center">
 <img src="documentation/uml/classDiagram.png">
 </p>
-Date: November 16, 2019
+Date: November 18, 2019
 
 ## Current Sequence Diagram
 
-<p align="center"> 
+<p align="center">
 <img src="documentation/uml/sequenceDiagram.png">
 </p>
-Date: November 16, 2019
+Date: November 18, 2019
 
 ## Road Map
 
@@ -87,15 +86,15 @@ Currently no known issues are present.
 
 ## The Team
 
-- [Mohamed Radwan](mailto:mohamedradwan@cmail.carleton.ca)
-- [Samuel Gamelin](mailto:samuelgamelin@cmail.carleton.ca)
-- [Dani Hashweh](mailto:danihashweh@cmail.carleton.ca)
-- [John Breton](mailto:johnbreton@cmail.carleton.ca)
-- [Abdalla El Nakla](mailto:abdallaelnakla@cmail.carleton.ca)
+- [Mohamed Radwan](https://github.com/MohamedRadwan)
+- [Samuel Gamelin](https://github.com/samuel-gamelin)
+- [Dani Hashweh](https://github.com/danihashweh)
+- [John Breton](https://github.com/john-breton)
+- [Abdalla El Nakla](https://github.com/Abdoltim)
 
 ## Documentation
 
-Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing)
+Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing).
 
 ## Credits for Graphical Resources
 
