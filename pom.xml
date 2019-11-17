@@ -7,8 +7,8 @@
 	</properties>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>SYSC-3110</groupId>
-	<artifactId>SYSC-3110</artifactId>
-	<version>3.0-MILESTONE</version>
+	<artifactId>Rabbits-and-Foxes</artifactId>
+	<version>Version 3.0</version>
 	<build>
 		<resources>
 			<resource>
