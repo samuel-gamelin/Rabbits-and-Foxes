@@ -142,10 +142,9 @@ public final class Resources {
 	 *         LevelData.json file is found.
 	 */
 	private static int getNumberOfLevels() {
-		try {
-			return ((JSONArray) new JSONParser().parse(new InputStreamReader(
-					Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"))))
-							.size();
+		try (InputStreamReader inputStreamReader = new InputStreamReader(
+				Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"))) {
+			return ((JSONArray) new JSONParser().parse(inputStreamReader)).size();
 
 		} catch (IOException | ParseException e) {
 			e.printStackTrace(System.out);
@@ -162,10 +161,11 @@ public final class Resources {
 	 *         not exist.
 	 */
 	public static Board getLevel(int level) {
-		try {
-			return Board.createBoard((String) ((JSONObject) (((JSONArray) new JSONParser().parse(new InputStreamReader(
-					Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"))))
-							.get(level - 1))).get("Level " + level));
+		try (InputStreamReader inputStreamReader = new InputStreamReader(
+				Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"))) {
+			return Board.createBoard(
+					(String) ((JSONObject) (((JSONArray) new JSONParser().parse(inputStreamReader)).get(level - 1)))
+							.get("Level " + level));
 		} catch (IOException | ParseException e) {
 			e.printStackTrace(System.out);
 			return null;
