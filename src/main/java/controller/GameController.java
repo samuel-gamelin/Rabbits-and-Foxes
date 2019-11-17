@@ -25,7 +25,7 @@ import util.Solver;
  */
 public class GameController {
 	private Board board;
-	private int currentLevel, prevLevel;
+	private int currentLevel, prevLevel = 1;
 	private List<Integer> moveList;
 	private ArrayDeque<Move> undoMoveStack, redoMoveStack;
 
@@ -46,7 +46,6 @@ public class GameController {
 	public GameController(Board board) {
 		this.board = board;
 		this.currentLevel = 1;
-		this.prevLevel = 1; 
 		this.moveList = new ArrayList<>();
 		this.undoMoveStack = new ArrayDeque<>();
 		this.redoMoveStack = new ArrayDeque<>();
