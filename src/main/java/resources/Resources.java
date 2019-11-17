@@ -2,8 +2,8 @@ package resources;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 
 import javax.sound.sampled.AudioSystem;
@@ -45,39 +45,39 @@ public final class Resources {
 					: 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 
 	// Incorrect move sound
-	public static final Clip INVALID_MOVE = loadClip(getFileURL("wrong.wav"));
+	public static final Clip INVALID_MOVE = loadClip(getFileURL("sounds/wrong.wav"));
 
 	// Level solved sound
-	public static final Clip SOLVED = loadClip(getFileURL("solved.wav"));
+	public static final Clip SOLVED = loadClip(getFileURL("sounds/solved.wav"));
 
 	// JFrame icon
-	public static final ImageIcon WINDOW_ICON = loadIcon("rabbit3.png", 4, 5);
+	public static final ImageIcon WINDOW_ICON = loadIcon("images/rabbit3.png", 4, 5);
 
 	// Rabbit icons
-	public static final ImageIcon RABBIT1 = loadIcon("rabbit1.png", 0.6, 0.75);
-	public static final ImageIcon RABBIT2 = loadIcon("rabbit2.png", 0.6, 0.75);
-	public static final ImageIcon RABBIT3 = loadIcon("rabbit3.png", 0.6, 0.75);
+	public static final ImageIcon RABBIT1 = loadIcon("images/rabbit1.png", 0.6, 0.75);
+	public static final ImageIcon RABBIT2 = loadIcon("images/rabbit2.png", 0.6, 0.75);
+	public static final ImageIcon RABBIT3 = loadIcon("images/rabbit3.png", 0.6, 0.75);
 
 	// Fox head icons
-	public static final ImageIcon FOX_HEAD_UP = loadIcon("fox-head-up.png", 0.75, 1);
-	public static final ImageIcon FOX_HEAD_DOWN = loadIcon("fox-head-down.png", 0.75, 1);
-	public static final ImageIcon FOX_HEAD_LEFT = loadIcon("fox-head-left.png", 1, 0.75);
-	public static final ImageIcon FOX_HEAD_RIGHT = loadIcon("fox-head-right.png", 1, 0.75);
+	public static final ImageIcon FOX_HEAD_UP = loadIcon("images/fox-head-up.png", 0.75, 1);
+	public static final ImageIcon FOX_HEAD_DOWN = loadIcon("images/fox-head-down.png", 0.75, 1);
+	public static final ImageIcon FOX_HEAD_LEFT = loadIcon("images/fox-head-left.png", 1, 0.75);
+	public static final ImageIcon FOX_HEAD_RIGHT = loadIcon("images/fox-head-right.png", 1, 0.75);
 
 	// Fox tail icons
-	public static final ImageIcon FOX_TAIL_UP = loadIcon("fox-tail-up.png", 0.7, 1);
-	public static final ImageIcon FOX_TAIL_DOWN = loadIcon("fox-tail-down.png", 0.75, 1);
-	public static final ImageIcon FOX_TAIL_LEFT = loadIcon("fox-tail-left.png", 1, 0.7);
-	public static final ImageIcon FOX_TAIL_RIGHT = loadIcon("fox-tail-right.png", 1.03, 0.7);
+	public static final ImageIcon FOX_TAIL_UP = loadIcon("images/fox-tail-up.png", 0.7, 1);
+	public static final ImageIcon FOX_TAIL_DOWN = loadIcon("images/fox-tail-down.png", 0.75, 1);
+	public static final ImageIcon FOX_TAIL_LEFT = loadIcon("images/fox-tail-left.png", 1, 0.7);
+	public static final ImageIcon FOX_TAIL_RIGHT = loadIcon("images/fox-tail-right.png", 1.03, 0.7);
 
 	// Mushroom icon
-	public static final ImageIcon MUSHROOM = loadIcon("mushroom.png", 0.75, 0.75);
+	public static final ImageIcon MUSHROOM = loadIcon("images/mushroom.png", 0.75, 0.75);
 
 	// Main menu icon
-	public static final ImageIcon MAIN_MENU_BACKGROUND = loadIcon("mainmenu.png", 5, 5);
+	public static final ImageIcon MAIN_MENU_BACKGROUND = loadIcon("images/mainmenu.png", 5, 5);
 
 	// Board icon
-	public static final ImageIcon BOARD = loadIcon("board.png", 5, 5);
+	public static final ImageIcon BOARD = loadIcon("images/board.png", 5, 5);
 
 	/**
 	 * Making the constructor private, preventing any instantiation of this class.
@@ -134,7 +134,7 @@ public final class Resources {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Provides the number of levels available in the LevelData.json file.
 	 * 
@@ -143,8 +143,10 @@ public final class Resources {
 	 */
 	private static int getNumberOfLevels() {
 		try {
-			return ((JSONArray) new JSONParser().parse(new FileReader("src/main/resources/Levels/LevelData.json")))
-					.size();
+			return ((JSONArray) new JSONParser().parse(new InputStreamReader(
+					Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"))))
+							.size();
+
 		} catch (IOException | ParseException e) {
 			e.printStackTrace(System.out);
 			return -1;
@@ -161,9 +163,9 @@ public final class Resources {
 	 */
 	public static Board getLevel(int level) {
 		try {
-			return Board.createBoard((String) ((JSONObject) (((JSONArray) new JSONParser()
-					.parse(new FileReader("src/main/resources/Levels/LevelData.json"))).get(level - 1)))
-							.get("Level " + level));
+			return Board.createBoard((String) ((JSONObject) (((JSONArray) new JSONParser().parse(new InputStreamReader(
+					Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"))))
+							.get(level - 1))).get("Level " + level));
 		} catch (IOException | ParseException e) {
 			e.printStackTrace(System.out);
 			return null;
