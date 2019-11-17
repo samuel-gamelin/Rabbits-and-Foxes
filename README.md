@@ -53,20 +53,21 @@ When contributing to the project please start on the issues page which is used f
 <p align="center"> 
 <img src="documentation/uml/classDiagram.png">
 </p>
-Date: November 4, 2019
+Date: November 16, 2019
 
 ## Current Sequence Diagram
 
 <p align="center"> 
 <img src="documentation/uml/sequenceDiagram.png">
 </p>
-Date: November 4, 2019
+Date: November 16, 2019
 
 ## Road Map
 
-- Creating the View and Controller portions of the game
-  - Building a graphical user interface to allow the user to play the game interactively
-  - Implementing unit tests for the Model portion of the game
+- Adding an undo/redo feature to the game and a hint system utilizing a game solver
+  - Adding the ability to see the next best move on the game board
+  - Incorporating an undo/redo to improve user experience
+  - Updating and adding unit tests for the Model portion of the game
   - Continuing to implement gradual improvements
   - Continuing to document the development and design process
 
@@ -78,8 +79,11 @@ Currently no known issues are present.
 
 ## New features
 
-- Milestone 3: A solver for the game
-    - Add new features here
+- Milestone 3: A solver for the game + undo/redo feature
+    - An undo/redo moves feature to make solving puzzles easier
+    - A hint system that can be used to get the next best move toward a solution
+      - The hint system uses a BFS-algorithm to solve the current puzzle and suggest the next move towards a solution
+    - 20 levels that can be played and completed, loaded from a JSON document
 
 ## The Team
 
