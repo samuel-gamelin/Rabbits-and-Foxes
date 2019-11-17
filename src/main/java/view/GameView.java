@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
@@ -80,8 +81,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		// platforms
 		try {
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			Resources.LOGGER.error("Could not set the default look and feel", e);
 		}
 		// Removes focus border from all buttons
 		UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
@@ -367,7 +369,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 									"FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())
 									.get(Resources.class));
 						} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
-							e.printStackTrace(System.out);
+							Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
 						}
 					}
 				} else {

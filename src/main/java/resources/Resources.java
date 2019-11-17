@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -13,6 +14,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,14 +25,19 @@ import org.json.simple.parser.ParseException;
 import model.Board;
 
 /**
- * This class provides a simple way to access audio and graphical resources used
- * by the game.
+ * This class provides a simple way to access audio and graphical resources
+ * along with logging facilities used by the game.
  * 
  * @author Samuel Gamelin
  * @author John Breton
  * @version 3.0
  */
 public final class Resources {
+	/**
+	 * The Logger object used for logging.
+	 */
+	public static final Logger LOGGER = getLogger();
+
 	/**
 	 * The total number of levels available.
 	 */
@@ -86,6 +95,16 @@ public final class Resources {
 	}
 
 	/**
+	 * Configures and returns the logger used for this application.
+	 * 
+	 * @return The properly-configured logger object
+	 */
+	private static Logger getLogger() {
+		PropertyConfigurator.configure(Thread.currentThread().getContextClassLoader().getResource("log4j.properties"));
+		return LogManager.getLogger(Resources.class);
+	}
+
+	/**
 	 * Returns a scaled version of the icon based on the primary display's size. A
 	 * scale value of 1 represents 1/5 of the width/height of the viewing area.
 	 * 
@@ -130,9 +149,9 @@ public final class Resources {
 			});
 			return clip;
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-			e.printStackTrace(System.out);
-			return null;
+			LOGGER.error("Could not load audio resource at " + path, e);
 		}
+		return null;
 	}
 
 	/**
@@ -143,13 +162,14 @@ public final class Resources {
 	 */
 	private static int getNumberOfLevels() {
 		try (InputStreamReader inputStreamReader = new InputStreamReader(
-				Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"))) {
+				Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"),
+				Charset.defaultCharset())) {
 			return ((JSONArray) new JSONParser().parse(inputStreamReader)).size();
 
 		} catch (IOException | ParseException e) {
-			e.printStackTrace(System.out);
-			return -1;
+			LOGGER.error("Could not load the LevelData.json file", e);
 		}
+		return -1;
 	}
 
 	/**
@@ -162,13 +182,14 @@ public final class Resources {
 	 */
 	public static Board getLevel(int level) {
 		try (InputStreamReader inputStreamReader = new InputStreamReader(
-				Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"))) {
+				Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"),
+				Charset.defaultCharset())) {
 			return Board.createBoard(
 					(String) ((JSONObject) (((JSONArray) new JSONParser().parse(inputStreamReader)).get(level - 1)))
 							.get("Level " + level));
 		} catch (IOException | ParseException e) {
-			e.printStackTrace(System.out);
-			return null;
+			LOGGER.error("Could not load the LevelData.json file", e);
 		}
+		return null;
 	}
 }

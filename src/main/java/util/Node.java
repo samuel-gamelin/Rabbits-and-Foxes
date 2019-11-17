@@ -78,10 +78,12 @@ public class Node {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!(obj instanceof Node))
+		}
+		if (!(obj instanceof Node)) {
 			return false;
+		}
 		Node other = (Node) obj;
 		if (board == null) {
 			if (other.board != null)
