@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_231" class="java.beans.XMLDecoder">
+<java version="1.8.0_221" class="java.beans.XMLDecoder">
  <object class="com.horstmann.violet.ClassDiagramGraph">
   <void method="addNode">
    <object class="com.horstmann.violet.ClassNode" id="ClassNode0">
@@ -484,6 +484,7 @@ TAIL</string>
      <void property="text">
       <string>-board:Board
 -currentLevel:int
+-prevLevel:int
 -move:List&lt;Integer&gt;
 -undoMoveStack:ArrayDeque&lt;Move&gt;
 -redoMoveStack:ArrayDeque&lt;Move&gt;</string>
