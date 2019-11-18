@@ -132,6 +132,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		 */
 
 		levelSelectorFrame = new JFrame("Level Selector");
+		levelSelectorFrame.setIconImage(Resources.WINDOW_ICON.getImage());
 		levelSelectorFrame.setContentPane(new JLabel(Resources.MAIN_MENU_BACKGROUND));
 		levelSelectorFrame.getContentPane().setLayout(new GridBagLayout());
 		levelSelectorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -426,7 +427,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				int choice = displayOptionDialog(gameFrame,
 						"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
 						new String[] { "Next", "Reset", "Quit" });
-
 				if (choice == 0) {
 					gameController.incrementLevel();
 					updateFrameTitle();
