@@ -62,7 +62,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	private JButton menuReset, menuHelp, menuQuit, menuHint, menuUndo, menuRedo, menuMainMenu;
 	private JButton btnStart, btnHelp, btnQuit, btnSelectLevel, btnStartSelectLevel;
 
-	private JList<String> listOfLevels; 
+	private JList<String> listOfLevels;
 	private JCheckBox chkPath;
 	private boolean pathSelection;
 
@@ -124,13 +124,13 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		mainMenuFrame.pack();
 		mainMenuFrame.setLocationRelativeTo(null);
 		mainMenuFrame.setVisible(true);
-		
+
 		/**
 		 * 
 		 * Level Selector frame
 		 * 
 		 */
-		
+
 		levelSelectorFrame = new JFrame("Level Selector");
 		levelSelectorFrame.setContentPane(new JLabel(Resources.MAIN_MENU_BACKGROUND));
 		levelSelectorFrame.getContentPane().setLayout(new GridBagLayout());
@@ -138,26 +138,23 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		levelSelectorFrame.setResizable(false);
 		levelSelectorFrame.pack();
 		levelSelectorFrame.setLocationRelativeTo(null);
-		
 
-		ArrayList<String> allLevels = new ArrayList<String>(); 
-		for(int i = 1; i <= Resources.NUMBER_OF_LEVELS; i++) {
+		ArrayList<String> allLevels = new ArrayList<String>();
+		for (int i = 1; i <= Resources.NUMBER_OF_LEVELS; i++) {
 			allLevels.add("Level " + i);
 		}
-		
-		//convert the arraylist to a string array 
+
+		// convert the arraylist to a string array
 		String[] arrAllLevels = allLevels.toArray(new String[0]);
-		listOfLevels = new JList<String>(arrAllLevels); 
-		
+		listOfLevels = new JList<String>(arrAllLevels);
+
 		levelSelectorFrame.add(listOfLevels);
-		
+
 		btnStartSelectLevel = new JButton("Start");
 		addMainMenuButton(levelSelectorFrame, btnStartSelectLevel);
-		
+
 		btnStartSelectLevel.addActionListener(this);
-		
-		
-		
+
 		/**
 		 * 
 		 * Game frame
@@ -181,7 +178,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		menuReset = createMenuBarButton("Reset", false);
 		menuHelp = createMenuBarButton("Help", false);
 		menuQuit = createMenuBarButton("Quit", true);
-		
+
 		menuBar.add(menuMainMenu);
 		menuBar.add(menuHint);
 		menuBar.add(menuUndo);
@@ -456,37 +453,33 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			}
 		}
 	}
-	
 
 	/**
 	 * Handles button input for the menus.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnStart) {
-			setGameLevel(0); 
-		}
-	else if (e.getSource() == menuMainMenu && displayOptionDialog(null,
-				"Are you sure you want to return to main menu?", "Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
+		if (e.getSource() == btnStart) {
+			setGameLevel(0);
+		} else if (e.getSource() == menuMainMenu
+				&& displayOptionDialog(null, "Are you sure you want to return to main menu?", "Return to Main Menu",
+						new String[] { "Yes", "No" }) == 0) {
 			gameFrame.setVisible(false);
 			mainMenuFrame.setVisible(true);
 		}
 
-		else if(e.getSource() == btnStartSelectLevel) {
-			if(listOfLevels.getSelectedIndex() == -1) {
+		else if (e.getSource() == btnStartSelectLevel) {
+			if (listOfLevels.getSelectedIndex() == -1) {
 				setGameLevel(1);
 				levelSelectorFrame.setVisible(false);
-			}
-			else {
+			} else {
 				setGameLevel(listOfLevels.getSelectedIndex());
 				levelSelectorFrame.setVisible(false);
 			}
-		}
-		else if(e.getSource() == btnSelectLevel) {
+		} else if (e.getSource() == btnSelectLevel) {
 			levelSelectorFrame.setVisible(true);
 			mainMenuFrame.setVisible(false);
-		}
-		else if (e.getSource() == btnHelp) {
+		} else if (e.getSource() == btnHelp) {
 			displayMessageDialog(mainMenuFrame,
 					"Start: Starts the game\nHelp: Displays the help menu\nQuit: Exits the application", "Help");
 		} else if (e.getSource() == menuHint) {
@@ -510,19 +503,18 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			displayMessageDialog(gameFrame, "No moves to redo", "Redo Move");
 		}
 	}
-	
+
 	/**
-	 * Sets the game level whenever the start button is pressed. 
+	 * Sets the game level whenever the start button is pressed.
 	 */
 	private void setGameLevel(int level) {
-		gameController.setLevel(level+1); 
-		resetGame(); 
-		updateFrameTitle(); 
-		mainMenuFrame.setVisible(false); 
+		gameController.setLevel(level + 1);
+		resetGame();
+		updateFrameTitle();
+		mainMenuFrame.setVisible(false);
 		gameFrame.setVisible(true);
 		displayHelpDialog();
 	}
-
 
 	/**
 	 * Highlights a JButton when we enter the component with the mouse cursor.
