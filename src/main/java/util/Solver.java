@@ -60,7 +60,7 @@ public class Solver {
 	 * @param nodeList The list of nodes to clean
 	 * @return A list of nodes where unwanted nodes have been removed
 	 */
-	public static List<Node> cleanNodeList(List<Node> nodeList) {
+	private static List<Node> cleanNodeList(List<Node> nodeList) {
 		if (nodeList == null || nodeList.size() < 3) {
 			return nodeList;
 		}

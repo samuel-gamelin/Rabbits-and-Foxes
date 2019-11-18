@@ -21,14 +21,18 @@ public class Node {
 	}
 
 	/**
-	 * @return the board
+	 * Returns the board associated with this Node.
+	 * 
+	 * @return This node's board
 	 */
 	public Board getBoard() {
 		return board;
 	}
 
 	/**
-	 * @return A list containing all children of this node
+	 * Returns a set containing all child nodes of this node.
+	 * 
+	 * @return A set containing all children of this node
 	 */
 	public Set<Node> getChildren() {
 		Set<Node> children = new HashSet<>();
