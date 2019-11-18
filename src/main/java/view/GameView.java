@@ -278,8 +278,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 */
 	private void addMainMenuButton(Container pane, JButton button) {
 		pane.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 7))));
-		button.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 2, (int) (0.15 * Resources.SIDE_LENGTH)));
+		button.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) (0.10 * Resources.SIDE_LENGTH)));
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
+		button.setForeground(Color.BLACK);
+		button.setBackground(Color.WHITE);
 		pane.add(button);
 	}
 
@@ -481,7 +483,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			mainMenuFrame.setVisible(false);
 		} else if (e.getSource() == btnHelp) {
 			displayMessageDialog(mainMenuFrame,
-					"Start: Starts the game\nHelp: Displays the help menu\nQuit: Exits the application", "Help");
+					"Start: Starts the game\nLevel Select: Opens the level section menu\nHelp: Displays the help menu\nQuit: Exits the application", "Help");
 		} else if (e.getSource() == menuHint) {
 			Move bestMove = gameController.getNextBestMove();
 			if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(selectedBorder)) {
