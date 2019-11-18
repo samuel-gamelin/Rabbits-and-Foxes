@@ -25,9 +25,10 @@ import util.Solver;
  */
 public class GameController {
 	private Board board;
-	private int currentLevel, prevLevel;
+	private int currentLevel;
 	private List<Integer> moveList;
-	private ArrayDeque<Move> undoMoveStack, redoMoveStack;
+	private ArrayDeque<Move> undoMoveStack;
+	private ArrayDeque<Move> redoMoveStack;
 
 	/**
 	 * An enumeration representing the validity of a click from the user.
@@ -46,7 +47,6 @@ public class GameController {
 	public GameController(Board board) {
 		this.board = board;
 		this.currentLevel = 1;
-		this.prevLevel = 1; 
 		this.moveList = new ArrayList<>();
 		this.undoMoveStack = new ArrayDeque<>();
 		this.redoMoveStack = new ArrayDeque<>();
@@ -72,15 +72,9 @@ public class GameController {
 			return ClickValidity.VALID;
 		} else if (!moveList.isEmpty()) {
 			Move movePiece = new Move(moveList.get(0), moveList.get(1), x, y);
-			if (board.move(movePiece)) {
+			if (board.move(movePiece) && !moveList.isEmpty()) {
 				moveList.clear();
-				redoMoveStack.clear();
-				if (prevLevel != getCurrentLevel()) {
-					undoMoveStack.clear();
-					prevLevel = getCurrentLevel();
-				} else {
-					undoMoveStack.push(movePiece);
-				}
+				undoMoveStack.push(movePiece);
 				return ClickValidity.VALID_MOVEMADE;
 			}
 			return ClickValidity.INVALID_MOVEMADE;
