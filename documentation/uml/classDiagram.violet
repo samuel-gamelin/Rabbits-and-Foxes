@@ -662,7 +662,7 @@ BoardListener</string>
 +&lt;u&gt;NUMBER_OF_LEVELS:int&lt;/u&gt;
 +&lt;u&gt;SIDE_LENGTH:double&lt;/u&gt;
 +&lt;u&gt;INVALID_MOVE:Clip&lt;/u&gt;
-+&lt;u&gt;Solved:Clip&lt;/u&gt;
++&lt;u&gt;SOLVED:Clip&lt;/u&gt;
 +&lt;u&gt;WINDOW_ICON:ImageIcon&lt;/u&gt;
 +&lt;u&gt;RABBIT1:ImageIcon&lt;/u&gt;
 +&lt;u&gt;RABBIT2:ImageIcon&lt;/u&gt;
