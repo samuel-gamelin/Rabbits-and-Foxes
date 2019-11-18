@@ -80,7 +80,7 @@ Currently no known issues are present.
 
 - Milestone 3: A solver for the game + undo/redo feature
     - An undo/redo moves feature to make solving puzzles easier
-    - A hint system that can be used to get the next best move toward a solution
+    - A hint system that can be used to get the next best move towards a solution
       - The hint system uses a BFS-algorithm to solve the current puzzle and suggest the next move towards a solution
     - 20 levels that can be played and completed, loaded from a JSON document
 
