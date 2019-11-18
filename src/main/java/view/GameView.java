@@ -149,8 +149,9 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		String[] arrAllLevels = allLevels.toArray(new String[0]);
 		listOfLevels = new JList<String>(arrAllLevels);
 
+		if (listOfLevels.getSelectedIndex() == -1)
+			listOfLevels.setSelectedIndex(0);
 		levelSelectorFrame.add(listOfLevels);
-
 		btnStartSelectLevel = new JButton("Start");
 		addMainMenuButton(levelSelectorFrame, btnStartSelectLevel);
 
