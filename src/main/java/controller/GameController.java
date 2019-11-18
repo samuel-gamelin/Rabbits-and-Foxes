@@ -77,7 +77,7 @@ public class GameController {
 		} else if (!moveList.isEmpty()) {
 
 			Move movePiece = new Move(moveList.get(0), moveList.get(1), x, y);
-			if (board.move(movePiece) && !moveList.isEmpty()) {
+			if (!moveList.isEmpty() && board.move(movePiece)) {
 				moveList.clear();
 
 				redoMoveStack.clear();
