@@ -59,7 +59,7 @@ import util.Move;
 public class GameView extends MouseAdapter implements BoardListener, ActionListener {
 	private JFrame mainMenuFrame, gameFrame, levelSelectorFrame;
 
-	private JButton menuReset, menuHelp, menuQuit, menuHint, menuUndo, menuRedo, menuMainMenu;
+	private JButton menuReset, menuHelp, menuQuit, menuHint, menuUndo, menuRedo, menuMainScreen;
 	private JButton btnStart, btnHelp, btnQuit, btnSelectLevel, btnStartSelectLevel;
 
 	private JList<String> listOfLevels;
@@ -172,7 +172,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
 
-		menuMainMenu = createMenuBarButton("Main Menu", false);
+		menuMainScreen = createMenuBarButton("Main Menu", false);
 		menuHint = createMenuBarButton("Hint", true);
 		menuUndo = createMenuBarButton("Undo", true);
 		menuRedo = createMenuBarButton("Redo", true);
@@ -180,7 +180,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		menuHelp = createMenuBarButton("Help", false);
 		menuQuit = createMenuBarButton("Quit", true);
 
-		menuBar.add(menuMainMenu);
+		menuBar.add(menuMainScreen);
 		menuBar.add(menuHint);
 		menuBar.add(menuUndo);
 		menuBar.add(menuRedo);
@@ -261,7 +261,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		btnQuit.addActionListener(this);
 		btnSelectLevel.addActionListener(this);
 
-		menuMainMenu.addActionListener(this);
+		menuMainScreen.addActionListener(this);
 		menuReset.addActionListener(this);
 		menuHelp.addActionListener(this);
 		menuQuit.addActionListener(this);
@@ -463,7 +463,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnStart) {
 			setGameLevel(0);
-		} else if (e.getSource() == menuMainMenu
+		} else if (e.getSource() == menuMainScreen
 				&& displayOptionDialog(null, "Are you sure you want to return to main menu?", "Return to Main Menu",
 						new String[] { "Yes", "No" }) == 0) {
 			gameFrame.setVisible(false);
