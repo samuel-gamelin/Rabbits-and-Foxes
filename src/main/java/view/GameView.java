@@ -54,10 +54,10 @@ import util.Move;
  * @version 3.0
  */
 public class GameView extends MouseAdapter implements BoardListener, ActionListener {
-	private JFrame mainMenuFrame, gameFrame;
+	private JFrame mainMenuFrame, gameFrame, levelSelector;
 
-	private JButton menuReset, menuHelp, menuQuit, menuHint, menuUndo, menuRedo;
-	private JButton btnStart, btnHelp, btnQuit;
+	private JButton menuReset, menuHelp, menuQuit, menuHint, menuUndo, menuRedo, menuMainMenu;
+	private JButton btnStart, btnHelp, btnQuit, btnSelectLevel; 
 
 	private JCheckBox chkPath;
 	private boolean pathSelection;
@@ -105,10 +105,12 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		mainMenuFrame.getContentPane().setLayout(new BoxLayout(mainMenuFrame.getContentPane(), BoxLayout.Y_AXIS));
 
 		btnStart = new JButton("Start");
+		btnSelectLevel = new JButton("Select Level");
 		btnHelp = new JButton("Help");
 		btnQuit = new JButton("Quit");
 
 		addMainMenuButton(mainMenuFrame, btnStart);
+		addMainMenuButton(mainMenuFrame, btnSelectLevel);
 		addMainMenuButton(mainMenuFrame, btnHelp);
 		addMainMenuButton(mainMenuFrame, btnQuit);
 
@@ -118,7 +120,22 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		mainMenuFrame.pack();
 		mainMenuFrame.setLocationRelativeTo(null);
 		mainMenuFrame.setVisible(true);
-
+		
+		/**
+		 * 
+		 * Level Selector frame
+		 * 
+		 */
+		
+		levelSelector = new JFrame("Level Selector");
+		levelSelector.setContentPane(new JLabel(Resources.MAIN_MENU_BACKGROUND));
+		levelSelector.getContentPane().setLayout(new GridLayout(5, 5));
+		levelSelector.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		levelSelector.setResizable(false);
+		levelSelector.pack();
+		levelSelector.setLocationRelativeTo(null);
+	
+		
 		/**
 		 * 
 		 * Game frame
@@ -135,13 +152,15 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
 
+		menuMainMenu = createMenuBarButton("Main Menu", false);
 		menuHint = createMenuBarButton("Hint", true);
 		menuUndo = createMenuBarButton("Undo", true);
 		menuRedo = createMenuBarButton("Redo", true);
 		menuReset = createMenuBarButton("Reset", false);
 		menuHelp = createMenuBarButton("Help", false);
 		menuQuit = createMenuBarButton("Quit", true);
-
+		
+		menuBar.add(menuMainMenu);
 		menuBar.add(menuHint);
 		menuBar.add(menuUndo);
 		menuBar.add(menuRedo);
@@ -219,12 +238,16 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		// Attach action listeners to buttons
 		btnStart.addActionListener(e -> {
 			mainMenuFrame.setVisible(false);
+			gameController.setToFirstLevel();
+			resetGame(); 
 			gameFrame.setVisible(true);
 			displayHelpDialog();
 		});
 		btnHelp.addActionListener(this);
 		btnQuit.addActionListener(this);
+		btnSelectLevel.addActionListener(this);
 
+		menuMainMenu.addActionListener(this);
 		menuReset.addActionListener(this);
 		menuHelp.addActionListener(this);
 		menuQuit.addActionListener(this);
@@ -423,7 +446,15 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnHelp) {
+		if(e.getSource() == menuMainMenu) {
+			gameFrame.setVisible(false);
+			mainMenuFrame.setVisible(true);
+		}
+		else if(e.getSource() == btnSelectLevel) {
+			levelSelector.setVisible(true);
+			mainMenuFrame.setVisible(false);
+		}
+		else if (e.getSource() == btnHelp) {
 			displayMessageDialog(mainMenuFrame,
 					"Start: Starts the game\nHelp: Displays the help menu\nQuit: Exits the application", "Help");
 		} else if (e.getSource() == menuHint) {
