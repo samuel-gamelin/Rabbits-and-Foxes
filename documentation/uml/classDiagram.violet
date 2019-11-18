@@ -491,7 +491,6 @@ TAIL</string>
      <void property="text">
       <string>-board:Board
 -currentLevel:int
--prevLevel:int
 -move:List&lt;Integer&gt;
 -undoMoveStack:ArrayDeque&lt;Move&gt;
 -redoMoveStack:ArrayDeque&lt;Move&gt;</string>
@@ -509,7 +508,7 @@ TAIL</string>
 +redoMove():boolean
 +getCurrentLevel():int
 +incrementLevel()
-+setToFirstLevel()</string>
++setLevel()</string>
      </void>
     </void>
     <void property="name">
