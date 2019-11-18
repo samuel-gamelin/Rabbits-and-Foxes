@@ -82,7 +82,7 @@ public class GameController {
 				undoMoveStack.push(movePiece);
 				return ClickValidity.VALID_MOVEMADE;
 			} else if (moveList.isEmpty()) {
-				return ClickValidity.VALID;
+				return ClickValidity.VALID_MOVEMADE;
 			}
 			return ClickValidity.INVALID_MOVEMADE;
 		}
