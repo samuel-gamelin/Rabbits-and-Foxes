@@ -2,8 +2,7 @@
 
 ## Other Deliverables Included In This Milestone/Release
 
-- Code (including the source and a jar executable)
-  - JUnit Tests
+- Code (including the source and a jar executable) along with JUnit test suits
 - UML class and sequence diagrams
 - Documentation (javadocs and a user manual that includes design decisions)
 
