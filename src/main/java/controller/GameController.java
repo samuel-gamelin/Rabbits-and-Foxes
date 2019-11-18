@@ -75,16 +75,16 @@ public class GameController {
 			moveList.add(y);
 			return ClickValidity.VALID;
 		} else if (!moveList.isEmpty()) {
-			
+
 			Move movePiece = new Move(moveList.get(0), moveList.get(1), x, y);
 			if (board.move(movePiece) && !moveList.isEmpty()) {
 				moveList.clear();
-				
+
 				redoMoveStack.clear();
-				
+
 				undoMoveStack.push(movePiece);
-				
-				 return ClickValidity.VALID_MOVEMADE;
+
+				return ClickValidity.VALID_MOVEMADE;
 			}
 			return ClickValidity.INVALID_MOVEMADE;
 		}
