@@ -173,11 +173,11 @@ public class GameController {
 	public void incrementLevel() {
 		currentLevel++;
 	}
-	
+
 	/**
 	 * Sets the level of the game
 	 */
 	public void setLevel(int level) {
-		currentLevel = level; 
+		currentLevel = level;
 	}
 }
