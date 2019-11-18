@@ -60,6 +60,10 @@ public class GameController {
 	 * pass them to the model. The model will then update the board which will
 	 * update the view for the user.
 	 * 
+	 * When a move is registered, it will clear the redo stack and push the move
+	 * onto the the Undo Stack
+	 * 
+	 * 
 	 * @param x Represents the start of the end x value of the user's move
 	 * @param y Represents the start of the end y value of the user's move
 	 * @return True if the selected location is valid, false if it is the first move
@@ -71,14 +75,20 @@ public class GameController {
 			moveList.add(y);
 			return ClickValidity.VALID;
 		} else if (!moveList.isEmpty()) {
+			
 			Move movePiece = new Move(moveList.get(0), moveList.get(1), x, y);
 			if (board.move(movePiece) && !moveList.isEmpty()) {
 				moveList.clear();
+				
+				redoMoveStack.clear();
+				
 				undoMoveStack.push(movePiece);
-				return ClickValidity.VALID_MOVEMADE;
+				
+				 return ClickValidity.VALID_MOVEMADE;
 			}
 			return ClickValidity.INVALID_MOVEMADE;
 		}
+
 		return ClickValidity.INVALID;
 	}
 
