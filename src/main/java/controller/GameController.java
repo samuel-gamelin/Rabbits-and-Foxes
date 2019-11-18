@@ -173,11 +173,11 @@ public class GameController {
 	public void incrementLevel() {
 		currentLevel++;
 	}
-
+	
 	/**
-	 * Sets the current level to the first level.
+	 * Sets the level of the game
 	 */
-	public void setToFirstLevel() {
-		currentLevel = 1;
+	public void setLevel(int level) {
+		currentLevel = level; 
 	}
 }
