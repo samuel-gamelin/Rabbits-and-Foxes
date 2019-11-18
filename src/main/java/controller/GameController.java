@@ -137,29 +137,32 @@ public class GameController {
 
 	/**
 	 * 
-	 * undoMove checkes if the UndoMoveStack is empty
-	 * If it is empty, return false to show there where no moves made
+	 * undoMove checkes if the UndoMoveStack is empty If it is empty, return false
+	 * to show there where no moves made
 	 * 
-	 * If it is not empty, pop the stack and push it into the redo stack
-	 * Then create a new move with the xEnd and yEnd in the starting position and 
-	 * vice versa to properly undo a move
+	 * If it is not empty, pop the stack and push it into the redo stack Then create
+	 * a new move with the xEnd and yEnd in the starting position and vice versa to
+	 * properly undo a move
 	 * 
 	 * @return True if there is a move to undo, false otherwise
 	 */
 
 	public boolean undoMove() {
 		if (!undoMoveStack.isEmpty()) {
-			 Move undoMove = undoMoveStack.pop();
-			  redoMoveStack.push(undoMove);	 
-		 board.move(new Move(undoMove.xEnd, undoMove.yEnd, undoMove.xStart, undoMove.yStart));
-			 return true;
+			Move undoMove = undoMoveStack.pop();
+			redoMoveStack.push(undoMove);
+			board.move(new Move(undoMove.xEnd, undoMove.yEnd, undoMove.xStart, undoMove.yStart));
+			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * The redoMove is popped from the stack, and then added into the undoMove
-	 * stack. the redoMove is the set into the board.
+	 * The redoMove checks if the redoMoveStack is empty If it is empty then return
+	 * false, as there is no redoMoves
+	 * 
+	 * If it is not empty then the redoMoveStack is popped and then added into the
+	 * undoMove stack. The redoMove is the set into the board.
 	 * 
 	 * @return True if there is a move to redo, false otherwise
 	 */
