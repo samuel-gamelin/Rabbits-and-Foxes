@@ -6,9 +6,9 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,7 +17,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
@@ -31,7 +30,6 @@ import javax.swing.JList;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -164,12 +162,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		
 		listOfLevels.setOpaque(false);
 		listOfLevels.setForeground(Color.WHITE);
-		
-		JScrollPane scroller = new JScrollPane(listOfLevels);
-		scroller.setOpaque(false);
-		scroller.getViewport().setOpaque(false);
-		scroller.setBorder(new EmptyBorder(0, 0, 0 ,0));
-		
+
 		btnStartSelectLevel = new JButton("Start");
 		btnStartSelectLevel.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) (0.20 * Resources.SIDE_LENGTH)));
 		btnStartSelectLevel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -177,13 +170,13 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		btnStartSelectLevel.setBackground(Color.WHITE);
 		btnStartSelectLevel.setFont(new Font("Times New Roman", Font.PLAIN, 32));
 
-		JPanel padding = new JPanel();
-		padding.setBorder(new EmptyBorder(15, 0, 10 ,0));
+		JPanel padding = new JPanel(new GridBagLayout());
+		padding.setBorder(new EmptyBorder(0, 0, 0,0));
 		padding.setOpaque(false);
+		padding.add(listOfLevels, new GridBagConstraints());
 		
 		levelSelectorFrame.add(btnStartSelectLevel, BorderLayout.SOUTH);
-		levelSelectorFrame.add(scroller, BorderLayout.CENTER);
-		levelSelectorFrame.add(padding, BorderLayout.NORTH);
+		levelSelectorFrame.add(padding, BorderLayout.CENTER);
 		
 		btnStartSelectLevel.addActionListener(this);
 
@@ -504,11 +497,11 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		else if (e.getSource() == btnStartSelectLevel) {
 			if (listOfLevels.getSelectedIndex() == -1) {
+				levelSelectorFrame.setVisible(false);
 				setGameLevel(0);
-				levelSelectorFrame.setVisible(false);
 			} else {
-				setGameLevel(listOfLevels.getSelectedIndex());
 				levelSelectorFrame.setVisible(false);
+				setGameLevel(listOfLevels.getSelectedIndex());
 			}
 		} else if (e.getSource() == btnSelectLevel) {
 			levelSelectorFrame.setVisible(true);
