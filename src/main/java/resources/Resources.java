@@ -85,6 +85,9 @@ public final class Resources {
 	// Main menu icon
 	public static final ImageIcon MAIN_MENU_BACKGROUND = loadIcon("images/mainmenu.png", 5, 5);
 
+	// Level selector icon
+	public static final ImageIcon LEVEL_SELECTOR_BACKGROUND = loadIcon("images/levelselectorbackground.png", 5, 5);
+	
 	// Board icon
 	public static final ImageIcon BOARD = loadIcon("images/board.png", 5, 5);
 

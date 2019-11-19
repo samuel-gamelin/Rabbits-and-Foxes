@@ -5,8 +5,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -15,8 +17,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -27,7 +31,9 @@ import javax.swing.JList;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -133,8 +139,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		levelSelectorFrame = new JFrame("Level Selector");
 		levelSelectorFrame.setIconImage(Resources.WINDOW_ICON.getImage());
-		levelSelectorFrame.setContentPane(new JLabel(Resources.MAIN_MENU_BACKGROUND));
-		levelSelectorFrame.getContentPane().setLayout(new GridBagLayout());
+		levelSelectorFrame.setContentPane(new JLabel(Resources.LEVEL_SELECTOR_BACKGROUND));
+		levelSelectorFrame.getContentPane().setLayout(new BorderLayout());
 		levelSelectorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		levelSelectorFrame.setResizable(false);
 		levelSelectorFrame.pack();
@@ -149,12 +155,36 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		String[] arrAllLevels = allLevels.toArray(new String[0]);
 		listOfLevels = new JList<String>(arrAllLevels);
 
-		if (listOfLevels.getSelectedIndex() == -1)
-			listOfLevels.setSelectedIndex(0);
-		levelSelectorFrame.add(listOfLevels);
+		listOfLevels.setSelectedIndex(0);
+		listOfLevels.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		
+		DefaultListCellRenderer renderer = (DefaultListCellRenderer) listOfLevels.getCellRenderer();
+		renderer.setHorizontalAlignment(SwingConstants.CENTER);
+		renderer.setOpaque(false);
+		
+		listOfLevels.setOpaque(false);
+		listOfLevels.setForeground(Color.WHITE);
+		
+		JScrollPane scroller = new JScrollPane(listOfLevels);
+		scroller.setOpaque(false);
+		scroller.getViewport().setOpaque(false);
+		scroller.setBorder(new EmptyBorder(0, 0, 0 ,0));
+		
 		btnStartSelectLevel = new JButton("Start");
-		addMainMenuButton(levelSelectorFrame, btnStartSelectLevel);
+		btnStartSelectLevel.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) (0.20 * Resources.SIDE_LENGTH)));
+		btnStartSelectLevel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnStartSelectLevel.setForeground(Color.BLACK);
+		btnStartSelectLevel.setBackground(Color.WHITE);
+		btnStartSelectLevel.setFont(new Font("Times New Roman", Font.PLAIN, 32));
 
+		JPanel padding = new JPanel();
+		padding.setBorder(new EmptyBorder(15, 0, 10 ,0));
+		padding.setOpaque(false);
+		
+		levelSelectorFrame.add(btnStartSelectLevel, BorderLayout.SOUTH);
+		levelSelectorFrame.add(scroller, BorderLayout.CENTER);
+		levelSelectorFrame.add(padding, BorderLayout.NORTH);
+		
 		btnStartSelectLevel.addActionListener(this);
 
 		/**
@@ -283,6 +313,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		button.setForeground(Color.BLACK);
 		button.setBackground(Color.WHITE);
+		button.setFont(new Font("Times New Roman", Font.PLAIN, 32));
 		pane.add(button);
 	}
 
@@ -473,7 +504,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		else if (e.getSource() == btnStartSelectLevel) {
 			if (listOfLevels.getSelectedIndex() == -1) {
-				setGameLevel(1);
+				setGameLevel(0);
 				levelSelectorFrame.setVisible(false);
 			} else {
 				setGameLevel(listOfLevels.getSelectedIndex());
