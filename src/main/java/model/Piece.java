@@ -1,12 +1,16 @@
 package model;
 
+import java.util.List;
+
+import util.Move;
+
 /**
  * This abstract class provides a high-level prototype for a piece.
  * 
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
  * 
- * @version 2.0
+ * @version 3.0
  */
 public abstract class Piece {
 
@@ -44,5 +48,24 @@ public abstract class Piece {
 	 * @return True if the piece was successfully moved from the specified start to
 	 *         end positions, false otherwise
 	 */
-	abstract boolean move(Move move, Board board);
+	public abstract boolean move(Move move, Board board);
+
+	/**
+	 * Determines and returns a list containing all possible moves for this piece on
+	 * the specified board, at the specified position.
+	 * 
+	 * @param board The board on which possible moves should be determined
+	 * @param x     The x position of the current piece from which possible moves
+	 *              are to be determined
+	 * @param y     The y position of the current piece from which possible moves
+	 *              are to be determined
+	 * @return The list of possible Move objects that this piece can make given the
+	 *         specified board
+	 */
+	public abstract List<Move> getPossibleMoves(Board board, int x, int y);
+
+	/**
+	 * @return A short, two to four character string representing the piece.
+	 */
+	public abstract String toString();
 }

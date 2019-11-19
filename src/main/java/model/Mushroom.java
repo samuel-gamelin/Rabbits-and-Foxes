@@ -1,12 +1,17 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import util.Move;
+
 /***
  * A class representing a Mushroom piece.
  * 
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
  * 
- * @version 2.0
+ * @version 3.0
  */
 public class Mushroom extends Piece {
 
@@ -29,4 +34,18 @@ public class Mushroom extends Piece {
 	public boolean move(Move move, Board board) {
 		return false;
 	}
+
+	@Override
+	public List<Move> getPossibleMoves(Board board, int x, int y) {
+		if (board != null) {
+			return new ArrayList<>();
+		}
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		return "MU";
+	}
+
 }

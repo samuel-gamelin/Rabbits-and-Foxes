@@ -1,9 +1,10 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import model.Rabbit.RabbitColour;
+import util.Move;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within
@@ -13,14 +14,20 @@ import model.Rabbit.RabbitColour;
  * @author Abdalla El Nakla
  * @author Dani Hashweh
  * @author John Breton
+ * @author Mohamed Radwan
  * 
- * @version 2.0
+ * @version 3.0
  */
 public class Board {
 	/**
 	 * The size of any side for the board.
 	 */
 	public static final int SIZE = 5;
+
+	/**
+	 * A String used to represent an empty tile on the board.
+	 */
+	public static final String EMPTY = "X";
 
 	/**
 	 * A 2D array of tiles used to manage all tiles on the board.
@@ -34,53 +41,95 @@ public class Board {
 	private List<BoardListener> boardListeners;
 
 	/**
-	 * Creates a board object and initializes it with the default game
-	 * configuration.
+	 * Construct an empty board
 	 */
 	public Board() {
-		tiles = new Tile[SIZE][SIZE];
-		boardListeners = new ArrayList<>();
-		initializeDefaultBoard();
+		this.tiles = new Tile[SIZE][SIZE];
+		this.boardListeners = new ArrayList<>();
+		initializeBaseBoard();
 	}
 
 	/**
-	 * Initializes the board with a default configuration.
+	 * A copy constructor for Board. Does not retain the list of listeners from the
+	 * old board. That is, it empties its listener list.
+	 * 
+	 * @param board The board to copy
 	 */
-	private void initializeDefaultBoard() {
+	public Board(Board board) {
+		this.tiles = new Tile[SIZE][SIZE];
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				this.tiles[i][j] = new Tile(board.tiles[i][j]);
+			}
+		}
+		this.boardListeners = new ArrayList<>();
+	}
+
+	/**
+	 * Create a board object and initializes the pieces specified by the passed
+	 * String. This is a factory method.
+	 * 
+	 * @param str The String representation of the Board that is being created. Must
+	 *            be of length 25.
+	 * @return The newly constructed Board based on the passed String.
+	 */
+	public static Board createBoard(String str) {
+		Board board = new Board();
+		String[] currBoard = str.split("\\s+");
+		if (currBoard.length != 25)
+			return null;
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (!currBoard[5 * i + j].equals(EMPTY)) {
+					if (currBoard[5 * i + j].length() == 2) {
+						board.tiles[i][j].placePiece(new Mushroom());
+					} else if (currBoard[5 * i + j].length() == 3) {
+						board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
+					} else if (currBoard[5 * i + j].substring(1, 2)
+							.equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
+						Fox f = Fox.createFox(currBoard[5 * i + j]);
+						board.tiles[i][j].placePiece(f);
+						switch (f.getDirection()) {
+						case DOWN:
+							board.tiles[i][j - 1].placePiece(f.getOtherHalf());
+							break;
+						case LEFT:
+							board.tiles[i + 1][j].placePiece(f.getOtherHalf());
+							break;
+						case RIGHT:
+							board.tiles[i - 1][j].placePiece(f.getOtherHalf());
+							break;
+						default:
+							board.tiles[i][j + 1].placePiece(f.getOtherHalf());
+						}
+					}
+				}
+			}
+		}
+		return board;
+	}
+
+	/**
+	 * Initializes the base configuration for any board (green and brown tiles).
+	 */
+	private void initializeBaseBoard() {
 		// Corner brown tiles
-		tiles[0][0] = new Tile(Tile.Colour.BROWN);
-		tiles[4][0] = new Tile(Tile.Colour.BROWN);
-		tiles[0][4] = new Tile(Tile.Colour.BROWN);
-		tiles[4][4] = new Tile(Tile.Colour.BROWN);
+		tiles[0][0] = new Tile(Tile.TileColour.BROWN);
+		tiles[4][0] = new Tile(Tile.TileColour.BROWN);
+		tiles[0][4] = new Tile(Tile.TileColour.BROWN);
+		tiles[4][4] = new Tile(Tile.TileColour.BROWN);
 
 		// Center brown tile
-		tiles[2][2] = new Tile(Tile.Colour.BROWN);
+		tiles[2][2] = new Tile(Tile.TileColour.BROWN);
 
 		// Regular green tiles
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				if (tiles[i][j] == null) {
-					tiles[i][j] = new Tile(Tile.Colour.GREEN);
+					tiles[i][j] = new Tile(Tile.TileColour.GREEN);
 				}
 			}
 		}
-
-		// Adding the mushrooms (there can be 0 to 3, here we have 2)
-		tiles[3][1].placePiece(new Mushroom());
-		tiles[2][4].placePiece(new Mushroom());
-
-		// Adding the rabbits (there can be 1 to 3, here we have 3)
-		tiles[1][4].placePiece(new Rabbit(RabbitColour.BROWN));
-		tiles[3][0].placePiece(new Rabbit(RabbitColour.WHITE));
-		tiles[4][2].placePiece(new Rabbit(RabbitColour.WHITE));
-
-		// Adding the foxes (there can be 0 to 2, here we have 2)
-		Fox fox1  = new Fox(Fox.Direction.LEFT, true);
-		Fox fox2 = new Fox(Fox.Direction.UP, false);
-		tiles[3][3].placePiece(fox1);
-		tiles[4][3].placePiece(fox1.getOtherHalf());
-		tiles[1][0].placePiece(fox2);
-		tiles[1][1].placePiece(fox2.getOtherHalf());
 	}
 
 	/**
@@ -91,13 +140,10 @@ public class Board {
 	 *         the move was unsuccessful
 	 */
 	public boolean move(Move move) {
-		// Do a preliminary check on the move (i.e. making sure it is in bounds, and
-		// that the starting tile actually has a piece)
-		if (!validateBounds(move) || !tiles[move.xStart][move.yStart].isOccupied()) {
+		if (move == null)
 			return false;
-		}
-
-		if (tiles[move.xStart][move.yStart].retrievePiece().move(move, this)) {
+		Piece piece = tiles[move.xStart][move.yStart].retrievePiece();
+		if (piece != null && piece.move(move, this)) {
 			notifyListeners();
 			return true;
 		}
@@ -105,19 +151,26 @@ public class Board {
 	}
 
 	/**
+	 * Checks to see if the Board is in a winning state. If no rabbits are present
+	 * on the Board, the game can't be played, so the Board is not in a winning
+	 * state.
+	 * 
 	 * @return True if the board is in a winning state, false otherwise
 	 */
 	public boolean isInWinningState() {
+		int rabbitCount = 0;
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if (tiles[i][j].retrievePiece() != null
-						&& tiles[i][j].retrievePiece().getPieceType().equals(Piece.PieceType.RABBIT)
-						&& !tiles[i][j].getColour().equals(Tile.Colour.BROWN)) {
-					return false;
+				Piece piece = tiles[i][j].retrievePiece();
+				if (piece != null && piece.getPieceType() == Piece.PieceType.RABBIT) {
+					rabbitCount++;
+					if (tiles[i][j].getColour() != Tile.TileColour.BROWN) {
+						return false;
+					}
 				}
 			}
 		}
-		return true;
+		return rabbitCount != 0;
 	}
 
 	/**
@@ -147,12 +200,12 @@ public class Board {
 	 * Sets the specified piece at the specified position.
 	 * 
 	 * @param piece The piece to set at the specified position
-	 * @param x The x-coordinate of the position
-	 * @param y The y-coordinate of the position
+	 * @param x     The x-coordinate of the position
+	 * @param y     The y-coordinate of the position
 	 * @return True if the piece was successfully set, false otherwise
 	 */
 	public boolean setPiece(Piece piece, int x, int y) {
-		if (validatePosition(x, y) && piece != null) {
+		if (piece != null && validatePosition(x, y)) {
 			tiles[x][y].placePiece(piece);
 			return true;
 		}
@@ -203,13 +256,52 @@ public class Board {
 	}
 
 	/**
-	 * Validates the bounds on the given move object.
-	 * 
-	 * @param move The move object's whose bounds are to be validated
-	 * @return True if the move is within the board's bounds, false otherwise
+	 * @return A list containing all possible move objects for this board
 	 */
-	private boolean validateBounds(Move move) {
-		return move.xStart >= 0 && move.xStart < SIZE && move.xEnd >= 0 && move.xEnd < SIZE && move.yStart >= 0
-				&& move.yStart < SIZE && move.yEnd >= 0 && move.yEnd < SIZE;
+	public List<Move> getPossibleMoves() {
+		List<Move> moves = new ArrayList<>();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				Piece piece = tiles[i][j].retrievePiece();
+				if (piece != null) {
+					moves.addAll(piece.getPossibleMoves(this, i, j));
+				}
+			}
+		}
+		return moves;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		return prime * result + Arrays.deepHashCode(tiles);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Board)) {
+			return false;
+		}
+		return Arrays.deepEquals(tiles, ((Board) obj).tiles);
+	}
+
+	/**
+	 * Create a String of the board to be stored in a JSON Object.
+	 *
+	 * @return A String representation of this board.
+	 */
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				str.append(tiles[i][j].toString() + " ");
+			}
+		}
+		return str.toString().trim();
 	}
 }

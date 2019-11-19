@@ -2,20 +2,95 @@ package resources;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.Charset;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import model.Board;
 
 /**
- * This class provides a simple way to access graphical resources used by the
- * game.
+ * This class provides a simple way to access audio and graphical resources
+ * along with logging facilities used by the game.
  * 
  * @author Samuel Gamelin
- * @version 2.0
+ * @author John Breton
+ * @version 3.0
  */
 public final class Resources {
+	/**
+	 * The Logger object used for logging.
+	 */
+	public static final Logger LOGGER = getLogger();
+
+	/**
+	 * The total number of levels available.
+	 */
+	public static final int NUMBER_OF_LEVELS = getNumberOfLevels();
+
+	/**
+	 * A percentage (75%) of the current display's height (or width, depending on
+	 * which is greater), which will be used in calculations to determine
+	 * appropriate scaling of icons and GUI elements.
+	 */
+	public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() > Toolkit
+			.getDefaultToolkit().getScreenSize().getHeight()
+					? 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight()
+					: 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+
+	// Incorrect move sound
+	public static final Clip INVALID_MOVE = loadClip(getFileURL("sounds/wrong.wav"));
+
+	// Level solved sound
+	public static final Clip SOLVED = loadClip(getFileURL("sounds/solved.wav"));
+
+	// JFrame icon
+	public static final ImageIcon WINDOW_ICON = loadIcon("images/rabbit3.png", 4, 5);
+
+	// Rabbit icons
+	public static final ImageIcon RABBIT1 = loadIcon("images/rabbit1.png", 0.6, 0.75);
+	public static final ImageIcon RABBIT2 = loadIcon("images/rabbit2.png", 0.6, 0.75);
+	public static final ImageIcon RABBIT3 = loadIcon("images/rabbit3.png", 0.6, 0.75);
+
+	// Fox head icons
+	public static final ImageIcon FOX_HEAD_UP = loadIcon("images/fox-head-up.png", 0.75, 1);
+	public static final ImageIcon FOX_HEAD_DOWN = loadIcon("images/fox-head-down.png", 0.75, 1);
+	public static final ImageIcon FOX_HEAD_LEFT = loadIcon("images/fox-head-left.png", 1, 0.75);
+	public static final ImageIcon FOX_HEAD_RIGHT = loadIcon("images/fox-head-right.png", 1, 0.75);
+
+	// Fox tail icons
+	public static final ImageIcon FOX_TAIL_UP = loadIcon("images/fox-tail-up.png", 0.7, 1);
+	public static final ImageIcon FOX_TAIL_DOWN = loadIcon("images/fox-tail-down.png", 0.75, 1);
+	public static final ImageIcon FOX_TAIL_LEFT = loadIcon("images/fox-tail-left.png", 1, 0.7);
+	public static final ImageIcon FOX_TAIL_RIGHT = loadIcon("images/fox-tail-right.png", 1.03, 0.7);
+
+	// Mushroom icon
+	public static final ImageIcon MUSHROOM = loadIcon("images/mushroom.png", 0.75, 0.75);
+
+	// Main menu icon
+	public static final ImageIcon MAIN_MENU_BACKGROUND = loadIcon("images/mainmenu.png", 5, 5);
+
+	// Level selector icon
+	public static final ImageIcon LEVEL_SELECTOR_BACKGROUND = loadIcon("images/levelselectorbackground.png", 5, 5);
+	
+	// Board icon
+	public static final ImageIcon BOARD = loadIcon("images/board.png", 5, 5);
+
 	/**
 	 * Making the constructor private, preventing any instantiation of this class.
 	 */
@@ -23,41 +98,14 @@ public final class Resources {
 	}
 
 	/**
-	 * A percentage (75%) of the current display's height, which will be used in
-	 * calculations to determine appropriate scaling of icons.
+	 * Configures and returns the logger used for this application.
+	 * 
+	 * @return The properly-configured logger object
 	 */
-	public static final double SIDE_LENGTH = 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-
-	// Incorrect move sound
-	public static final URL INVALID_MOVE = loadFile("wrong.wav");
-
-	// JFrame icon
-	public static final ImageIcon WINDOW_ICON = loadIcon("window-icon.png", 4, 5);
-
-	// Rabbit icons
-	public static final ImageIcon RABBIT1 = loadIcon("rabbit1.png", 0.6, 0.75);
-	public static final ImageIcon RABBIT2 = loadIcon("rabbit2.png", 0.6, 0.75);
-
-	// Fox head icons
-	public static final ImageIcon FOX_HEAD_UP = loadIcon("fox-head-up.png", 0.75, 1);
-	public static final ImageIcon FOX_HEAD_DOWN = loadIcon("fox-head-down.png", 0.75, 1);
-	public static final ImageIcon FOX_HEAD_LEFT = loadIcon("fox-head-left.png", 1, 0.75);
-	public static final ImageIcon FOX_HEAD_RIGHT = loadIcon("fox-head-right.png", 1, 0.75);
-
-	// Fox tail icons
-	public static final ImageIcon FOX_TAIL_UP = loadIcon("fox-tail-up.png", 0.7, 1);
-	public static final ImageIcon FOX_TAIL_DOWN = loadIcon("fox-tail-down.png", 0.75, 1);
-	public static final ImageIcon FOX_TAIL_LEFT = loadIcon("fox-tail-left.png", 1, 0.7);
-	public static final ImageIcon FOX_TAIL_RIGHT = loadIcon("fox-tail-right.png", 1, 0.7);
-
-	// Mushroom icon
-	public static final ImageIcon MUSHROOM = loadIcon("mushroom.png", 0.75, 0.75);
-
-	// Main menu icon
-	public static final ImageIcon MAIN_MENU_BACKGROUND = loadIcon("mainmenu.png", 5, 5);
-
-	// Board icon
-	public static final ImageIcon BOARD = loadIcon("board.png", 5, 5);
+	private static Logger getLogger() {
+		PropertyConfigurator.configure(Thread.currentThread().getContextClassLoader().getResource("log4j.properties"));
+		return LogManager.getLogger(Resources.class);
+	}
 
 	/**
 	 * Returns a scaled version of the icon based on the primary display's size. A
@@ -69,7 +117,7 @@ public final class Resources {
 	 * @return A scaled version of the icon
 	 */
 	private static ImageIcon loadIcon(String path, double xScale, double yScale) {
-		return new ImageIcon(new ImageIcon(Resources.class.getClassLoader().getResource(path)).getImage()
+		return new ImageIcon(new ImageIcon(Thread.currentThread().getContextClassLoader().getResource(path)).getImage()
 				.getScaledInstance((int) (xScale * SIDE_LENGTH / Board.SIZE), (int) (yScale * SIDE_LENGTH / Board.SIZE),
 						Image.SCALE_SMOOTH));
 	}
@@ -81,11 +129,69 @@ public final class Resources {
 	 * @param path The path at which the resource is located
 	 * @return The file at the specified location
 	 */
-	private static URL loadFile(String path) {
+	private static URL getFileURL(String path) {
+		return Thread.currentThread().getContextClassLoader().getResource(path);
+	}
+
+	/**
+	 * Loads and returns an audio clip used for sound playback.
+	 * 
+	 * @param path The path of the audio resource
+	 * @return The audio clip at the specified path. Null if no such path exists.
+	 */
+	private static Clip loadClip(URL path) {
 		try {
-			return Resources.class.getClassLoader().getResource(path);
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(path));
+			clip.addLineListener(e -> {
+				if (e.getType() == LineEvent.Type.STOP) {
+					clip.stop();
+					clip.flush();
+					clip.setFramePosition(0);
+				}
+			});
+			return clip;
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			LOGGER.error("Could not load audio resource at " + path, e);
+		}
+		return null;
+	}
+
+	/**
+	 * Provides the number of levels available in the LevelData.json file.
+	 * 
+	 * @return The total number of levels in the game. Returns -1 if no valid
+	 *         LevelData.json file is found.
+	 */
+	private static int getNumberOfLevels() {
+		try (InputStreamReader inputStreamReader = new InputStreamReader(
+				Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"),
+				Charset.defaultCharset())) {
+			return ((JSONArray) new JSONParser().parse(inputStreamReader)).size();
+
+		} catch (IOException | ParseException e) {
+			LOGGER.error("Could not load the LevelData.json file", e);
+		}
+		return -1;
+	}
+
+	/**
+	 * Load and return a new Board based on the current level. The levels are loaded
+	 * from a JSONArray.
+	 * 
+	 * @param level The level to load.
+	 * @return The Board associated with the passed-in level. Null if the level does
+	 *         not exist.
+	 */
+	public static Board getLevel(int level) {
+		try (InputStreamReader inputStreamReader = new InputStreamReader(
+				Thread.currentThread().getContextClassLoader().getResourceAsStream("levels/LevelData.json"),
+				Charset.defaultCharset())) {
+			return Board.createBoard(
+					(String) ((JSONObject) (((JSONArray) new JSONParser().parse(inputStreamReader)).get(level - 1)))
+							.get("Level " + level));
+		} catch (IOException | ParseException e) {
+			LOGGER.error("Could not load the LevelData.json file", e);
 		}
 		return null;
 	}

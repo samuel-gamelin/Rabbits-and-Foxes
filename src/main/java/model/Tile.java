@@ -6,42 +6,56 @@ package model;
  * isn't.
  * 
  * @author Dani Hashweh
- * @version 2.0
+ * @author Mohamed Radwan
+ * @version 3.0
  */
 public class Tile {
 	/**
-	 * A Colour that will represent the colour of the tile.
+	 * Represents the colour of the Tile.
 	 */
-	private Colour tileColour;
+	private TileColour tileColour;
 
 	/**
-	 * A boolean that will represent if the tile is occupied or not.
+	 * Represents if the Tile is occupied.
 	 */
 	private boolean occupied;
 
 	/**
-	 * A piece of type Piece that will be placed on the tile.
+	 * A Piece that occupies the Tile.
 	 */
 	private Piece piece;
 
 	/**
-	 * An enumeration representing this tile's colour (either brown or green).
+	 * An enumeration representing this Tile's colour (either brown or green).
 	 */
-	public enum Colour {
+	public enum TileColour {
 		BROWN, GREEN
 	}
 
 	/**
 	 * Constructs the Tile based on the passed-in tileColour.
 	 * 
-	 * @param tileColour The colour of the tile as type Colour.
+	 * @param tileColour The TileColour of the tile.
 	 */
-	public Tile(Colour tileColour) {
+	public Tile(TileColour tileColour) {
 		this.tileColour = tileColour;
 	}
 
 	/**
-	 * @return True if the Tile is occupied, False if the Tile is not occupied.
+	 * A copy constructor for Tile.
+	 * 
+	 * @param tile The tile to copy
+	 */
+	public Tile(Tile tile) {
+		this.tileColour = tile.tileColour;
+		this.occupied = tile.occupied;
+		this.piece = tile.piece;
+	}
+
+	/**
+	 * Determine if there is a Piece on this Tile.
+	 * 
+	 * @return True if the Tile is occupied, false otherwise.
 	 */
 	public boolean isOccupied() {
 		return occupied;
@@ -60,7 +74,10 @@ public class Tile {
 	}
 
 	/**
-	 * @return the current Piece placed on the Tile.
+	 * Gets the Piece currently occupying this Tile. Will return null if there is no
+	 * Piece on this Tile.
+	 * 
+	 * @return The current Piece placed on the Tile.
 	 */
 	public Piece retrievePiece() {
 		return piece;
@@ -69,17 +86,60 @@ public class Tile {
 	/**
 	 * Places piece and sets occupied to true
 	 * 
-	 * @param piece Of type Piece will now be placed on the tile.
+	 * @param piece The piece to place on the tile
 	 */
 	public void placePiece(Piece piece) {
-		this.occupied = true;
-		this.piece = piece;
+		if (piece != null) {
+			this.occupied = true;
+			this.piece = piece;
+		}
 	}
 
 	/**
 	 * @return The colour of this tile
 	 */
-	public Colour getColour() {
+	public TileColour getColour() {
 		return tileColour;
+	}
+
+	/**
+	 * @return A two to four character string representation of this tile. If the
+	 *         tile has no piece, return the String used to represent empty on a
+	 *         board.
+	 */
+	@Override
+	public String toString() {
+		return piece != null ? piece.toString() : Board.EMPTY;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (occupied ? 1231 : 1237);
+		result = prime * result + ((piece == null) ? 0 : piece.hashCode());
+		result = prime * result + ((tileColour == null) ? 0 : tileColour.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tile other = (Tile) obj;
+		if (occupied != other.occupied)
+			return false;
+		if (piece == null) {
+			if (other.piece != null)
+				return false;
+		} else if (!piece.equals(other.piece))
+			return false;
+		if (tileColour != other.tileColour)
+			return false;
+		return true;
 	}
 }

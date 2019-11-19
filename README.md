@@ -1,6 +1,6 @@
 ## Rabbits and Foxes
 
-This GitHub repo is used for the development of a game based on JumpIN that follows the MVC design pattern.
+This GitHub repository is used for the development of a game based on JumpIN that follows the MVC design pattern.
 
 ## Development
 
@@ -19,7 +19,6 @@ This GitHub repo is used for the development of a game based on JumpIN that foll
     This will create a folder called SYSC-3110.
 2.  Open the Eclipse IDE, and click File -> Open Projects from File System.
 3.  From that window, click on the "Directory" button next to the "Import source" box, and select the "SYSC-3110" folder that was just created. Click "Finish".
-4.  You will have to add JUnit 4 to your classpath to run the tests. To do so, right-click on the project name, then click "Build Path -> Add Libraries". Select JUnit, hit "Next", select JUnit 4 and click "Finish".
 
 ##### Rules for Contributions:
 
@@ -29,7 +28,7 @@ When contributing to the project please start on the issues page which is used f
   - Only commit code to the corresponding milestone.
   - Please document your commits with changes and updates.
   - Add test cases for the updates made.
-  - Merging to master will occur on weekly bases under the review of all developers on the project.
+  - Merging to master will occur once every two weeks under the review of all developers on the project.
 - Pull requests:
   - Open a pull request to the corresponding milestone.
   - Document your code.
@@ -50,23 +49,24 @@ When contributing to the project please start on the issues page which is used f
 
 ## Current Class Diagram
 
-<p align="center"> 
+<p align="center">
 <img src="documentation/uml/classDiagram.png">
 </p>
-Date: November 2, 2019
+Date: November 18, 2019
 
 ## Current Sequence Diagram
 
-<p align="center"> 
+<p align="center">
 <img src="documentation/uml/sequenceDiagram.png">
 </p>
-Date: November 2, 2019
+Date: November 18, 2019
 
 ## Road Map
 
-- Creating the View and Controller portions of the game
-  - Building a graphical user interface to allow the user to play the game interactively
-  - Implementing unit tests for the Model portion of the game
+- Adding an undo/redo feature to the game and a hint system utilizing a game solver
+  - Adding the ability to see the next best move on the game board
+  - Incorporating an undo/redo to improve user experience
+  - Updating and adding unit tests for the Model portion of the game
   - Continuing to implement gradual improvements
   - Continuing to document the development and design process
 
@@ -78,31 +78,27 @@ Currently no known issues are present.
 
 ## New features
 
-- Milestone 2: A fully playable GUI implementation of the game!
-  - Parsing user input through mouse clicks
-  - Moving pieces on the board
-  - Displaying the board to the user
-  - Identifying if a move is valid based on the game rules
-  - Creating a board and setting pieces on said board
-  - Proceeding with the game based on user input.
-  - Ability to process if the user has solved the puzzle
-  - Among other fundamental features necessary to ensure the game runs smoothly
+- Milestone 3: A solver for the game + undo/redo feature
+    - An undo/redo moves feature to make solving puzzles easier
+    - A hint system that can be used to get the next best move towards a solution
+      - The hint system uses a BFS-algorithm to solve the current puzzle and suggest the next move towards a solution
+    - 20 levels that can be played and completed, loaded from a JSON document
 
 ## The Team
 
-- [Mohamed Radwan](mailto:mohamedradwan@cmail.carleton.ca)
-- [Samuel Gamelin](mailto:samuelgamelin@cmail.carleton.ca)
-- [Dani Hashweh](mailto:danihashweh@cmail.carleton.ca)
-- [John Breton](mailto:johnbreton@cmail.carleton.ca)
-- [Abdalla El Nakla](mailto:abdallaelnakla@cmail.carleton.ca)
+- [Mohamed Radwan](https://github.com/MohamedRadwan)
+- [Samuel Gamelin](https://github.com/samuel-gamelin)
+- [Dani Hashweh](https://github.com/danihashweh)
+- [John Breton](https://github.com/john-breton)
+- [Abdalla El Nakla](https://github.com/Abdoltim)
 
 ## Documentation
 
-Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing)
+Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing).
 
 ## Credits for Graphical Resources
 
-The pictures and graphical resouces used in this game were obtained from https://www.smartgames.eu/uk/one-player-games/jumpin.
+The pictures and graphical resources used in this game were obtained from https://www.smartgames.eu/uk/one-player-games/jumpin.
 
 ## License and Disclaimer
 

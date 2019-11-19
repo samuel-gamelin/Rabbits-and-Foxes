@@ -1,4 +1,4 @@
-package model;
+package util;
 
 /**
  * This class represents the move coordinates for the game. Since move will be
@@ -8,7 +8,7 @@ package model;
  * @author Mohamed Radwan
  * @author Samuel Gamelin
  * 
- * @version 2.0
+ * @version 3.0
  */
 
 public final class Move {
@@ -16,6 +16,10 @@ public final class Move {
 	public final int yStart;
 	public final int xEnd;
 	public final int yEnd;
+
+	public enum MoveDirection {
+		HORIZONTAL, VERTICAL, INVALID;
+	}
 
 	/**
 	 * Given the position of the object being moved and where it needs to be moved
@@ -38,17 +42,16 @@ public final class Move {
 	 * has move restrictions this method will be used to initially determine if a
 	 * move is valid.
 	 * 
-	 * @return direction Horizontal = 0, Vertical = 1, Invalid = -1
+	 * @return Direction enum HORIZONTAL, VERTICAL, INVALID
 	 *
 	 */
-	public int direction() {
-		int direction = -1;
+	public MoveDirection direction() {
 		if ((xStart == xEnd) && (yStart != yEnd)) {
-			direction = 1;
+			return MoveDirection.VERTICAL;
 		} else if ((xStart != xEnd) && (yStart == yEnd)) {
-			direction = 0;
+			return MoveDirection.HORIZONTAL;
 		}
-		return direction;
+		return MoveDirection.INVALID;
 	}
 
 	/**

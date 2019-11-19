@@ -105,3 +105,9 @@ hs_err_pid*
 
 # Documentation
 documentation/javadoc
+
+# Maven
+target/
+
+#Logging
+info.log
