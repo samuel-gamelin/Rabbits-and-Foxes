@@ -58,6 +58,7 @@ import util.Move;
  * @author Dani Hashweh
  * @author John Breton
  * @author Samuel Gamelin
+ * @author Abdalla El Nakla
  * @version 3.0
  */
 public class GameView extends MouseAdapter implements BoardListener, ActionListener {
@@ -155,29 +156,30 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		listOfLevels.setSelectedIndex(0);
 		listOfLevels.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		
+
 		DefaultListCellRenderer renderer = (DefaultListCellRenderer) listOfLevels.getCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 		renderer.setOpaque(false);
-		
+
 		listOfLevels.setOpaque(false);
 		listOfLevels.setForeground(Color.WHITE);
 
 		btnStartSelectLevel = new JButton("Start");
-		btnStartSelectLevel.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) (0.20 * Resources.SIDE_LENGTH)));
+		btnStartSelectLevel
+				.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) (0.20 * Resources.SIDE_LENGTH)));
 		btnStartSelectLevel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnStartSelectLevel.setForeground(Color.BLACK);
 		btnStartSelectLevel.setBackground(Color.WHITE);
 		btnStartSelectLevel.setFont(new Font("Times New Roman", Font.PLAIN, 32));
 
 		JPanel padding = new JPanel(new GridBagLayout());
-		padding.setBorder(new EmptyBorder(0, 0, 0,0));
+		padding.setBorder(new EmptyBorder(0, 0, 0, 0));
 		padding.setOpaque(false);
 		padding.add(listOfLevels, new GridBagConstraints());
-		
+
 		levelSelectorFrame.add(btnStartSelectLevel, BorderLayout.SOUTH);
 		levelSelectorFrame.add(padding, BorderLayout.CENTER);
-		
+
 		btnStartSelectLevel.addActionListener(this);
 
 		/**
@@ -508,7 +510,8 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			mainMenuFrame.setVisible(false);
 		} else if (e.getSource() == btnHelp) {
 			displayMessageDialog(mainMenuFrame,
-					"Start: Starts the game\nLevel Select: Opens the level section menu\nHelp: Displays the help menu\nQuit: Exits the application", "Help");
+					"Start: Starts the game\nLevel Select: Opens the level section menu\nHelp: Displays the help menu\nQuit: Exits the application",
+					"Help");
 		} else if (e.getSource() == menuHint) {
 			Move bestMove = gameController.getNextBestMove();
 			if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(selectedBorder)) {
