@@ -1,6 +1,6 @@
 ## Rabbits and Foxes
 
-This GitHub repo is used for the development of a game based on JumpIN that follows the MVC design pattern.
+This GitHub repository is used for the development of a game based on JumpIN that follows the MVC design pattern.
 
 ## Development
 
@@ -98,7 +98,7 @@ Documentation for the project can be found [here](https://docs.google.com/docume
 
 ## Credits for Graphical Resources
 
-The pictures and graphical resouces used in this game were obtained from https://www.smartgames.eu/uk/one-player-games/jumpin.
+The pictures and graphical resources used in this game were obtained from https://www.smartgames.eu/uk/one-player-games/jumpin.
 
 ## License and Disclaimer
 
