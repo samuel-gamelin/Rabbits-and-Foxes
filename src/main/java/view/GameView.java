@@ -15,6 +15,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -145,14 +146,14 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		levelSelectorFrame.pack();
 		levelSelectorFrame.setLocationRelativeTo(null);
 
-		ArrayList<String> allLevels = new ArrayList<String>();
+		List<String> allLevels = new ArrayList<>();
 		for (int i = 1; i <= Resources.NUMBER_OF_LEVELS; i++) {
 			allLevels.add("Level " + i);
 		}
 
 		// convert the arraylist to a string array
 		String[] arrAllLevels = allLevels.toArray(new String[0]);
-		listOfLevels = new JList<String>(arrAllLevels);
+		listOfLevels = new JList<>(arrAllLevels);
 
 		listOfLevels.setSelectedIndex(0);
 		listOfLevels.setFont(new Font("Times New Roman", Font.PLAIN, 28));
