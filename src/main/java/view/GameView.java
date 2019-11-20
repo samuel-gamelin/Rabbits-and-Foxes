@@ -159,7 +159,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuHint.addActionListener(this);
 		menuUndo.addActionListener(this);
 		menuRedo.addActionListener(this);
-		
+
 		// Organize the frame
 		this.setIconImage(Resources.WINDOW_ICON.getImage());
 		Utilities.configureFrame(this);
@@ -332,10 +332,16 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
 				new String[] { "Yes", "No" }) == 0)) {
 			resetGame();
-		} else if (e.getSource() == menuUndo && !gameController.undoMove()) {
-			Utilities.displayMessageDialog(this, "No moves to undo", "Undo Move");
-		} else if (e.getSource() == menuRedo && !gameController.redoMove()) {
-			Utilities.displayMessageDialog(this, "No moves to redo", "Redo Move");
+		} else if (e.getSource() == menuUndo) {
+			clearButtonBorders();
+			if (!gameController.undoMove()) {
+				Utilities.displayMessageDialog(this, "No moves to undo", "Undo Move");
+			}
+		} else if (e.getSource() == menuRedo) {
+			clearButtonBorders();
+			if (!gameController.redoMove()) {
+				Utilities.displayMessageDialog(this, "No moves to redo", "Redo Move");
+			}
 		}
 	}
 
