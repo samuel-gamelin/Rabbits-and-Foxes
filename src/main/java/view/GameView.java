@@ -6,33 +6,26 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -50,6 +43,8 @@ import model.Piece;
 import model.Rabbit;
 import model.Rabbit.RabbitColour;
 import resources.Resources;
+import ui.MainMenu;
+import ui.Utilities;
 import util.Move;
 
 /**
@@ -62,15 +57,11 @@ import util.Move;
  * @author Abdalla El Nakla
  * @version 3.0
  */
-public class GameView extends MouseAdapter implements BoardListener, ActionListener {
-	private JFrame mainMenuFrame, gameFrame, levelSelectorFrame;
-
+public class GameView extends JFrame implements BoardListener, ActionListener {
 	private JButton menuReset, menuHelp, menuQuit, menuHint, menuUndo, menuRedo, menuMainScreen;
-	private JButton btnStart, btnHelp, btnQuit, btnSelectLevel, btnStartSelectLevel;
+	private JButton btnStart, btnHelp, btnQuit, btnSelectLevel;
 
-	private JList<String> listOfLevels;
 	private JCheckBox chkPath;
-	private boolean pathSelection;
 
 	private JButton[][] buttons;
 
@@ -86,7 +77,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	/**
 	 * Creates the application GUI.
 	 */
-	public GameView() {
+	public GameView(int level) {
 		// Forces the look and feel of the application to remain consistent across
 		// platforms
 		try {
@@ -107,84 +98,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 
 		/**
 		 * 
-		 * Main menu frame
-		 * 
-		 */
-		mainMenuFrame = new JFrame(GAME_NAME);
-		mainMenuFrame.setContentPane(new JLabel(Resources.MAIN_MENU_BACKGROUND));
-		mainMenuFrame.getContentPane().setLayout(new BoxLayout(mainMenuFrame.getContentPane(), BoxLayout.Y_AXIS));
-
-		btnStart = new JButton("Start");
-		btnSelectLevel = new JButton("Select Level");
-		btnHelp = new JButton("Help");
-		btnQuit = new JButton("Quit");
-
-		addMainMenuButton(mainMenuFrame, btnStart);
-		addMainMenuButton(mainMenuFrame, btnSelectLevel);
-		addMainMenuButton(mainMenuFrame, btnHelp);
-		addMainMenuButton(mainMenuFrame, btnQuit);
-
-		mainMenuFrame.setIconImage(Resources.WINDOW_ICON.getImage());
-		mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainMenuFrame.setResizable(false);
-		mainMenuFrame.pack();
-		mainMenuFrame.setLocationRelativeTo(null);
-		mainMenuFrame.setVisible(true);
-
-		/**
-		 * 
-		 * Level Selector frame
-		 * 
-		 */
-
-		levelSelectorFrame = new JFrame("Level Selector");
-		levelSelectorFrame.setIconImage(Resources.WINDOW_ICON.getImage());
-		levelSelectorFrame.setContentPane(new JLabel(Resources.LEVEL_SELECTOR_BACKGROUND));
-		levelSelectorFrame.getContentPane().setLayout(new BorderLayout());
-		levelSelectorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		levelSelectorFrame.setResizable(false);
-		levelSelectorFrame.pack();
-		levelSelectorFrame.setLocationRelativeTo(null);
-
-		List<String> allLevels = new ArrayList<>();
-		for (int i = 1; i <= Resources.NUMBER_OF_LEVELS; i++) {
-			allLevels.add("Level " + i);
-		}
-
-		// convert the arraylist to a string array
-		String[] arrAllLevels = allLevels.toArray(new String[0]);
-		listOfLevels = new JList<>(arrAllLevels);
-
-		listOfLevels.setSelectedIndex(0);
-		listOfLevels.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-
-		DefaultListCellRenderer renderer = (DefaultListCellRenderer) listOfLevels.getCellRenderer();
-		renderer.setHorizontalAlignment(SwingConstants.CENTER);
-		renderer.setOpaque(false);
-
-		listOfLevels.setOpaque(false);
-		listOfLevels.setForeground(Color.WHITE);
-
-		btnStartSelectLevel = new JButton("Start");
-		btnStartSelectLevel
-				.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) (0.20 * Resources.SIDE_LENGTH)));
-		btnStartSelectLevel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		btnStartSelectLevel.setForeground(Color.BLACK);
-		btnStartSelectLevel.setBackground(Color.WHITE);
-		btnStartSelectLevel.setFont(new Font("Times New Roman", Font.PLAIN, 32));
-
-		JPanel padding = new JPanel(new GridBagLayout());
-		padding.setBorder(new EmptyBorder(0, 0, 0, 0));
-		padding.setOpaque(false);
-		padding.add(listOfLevels, new GridBagConstraints());
-
-		levelSelectorFrame.add(btnStartSelectLevel, BorderLayout.SOUTH);
-		levelSelectorFrame.add(padding, BorderLayout.CENTER);
-
-		btnStartSelectLevel.addActionListener(this);
-
-		/**
-		 * 
 		 * Game frame
 		 * 
 		 */
@@ -194,12 +107,12 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		board.addListener(this);
 		gameController = new GameController(board);
 
-		gameFrame = new JFrame(GAME_NAME + " Level: " + gameController.getCurrentLevel());
+		this.setTitle(GAME_NAME + " Level: " + gameController.getCurrentLevel());
 
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
 
-		menuMainScreen = createMenuBarButton("Main Menu", false);
+		menuMainScreen = createMenuBarButton("Main Menu", true);
 		menuHint = createMenuBarButton("Hint", true);
 		menuUndo = createMenuBarButton("Undo", true);
 		menuRedo = createMenuBarButton("Redo", true);
@@ -215,18 +128,18 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		menuBar.add(menuHelp);
 		menuBar.add(menuQuit);
 
-		gameFrame.setJMenuBar(menuBar);
-		gameFrame.setContentPane(new JLabel(Resources.BOARD));
-		gameFrame.getContentPane().setLayout(new GridLayout(5, 5));
+		this.setJMenuBar(menuBar);
+		this.setContentPane(new JLabel(Resources.BOARD));
+		this.getContentPane().setLayout(new GridLayout(5, 5));
 
 		// Organize the game frame
-		gameFrame.setIconImage(Resources.WINDOW_ICON.getImage());
-		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gameFrame.setResizable(false);
-		gameFrame.pack();
-		gameFrame.setLocationRelativeTo(null);
+		this.setIconImage(Resources.WINDOW_ICON.getImage());
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
+		this.pack();
+		this.setLocationRelativeTo(null);
 
-		JLabel gameContentPane = (JLabel) gameFrame.getContentPane();
+		JLabel gameContentPane = (JLabel) this.getContentPane();
 
 		// Create all buttons
 		buttons = new JButton[5][5];
@@ -274,11 +187,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		}
 
 		// Configure the escape key to cancel the pending move, setup the check box and
-		bindKeyStroke(gameContentPane, "ESCAPE", "clear", this::clearMove);
+		Utilities.bindKeyStroke(gameContentPane, "ESCAPE", "clear", this::clearMove);
 		chkPath = new JCheckBox();
 		chkPath.addItemListener(e -> {
-			pathSelection = e.getStateChange() == ItemEvent.SELECTED;
-			chkPath.setSelected(pathSelection);
+			chkPath.setSelected(e.getStateChange() == ItemEvent.SELECTED);
 		});
 		updateView();
 
@@ -331,32 +243,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	}
 
 	/**
-	 * Displays an informational message dialog.
-	 * 
-	 * @param parent  The parent component of this option dialog
-	 * @param message The message to display
-	 * @param title   The title of the dialog box
-	 */
-	private void displayMessageDialog(Component parent, String message, String title) {
-		JOptionPane.showMessageDialog(parent, message, title, JOptionPane.INFORMATION_MESSAGE);
-	}
-
-	/**
-	 * Displays an option dialog, returning the choice selected by the user.
-	 * 
-	 * @param parent  The parent component of this option dialog
-	 * @param message The message to display
-	 * @param title   The title of the dialog box
-	 * @param options The options to be provided in the dialog - the initial option
-	 *                selected is the first element of the provided object array
-	 * @return The choice made by the user
-	 */
-	private int displayOptionDialog(Component parent, String message, String title, Object[] options) {
-		return JOptionPane.showOptionDialog(parent, message, title, JOptionPane.DEFAULT_OPTION,
-				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-	}
-
-	/**
 	 * Pops up the in-game help dialog.
 	 */
 	private void displayHelpDialog() {
@@ -373,7 +259,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 				+ "Reset:   Restarts the game<br>" + "Quit   (q):   Exits the application<br>"
 				+ "Escape (ESC): Clears the pending move" + "</p></body></html>"), BorderLayout.NORTH);
 
-		JOptionPane.showMessageDialog(gameFrame, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	/**
@@ -398,7 +284,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 	 * Updates the game frame's title with the new level name.
 	 */
 	private void updateFrameTitle() {
-		gameFrame.setTitle(GAME_NAME + " Level: " + gameController.getCurrentLevel());
+		this.setTitle(GAME_NAME + " Level: " + gameController.getCurrentLevel());
 	}
 
 	/**
@@ -454,7 +340,7 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			clearButtonBorders();
 
 			if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
-				int choice = displayOptionDialog(gameFrame,
+				int choice = Utilities.displayOptionDialog(this,
 						"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
 						new String[] { "Next", "Reset", "Quit" });
 				if (choice == 0) {
@@ -467,16 +353,11 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 					System.exit(0);
 				}
 			} else {
-				if (displayOptionDialog(gameFrame,
+				if (Utilities.displayOptionDialog(this,
 						"You have finished the game! Would you like to go to the main menu or exit?", "End Game",
 						new String[] { "Main Menu", "Quit" }) == 0) {
-					gameController.setLevel(1);
-					updateFrameTitle();
-					resetGame();
-					gameFrame.setVisible(false);
-					gameFrame.setLocationRelativeTo(null);
-					mainMenuFrame.setLocationRelativeTo(null);
-					mainMenuFrame.setVisible(true);
+					this.dispose();
+					SwingUtilities.invokeLater(MainMenu::new);
 				} else {
 					System.exit(0);
 				}
@@ -492,27 +373,10 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		if (e.getSource() == btnStart) {
 			setGameLevel(0);
 		} else if (e.getSource() == menuMainScreen
-				&& displayOptionDialog(null, "Are you sure you want to return to main menu?", "Return to Main Menu",
-						new String[] { "Yes", "No" }) == 0) {
-			gameFrame.setVisible(false);
-			mainMenuFrame.setVisible(true);
-		}
-
-		else if (e.getSource() == btnStartSelectLevel) {
-			if (listOfLevels.getSelectedIndex() == -1) {
-				levelSelectorFrame.setVisible(false);
-				setGameLevel(0);
-			} else {
-				levelSelectorFrame.setVisible(false);
-				setGameLevel(listOfLevels.getSelectedIndex());
-			}
-		} else if (e.getSource() == btnSelectLevel) {
-			levelSelectorFrame.setVisible(true);
-			mainMenuFrame.setVisible(false);
-		} else if (e.getSource() == btnHelp) {
-			displayMessageDialog(mainMenuFrame,
-					"Start: Starts the game\nLevel Select: Opens the level section menu\nHelp: Displays the help menu\nQuit: Exits the application",
-					"Help");
+				&& Utilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
+						"Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
+			this.dispose();
+			SwingUtilities.invokeLater(MainMenu::new);
 		} else if (e.getSource() == menuHint) {
 			Move bestMove = gameController.getNextBestMove();
 			if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(selectedBorder)) {
@@ -521,17 +385,17 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
 		} else if (e.getSource() == menuHelp) {
 			displayHelpDialog();
-		} else if ((e.getSource() == menuQuit || e.getSource() == btnQuit) && displayOptionDialog(null,
+		} else if ((e.getSource() == menuQuit || e.getSource() == btnQuit) && Utilities.displayOptionDialog(this,
 				"Are you sure you want to exit?", "Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
 			System.exit(0);
-		} else if ((e.getSource() == menuReset) && (displayOptionDialog(gameFrame,
+		} else if ((e.getSource() == menuReset) && (Utilities.displayOptionDialog(this,
 				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
 				new String[] { "Yes", "No" }) == 0)) {
 			resetGame();
 		} else if (e.getSource() == menuUndo && !gameController.undoMove()) {
-			displayMessageDialog(gameFrame, "No moves to undo", "Undo Move");
+			Utilities.displayMessageDialog(this, "No moves to undo", "Undo Move");
 		} else if (e.getSource() == menuRedo && !gameController.redoMove()) {
-			displayMessageDialog(gameFrame, "No moves to redo", "Redo Move");
+			Utilities.displayMessageDialog(this, "No moves to redo", "Redo Move");
 		}
 	}
 
@@ -542,8 +406,6 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		gameController.setLevel(level + 1);
 		resetGame();
 		updateFrameTitle();
-		mainMenuFrame.setVisible(false);
-		gameFrame.setVisible(true);
 		displayHelpDialog();
 	}
 
@@ -569,38 +431,5 @@ public class GameView extends MouseAdapter implements BoardListener, ActionListe
 		if (((JButton) e.getSource()).getBorder().equals(UIManager.getBorder("Button.border"))) {
 			((JButton) e.getSource()).setBorder(blankBorder);
 		}
-	}
-
-	/**
-	 * Binds the specified keystroke to the specified JComponent.
-	 * 
-	 * @param component  The component on which the keystroke should be bound
-	 * @param keystroke  The keystroke to bind
-	 * @param actionName The name of keystroke action
-	 * @param method     The method to execute when the keystroke is activated
-	 */
-	private void bindKeyStroke(JComponent component, String keystroke, String actionName, Runnable method) {
-		if (keystroke.length() == 1) {
-			component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keystroke.charAt(0)),
-					actionName);
-		} else {
-			component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keystroke), actionName);
-		}
-		component.getActionMap().put(actionName, new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				method.run();
-			}
-
-		});
-	}
-
-	/**
-	 * Starts the Rabbits and Foxes game.
-	 * 
-	 * @param args The command-line arguments
-	 */
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(GameView::new);
 	}
 }
