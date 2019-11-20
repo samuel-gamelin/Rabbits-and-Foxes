@@ -8,10 +8,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
@@ -54,6 +57,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	private JButton menuUndo;
 	private JButton menuRedo;
 	private JButton menuMainScreen;
+	private JButton menuSaveButton; 
 
 	private BevelBorder selectedBorder;
 	private BevelBorder hintBorderStart;
@@ -66,6 +70,12 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
 	private Board board;
 	private GameController gameController;
+	final JFileChooser fc = new JFileChooser();
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -876514072285839358L;
 
 	/**
 	 * Creates the application GUI.
@@ -93,6 +103,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuUndo = createMenuBarButton("Undo", true);
 		menuRedo = createMenuBarButton("Redo", true);
 		menuReset = createMenuBarButton("Reset", false);
+		menuSaveButton = createMenuBarButton("Save Game", true);
 		menuHelp = createMenuBarButton("Help", false);
 		menuQuit = createMenuBarButton("Quit", true);
 
@@ -101,6 +112,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuBar.add(menuUndo);
 		menuBar.add(menuRedo);
 		menuBar.add(menuReset);
+		menuBar.add(menuSaveButton);
 		menuBar.add(menuHelp);
 		menuBar.add(menuQuit);
 
@@ -166,6 +178,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuMainScreen.addActionListener(this);
 		menuReset.addActionListener(this);
 		menuHelp.addActionListener(this);
+		menuSaveButton.addActionListener(this);
 		menuQuit.addActionListener(this);
 		menuHint.addActionListener(this);
 		menuUndo.addActionListener(this);
@@ -334,7 +347,15 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 				buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
 			}
 			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
-		} else if (e.getSource() == menuHelp) {
+			}
+		else if(e.getSource() == menuSaveButton) {
+			int returnVal = fc.showSaveDialog(this);
+			if(returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				gameController.saveGame(file, board);
+			}
+		}
+		else if (e.getSource() == menuHelp) {
 			displayHelpDialog();
 		} else if ((e.getSource() == menuQuit) && Utilities.displayOptionDialog(this, "Are you sure you want to exit?",
 				"Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
