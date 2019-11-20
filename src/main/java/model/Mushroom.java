@@ -16,6 +16,11 @@ import util.Move;
 public class Mushroom extends Piece {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5059119101029351797L;
+
+	/**
 	 * Construct a new mushroom.
 	 */
 	public Mushroom() {
