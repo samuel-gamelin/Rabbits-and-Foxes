@@ -70,12 +70,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
 	private Board board;
 	private GameController gameController;
-	final JFileChooser fc = new JFileChooser();
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -876514072285839358L;
+	private JFileChooser fc = new JFileChooser();
 
 	/**
 	 * Creates the application GUI.

@@ -18,8 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
-import controller.GameController;
-import model.Board;
 import resources.Resources;
 import view.GameView;
 
@@ -36,18 +34,7 @@ public class MainMenu extends JFrame implements ActionListener {
 	private JButton btnHelp;
 	private JButton btnQuit;
 	private JButton btnLoadGameButton;
-	private GameController gameController;
-	
-	private Board board;
-	
-	//Create a file chooser
-	final JFileChooser fc = new JFileChooser();
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -9068173652721254432L;
-	
+	private JFileChooser fc = new JFileChooser();
 
 	/**
 	 * Creates the main menu GUI.
@@ -66,8 +53,6 @@ public class MainMenu extends JFrame implements ActionListener {
 		btnLoadGameButton = new JButton("Open Saved Game"); 
 		btnHelp = new JButton("Help");
 		btnQuit = new JButton("Quit");
-		
-		gameController = new GameController(board);
 		
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.NORTH);
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.SOUTH);
@@ -115,7 +100,6 @@ public class MainMenu extends JFrame implements ActionListener {
 			int returnVal = fc.showOpenDialog(this);
 			if(returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
-				gameController.openGame(file);
 			}
 		}
 		else if (e.getSource() == btnSelectLevel) {

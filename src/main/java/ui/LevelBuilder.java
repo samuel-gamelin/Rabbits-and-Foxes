@@ -11,9 +11,12 @@ import model.Board;
 import resources.Resources;
 
 public class LevelBuilder extends JFrame {
+	private Board board;
 	private JButton[][] buttons;
 	
 	public LevelBuilder() {
+		this.board = new Board();
+		
 		JLabel boardLabel = new JLabel(Resources.BOARD);
 		boardLabel.setLayout(new GridLayout(5, 5));
 		
