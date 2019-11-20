@@ -196,33 +196,33 @@ public class GameController {
 	}
 	
 	public void openGame(File file) {
-		// read the object from file
-        // save the object to file
-        FileInputStream fis = null;
-        ObjectInputStream in = null;
-        try {
-            fis = new FileInputStream(file);
-            in = new ObjectInputStream(fis);
-            board = (Board) in.readObject();
-            in.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+//		// read the object from file
+//        // save the object to file
+//        FileInputStream fis = null;
+//        ObjectInputStream in = null;
+//        try {
+//            fis = new FileInputStream(file);
+//            in = new ObjectInputStream(fis);
+//            board = (Board) in.readObject();
+//            in.close();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
 	}
 	
 	public void saveGame(File file, Board board) {
-		// save the object to file
-        FileOutputStream fos = null;
-        ObjectOutputStream out = null;
-        try {
-            fos = new FileOutputStream(file);
-            out = new ObjectOutputStream(fos);
-            out.writeObject(board);
-
-            out.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+//		// save the object to file
+//        FileOutputStream fos = null;
+//        ObjectOutputStream out = null;
+//        try {
+//            fos = new FileOutputStream(file);
+//            out = new ObjectOutputStream(fos);
+//            out.writeObject(board);
+//
+//            out.close();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
 	}
 
 	/**
