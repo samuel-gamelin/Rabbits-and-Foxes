@@ -17,6 +17,10 @@ import util.Move.MoveDirection;
  */
 public class Rabbit extends Piece {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7686345149603686805L;
+	/**
 	 * The colour of the rabbit
 	 */
 	private RabbitColour colour;
