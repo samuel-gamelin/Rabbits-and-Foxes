@@ -9,7 +9,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -57,7 +56,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	private JButton menuUndo;
 	private JButton menuRedo;
 	private JButton menuMainScreen;
-	private JButton menuSaveButton; 
+	private JButton menuSaveButton;
 
 	private BevelBorder selectedBorder;
 	private BevelBorder hintBorderStart;
@@ -179,8 +178,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuUndo.addActionListener(this);
 		menuRedo.addActionListener(this);
 
-		// Organize the frame
-		this.setIconImage(Resources.WINDOW_ICON.getImage());
 		Utilities.configureFrame(this);
 		this.setGameLevel(level);
 	}
@@ -342,15 +339,13 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 				buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
 			}
 			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
-			}
-		else if(e.getSource() == menuSaveButton) {
+		} else if (e.getSource() == menuSaveButton) {
 			int returnVal = fc.showSaveDialog(this);
-			if(returnVal == JFileChooser.APPROVE_OPTION) {
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
 				gameController.saveGame(file, board);
 			}
-		}
-		else if (e.getSource() == menuHelp) {
+		} else if (e.getSource() == menuHelp) {
 			displayHelpDialog();
 		} else if ((e.getSource() == menuQuit) && Utilities.displayOptionDialog(this, "Are you sure you want to exit?",
 				"Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {

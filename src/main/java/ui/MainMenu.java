@@ -50,10 +50,10 @@ public class MainMenu extends JFrame implements ActionListener {
 		btnStart = new JButton("Start");
 		btnSelectLevel = new JButton("Select Level");
 		btnBuildLevel = new JButton("Level Builder");
-		btnLoadGameButton = new JButton("Open Saved Game"); 
+		btnLoadGameButton = new JButton("Open Saved Game");
 		btnHelp = new JButton("Help");
 		btnQuit = new JButton("Quit");
-		
+
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.NORTH);
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.SOUTH);
 
@@ -64,7 +64,6 @@ public class MainMenu extends JFrame implements ActionListener {
 		addMainMenuButton(this, btnHelp);
 		addMainMenuButton(this, btnQuit);
 
-		this.setIconImage(Resources.WINDOW_ICON.getImage());
 		Utilities.configureFrame(this);
 	}
 
@@ -84,7 +83,6 @@ public class MainMenu extends JFrame implements ActionListener {
 		button.setFont(new Font("Times New Roman", Font.PLAIN, 32));
 		button.addActionListener(this);
 		pane.add(button, BorderLayout.CENTER);
-		//pane.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 20))), BorderLayout.CENTER);
 	}
 
 	/**
@@ -95,14 +93,12 @@ public class MainMenu extends JFrame implements ActionListener {
 		if (e.getSource() == btnStart) {
 			this.dispose();
 			SwingUtilities.invokeLater(new GameView(0));
-		} 
-		else if(e.getSource() == btnLoadGameButton) {
+		} else if (e.getSource() == btnLoadGameButton) {
 			int returnVal = fc.showOpenDialog(this);
-			if(returnVal == JFileChooser.APPROVE_OPTION) {
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
 			}
-		}
-		else if (e.getSource() == btnSelectLevel) {
+		} else if (e.getSource() == btnSelectLevel) {
 			this.dispose();
 			SwingUtilities.invokeLater(LevelSelector::new);
 		} else if (e.getSource() == btnHelp) {
