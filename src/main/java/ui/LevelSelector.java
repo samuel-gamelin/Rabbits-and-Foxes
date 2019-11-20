@@ -33,9 +33,8 @@ public class LevelSelector extends JFrame implements ActionListener {
 		this.setContentPane(new JLabel(Resources.LEVEL_SELECTOR_BACKGROUND));
 		this.getContentPane().setLayout(new BorderLayout());
 
-
 		btnStartSelectLevel = new JButton("Start");
-		
+
 		this.add(btnStartSelectLevel, BorderLayout.SOUTH);
 		// this.add(padding, BorderLayout.CENTER);
 
@@ -75,7 +74,7 @@ public class LevelSelector extends JFrame implements ActionListener {
 		this.add(padding, BorderLayout.CENTER);
 
 		btnStartSelectLevel.addActionListener(this);
-		
+
 		this.setTitle("Level Selector");
 		this.setIconImage(Resources.WINDOW_ICON.getImage());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,8 +88,8 @@ public class LevelSelector extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnStartSelectLevel) {
 			this.dispose();
-			SwingUtilities.invokeLater(new GameView(
-					listOfLevels.getSelectedIndex() == -1 ? 0 : listOfLevels.getSelectedIndex()));
+			SwingUtilities.invokeLater(
+					new GameView(listOfLevels.getSelectedIndex() == -1 ? 0 : listOfLevels.getSelectedIndex()));
 		}
 
 	}

@@ -47,8 +47,19 @@ import util.Move;
  * @version 4.0
  */
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
-	private JButton menuReset, menuHelp, menuQuit, menuHint, menuUndo, menuRedo, menuMainScreen;
-	private BevelBorder selectedBorder, hintBorderStart, hintBorderEnd, possiblePositionBorder;
+	private JButton menuReset;
+	private JButton menuHelp;
+	private JButton menuQuit;
+	private JButton menuHint;
+	private JButton menuUndo;
+	private JButton menuRedo;
+	private JButton menuMainScreen;
+
+	private BevelBorder selectedBorder;
+	private BevelBorder hintBorderStart;
+	private BevelBorder hintBorderEnd;
+	private BevelBorder possiblePositionBorder;
+
 	private EmptyBorder blankBorder;
 	private JCheckBox showPossibleMovesBox;
 	private JButton[][] buttons;
@@ -159,7 +170,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuHint.addActionListener(this);
 		menuUndo.addActionListener(this);
 		menuRedo.addActionListener(this);
-		
+
 		// Organize the frame
 		this.setIconImage(Resources.WINDOW_ICON.getImage());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
