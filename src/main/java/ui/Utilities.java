@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -7,8 +8,27 @@ import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.ColorUIResource;
+
+import resources.Resources;
 
 public class Utilities {
+	/**
+	 * Forces the look and feel of the application to remain consistent across
+	 * platforms, and removes the focus border form all buttons.
+	 */
+	public static void applyDefaults() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			Resources.LOGGER.error("Could not set the default look and feel", e);
+		}
+		UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
+	}
+
 	/**
 	 * Displays an informational message dialog.
 	 * 
@@ -34,7 +54,7 @@ public class Utilities {
 		return JOptionPane.showOptionDialog(parent, message, title, JOptionPane.DEFAULT_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 	}
-	
+
 	/**
 	 * Binds the specified keystroke to the specified JComponent.
 	 * 

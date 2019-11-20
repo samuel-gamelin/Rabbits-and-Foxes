@@ -2,36 +2,25 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.ColorUIResource;
 
 import controller.GameController;
 import controller.GameController.ClickValidity;
@@ -55,40 +44,22 @@ import util.Move;
  * @author John Breton
  * @author Samuel Gamelin
  * @author Abdalla El Nakla
- * @version 3.0
+ * @version 4.0
  */
-public class GameView extends JFrame implements BoardListener, ActionListener {
+public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
 	private JButton menuReset, menuHelp, menuQuit, menuHint, menuUndo, menuRedo, menuMainScreen;
-	private JButton btnStart, btnHelp, btnQuit, btnSelectLevel;
-
-	private JCheckBox chkPath;
-
+	private BevelBorder selectedBorder, hintBorderStart, hintBorderEnd, possiblePositionBorder;
+	private EmptyBorder blankBorder;
+	private JCheckBox showPossibleMovesBox;
 	private JButton[][] buttons;
 
 	private Board board;
-
 	private GameController gameController;
-
-	private BevelBorder selectedBorder, hintBorderStart, hintBorderEnd, possiblePositionBorder;
-	private EmptyBorder blankBorder;
-
-	public static final String GAME_NAME = "Rabbit and Foxes!";
 
 	/**
 	 * Creates the application GUI.
 	 */
 	public GameView(int level) {
-		// Forces the look and feel of the application to remain consistent across
-		// platforms
-		try {
-			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			Resources.LOGGER.error("Could not set the default look and feel", e);
-		}
-		// Removes focus border from all buttons
-		UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
-
 		// Setting up the borders used for JButtons
 		selectedBorder = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
 		hintBorderStart = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
@@ -96,18 +67,12 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		possiblePositionBorder = new BevelBorder(BevelBorder.RAISED, Color.BLUE, Color.BLUE);
 		blankBorder = new EmptyBorder(0, 0, 0, 0);
 
-		/**
-		 * 
-		 * Game frame
-		 * 
-		 */
-
 		// Create the board and controller
 		board = Resources.getLevel(1);
 		board.addListener(this);
 		gameController = new GameController(board);
 
-		this.setTitle(GAME_NAME + " Level: " + gameController.getCurrentLevel());
+		this.updateFrameTitle();
 
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -131,13 +96,6 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		this.setJMenuBar(menuBar);
 		this.setContentPane(new JLabel(Resources.BOARD));
 		this.getContentPane().setLayout(new GridLayout(5, 5));
-
-		// Organize the game frame
-		this.setIconImage(Resources.WINDOW_ICON.getImage());
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
-		this.pack();
-		this.setLocationRelativeTo(null);
 
 		JLabel gameContentPane = (JLabel) this.getContentPane();
 
@@ -164,7 +122,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 					ClickValidity clickResult = gameController.registerClick(xCopy, yCopy);
 
 					// Highlights all possible moves for the selected piece.
-					if (chkPath.isSelected()) {
+					if (showPossibleMovesBox.isSelected()) {
 						gameController.getPossibleMoves(xCopy, yCopy).parallelStream().forEach(move -> {
 							buttons[move.xStart][move.yStart].setBorder(hintBorderStart);
 							buttons[move.xEnd][move.yEnd].setBorder(possiblePositionBorder);
@@ -188,17 +146,11 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 
 		// Configure the escape key to cancel the pending move, setup the check box and
 		Utilities.bindKeyStroke(gameContentPane, "ESCAPE", "clear", this::clearMove);
-		chkPath = new JCheckBox();
-		chkPath.addItemListener(e -> {
-			chkPath.setSelected(e.getStateChange() == ItemEvent.SELECTED);
+		showPossibleMovesBox = new JCheckBox();
+		showPossibleMovesBox.addItemListener(e -> {
+			showPossibleMovesBox.setSelected(e.getStateChange() == ItemEvent.SELECTED);
 		});
 		updateView();
-
-		// Attach action listeners to buttons
-		btnStart.addActionListener(this);
-		btnHelp.addActionListener(this);
-		btnQuit.addActionListener(this);
-		btnSelectLevel.addActionListener(this);
 
 		menuMainScreen.addActionListener(this);
 		menuReset.addActionListener(this);
@@ -207,22 +159,15 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		menuHint.addActionListener(this);
 		menuUndo.addActionListener(this);
 		menuRedo.addActionListener(this);
-	}
-
-	/**
-	 * Adds a button to the specified pane. Used in building the main menu.
-	 * 
-	 * @param pane   The pane to which to add the specified button
-	 * @param button The button to add
-	 */
-	private void addMainMenuButton(Container pane, JButton button) {
-		pane.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 7))));
-		button.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) (0.10 * Resources.SIDE_LENGTH)));
-		button.setAlignmentX(Component.CENTER_ALIGNMENT);
-		button.setForeground(Color.BLACK);
-		button.setBackground(Color.WHITE);
-		button.setFont(new Font("Times New Roman", Font.PLAIN, 32));
-		pane.add(button);
+		
+		// Organize the frame
+		this.setIconImage(Resources.WINDOW_ICON.getImage());
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
+		this.pack();
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+		this.setGameLevel(level);
 	}
 
 	/**
@@ -237,7 +182,8 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		button.setBorderPainted(false);
 
 		if (enableShortcut) {
-			bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(0))), text, button::doClick);
+			Utilities.bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(0))), text,
+					button::doClick);
 		}
 		return button;
 	}
@@ -249,7 +195,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		JPanel panel = new JPanel(new BorderLayout(0, 15));
 
 		panel.add(new JLabel("Show possible moves?"), BorderLayout.CENTER);
-		panel.add(chkPath, BorderLayout.EAST);
+		panel.add(showPossibleMovesBox, BorderLayout.EAST);
 
 		panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>"
 				+ "Rabbits and Foxes is a game in which you must get all rabbits to safety by having them land in brown holes. "
@@ -284,7 +230,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	 * Updates the game frame's title with the new level name.
 	 */
 	private void updateFrameTitle() {
-		this.setTitle(GAME_NAME + " Level: " + gameController.getCurrentLevel());
+		this.setTitle("Rabbit and Foxes! Level: " + gameController.getCurrentLevel());
 	}
 
 	/**
@@ -370,9 +316,7 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnStart) {
-			setGameLevel(0);
-		} else if (e.getSource() == menuMainScreen
+		if (e.getSource() == menuMainScreen
 				&& Utilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
 						"Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
 			this.dispose();
@@ -385,8 +329,8 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
 		} else if (e.getSource() == menuHelp) {
 			displayHelpDialog();
-		} else if ((e.getSource() == menuQuit || e.getSource() == btnQuit) && Utilities.displayOptionDialog(this,
-				"Are you sure you want to exit?", "Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
+		} else if ((e.getSource() == menuQuit) && Utilities.displayOptionDialog(this, "Are you sure you want to exit?",
+				"Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
 			System.exit(0);
 		} else if ((e.getSource() == menuReset) && (Utilities.displayOptionDialog(this,
 				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
@@ -431,5 +375,21 @@ public class GameView extends JFrame implements BoardListener, ActionListener {
 		if (((JButton) e.getSource()).getBorder().equals(UIManager.getBorder("Button.border"))) {
 			((JButton) e.getSource()).setBorder(blankBorder);
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+
+	@Override
+	public void run() {
 	}
 }

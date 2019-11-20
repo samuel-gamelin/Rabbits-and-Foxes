@@ -14,13 +14,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.ColorUIResource;
 
 import resources.Resources;
 import view.GameView;
 
+/**
+ * This class represents the main menu frame of the game.
+ * 
+ * @author Samuel Gamelin
+ * @author Mohamed Radwan
+ */
 public class MainMenu extends JFrame implements ActionListener {
 	private JButton btnStart, btnHelp, btnQuit, btnSelectLevel;
 
@@ -28,23 +31,9 @@ public class MainMenu extends JFrame implements ActionListener {
 	 * Creates the main menu GUI.
 	 */
 	public MainMenu() {
-		// Forces the look and feel of the application to remain consistent across
-		// platforms
-		try {
-			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			Resources.LOGGER.error("Could not set the default look and feel", e);
-		}
-		// Removes focus border from all buttons
-		UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
-
-		/**
-		 * 
-		 * Main menu frame
-		 * 
-		 */
-		this.setTitle(GameView.GAME_NAME);
+		Utilities.applyDefaults();
+		
+		this.setTitle("Rabbits and Foxes Main Menu");
 		this.setContentPane(new JLabel(Resources.MAIN_MENU_BACKGROUND));
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 

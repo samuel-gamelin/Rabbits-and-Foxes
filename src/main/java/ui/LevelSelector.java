@@ -27,19 +27,15 @@ import view.GameView;
 
 public class LevelSelector extends JFrame implements ActionListener {
 	private JList<String> listOfLevels;
-	private JButton btnSelectLevel;
 	private JButton btnStartSelectLevel;
 
 	public LevelSelector() {
-		this.setTitle("Level Selector");
-		this.setIconImage(Resources.WINDOW_ICON.getImage());
 		this.setContentPane(new JLabel(Resources.LEVEL_SELECTOR_BACKGROUND));
 		this.getContentPane().setLayout(new BorderLayout());
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
-		this.pack();
-		this.setLocationRelativeTo(null);
 
+
+		btnStartSelectLevel = new JButton("Start");
+		
 		this.add(btnStartSelectLevel, BorderLayout.SOUTH);
 		// this.add(padding, BorderLayout.CENTER);
 
@@ -79,13 +75,21 @@ public class LevelSelector extends JFrame implements ActionListener {
 		this.add(padding, BorderLayout.CENTER);
 
 		btnStartSelectLevel.addActionListener(this);
+		
+		this.setTitle("Level Selector");
+		this.setIconImage(Resources.WINDOW_ICON.getImage());
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
+		this.pack();
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnStartSelectLevel) {
 			this.dispose();
-			SwingUtilities.invokeLater((Runnable) new GameView(
+			SwingUtilities.invokeLater(new GameView(
 					listOfLevels.getSelectedIndex() == -1 ? 0 : listOfLevels.getSelectedIndex()));
 		}
 
