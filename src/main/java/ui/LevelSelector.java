@@ -77,11 +77,7 @@ public class LevelSelector extends JFrame implements ActionListener {
 
 		this.setTitle("Level Selector");
 		this.setIconImage(Resources.WINDOW_ICON.getImage());
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
-		this.pack();
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
+		Utilities.configureFrame(this);
 	}
 
 	@Override

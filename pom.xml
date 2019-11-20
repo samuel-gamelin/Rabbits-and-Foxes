@@ -32,7 +32,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>view.GameView</mainClass>
+							<mainClass>ui.MainMenu</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

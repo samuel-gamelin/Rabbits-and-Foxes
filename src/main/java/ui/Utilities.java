@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
@@ -15,6 +16,14 @@ import javax.swing.plaf.ColorUIResource;
 import resources.Resources;
 
 public class Utilities {
+	public static void configureFrame(JFrame frame) {
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
+	
 	/**
 	 * Forces the look and feel of the application to remain consistent across
 	 * platforms, and removes the focus border form all buttons.

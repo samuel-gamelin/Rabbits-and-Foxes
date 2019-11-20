@@ -51,11 +51,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		addMainMenuButton(this, btnQuit);
 
 		this.setIconImage(Resources.WINDOW_ICON.getImage());
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
-		this.pack();
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
+		Utilities.configureFrame(this);
 	}
 
 	/**
@@ -84,7 +80,7 @@ public class MainMenu extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnStart) {
 			this.dispose();
-			SwingUtilities.invokeLater((Runnable) new GameView(0));
+			SwingUtilities.invokeLater(new GameView(0));
 		} else if (e.getSource() == btnSelectLevel) {
 			this.dispose();
 			SwingUtilities.invokeLater(LevelSelector::new);

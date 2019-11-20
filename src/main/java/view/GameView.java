@@ -173,11 +173,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
 		// Organize the frame
 		this.setIconImage(Resources.WINDOW_ICON.getImage());
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
-		this.pack();
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
+		Utilities.configureFrame(this);
 		this.setGameLevel(level);
 	}
 
