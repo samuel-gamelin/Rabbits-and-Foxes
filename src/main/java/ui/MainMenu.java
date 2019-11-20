@@ -8,14 +8,18 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import controller.GameController;
+import model.Board;
 import resources.Resources;
 import view.GameView;
 
@@ -31,6 +35,18 @@ public class MainMenu extends JFrame implements ActionListener {
 	private JButton btnBuildLevel;
 	private JButton btnHelp;
 	private JButton btnQuit;
+	private JButton btnLoadGameButton;
+	private GameController gameController;
+	
+	private Board board;
+	
+	//Create a file chooser
+	final JFileChooser fc = new JFileChooser();
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9068173652721254432L;
 	
 
 	/**
@@ -47,14 +63,18 @@ public class MainMenu extends JFrame implements ActionListener {
 		btnStart = new JButton("Start");
 		btnSelectLevel = new JButton("Select Level");
 		btnBuildLevel = new JButton("Level Builder");
+		btnLoadGameButton = new JButton("Open Saved Game"); 
 		btnHelp = new JButton("Help");
 		btnQuit = new JButton("Quit");
+		
+		gameController = new GameController(board);
 		
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.NORTH);
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.SOUTH);
 
 		addMainMenuButton(this, btnStart);
 		addMainMenuButton(this, btnSelectLevel);
+		addMainMenuButton(this, btnLoadGameButton);
 		addMainMenuButton(this, btnBuildLevel);
 		addMainMenuButton(this, btnHelp);
 		addMainMenuButton(this, btnQuit);
@@ -90,7 +110,15 @@ public class MainMenu extends JFrame implements ActionListener {
 		if (e.getSource() == btnStart) {
 			this.dispose();
 			SwingUtilities.invokeLater(new GameView(0));
-		} else if (e.getSource() == btnSelectLevel) {
+		} 
+		else if(e.getSource() == btnLoadGameButton) {
+			int returnVal = fc.showOpenDialog(this);
+			if(returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				gameController.openGame(file);
+			}
+		}
+		else if (e.getSource() == btnSelectLevel) {
 			this.dispose();
 			SwingUtilities.invokeLater(LevelSelector::new);
 		} else if (e.getSource() == btnHelp) {
