@@ -8,10 +8,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
@@ -32,8 +34,8 @@ import model.Piece;
 import model.Rabbit;
 import model.Rabbit.RabbitColour;
 import resources.Resources;
+import ui.GUIUtilities;
 import ui.MainMenu;
-import ui.Utilities;
 import util.Move;
 
 /**
@@ -54,6 +56,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	private JButton menuUndo;
 	private JButton menuRedo;
 	private JButton menuMainScreen;
+	private JButton menuSaveButton;
 
 	private BevelBorder selectedBorder;
 	private BevelBorder hintBorderStart;
@@ -66,6 +69,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
 	private Board board;
 	private GameController gameController;
+	private JFileChooser fc = new JFileChooser();
 
 	/**
 	 * Creates the application GUI.
@@ -93,6 +97,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuUndo = createMenuBarButton("Undo", true);
 		menuRedo = createMenuBarButton("Redo", true);
 		menuReset = createMenuBarButton("Reset", false);
+		menuSaveButton = createMenuBarButton("Save Game", true);
 		menuHelp = createMenuBarButton("Help", false);
 		menuQuit = createMenuBarButton("Quit", true);
 
@@ -101,6 +106,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuBar.add(menuUndo);
 		menuBar.add(menuRedo);
 		menuBar.add(menuReset);
+		menuBar.add(menuSaveButton);
 		menuBar.add(menuHelp);
 		menuBar.add(menuQuit);
 
@@ -156,7 +162,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		}
 
 		// Configure the escape key to cancel the pending move, setup the check box and
-		Utilities.bindKeyStroke(gameContentPane, "ESCAPE", "clear", this::clearMove);
+		GUIUtilities.bindKeyStroke(gameContentPane, "ESCAPE", "clear", this::clearMove);
 		showPossibleMovesBox = new JCheckBox();
 		showPossibleMovesBox.addItemListener(e -> {
 			showPossibleMovesBox.setSelected(e.getStateChange() == ItemEvent.SELECTED);
@@ -166,14 +172,13 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuMainScreen.addActionListener(this);
 		menuReset.addActionListener(this);
 		menuHelp.addActionListener(this);
+		menuSaveButton.addActionListener(this);
 		menuQuit.addActionListener(this);
 		menuHint.addActionListener(this);
 		menuUndo.addActionListener(this);
 		menuRedo.addActionListener(this);
 
-		// Organize the frame
-		this.setIconImage(Resources.WINDOW_ICON.getImage());
-		Utilities.configureFrame(this);
+		GUIUtilities.configureFrame(this);
 		this.setGameLevel(level);
 	}
 
@@ -189,7 +194,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		button.setBorderPainted(false);
 
 		if (enableShortcut) {
-			Utilities.bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(0))), text,
+			GUIUtilities.bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(0))), text,
 					button::doClick);
 		}
 		return button;
@@ -293,7 +298,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 			clearButtonBorders();
 
 			if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
-				int choice = Utilities.displayOptionDialog(this,
+				int choice = GUIUtilities.displayOptionDialog(this,
 						"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
 						new String[] { "Next", "Reset", "Quit" });
 				if (choice == 0) {
@@ -306,7 +311,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 					System.exit(0);
 				}
 			} else {
-				if (Utilities.displayOptionDialog(this,
+				if (GUIUtilities.displayOptionDialog(this,
 						"You have finished the game! Would you like to go to the main menu or exit?", "End Game",
 						new String[] { "Main Menu", "Quit" }) == 0) {
 					this.dispose();
@@ -324,7 +329,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == menuMainScreen
-				&& Utilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
+				&& GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
 						"Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
 			this.dispose();
 			SwingUtilities.invokeLater(MainMenu::new);
@@ -334,24 +339,30 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 				buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
 			}
 			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
+		} else if (e.getSource() == menuSaveButton) {
+			int returnVal = fc.showSaveDialog(this);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				gameController.saveGame(file, board);
+			}
 		} else if (e.getSource() == menuHelp) {
 			displayHelpDialog();
-		} else if ((e.getSource() == menuQuit) && Utilities.displayOptionDialog(this, "Are you sure you want to exit?",
+		} else if ((e.getSource() == menuQuit) && GUIUtilities.displayOptionDialog(this, "Are you sure you want to exit?",
 				"Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
 			System.exit(0);
-		} else if ((e.getSource() == menuReset) && (Utilities.displayOptionDialog(this,
+		} else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
 				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
 				new String[] { "Yes", "No" }) == 0)) {
 			resetGame();
 		} else if (e.getSource() == menuUndo) {
 			clearButtonBorders();
 			if (!gameController.undoMove()) {
-				Utilities.displayMessageDialog(this, "No moves to undo", "Undo Move");
+				GUIUtilities.displayMessageDialog(this, "No moves to undo", "Undo Move");
 			}
 		} else if (e.getSource() == menuRedo) {
 			clearButtonBorders();
 			if (!gameController.redoMove()) {
-				Utilities.displayMessageDialog(this, "No moves to redo", "Redo Move");
+				GUIUtilities.displayMessageDialog(this, "No moves to redo", "Redo Move");
 			}
 		}
 	}

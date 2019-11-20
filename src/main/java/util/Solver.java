@@ -21,13 +21,13 @@ import model.Piece;
  * @author Samuel Gamelin
  * @author Mohamed Radwan
  * 
- * @version 3.0
+ * @version 4.0
  */
-public class Solver {
+public final class Solver {
 	private static List<Node> lastHint;
 
 	/**
-	 * Private constructor since solver cannot be instantiated
+	 * A private constructor, preventing any instantiation of this class.
 	 */
 	private Solver() {
 	}

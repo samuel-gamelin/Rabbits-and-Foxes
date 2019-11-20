@@ -76,8 +76,7 @@ public class LevelSelector extends JFrame implements ActionListener {
 		btnStartSelectLevel.addActionListener(this);
 
 		this.setTitle("Level Selector");
-		this.setIconImage(Resources.WINDOW_ICON.getImage());
-		Utilities.configureFrame(this);
+		GUIUtilities.configureFrame(this);
 	}
 
 	@Override

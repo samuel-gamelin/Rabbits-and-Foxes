@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import util.Solver;
  * @author Dani Hashweh
  * @author Samuel Gamelin
  * @author Abdalla El Nakla
- * @version 3.0
+ * @version 4.0
  */
 public class GameController {
 	private Board board;
@@ -188,6 +189,36 @@ public class GameController {
 	 */
 	public void incrementLevel() {
 		currentLevel++;
+	}
+
+	public void openGame(File file) {
+//		// read the object from file
+//        // save the object to file
+//        FileInputStream fis = null;
+//        ObjectInputStream in = null;
+//        try {
+//            fis = new FileInputStream(file);
+//            in = new ObjectInputStream(fis);
+//            board = (Board) in.readObject();
+//            in.close();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+	}
+
+	public void saveGame(File file, Board board) {
+//		// save the object to file
+//        FileOutputStream fos = null;
+//        ObjectOutputStream out = null;
+//        try {
+//            fos = new FileOutputStream(file);
+//            out = new ObjectOutputStream(fos);
+//            out.writeObject(board);
+//
+//            out.close();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
 	}
 
 	/**

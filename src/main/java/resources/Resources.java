@@ -30,7 +30,7 @@ import model.Board;
  * 
  * @author Samuel Gamelin
  * @author John Breton
- * @version 3.0
+ * @version 4.0
  */
 public final class Resources {
 	/**
@@ -44,14 +44,14 @@ public final class Resources {
 	public static final int NUMBER_OF_LEVELS = getNumberOfLevels();
 
 	/**
-	 * A percentage (75%) of the current display's height (or width, depending on
+	 * A percentage (85%) of the current display's height (or width, depending on
 	 * which is greater), which will be used in calculations to determine
 	 * appropriate scaling of icons and GUI elements.
 	 */
 	public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() > Toolkit
 			.getDefaultToolkit().getScreenSize().getHeight()
-					? 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getHeight()
-					: 0.75 * Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+					? (0.85 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
+					: (0.85 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
 	// Incorrect move sound
 	public static final Clip INVALID_MOVE = loadClip(getFileURL("sounds/wrong.wav"));
@@ -87,7 +87,7 @@ public final class Resources {
 
 	// Level selector icon
 	public static final ImageIcon LEVEL_SELECTOR_BACKGROUND = loadIcon("images/levelselectorbackground.png", 5, 5);
-	
+
 	// Board icon
 	public static final ImageIcon BOARD = loadIcon("images/board.png", 5, 5);
 

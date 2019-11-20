@@ -14,9 +14,14 @@ import util.Move.MoveDirection;
  * @author John Breton
  * @author Mohamed Radwan
  * 
- * @version 3.0
+ * @version 4.0
  */
 public class Fox extends Piece {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -882359688200994746L;
+
 	/**
 	 * The direction in which the fox is facing
 	 */

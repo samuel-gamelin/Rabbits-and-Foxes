@@ -11,7 +11,7 @@ import model.Board;
  * @author Samuel Gamelin
  * @author Mohamed Radwan
  *
- * @version 3.0
+ * @version 4.0
  */
 public class Node {
 	private Board board;

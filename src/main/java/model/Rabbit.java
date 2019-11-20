@@ -13,9 +13,13 @@ import util.Move.MoveDirection;
  * @author Samuel Gamelin
  * @author Mohamed Radwan
  * 
- * @version 3.0
+ * @version 4.0
  */
 public class Rabbit extends Piece {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7686345149603686805L;
 	/**
 	 * The colour of the rabbit
 	 */

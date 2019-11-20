@@ -15,15 +15,27 @@ import javax.swing.plaf.ColorUIResource;
 
 import resources.Resources;
 
-public class Utilities {
+public final class GUIUtilities {
+	/**
+	 * A private constructor, preventing any instantiation of this class.
+	 */
+	private GUIUtilities() {
+	}
+
+	/**
+	 * Configures the provided frame with default frame configurations.
+	 * 
+	 * @param frame The frame to configure
+	 */
 	public static void configureFrame(JFrame frame) {
+		frame.setIconImage(Resources.WINDOW_ICON.getImage());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-	
+
 	/**
 	 * Forces the look and feel of the application to remain consistent across
 	 * platforms, and removes the focus border form all buttons.
