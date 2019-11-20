@@ -15,7 +15,7 @@ import javax.swing.plaf.ColorUIResource;
 
 import resources.Resources;
 
-public class Utilities {
+public class GUIUtilities {
 	public static void configureFrame(JFrame frame) {
 		frame.setIconImage(Resources.WINDOW_ICON.getImage());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

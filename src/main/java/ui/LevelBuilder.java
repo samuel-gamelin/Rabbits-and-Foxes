@@ -38,6 +38,6 @@ public class LevelBuilder extends JFrame {
 			}
 		}
 
-		Utilities.configureFrame(this);
+		GUIUtilities.configureFrame(this);
 	}
 }
