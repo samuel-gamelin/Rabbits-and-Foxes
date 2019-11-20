@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.border.EmptyBorder;
 
 import model.Board;
 import resources.Resources;
@@ -23,7 +24,10 @@ public class LevelBuilder extends JFrame {
 
 		for (int y = 0; y < Board.SIZE; y++) {
 			for (int x = 0; x < Board.SIZE; x++) {
-				buttons[x][y] = new JButton();
+				JButton button = new JButton();
+				button.setOpaque(false);
+				button.setContentAreaFilled(false);
+				buttons[x][y] = button;
 				gameContentPane.add(buttons[x][y]);
 			}
 		}
