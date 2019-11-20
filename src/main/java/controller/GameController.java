@@ -1,10 +1,6 @@
 package controller;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -194,7 +190,7 @@ public class GameController {
 	public void incrementLevel() {
 		currentLevel++;
 	}
-	
+
 	public void openGame(File file) {
 //		// read the object from file
 //        // save the object to file
@@ -209,7 +205,7 @@ public class GameController {
 //            ex.printStackTrace();
 //        }
 	}
-	
+
 	public void saveGame(File file, Board board) {
 //		// save the object to file
 //        FileOutputStream fos = null;

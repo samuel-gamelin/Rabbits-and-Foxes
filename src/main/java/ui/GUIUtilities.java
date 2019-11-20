@@ -16,6 +16,11 @@ import javax.swing.plaf.ColorUIResource;
 import resources.Resources;
 
 public class GUIUtilities {
+
+	private GUIUtilities() {
+
+	}
+
 	public static void configureFrame(JFrame frame) {
 		frame.setIconImage(Resources.WINDOW_ICON.getImage());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,7 +29,7 @@ public class GUIUtilities {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-	
+
 	/**
 	 * Forces the look and feel of the application to remain consistent across
 	 * platforms, and removes the focus border form all buttons.
