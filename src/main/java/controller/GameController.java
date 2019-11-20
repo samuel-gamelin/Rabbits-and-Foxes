@@ -22,7 +22,7 @@ import util.Solver;
  * @author Dani Hashweh
  * @author Samuel Gamelin
  * @author Abdalla El Nakla
- * @version 3.0
+ * @version 4.0
  */
 public class GameController {
 	private Board board;

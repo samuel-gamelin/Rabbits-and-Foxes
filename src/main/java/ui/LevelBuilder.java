@@ -11,6 +11,13 @@ import javax.swing.SwingUtilities;
 import model.Board;
 import resources.Resources;
 
+/**
+ * This class represents a level builder which allows the user to create and save their own levels.
+ * 
+ * @author Abdalla El Nakla
+ * @author Mohamed Radwan
+ * @author Samuel Gamelin
+ */
 public class LevelBuilder extends JFrame {
 	private Board board;
 	private JButton[][] buttons;

@@ -1,14 +1,74 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.sysc3110</groupId>
+	<artifactId>rabbits-and-foxes</artifactId>
+	<version>4.0</version>
+	<developers>
+		<developer>
+			<id>Abdalla</id>
+			<name>Abdalla El Nakla</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-5</timezone>
+		</developer>
+		<developer>
+			<id>Dani</id>
+			<name>Dani Hashweh</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-5</timezone>
+		</developer>
+		<developer>
+			<id>John</id>
+			<name>John Breton</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-5</timezone>
+		</developer>
+		<developer>
+			<id>Mohamed</id>
+			<name>Mohamed Radwan</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-5</timezone>
+		</developer>
+		<developer>
+			<id>Samuel</id>
+			<name>Samuel Gamelin</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-5</timezone>
+		</developer>
+	</developers>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>SYSC-3110</groupId>
-	<artifactId>Rabbits-and-Foxes</artifactId>
-	<version>Version 3.0</version>
+	<dependencies>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.12</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<resources>
 			<resource>
@@ -28,7 +88,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.2.0</version><!--$NO-MVN-MAN-VER$-->
+				<version>3.2.0</version><!--$NO-MVN-MAN-VER$ -->
 				<configuration>
 					<archive>
 						<manifest>
@@ -60,22 +120,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<dependencies>
-		<dependency>
-			<groupId>com.googlecode.json-simple</groupId>
-			<artifactId>json-simple</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.12</version>
-		</dependency>
-	</dependencies>
 </project>

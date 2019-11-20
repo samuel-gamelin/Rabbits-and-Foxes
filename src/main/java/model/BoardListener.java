@@ -4,7 +4,7 @@ package model;
  * This interface represents the behaviour that a board listener should have.
  * 
  * @author Samuel Gamelin
- * @version 3.0
+ * @version 4.0
  */
 @FunctionalInterface
 public interface BoardListener {

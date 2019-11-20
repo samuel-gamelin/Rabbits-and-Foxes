@@ -11,7 +11,7 @@ import util.Move;
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
  * 
- * @version 3.0
+ * @version 4.0
  */
 public class Mushroom extends Piece {
 

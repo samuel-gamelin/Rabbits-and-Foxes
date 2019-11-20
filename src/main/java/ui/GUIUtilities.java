@@ -15,12 +15,18 @@ import javax.swing.plaf.ColorUIResource;
 
 import resources.Resources;
 
-public class GUIUtilities {
-
+public final class GUIUtilities {
+	/**
+	 * A private constructor, preventing any instantiation of this class.
+	 */
 	private GUIUtilities() {
-
 	}
 
+	/**
+	 * Configures the provided frame with default frame configurations.
+	 * 
+	 * @param frame The frame to configure
+	 */
 	public static void configureFrame(JFrame frame) {
 		frame.setIconImage(Resources.WINDOW_ICON.getImage());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

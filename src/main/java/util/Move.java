@@ -10,13 +10,10 @@ import java.io.Serializable;
  * @author Mohamed Radwan
  * @author Samuel Gamelin
  * 
- * @version 3.0
+ * @version 4.0
  */
 
-public final class Move implements Serializable{
-	/**
-	 * 
-	 */
+public final class Move implements Serializable {
 	private static final long serialVersionUID = -3908045756790500474L;
 	public final int xStart;
 	public final int yStart;

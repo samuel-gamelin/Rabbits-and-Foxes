@@ -14,7 +14,7 @@ import util.Move.MoveDirection;
  * @author John Breton
  * @author Mohamed Radwan
  * 
- * @version 3.0
+ * @version 4.0
  */
 public class Fox extends Piece {
 	/**

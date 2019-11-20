@@ -13,7 +13,7 @@ import util.Move.MoveDirection;
  * @author Samuel Gamelin
  * @author Mohamed Radwan
  * 
- * @version 3.0
+ * @version 4.0
  */
 public class Rabbit extends Piece {
 	/**
