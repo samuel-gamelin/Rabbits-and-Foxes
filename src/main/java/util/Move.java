@@ -1,5 +1,7 @@
 package util;
 
+import java.io.Serializable;
+
 /**
  * This class represents the move coordinates for the game. Since move will be
  * used in multiple classes its easier to represent the start and end points of
@@ -11,7 +13,11 @@ package util;
  * @version 3.0
  */
 
-public final class Move {
+public final class Move implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3908045756790500474L;
 	public final int xStart;
 	public final int yStart;
 	public final int xEnd;
