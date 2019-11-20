@@ -25,14 +25,17 @@ import view.GameView;
  * @author Mohamed Radwan
  */
 public class MainMenu extends JFrame implements ActionListener {
-	private JButton btnStart, btnHelp, btnQuit, btnSelectLevel;
+	private JButton btnStart;
+	private JButton btnHelp;
+	private JButton btnQuit;
+	private JButton btnSelectLevel;
 
 	/**
 	 * Creates the main menu GUI.
 	 */
 	public MainMenu() {
 		Utilities.applyDefaults();
-		
+
 		this.setTitle("Rabbits and Foxes Main Menu");
 		this.setContentPane(new JLabel(Resources.MAIN_MENU_BACKGROUND));
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
