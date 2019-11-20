@@ -34,8 +34,8 @@ import model.Piece;
 import model.Rabbit;
 import model.Rabbit.RabbitColour;
 import resources.Resources;
-import ui.MainMenu;
 import ui.GUIUtilities;
+import ui.MainMenu;
 import util.Move;
 
 /**
