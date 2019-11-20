@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 import model.Board;
 import resources.Resources;
@@ -27,7 +28,6 @@ public class LevelBuilder extends JFrame {
 
 		// Create all buttons
 		buttons = new JButton[5][5];
-
 		for (int y = 0; y < Board.SIZE; y++) {
 			for (int x = 0; x < Board.SIZE; x++) {
 				JButton button = new JButton();
@@ -39,5 +39,10 @@ public class LevelBuilder extends JFrame {
 		}
 
 		GUIUtilities.configureFrame(this);
+	}
+	
+	// Added for testing frame
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(LevelBuilder::new);
 	}
 }
