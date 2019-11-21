@@ -46,12 +46,12 @@ import util.Move;
  * @author John Breton
  * @author Samuel Gamelin
  * @author Abdalla El Nakla
+ * @author Mohamed Radwan
  * @version 4.0
  */
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
 	private JButton menuReset;
 	private JButton menuHelp;
-	private JButton menuQuit;
 	private JButton menuHint;
 	private JButton menuUndo;
 	private JButton menuRedo;
@@ -109,7 +109,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuReset = ui.GUIUtilities.createMenuBarButton("Reset", false);
 		menuSaveButton = ui.GUIUtilities.createMenuBarButton("Save Game", true);
 		menuHelp = ui.GUIUtilities.createMenuBarButton("Help", false);
-		menuQuit = ui.GUIUtilities.createMenuBarButton("Quit", true);
 
 		menuBar.add(menuMainScreen);
 		menuBar.add(menuHint);
@@ -118,7 +117,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuBar.add(menuReset);
 		menuBar.add(menuSaveButton);
 		menuBar.add(menuHelp);
-		menuBar.add(menuQuit);
 
 		this.setJMenuBar(menuBar);
 		this.setContentPane(new JLabel(Resources.BOARD));
@@ -183,13 +181,22 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuReset.addActionListener(this);
 		menuHelp.addActionListener(this);
 		menuSaveButton.addActionListener(this);
-		menuQuit.addActionListener(this);
 		menuHint.addActionListener(this);
 		menuUndo.addActionListener(this);
 		menuRedo.addActionListener(this);
 
 		GUIUtilities.configureFrame(this);
 		this.setGameLevel(level);
+
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				if (GUIUtilities.displayOptionDialog(null, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
+						new String[] { "Yes", "No" }) == 0) {
+					System.exit(0);
+				}
+			}
+		});
 	}
 
 	/**
