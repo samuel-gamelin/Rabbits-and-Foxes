@@ -42,6 +42,15 @@ public final class GUIUtilities {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				if (GUIUtilities.displayOptionDialog(null, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
+						new String[] { "Yes", "No" }) == 0) {
+					System.exit(0);
+				}
+			}
+		});
 	}
 
 	/**
@@ -107,8 +116,7 @@ public final class GUIUtilities {
 
 		});
 	}
-	
-	
+
 	/**
 	 * Creates and returns a JButton suitable for the game's menu bar.
 	 * 

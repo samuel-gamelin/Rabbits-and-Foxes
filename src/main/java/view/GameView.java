@@ -188,15 +188,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		GUIUtilities.configureFrame(this);
 		this.setGameLevel(level);
 
-		this.addWindowListener(new java.awt.event.WindowAdapter() {
-			@Override
-			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				if (GUIUtilities.displayOptionDialog(null, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
-						new String[] { "Yes", "No" }) == 0) {
-					System.exit(0);
-				}
-			}
-		});
+
 	}
 
 	/**
@@ -346,9 +338,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 			}
 		} else if (e.getSource() == menuHelp) {
 			displayHelpDialog();
-		} else if ((e.getSource() == menuQuit) && GUIUtilities.displayOptionDialog(this,
-				"Are you sure you want to exit?", "Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
-			System.exit(0);
 		} else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
 				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
 				new String[] { "Yes", "No" }) == 0)) {

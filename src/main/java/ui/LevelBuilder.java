@@ -1,24 +1,18 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.SwingUtilities;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
 
 import model.Board;
 import resources.Resources;
-import util.Move;
 
 /**
  * This class represents a level builder which allows the user to create and
@@ -32,12 +26,8 @@ public class LevelBuilder extends JFrame implements ActionListener {
 
 	private JButton menuReset;
 	private JButton menuHelp;
-	private JButton menuQuit;
-	private JButton menuHint;
-	private JButton menuUndo;
-	private JButton menuRedo;
 	private JButton menuMainScreen;
-	private JButton boardSave;
+	private JButton saveBoard;
 
 	private Board board;
 	private JButton[][] buttons;
@@ -55,15 +45,13 @@ public class LevelBuilder extends JFrame implements ActionListener {
 		JMenuBar menuBar = new JMenuBar();
 
 		menuMainScreen = ui.GUIUtilities.createMenuBarButton("Main Menu", true);
-		menuUndo = ui.GUIUtilities.createMenuBarButton("Undo", true);
-		menuRedo = ui.GUIUtilities.createMenuBarButton("Redo", true);
 		menuReset = ui.GUIUtilities.createMenuBarButton("Reset", false);
-		boardSave = ui.GUIUtilities.createMenuBarButton("Save Game", true);
+		saveBoard = ui.GUIUtilities.createMenuBarButton("Save", true);
 		menuHelp = ui.GUIUtilities.createMenuBarButton("Help", false);
 
 		menuBar.add(menuMainScreen);
 		menuBar.add(menuReset);
-		menuBar.add(boardSave);
+		menuBar.add(saveBoard);
 		menuBar.add(menuHelp);
 
 		this.setJMenuBar(menuBar);
@@ -84,11 +72,7 @@ public class LevelBuilder extends JFrame implements ActionListener {
 		menuMainScreen.addActionListener(this);
 		menuReset.addActionListener(this);
 		menuHelp.addActionListener(this);
-		boardSave.addActionListener(this);
-		menuQuit.addActionListener(this);
-		menuHint.addActionListener(this);
-		menuUndo.addActionListener(this);
-		menuRedo.addActionListener(this);
+		saveBoard.addActionListener(this);
 
 		GUIUtilities.configureFrame(this);
 	}
