@@ -1,17 +1,24 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.SwingUtilities;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 
 import model.Board;
 import resources.Resources;
+import util.Move;
 
 /**
  * This class represents a level builder which allows the user to create and
@@ -30,7 +37,7 @@ public class LevelBuilder extends JFrame implements ActionListener {
 	private JButton menuUndo;
 	private JButton menuRedo;
 	private JButton menuMainScreen;
-	private JButton menuSaveButton;
+	private JButton boardSave;
 
 	private Board board;
 	private JButton[][] buttons;
@@ -48,22 +55,16 @@ public class LevelBuilder extends JFrame implements ActionListener {
 		JMenuBar menuBar = new JMenuBar();
 
 		menuMainScreen = ui.GUIUtilities.createMenuBarButton("Main Menu", true);
-		menuHint = ui.GUIUtilities.createMenuBarButton("Hint", true);
 		menuUndo = ui.GUIUtilities.createMenuBarButton("Undo", true);
 		menuRedo = ui.GUIUtilities.createMenuBarButton("Redo", true);
 		menuReset = ui.GUIUtilities.createMenuBarButton("Reset", false);
-		menuSaveButton = ui.GUIUtilities.createMenuBarButton("Save Game", true);
+		boardSave = ui.GUIUtilities.createMenuBarButton("Save Game", true);
 		menuHelp = ui.GUIUtilities.createMenuBarButton("Help", false);
-		menuQuit = ui.GUIUtilities.createMenuBarButton("Quit", true);
 
 		menuBar.add(menuMainScreen);
-		menuBar.add(menuHint);
-		menuBar.add(menuUndo);
-		menuBar.add(menuRedo);
 		menuBar.add(menuReset);
-		menuBar.add(menuSaveButton);
+		menuBar.add(boardSave);
 		menuBar.add(menuHelp);
-		menuBar.add(menuQuit);
 
 		this.setJMenuBar(menuBar);
 		this.setContentPane(new JLabel(Resources.BOARD));
@@ -83,7 +84,7 @@ public class LevelBuilder extends JFrame implements ActionListener {
 		menuMainScreen.addActionListener(this);
 		menuReset.addActionListener(this);
 		menuHelp.addActionListener(this);
-		menuSaveButton.addActionListener(this);
+		boardSave.addActionListener(this);
 		menuQuit.addActionListener(this);
 		menuHint.addActionListener(this);
 		menuUndo.addActionListener(this);
@@ -95,5 +96,47 @@ public class LevelBuilder extends JFrame implements ActionListener {
 	// Added for testing frame
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(LevelBuilder::new);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == menuMainScreen
+				&& GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
+						"Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
+			this.dispose();
+			SwingUtilities.invokeLater(MainMenu::new);
+		} else if (e.getSource() == menuHint) {
+			Move bestMove = gameController.getNextBestMove();
+			if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(selectedBorder)) {
+				buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
+			}
+			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
+		} else if (e.getSource() == boardSave) {
+			int returnVal = fc.showSaveDialog(this);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				gameController.saveGame(file);
+			}
+		} else if (e.getSource() == menuHelp) {
+			displayHelpDialog();
+		} else if ((e.getSource() == menuQuit) && GUIUtilities.displayOptionDialog(this,
+				"Are you sure you want to exit?", "Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
+			System.exit(0);
+		} else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
+				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
+				new String[] { "Yes", "No" }) == 0)) {
+			resetGame();
+		} else if (e.getSource() == menuUndo) {
+			clearButtonBorders();
+			if (!gameController.undoMove()) {
+				GUIUtilities.displayMessageDialog(this, "No moves to undo", "Undo Move");
+			}
+		} else if (e.getSource() == menuRedo) {
+			clearButtonBorders();
+			if (!gameController.redoMove()) {
+				GUIUtilities.displayMessageDialog(this, "No moves to redo", "Redo Move");
+			}
+		}
+
 	}
 }
