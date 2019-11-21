@@ -86,33 +86,33 @@ public class Fox extends Piece {
 		this.id = id;
 		this.otherHalf = head;
 	}
-	
+
 	/**
-	 * Factory method to create a Fox based on the based String.
-	 * For example, the String should be of the form "FHU1".
+	 * Factory method to create a Fox based on the based String. For example, the
+	 * String should be of the form "FHU1".
 	 * 
 	 * @param str The String to build the Fox from. Must be of length 4.
 	 * @return A newly created Fox based on the passed String.
 	 */
 	public static Fox createFox(String str) {
-		if (str == null || str.length() != 4) 
+		if (str == null || str.length() != 4)
 			return null;
-		
+
 		Direction dir;
-		switch (str.substring(2,3)) {
-			case "L" :
-				dir = Direction.LEFT;
-				break;
-			case "R" :
-				dir = Direction.RIGHT;
-				break;
-			case "U" :
-				dir = Direction.UP;
-				break;
-			default :
-				dir = Direction.DOWN;
+		switch (str.substring(2, 3)) {
+		case "L":
+			dir = Direction.LEFT;
+			break;
+		case "R":
+			dir = Direction.RIGHT;
+			break;
+		case "U":
+			dir = Direction.UP;
+			break;
+		default:
+			dir = Direction.DOWN;
 		}
-		return new Fox(dir, str.substring(3,4).equals("1"));
+		return new Fox(dir, str.substring(3, 4).equals("1"));
 	}
 
 	/**
@@ -232,63 +232,63 @@ public class Fox extends Piece {
 		int yEnd = move.yEnd;
 		int xDistance = move.xDistance();
 		int yDistance = move.yDistance();
-		
-		// Initial check to see if the move can be valid.		
-		if (board == null || (board.isOccupied(xEnd, yEnd) && !(board.getPiece(xEnd, yEnd) instanceof Fox)) ||
-				(location && xEnd + 1 > 4) || (!location && xEnd - 1 < 0) || 
-					(!location && yEnd + 1 > 4) || (location && yEnd - 1 < 0)) 
-			return false; 
-		
+
+		// Initial check to see if the move can be valid.
+		if (board == null || (board.isOccupied(xEnd, yEnd) && !(board.getPiece(xEnd, yEnd) instanceof Fox))
+				|| (location && xEnd + 1 > 4) || (!location && xEnd - 1 < 0) || (!location && yEnd + 1 > 4)
+				|| (location && yEnd - 1 < 0))
+			return false;
+
 		// The other part of the fox is to the right and we are moving right
-		if (location && xDistance > 0) { 
-			for (int i = xStart + 2; i <= xEnd + 1; i++) { 
-				if (board.isOccupied(i, yStart)) 
+		if (location && xDistance > 0) {
+			for (int i = xStart + 2; i <= xEnd + 1; i++) {
+				if (board.isOccupied(i, yStart))
 					return false;
 			}
-		// The other part of the fox is to the right and we are moving left
-		} else if (location && xDistance < 0) { 
-			for (int i = xStart - 1; i >= xEnd; i--) { 
-				if (board.isOccupied(i, yStart)) 
+			// The other part of the fox is to the right and we are moving left
+		} else if (location && xDistance < 0) {
+			for (int i = xStart - 1; i >= xEnd; i--) {
+				if (board.isOccupied(i, yStart))
 					return false;
 			}
-		// The other part of the fox is to the left and we are moving right
-		} else if (!location && xDistance > 0) { 
-			for (int i = xStart + 1; i <= xEnd; i++) { 
-				if (board.isOccupied(i, yStart)) 
+			// The other part of the fox is to the left and we are moving right
+		} else if (!location && xDistance > 0) {
+			for (int i = xStart + 1; i <= xEnd; i++) {
+				if (board.isOccupied(i, yStart))
 					return false;
 			}
-		// The other part of the fox is the the left and we are moving left
+			// The other part of the fox is the the left and we are moving left
 		} else if (!location && xDistance < 0) {
 			for (int i = xStart - 2; i >= xEnd - 1; i--) {
-				if (board.isOccupied(i, yStart)) 
+				if (board.isOccupied(i, yStart))
 					return false;
 			}
-		// The other part of the fox is up and we are moving down
-		} else if (location && yDistance > 0) { 
-			for (int i = yStart + 1; i <= yEnd; i++) { 
-				if (board.isOccupied(xStart, i)) 
+			// The other part of the fox is up and we are moving down
+		} else if (location && yDistance > 0) {
+			for (int i = yStart + 1; i <= yEnd; i++) {
+				if (board.isOccupied(xStart, i))
 					return false;
 			}
-		// The other part of the fox is up and we are moving up
-		} else if (location && yDistance < 0) { 
-			for (int i = yStart - 2; i >= yEnd - 1; i--) { 
-				if (board.isOccupied(xStart, i)) 
+			// The other part of the fox is up and we are moving up
+		} else if (location && yDistance < 0) {
+			for (int i = yStart - 2; i >= yEnd - 1; i--) {
+				if (board.isOccupied(xStart, i))
 					return false;
 			}
-		// The other part of the fox is down and we are moving down
-		} else if (!location && yDistance > 0) { 
-			for (int i = yStart + 2; i <= yEnd + 1; i++) { 
-				if (board.isOccupied(xStart, i)) 
+			// The other part of the fox is down and we are moving down
+		} else if (!location && yDistance > 0) {
+			for (int i = yStart + 2; i <= yEnd + 1; i++) {
+				if (board.isOccupied(xStart, i))
 					return false;
 			}
-		// We know the other part of the fox is down and we are moving up
-		} else { 
-			for (int i = yStart - 1; i >= yEnd; i--) { 
-				if (board.isOccupied(xStart, i)) 
+			// We know the other part of the fox is down and we are moving up
+		} else {
+			for (int i = yStart - 1; i >= yEnd; i--) {
+				if (board.isOccupied(xStart, i))
 					return false;
 			}
 		}
-		return true; 
+		return true;
 	}
 
 	@Override
@@ -343,16 +343,17 @@ public class Fox extends Piece {
 	}
 
 	/**
-	 * Returns a String representation of this Fox, along with all 
-	 * associated information contained within.
+	 * Returns a String representation of this Fox, along with all associated
+	 * information contained within.
 	 * 
-	 * @return A short four character representation encoding the information of this Fox.
+	 * @return A short four character representation encoding the information of
+	 *         this Fox.
 	 */
 	@Override
 	public String toString() {
 		if (foxType == FoxType.HEAD) {
-			return "FH" + this.getDirection().toString().substring(0,1) + (this.getID() ? 1 : 0);
+			return "FH" + this.getDirection().toString().substring(0, 1) + (this.getID() ? 1 : 0);
 		}
-		return "FT" + this.getDirection().toString().substring(0,1) + (this.getID() ? 1 : 0);
+		return "FT" + this.getDirection().toString().substring(0, 1) + (this.getID() ? 1 : 0);
 	}
 }
