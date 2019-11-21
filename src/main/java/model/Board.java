@@ -1,6 +1,9 @@
 package model;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,7 +49,7 @@ public class Board implements Serializable {
 	 * A list of listeners that are updated on the status of this board whenever
 	 * appropriate.
 	 */
-	private List<BoardListener> boardListeners;
+	private transient List<BoardListener> boardListeners;
 
 	/**
 	 * Construct an empty board
@@ -279,11 +282,29 @@ public class Board implements Serializable {
 		return moves;
 	}
 
-	public void saveGame(String path) {
+	public static Board loadGame(File file) {
+		// read the object from file
+		// save the object to file
+		FileInputStream fis = null;
+		ObjectInputStream in = null;
+		Board board = null; 
+		try {
+			fis = new FileInputStream(file);
+			in = new ObjectInputStream(fis);
+			board = (Board) in.readObject();
+			in.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return board;
+	}
+
+	public void saveGame(File file) {
+		// save the object to file
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;
 		try {
-			fos = new FileOutputStream("C:/Users/danihashweh");
+			fos = new FileOutputStream(file);
 			out = new ObjectOutputStream(fos);
 			out.writeObject(this);
 			out.close();
@@ -325,4 +346,5 @@ public class Board implements Serializable {
 		}
 		return str.toString().trim();
 	}
+
 }
