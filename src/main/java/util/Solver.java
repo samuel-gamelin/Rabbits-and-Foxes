@@ -15,7 +15,7 @@ import model.Fox;
 import model.Piece;
 
 /**
- * This class is used to solve a board representing a state in the game of
+ * This class is used to solve  a board representing a state in the game of
  * Rabbits and Foxes.
  * 
  * @author Samuel Gamelin
