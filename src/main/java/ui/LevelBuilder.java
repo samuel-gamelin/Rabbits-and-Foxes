@@ -12,7 +12,8 @@ import model.Board;
 import resources.Resources;
 
 /**
- * This class represents a level builder which allows the user to create and save their own levels.
+ * This class represents a level builder which allows the user to create and
+ * save their own levels.
  * 
  * @author Abdalla El Nakla
  * @author Mohamed Radwan
@@ -21,15 +22,15 @@ import resources.Resources;
 public class LevelBuilder extends JFrame {
 	private Board board;
 	private JButton[][] buttons;
-	
+
 	public LevelBuilder() {
 		this.board = new Board();
-		
+
 		JLabel boardLabel = new JLabel(Resources.BOARD);
 		boardLabel.setLayout(new GridLayout(5, 5));
-		
+
 		JButton yee = new JButton("Yee Yee Yee");
-		
+
 		this.add(boardLabel, BorderLayout.CENTER);
 		this.add(yee, BorderLayout.EAST);
 
@@ -47,7 +48,7 @@ public class LevelBuilder extends JFrame {
 
 		GUIUtilities.configureFrame(this);
 	}
-	
+
 	// Added for testing frame
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(LevelBuilder::new);

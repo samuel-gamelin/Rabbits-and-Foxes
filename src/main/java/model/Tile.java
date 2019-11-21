@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author Mohamed Radwan
  * @version 4.0
  */
-public class Tile implements Serializable{
+public class Tile implements Serializable {
 	/**
 	 * 
 	 */

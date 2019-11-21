@@ -287,7 +287,7 @@ public class Board implements Serializable {
 		// save the object to file
 		FileInputStream fis = null;
 		ObjectInputStream in = null;
-		Board board = null; 
+		Board board = null;
 		try {
 			fis = new FileInputStream(file);
 			in = new ObjectInputStream(fis);

@@ -70,14 +70,15 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	private Board board;
 	private GameController gameController;
 	private JFileChooser fc = new JFileChooser();
-	
+
 	/**
-	 * Creates the application GUI from a saved board. 
+	 * Creates the application GUI from a saved board.
+	 * 
 	 * @param board
 	 */
 	public GameView(Board board) {
 		this(0);
-		this.board = board;  
+		this.board = board;
 	}
 
 	/**
@@ -356,8 +357,8 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 			}
 		} else if (e.getSource() == menuHelp) {
 			displayHelpDialog();
-		} else if ((e.getSource() == menuQuit) && GUIUtilities.displayOptionDialog(this, "Are you sure you want to exit?",
-				"Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
+		} else if ((e.getSource() == menuQuit) && GUIUtilities.displayOptionDialog(this,
+				"Are you sure you want to exit?", "Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
 			System.exit(0);
 		} else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
 				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",

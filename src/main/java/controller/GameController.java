@@ -29,7 +29,7 @@ import util.Solver;
  * @author Abdalla El Nakla
  * @version 4.0
  */
-public class GameController implements Serializable{
+public class GameController implements Serializable {
 	private static final long serialVersionUID = 4359758451395959055L;
 	private Board board;
 	private int currentLevel;
@@ -52,7 +52,7 @@ public class GameController implements Serializable{
 	 * @param board The Board (model) that this controller should update
 	 */
 	public GameController(Board board) {
-		this.board = board; 
+		this.board = board;
 		this.currentLevel = 1;
 		this.moveList = new ArrayList<>();
 		this.undoMoveStack = new ArrayDeque<>();
@@ -198,7 +198,7 @@ public class GameController implements Serializable{
 	}
 
 	public static Board openGame(File file) {
-		return(Board.loadGame(file));  
+		return (Board.loadGame(file));
 	}
 
 	public void saveGame(File file) {

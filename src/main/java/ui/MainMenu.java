@@ -27,7 +27,7 @@ import view.GameView;
  * 
  * @author Samuel Gamelin
  * @author Dani Hashweh
- * @author John Breton 
+ * @author John Breton
  */
 public class MainMenu extends JFrame implements ActionListener {
 	private JButton btnStart;

@@ -13,10 +13,10 @@ import util.Move;
  * 
  * @version 4.0
  */
-public abstract class Piece implements Serializable{
+public abstract class Piece implements Serializable {
 
 	/**
-	 * Ensures that during deserialization the same class is loaded. 
+	 * Ensures that during deserialization the same class is loaded.
 	 */
 	private static final long serialVersionUID = -4217599773080427752L;
 
