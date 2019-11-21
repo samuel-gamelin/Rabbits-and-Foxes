@@ -30,7 +30,6 @@ public class LevelBuilder extends JFrame {
 		JLabel boardLabel = new JLabel(Resources.BOARD);
 		boardLabel.setLayout(new GridLayout(5, 5));
 
-
 		this.add(boardLabel, BorderLayout.CENTER);
 
 		// Create all buttons
