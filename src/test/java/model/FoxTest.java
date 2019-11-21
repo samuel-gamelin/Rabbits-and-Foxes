@@ -1,12 +1,14 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Board;
-import model.Fox;
 import util.Move;
 
 /**
@@ -18,9 +20,9 @@ import util.Move;
 public class FoxTest {
 
 	private Board board;
-	
+
 	private final String TESTBOARD = "RBG MU X X X FHU1 FTU1 X X X FHL0 X RBB X X FTL0 X X X X X X X X X";
-	
+
 	private Fox fox1;
 	private Fox fox2;
 
@@ -31,7 +33,7 @@ public class FoxTest {
 		fox2 = new Fox(Fox.Direction.LEFT, false);
 		board.setPiece(fox1, 0, 1);
 	}
-	
+
 	@Test
 	public void testFoxConstructors() {
 		assertNotNull(fox1);
@@ -65,9 +67,9 @@ public class FoxTest {
 		assertTrue(fox1.getID());
 		assertFalse(fox2.getID());
 	}
-	
+
 	@Test
-	public void testGetPossibleMoves() { 
+	public void testGetPossibleMoves() {
 		// By design, the head will only generate possible moves in front of itself.
 		assertTrue(fox1.getPossibleMoves(board, 0, 1).isEmpty());
 		// By design, the tail will only generate possible moves behind itself.
@@ -86,7 +88,7 @@ public class FoxTest {
 		assertFalse(fox1.move(null, null));
 		assertFalse(fox1.move(new Move(1, 2, 1, 0), null));
 	}
-	
+
 	@Test
 	public void testToString() {
 		assertEquals(fox1.toString(), "FHU1");

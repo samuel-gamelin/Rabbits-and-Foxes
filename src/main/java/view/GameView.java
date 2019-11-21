@@ -46,12 +46,12 @@ import util.Move;
  * @author John Breton
  * @author Samuel Gamelin
  * @author Abdalla El Nakla
+ * @author Mohamed Radwan
  * @version 4.0
  */
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
 	private JButton menuReset;
 	private JButton menuHelp;
-	private JButton menuQuit;
 	private JButton menuHint;
 	private JButton menuUndo;
 	private JButton menuRedo;
@@ -102,14 +102,13 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
 
-		menuMainScreen = createMenuBarButton("Main Menu", true);
-		menuHint = createMenuBarButton("Hint", true);
-		menuUndo = createMenuBarButton("Undo", true);
-		menuRedo = createMenuBarButton("Redo", true);
-		menuReset = createMenuBarButton("Reset", false);
-		menuSaveButton = createMenuBarButton("Save Game", true);
-		menuHelp = createMenuBarButton("Help", false);
-		menuQuit = createMenuBarButton("Quit", true);
+		menuMainScreen = ui.GUIUtilities.createMenuBarButton("Main Menu", true);
+		menuHint = ui.GUIUtilities.createMenuBarButton("Hint", true);
+		menuUndo = ui.GUIUtilities.createMenuBarButton("Undo", true);
+		menuRedo = ui.GUIUtilities.createMenuBarButton("Redo", true);
+		menuReset = ui.GUIUtilities.createMenuBarButton("Reset", false);
+		menuSaveButton = ui.GUIUtilities.createMenuBarButton("Save Game", true);
+		menuHelp = ui.GUIUtilities.createMenuBarButton("Help", false);
 
 		menuBar.add(menuMainScreen);
 		menuBar.add(menuHint);
@@ -118,7 +117,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuBar.add(menuReset);
 		menuBar.add(menuSaveButton);
 		menuBar.add(menuHelp);
-		menuBar.add(menuQuit);
 
 		this.setJMenuBar(menuBar);
 		this.setContentPane(new JLabel(Resources.BOARD));
@@ -183,31 +181,14 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuReset.addActionListener(this);
 		menuHelp.addActionListener(this);
 		menuSaveButton.addActionListener(this);
-		menuQuit.addActionListener(this);
 		menuHint.addActionListener(this);
 		menuUndo.addActionListener(this);
 		menuRedo.addActionListener(this);
 
 		GUIUtilities.configureFrame(this);
 		this.setGameLevel(level);
-	}
 
-	/**
-	 * Creates and returns a JButton suitable for the game's menu bar.
-	 * 
-	 * @param text The text inside the button
-	 * @return The newly created JButton
-	 */
-	private JButton createMenuBarButton(String text, boolean enableShortcut) {
-		JButton button = new JButton("<html><p style='text-align:center;'>" + text + "</p></html>");
-		button.setBackground(Color.WHITE);
-		button.setBorderPainted(false);
 
-		if (enableShortcut) {
-			GUIUtilities.bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(0))), text,
-					button::doClick);
-		}
-		return button;
 	}
 
 	/**
@@ -357,9 +338,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 			}
 		} else if (e.getSource() == menuHelp) {
 			displayHelpDialog();
-		} else if ((e.getSource() == menuQuit) && GUIUtilities.displayOptionDialog(this,
-				"Are you sure you want to exit?", "Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
-			System.exit(0);
 		} else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
 				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
 				new String[] { "Yes", "No" }) == 0)) {

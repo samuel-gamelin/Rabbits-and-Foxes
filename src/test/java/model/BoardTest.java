@@ -1,12 +1,14 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Board;
-import model.Rabbit;
 import util.Move;
 
 /**
@@ -44,7 +46,7 @@ public class BoardTest {
 
 	@Test
 	public void testIsOccupied() {
-		assert(board.isOccupied(1, 1));
+		assert (board.isOccupied(1, 1));
 		assertTrue(board.isOccupied(0, 0));
 		assertFalse(board.isOccupied(6, 6));
 		assertFalse(board.isOccupied(-1, -1));
@@ -68,7 +70,7 @@ public class BoardTest {
 		assertTrue(board.setPiece(fox, 1, 1));
 		assertTrue(board.setPiece(fox, 0, 0)); // overwrites the rabbit
 		assertFalse(board.setPiece(fox, 6, 6));
-		assertFalse(board.setPiece(null, 3, 3)); 
+		assertFalse(board.setPiece(null, 3, 3));
 	}
 
 	@Test
@@ -79,14 +81,14 @@ public class BoardTest {
 		assertFalse(board.removePiece(0, 2) instanceof Fox);
 		assertNull(board.removePiece(-1, -1));
 	}
-	
+
 	@Test
 	public void testGetPossibleMoves() {
 		assertFalse(board.getPossibleMoves().isEmpty());
 		Board emptyBoard = Board.createBoard("X X X X X X X X X X X X X X X X X X X X X X X X X");
 		assertTrue(emptyBoard.getPossibleMoves().isEmpty());
 	}
-	
+
 	@Test
 	public void testToString() {
 		Board emptyBoard = Board.createBoard("X X X X X X X X X X X X X X X X X X X X X X X X X");

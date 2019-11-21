@@ -1,13 +1,15 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Rabbit;
 import util.Move;
-import model.Board;
 
 /**
  * Tests for the Rabbit class.
@@ -29,7 +31,7 @@ public class RabbitTest {
 		board.setPiece(rabbitWhite, 0, 0);
 		board.setPiece(rabbitBrown, 2, 2);
 	}
-	
+
 	@Test
 	public void testRabbitConstructors() {
 		assertNotNull(rabbitBrown);
@@ -55,13 +57,13 @@ public class RabbitTest {
 		assertFalse(rabbitWhite.move(move, board));
 		assertFalse(rabbitWhite.move(null, null));
 	}
-	
+
 	@Test
 	public void testGetPossibleMoves() {
 		assertFalse(rabbitWhite.getPossibleMoves(board, 0, 0).isEmpty());
 		assertTrue(rabbitBrown.getPossibleMoves(board, 2, 2).isEmpty());
 	}
-	
+
 	@Test
 	public void testToString() {
 		assertEquals(rabbitWhite.toString(), "RBW");

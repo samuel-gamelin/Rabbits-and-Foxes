@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,6 +42,15 @@ public final class GUIUtilities {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				if (GUIUtilities.displayOptionDialog(null, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
+						new String[] { "Yes", "No" }) == 0) {
+					System.exit(0);
+				}
+			}
+		});
 	}
 
 	/**
@@ -105,5 +115,23 @@ public final class GUIUtilities {
 			}
 
 		});
+	}
+
+	/**
+	 * Creates and returns a JButton suitable for the game's menu bar.
+	 * 
+	 * @param text The text inside the button
+	 * @return The newly created JButton
+	 */
+	public static JButton createMenuBarButton(String text, boolean enableShortcut) {
+		JButton button = new JButton("<html><p style='text-align:center;'>" + text + "</p></html>");
+		button.setBackground(Color.WHITE);
+		button.setBorderPainted(false);
+
+		if (enableShortcut) {
+			GUIUtilities.bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(0))), text,
+					button::doClick);
+		}
+		return button;
 	}
 }

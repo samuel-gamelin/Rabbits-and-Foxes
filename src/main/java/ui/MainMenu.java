@@ -34,7 +34,6 @@ public class MainMenu extends JFrame implements ActionListener {
 	private JButton btnSelectLevel;
 	private JButton btnBuildLevel;
 	private JButton btnHelp;
-	private JButton btnQuit;
 	private JButton btnLoadGameButton;
 	private JFileChooser fc = new JFileChooser();
 
@@ -54,7 +53,6 @@ public class MainMenu extends JFrame implements ActionListener {
 		btnBuildLevel = new JButton("Level Builder");
 		btnLoadGameButton = new JButton("Open Saved Game");
 		btnHelp = new JButton("Help");
-		btnQuit = new JButton("Quit");
 
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.NORTH);
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.SOUTH);
@@ -64,7 +62,6 @@ public class MainMenu extends JFrame implements ActionListener {
 		addMainMenuButton(this, btnLoadGameButton);
 		addMainMenuButton(this, btnBuildLevel);
 		addMainMenuButton(this, btnHelp);
-		addMainMenuButton(this, btnQuit);
 
 		GUIUtilities.configureFrame(this);
 	}
@@ -112,9 +109,6 @@ public class MainMenu extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnBuildLevel) {
 			this.dispose();
 			SwingUtilities.invokeLater(LevelBuilder::new);
-		} else if (e.getSource() == btnQuit && GUIUtilities.displayOptionDialog(this, "Are you sure you want to exit?",
-				"Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
-			System.exit(0);
 		}
 	}
 
