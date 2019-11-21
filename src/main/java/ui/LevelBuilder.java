@@ -26,13 +26,12 @@ public class LevelBuilder extends JFrame {
 	public LevelBuilder() {
 		this.board = new Board();
 
+		this.setTitle("Level Builder");
 		JLabel boardLabel = new JLabel(Resources.BOARD);
 		boardLabel.setLayout(new GridLayout(5, 5));
 
-		JButton yee = new JButton("Yee Yee Yee");
 
 		this.add(boardLabel, BorderLayout.CENTER);
-		this.add(yee, BorderLayout.EAST);
 
 		// Create all buttons
 		buttons = new JButton[5][5];
