@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,7 +21,8 @@ import resources.Resources;
  * @author Mohamed Radwan
  * @author Samuel Gamelin
  */
-public class LevelBuilder extends JFrame {
+public class LevelBuilder extends JFrame implements ActionListener {
+
 	private JButton menuReset;
 	private JButton menuHelp;
 	private JButton menuQuit;
@@ -78,6 +80,14 @@ public class LevelBuilder extends JFrame {
 				boardLabel.add(buttons[x][y]);
 			}
 		}
+		menuMainScreen.addActionListener(this);
+		menuReset.addActionListener(this);
+		menuHelp.addActionListener(this);
+		menuSaveButton.addActionListener(this);
+		menuQuit.addActionListener(this);
+		menuHint.addActionListener(this);
+		menuUndo.addActionListener(this);
+		menuRedo.addActionListener(this);
 
 		GUIUtilities.configureFrame(this);
 	}
