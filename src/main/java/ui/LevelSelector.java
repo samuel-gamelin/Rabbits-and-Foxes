@@ -25,6 +25,12 @@ import javax.swing.border.EmptyBorder;
 import resources.Resources;
 import view.GameView;
 
+/**
+ * This class represents the level selector for the game. 
+ * 
+ * @author Dani Hashweh
+ * @author John Breton 
+ */
 public class LevelSelector extends JFrame implements ActionListener {
 	private JList<String> listOfLevels;
 	private JButton btnStartSelectLevel;
