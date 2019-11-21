@@ -45,14 +45,14 @@ public class LevelBuilder extends JFrame {
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
 
-		menuMainScreen =  ui.GUIUtilities.createMenuBarButton("Main Menu", true);
-		menuHint =  ui.GUIUtilities.createMenuBarButton("Hint", true);
-		menuUndo =  ui.GUIUtilities.createMenuBarButton("Undo", true);
-		menuRedo =  ui.GUIUtilities.createMenuBarButton("Redo", true);
+		menuMainScreen = ui.GUIUtilities.createMenuBarButton("Main Menu", true);
+		menuHint = ui.GUIUtilities.createMenuBarButton("Hint", true);
+		menuUndo = ui.GUIUtilities.createMenuBarButton("Undo", true);
+		menuRedo = ui.GUIUtilities.createMenuBarButton("Redo", true);
 		menuReset = ui.GUIUtilities.createMenuBarButton("Reset", false);
-		menuSaveButton =  ui.GUIUtilities.createMenuBarButton("Save Game", true);
-		menuHelp =  ui.GUIUtilities.createMenuBarButton("Help", false);
-		menuQuit =  ui.GUIUtilities.createMenuBarButton("Quit", true);
+		menuSaveButton = ui.GUIUtilities.createMenuBarButton("Save Game", true);
+		menuHelp = ui.GUIUtilities.createMenuBarButton("Help", false);
+		menuQuit = ui.GUIUtilities.createMenuBarButton("Quit", true);
 
 		menuBar.add(menuMainScreen);
 		menuBar.add(menuHint);
