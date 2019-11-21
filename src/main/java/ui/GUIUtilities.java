@@ -16,11 +16,11 @@ import javax.swing.plaf.ColorUIResource;
 import resources.Resources;
 
 /**
- * This class represents the GUI utilities shared by the game's frames. 
+ * This class represents the GUI utilities shared by the game's frames.
  * 
  * @author Samuel Gamelin
  * @author Dani Hashweh
- * @author John Breton 
+ * @author John Breton
  */
 public final class GUIUtilities {
 	/**
