@@ -70,6 +70,15 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	private Board board;
 	private GameController gameController;
 	private JFileChooser fc = new JFileChooser();
+	
+	/**
+	 * Creates the application GUI from a saved board. 
+	 * @param board
+	 */
+	public GameView(Board board) {
+		this(0);
+		this.board = board;  
+	}
 
 	/**
 	 * Creates the application GUI.
@@ -343,7 +352,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 			int returnVal = fc.showSaveDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
-				gameController.saveGame(file, board);
+				gameController.saveGame(file);
 			}
 		} else if (e.getSource() == menuHelp) {
 			displayHelpDialog();
