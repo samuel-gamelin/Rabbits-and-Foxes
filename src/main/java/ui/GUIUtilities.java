@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -105,5 +106,24 @@ public final class GUIUtilities {
 			}
 
 		});
+	}
+	
+	
+	/**
+	 * Creates and returns a JButton suitable for the game's menu bar.
+	 * 
+	 * @param text The text inside the button
+	 * @return The newly created JButton
+	 */
+	public static JButton createMenuBarButton(String text, boolean enableShortcut) {
+		JButton button = new JButton("<html><p style='text-align:center;'>" + text + "</p></html>");
+		button.setBackground(Color.WHITE);
+		button.setBorderPainted(false);
+
+		if (enableShortcut) {
+			GUIUtilities.bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(0))), text,
+					button::doClick);
+		}
+		return button;
 	}
 }

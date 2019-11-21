@@ -101,15 +101,16 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
+		
 
-		menuMainScreen = createMenuBarButton("Main Menu", true);
-		menuHint = createMenuBarButton("Hint", true);
-		menuUndo = createMenuBarButton("Undo", true);
-		menuRedo = createMenuBarButton("Redo", true);
-		menuReset = createMenuBarButton("Reset", false);
-		menuSaveButton = createMenuBarButton("Save Game", true);
-		menuHelp = createMenuBarButton("Help", false);
-		menuQuit = createMenuBarButton("Quit", true);
+		menuMainScreen = ui.GUIUtilities.createMenuBarButton("Main Menu", true);
+		menuHint =  ui.GUIUtilities.createMenuBarButton("Hint", true);
+		menuUndo =  ui.GUIUtilities.createMenuBarButton("Undo", true);
+		menuRedo =  ui.GUIUtilities.createMenuBarButton("Redo", true);
+		menuReset =  ui.GUIUtilities.createMenuBarButton("Reset", false);
+		menuSaveButton =  ui.GUIUtilities.createMenuBarButton("Save Game", true);
+		menuHelp =  ui.GUIUtilities.createMenuBarButton("Help", false);
+		menuQuit =  ui.GUIUtilities.createMenuBarButton("Quit", true);
 
 		menuBar.add(menuMainScreen);
 		menuBar.add(menuHint);
