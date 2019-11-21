@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.SwingUtilities;
 
 import model.Board;
@@ -20,6 +21,16 @@ import resources.Resources;
  * @author Samuel Gamelin
  */
 public class LevelBuilder extends JFrame {
+	private JButton menuReset;
+	private JButton menuHelp;
+	private JButton menuQuit;
+	private JButton menuHint;
+	private JButton menuUndo;
+	private JButton menuRedo;
+	private JButton menuMainScreen;
+	private JButton menuSaveButton;
+	
+	
 	private Board board;
 	private JButton[][] buttons;
 
@@ -31,6 +42,33 @@ public class LevelBuilder extends JFrame {
 		boardLabel.setLayout(new GridLayout(5, 5));
 
 		this.add(boardLabel, BorderLayout.CENTER);
+		
+		
+		// Menu bar
+		JMenuBar menuBar = new JMenuBar();
+
+		menuMainScreen = createMenuBarButton("Main Menu", true);
+		menuHint = createMenuBarButton("Hint", true);
+		menuUndo = createMenuBarButton("Undo", true);
+		menuRedo = createMenuBarButton("Redo", true);
+		menuReset = createMenuBarButton("Reset", false);
+		menuSaveButton = createMenuBarButton("Save Game", true);
+		menuHelp = createMenuBarButton("Help", false);
+		menuQuit = createMenuBarButton("Quit", true);
+
+		menuBar.add(menuMainScreen);
+		menuBar.add(menuHint);
+		menuBar.add(menuUndo);
+		menuBar.add(menuRedo);
+		menuBar.add(menuReset);
+		menuBar.add(menuSaveButton);
+		menuBar.add(menuHelp);
+		menuBar.add(menuQuit);
+
+		this.setJMenuBar(menuBar);
+		this.setContentPane(new JLabel(Resources.BOARD));
+		this.getContentPane().setLayout(new GridLayout(5, 5));
+		
 
 		// Create all buttons
 		buttons = new JButton[5][5];

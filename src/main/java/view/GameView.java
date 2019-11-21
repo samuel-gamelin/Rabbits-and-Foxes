@@ -193,24 +193,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	}
 
 	/**
-	 * Creates and returns a JButton suitable for the game's menu bar.
-	 * 
-	 * @param text The text inside the button
-	 * @return The newly created JButton
-	 */
-	private JButton createMenuBarButton(String text, boolean enableShortcut) {
-		JButton button = new JButton("<html><p style='text-align:center;'>" + text + "</p></html>");
-		button.setBackground(Color.WHITE);
-		button.setBorderPainted(false);
-
-		if (enableShortcut) {
-			GUIUtilities.bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(0))), text,
-					button::doClick);
-		}
-		return button;
-	}
-
-	/**
 	 * Pops up the in-game help dialog.
 	 */
 	private void displayHelpDialog() {
