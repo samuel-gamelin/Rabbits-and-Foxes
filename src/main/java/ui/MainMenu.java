@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import controller.GameController;
 import resources.Resources;
 import view.GameView;
 
@@ -25,7 +26,8 @@ import view.GameView;
  * This class represents the main menu frame of the game.
  * 
  * @author Samuel Gamelin
- * @author Mohamed Radwan
+ * @author Dani Hashweh
+ * @author John Breton 
  */
 public class MainMenu extends JFrame implements ActionListener {
 	private JButton btnStart;
@@ -97,6 +99,8 @@ public class MainMenu extends JFrame implements ActionListener {
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
+				this.dispose();
+				SwingUtilities.invokeLater(new GameView(GameController.openGame(file)));
 			}
 		} else if (e.getSource() == btnSelectLevel) {
 			this.dispose();
