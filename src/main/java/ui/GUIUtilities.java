@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -14,6 +15,12 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.ColorUIResource;
 
+import model.Board;
+import model.Fox;
+import model.Mushroom;
+import model.Piece;
+import model.Rabbit;
+import model.Rabbit.RabbitColour;
 import resources.Resources;
 
 /**
@@ -22,6 +29,7 @@ import resources.Resources;
  * @author Samuel Gamelin
  * @author Dani Hashweh
  * @author John Breton
+ * @author Mohamed Radwan
  */
 public final class GUIUtilities {
 	/**
@@ -46,7 +54,7 @@ public final class GUIUtilities {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				if (GUIUtilities.displayOptionDialog(null, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
-						new String[] { "Yes", "No" }) == 0) {
+						new String[] { "Yes", "No" }) == 1) {
 					System.exit(0);
 				}
 			}
@@ -134,4 +142,39 @@ public final class GUIUtilities {
 		}
 		return button;
 	}
+
+	/**
+	 * Updates the visual representation of the board.
+	 */
+	public static void updateView(JButton[][] buttons, Board board) {
+		for (int x = 0; x < Board.SIZE; x++) {
+			for (int y = 0; y < Board.SIZE; y++) {
+				Piece piece = board.getPiece(x, y);
+				if (piece != null) {
+					if (piece instanceof Mushroom) {
+						buttons[x][y].setIcon(Resources.MUSHROOM);
+					} else if (piece instanceof Rabbit) {
+						if (((Rabbit) (piece)).getColour() == RabbitColour.BROWN) {
+							buttons[x][y].setIcon(Resources.RABBIT1);
+						} else if (((Rabbit) (piece)).getColour() == RabbitColour.WHITE) {
+							buttons[x][y].setIcon(Resources.RABBIT2);
+						} else {
+							buttons[x][y].setIcon(Resources.RABBIT3);
+						}
+					} else {
+						try {
+							buttons[x][y].setIcon((ImageIcon) Resources.class.getDeclaredField(
+									"FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())
+									.get(Resources.class));
+						} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
+							Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
+						}
+					}
+				} else {
+					buttons[x][y].setIcon(null);
+				}
+			}
+		}
+	}
+
 }

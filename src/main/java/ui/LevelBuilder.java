@@ -4,12 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 import model.Board;
 import resources.Resources;
@@ -21,13 +25,16 @@ import resources.Resources;
  * @author Abdalla El Nakla
  * @author Mohamed Radwan
  * @author Samuel Gamelin
+ * @version 4.0
  */
-public class LevelBuilder extends JFrame implements ActionListener {
+public class LevelBuilder extends JFrame implements ActionListener, MouseListener {
 
 	private JButton menuReset;
 	private JButton menuHelp;
 	private JButton menuMainScreen;
 	private JButton saveBoard;
+
+	public final static EmptyBorder BLANKBORDER = new EmptyBorder(0, 0, 0, 0);
 
 	private Board board;
 	private JButton[][] buttons;
@@ -77,11 +84,6 @@ public class LevelBuilder extends JFrame implements ActionListener {
 		GUIUtilities.configureFrame(this);
 	}
 
-	// Added for testing frame
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(LevelBuilder::new);
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 //		if (e.getSource() == menuMainScreen
@@ -123,4 +125,46 @@ public class LevelBuilder extends JFrame implements ActionListener {
 //		}
 
 	}
+
+	/**
+	 * Highlights a JButton when we enter the component with the mouse cursor.
+	 * 
+	 * @param e The mouse event that is triggered when the mouse enters the JButton
+	 */
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		if (((JButton) e.getSource()).getBorder().equals(BLANKBORDER)) {
+			((JButton) e.getSource()).setBorder(UIManager.getBorder("Button.border"));
+		}
+	}
+
+	/**
+	 * Stops highlighting a JButton when the mouse cursor leaves the component.
+	 * 
+	 * @param e The mouse event that is triggered when the mouse leaves the JButton
+	 */
+	@Override
+	public void mouseExited(MouseEvent e) {
+		if (((JButton) e.getSource()).getBorder().equals(UIManager.getBorder("Button.border"))) {
+			((JButton) e.getSource()).setBorder(BLANKBORDER);
+		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+
+	// Added for testing frame
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(LevelBuilder::new);
+	}
+
 }
