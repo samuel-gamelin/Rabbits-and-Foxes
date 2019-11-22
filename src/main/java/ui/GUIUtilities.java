@@ -24,7 +24,6 @@ import model.Fox;
 import model.Mushroom;
 import model.Piece;
 import model.Rabbit;
-import model.Rabbit.RabbitColour;
 import resources.Resources;
 
 /**
@@ -161,12 +160,11 @@ public final class GUIUtilities {
 					if (piece instanceof Mushroom) {
 						buttons[x][y].setIcon(Resources.MUSHROOM);
 					} else if (piece instanceof Rabbit) {
-						if (((Rabbit) (piece)).getColour() == RabbitColour.BROWN) {
-							buttons[x][y].setIcon(Resources.RABBIT1);
-						} else if (((Rabbit) (piece)).getColour() == RabbitColour.WHITE) {
-							buttons[x][y].setIcon(Resources.RABBIT2);
-						} else {
-							buttons[x][y].setIcon(Resources.RABBIT3);
+						try {
+							buttons[x][y].setIcon((ImageIcon) Resources.class.getDeclaredField(
+									"RABBIT_" + ((Rabbit) (piece)).getColour()).get(Resources.class));
+						} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
+							Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
 						}
 					} else {
 						try {
@@ -183,5 +181,4 @@ public final class GUIUtilities {
 			}
 		}
 	}
-
 }
