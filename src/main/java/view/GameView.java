@@ -195,7 +195,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 				+ "Hint (h): Outlines the next best move<br>" + "Help: Displays the help menu<br>"
 				+ "Reset:   Restarts the game<br>" + "Quit   (q):   Exits the application<br>"
 				+ "Escape (ESC): Clears the pending move" + "</p></body></html>"), BorderLayout.NORTH);
-
 		JOptionPane.showMessageDialog(this, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
 	}
 

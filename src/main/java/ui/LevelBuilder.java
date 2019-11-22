@@ -65,17 +65,31 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 		this.setContentPane(new JLabel(Resources.BOARD));
 		this.getContentPane().setLayout(new GridLayout(5, 5));
 
+		JLabel gameContentPane = (JLabel) this.getContentPane();
+
 		// Create all buttons
 		buttons = new JButton[5][5];
+
 		for (int y = 0; y < Board.SIZE; y++) {
 			for (int x = 0; x < Board.SIZE; x++) {
-				JButton button = new JButton();
-				button.setOpaque(false);
-				button.setContentAreaFilled(false);
-				buttons[x][y] = button;
-				boardLabel.add(buttons[x][y]);
+				buttons[x][y] = new JButton();
+				// Clear button default colours and make it transparent
+				buttons[x][y].setOpaque(false);
+				buttons[x][y].setContentAreaFilled(false);
+				buttons[x][y].setBorder(BLANKBORDER);
+
+				gameContentPane.add(buttons[x][y]);
+				buttons[x][y].addMouseListener(this);
+
+				final int xCopy = x;
+				final int yCopy = y;
+
+				buttons[x][y].addActionListener(e -> {
+				});
+
 			}
 		}
+
 		menuMainScreen.addActionListener(this);
 		menuReset.addActionListener(this);
 		menuHelp.addActionListener(this);
@@ -86,44 +100,27 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		if (e.getSource() == menuMainScreen
-//				&& GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
-//						"Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
-//			this.dispose();
-//			SwingUtilities.invokeLater(MainMenu::new);
-//		} else if (e.getSource() == menuHint) {
-//			Move bestMove = gameController.getNextBestMove();
-//			if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(selectedBorder)) {
-//				buttons[bestMove.xStart][bestMove.yStart].setBorder(hintBorderStart);
-//			}
-//			buttons[bestMove.xEnd][bestMove.yEnd].setBorder(hintBorderEnd);
-//		} else if (e.getSource() == boardSave) {
-//			int returnVal = fc.showSaveDialog(this);
-//			if (returnVal == JFileChooser.APPROVE_OPTION) {
-//				File file = fc.getSelectedFile();
-//				gameController.saveGame(file);
-//			}
-//		} else if (e.getSource() == menuHelp) {
-//			displayHelpDialog();
-//		} else if ((e.getSource() == menuQuit) && GUIUtilities.displayOptionDialog(this,
-//				"Are you sure you want to exit?", "Exit Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0) {
-//			System.exit(0);
-//		} else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
-//				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
-//				new String[] { "Yes", "No" }) == 0)) {
-//			resetGame();
-//		} else if (e.getSource() == menuUndo) {
-//			clearButtonBorders();
-//			if (!gameController.undoMove()) {
-//				GUIUtilities.displayMessageDialog(this, "No moves to undo", "Undo Move");
-//			}
-//		} else if (e.getSource() == menuRedo) {
-//			clearButtonBorders();
-//			if (!gameController.redoMove()) {
-//				GUIUtilities.displayMessageDialog(this, "No moves to redo", "Redo Move");
-//			}
-//		}
+		if (e.getSource() == menuMainScreen
+				&& GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
+						"Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
+			this.dispose();
+			SwingUtilities.invokeLater(MainMenu::new);
+		} else if (e.getSource() == saveBoard) {
 
+		} else if (e.getSource() == menuHelp) {
+
+		} else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
+				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
+				new String[] { "Yes", "No" }) == 0)) {
+			resetBoard();
+		}
+	}
+
+	/**
+	 * Resets the board.
+	 */
+	private void resetBoard() {
+		board = new Board();
 	}
 
 	/**
