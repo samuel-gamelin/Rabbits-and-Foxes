@@ -60,12 +60,12 @@ public final class Resources {
 	public static final Clip SOLVED = loadClip(getFileURL("sounds/solved.wav"));
 
 	// JFrame icon
-	public static final ImageIcon WINDOW_ICON = loadIcon("images/rabbit3.png", 4, 5);
+	public static final ImageIcon WINDOW_ICON = loadIcon("images/rabbit-gray.png", 4, 5);
 
 	// Rabbit icons
-	public static final ImageIcon RABBIT1 = loadIcon("images/rabbit1.png", 0.6, 0.75);
-	public static final ImageIcon RABBIT2 = loadIcon("images/rabbit2.png", 0.6, 0.75);
-	public static final ImageIcon RABBIT3 = loadIcon("images/rabbit3.png", 0.6, 0.75);
+	public static final ImageIcon RABBIT_BROWN = loadIcon("images/rabbit-brown.png", 0.6, 0.75);
+	public static final ImageIcon RABBIT_WHITE = loadIcon("images/rabbit-white.png", 0.6, 0.75);
+	public static final ImageIcon RABBIT_GRAY = loadIcon("images/rabbit-gray.png", 0.6, 0.75);
 
 	// Fox head icons
 	public static final ImageIcon FOX_HEAD_UP = loadIcon("images/fox-head-up.png", 0.75, 1);
