@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
 
 import controller.GameController;
 import controller.GameController.ClickValidity;
@@ -44,6 +43,13 @@ import util.Move;
  * @version 4.0
  */
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
+
+	private static final BevelBorder SELECTBORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
+	private static final BevelBorder HINTBORDERSTART = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
+	private static final BevelBorder HINTBORDEREND = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
+	private static final BevelBorder POSSIBLEPOSITIONBORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE,
+			Color.BLUE);
+
 	private JButton menuReset;
 	private JButton menuHelp;
 	private JButton menuHint;
@@ -51,15 +57,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	private JButton menuRedo;
 	private JButton menuMainScreen;
 	private JButton menuSaveButton;
-
-	private JMenuBar menuBar;
-
-	private static final BevelBorder SELECTBORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
-	private static final BevelBorder HINTBORDERSTART = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
-	private static final BevelBorder HINTBORDEREND = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
-	private static final BevelBorder POSSIBLEPOSITIONBORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE,
-			Color.BLUE);
-	private static final EmptyBorder BLANKBORDER = new EmptyBorder(0, 0, 0, 0);
 
 	private JCheckBox showPossibleMovesBox;
 	private JButton[][] buttons;
@@ -89,7 +86,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		gameController = new GameController(board);
 
 		this.updateFrameTitle();
-		menuBar = new JMenuBar();
+		JMenuBar menuBar = new JMenuBar();
 
 		menuMainScreen = GUIUtilities.createMenuBarButton("Main Menu", true);
 		menuHint = GUIUtilities.createMenuBarButton("Hint", true);
@@ -122,7 +119,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 				// Clear button default colours and make it transparent
 				buttons[x][y].setOpaque(false);
 				buttons[x][y].setContentAreaFilled(false);
-				buttons[x][y].setBorder(BLANKBORDER);
+				buttons[x][y].setBorder(GUIUtilities.BLANKBORDER);
 
 				gameContentPane.add(buttons[x][y]);
 				buttons[x][y].addMouseListener(this);
@@ -229,7 +226,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	private void clearButtonBorders() {
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
-				buttons[i][j].setBorder(BLANKBORDER);
+				buttons[i][j].setBorder(GUIUtilities.BLANKBORDER);
 			}
 		}
 	}
@@ -325,7 +322,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		if (((JButton) e.getSource()).getBorder().equals(BLANKBORDER)) {
+		if (((JButton) e.getSource()).getBorder().equals(GUIUtilities.BLANKBORDER)) {
 			((JButton) e.getSource()).setBorder(UIManager.getBorder("Button.border"));
 		}
 	}
@@ -338,7 +335,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	@Override
 	public void mouseExited(MouseEvent e) {
 		if (((JButton) e.getSource()).getBorder().equals(UIManager.getBorder("Button.border"))) {
-			((JButton) e.getSource()).setBorder(BLANKBORDER);
+			((JButton) e.getSource()).setBorder(GUIUtilities.BLANKBORDER);
 		}
 	}
 

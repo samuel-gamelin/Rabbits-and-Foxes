@@ -30,6 +30,7 @@ import view.GameView;
  * @author John Breton
  * @author Mohamed Radwan
  */
+
 public class MainMenu extends JFrame implements ActionListener {
 	private JButton btnStart;
 	private JButton btnSelectLevel;
@@ -38,13 +39,10 @@ public class MainMenu extends JFrame implements ActionListener {
 	private JButton btnLoadGameButton;
 	private JFileChooser fc = new JFileChooser();
 
-	/**
-	 * Creates the main menu GUI.
-	 */
 	public MainMenu() {
 		GUIUtilities.applyDefaults();
 
-		this.setTitle("Rabbits and Foxes Main Menu");
+		this.setTitle("Main Menu");
 		this.setContentPane(new JLabel(Resources.MAIN_MENU_BACKGROUND));
 		this.getContentPane().setLayout(new BorderLayout());
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
@@ -55,9 +53,10 @@ public class MainMenu extends JFrame implements ActionListener {
 		btnLoadGameButton = new JButton("Open Saved Game");
 		btnHelp = new JButton("Help");
 
+
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.NORTH);
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.SOUTH);
-
+		
 		addMainMenuButton(this, btnStart);
 		addMainMenuButton(this, btnSelectLevel);
 		addMainMenuButton(this, btnLoadGameButton);
@@ -80,7 +79,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		button.setForeground(Color.BLACK);
 		button.setBackground(Color.WHITE);
-		button.setFont(new Font("Times New Roman", Font.PLAIN, 32));
+		button.setFont(new Font("Abadi MT Condensed Extra Bold", Font.PLAIN, 32));
 		button.addActionListener(this);
 		pane.add(button, BorderLayout.CENTER);
 	}

@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 
 import model.Board;
@@ -32,6 +33,10 @@ import resources.Resources;
  * @author Mohamed Radwan
  */
 public final class GUIUtilities {
+	public static final String GAMENAME = "Rabbit and Foxes";
+	public static final EmptyBorder BLANKBORDER = new EmptyBorder(0, 0, 0, 0);
+
+
 	/**
 	 * A private constructor, preventing any instantiation of this class.
 	 */
@@ -53,8 +58,9 @@ public final class GUIUtilities {
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				if (GUIUtilities.displayOptionDialog(null, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
+				if (GUIUtilities.displayOptionDialog(frame, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
 						new String[] { "Yes", "No" }) == 1) {
+					frame.dispose();
 					System.exit(0);
 				}
 			}

@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
 
 import model.Board;
 import resources.Resources;
@@ -24,7 +23,6 @@ import resources.Resources;
  * 
  * @author Abdalla El Nakla
  * @author Mohamed Radwan
- * @author Samuel Gamelin
  * @version 4.0
  */
 public class LevelBuilder extends JFrame implements ActionListener, MouseListener {
@@ -34,19 +32,20 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 	private JButton menuMainScreen;
 	private JButton saveBoard;
 
-	public final static EmptyBorder BLANKBORDER = new EmptyBorder(0, 0, 0, 0);
-
 	private Board board;
 	private JButton[][] buttons;
 
 	public LevelBuilder() {
 		this.board = new Board();
-
 		this.setTitle("Level Builder");
+
 		JLabel boardLabel = new JLabel(Resources.BOARD);
 		boardLabel.setLayout(new GridLayout(5, 5));
 
 		this.add(boardLabel, BorderLayout.CENTER);
+
+		JButton yee = new JButton("Yee Yee Yee");
+		this.add(yee, BorderLayout.EAST);
 
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -67,16 +66,13 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 
 		JLabel gameContentPane = (JLabel) this.getContentPane();
 
-		// Create all buttons
 		buttons = new JButton[5][5];
-
 		for (int y = 0; y < Board.SIZE; y++) {
 			for (int x = 0; x < Board.SIZE; x++) {
 				buttons[x][y] = new JButton();
-				// Clear button default colours and make it transparent
 				buttons[x][y].setOpaque(false);
 				buttons[x][y].setContentAreaFilled(false);
-				buttons[x][y].setBorder(BLANKBORDER);
+				buttons[x][y].setBorder(GUIUtilities.BLANKBORDER);
 
 				gameContentPane.add(buttons[x][y]);
 				buttons[x][y].addMouseListener(this);
@@ -130,7 +126,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		if (((JButton) e.getSource()).getBorder().equals(BLANKBORDER)) {
+		if (((JButton) e.getSource()).getBorder().equals(GUIUtilities.BLANKBORDER)) {
 			((JButton) e.getSource()).setBorder(UIManager.getBorder("Button.border"));
 		}
 	}
@@ -143,7 +139,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 	@Override
 	public void mouseExited(MouseEvent e) {
 		if (((JButton) e.getSource()).getBorder().equals(UIManager.getBorder("Button.border"))) {
-			((JButton) e.getSource()).setBorder(BLANKBORDER);
+			((JButton) e.getSource()).setBorder(GUIUtilities.BLANKBORDER);
 		}
 	}
 
