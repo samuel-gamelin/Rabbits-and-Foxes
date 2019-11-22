@@ -119,7 +119,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 				// Clear button default colours and make it transparent
 				buttons[x][y].setOpaque(false);
 				buttons[x][y].setContentAreaFilled(false);
-				buttons[x][y].setBorder(GUIUtilities.BLANKBORDER);
+				buttons[x][y].setBorder(GUIUtilities.BLANK_BORDER);
 
 				gameContentPane.add(buttons[x][y]);
 				buttons[x][y].addMouseListener(this);
@@ -226,7 +226,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	private void clearButtonBorders() {
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
-				buttons[i][j].setBorder(GUIUtilities.BLANKBORDER);
+				buttons[i][j].setBorder(GUIUtilities.BLANK_BORDER);
 			}
 		}
 	}
@@ -322,7 +322,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		if (((JButton) e.getSource()).getBorder().equals(GUIUtilities.BLANKBORDER)) {
+		if (((JButton) e.getSource()).getBorder().equals(GUIUtilities.BLANK_BORDER)) {
 			((JButton) e.getSource()).setBorder(UIManager.getBorder("Button.border"));
 		}
 	}
@@ -335,7 +335,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	@Override
 	public void mouseExited(MouseEvent e) {
 		if (((JButton) e.getSource()).getBorder().equals(UIManager.getBorder("Button.border"))) {
-			((JButton) e.getSource()).setBorder(GUIUtilities.BLANKBORDER);
+			((JButton) e.getSource()).setBorder(GUIUtilities.BLANK_BORDER);
 		}
 	}
 

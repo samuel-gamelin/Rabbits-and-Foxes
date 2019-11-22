@@ -36,8 +36,8 @@ import resources.Resources;
  * @author Mohamed Radwan
  */
 public final class GUIUtilities {
-	public static final String GAMENAME = "Rabbit and Foxes";
-	public static final EmptyBorder BLANKBORDER = new EmptyBorder(0, 0, 0, 0);
+	public static final String GAME_NAME = "Rabbit and Foxes";
+	public static final EmptyBorder BLANK_BORDER = new EmptyBorder(0, 0, 0, 0);
 
 	/**
 	 * A private constructor, preventing any instantiation of this class.
