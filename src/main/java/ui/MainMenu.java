@@ -53,10 +53,9 @@ public class MainMenu extends JFrame implements ActionListener {
 		btnLoadGameButton = new JButton("Open Saved Game");
 		btnHelp = new JButton("Help");
 
-
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.NORTH);
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.SOUTH);
-		
+
 		addMainMenuButton(this, btnStart);
 		addMainMenuButton(this, btnSelectLevel);
 		addMainMenuButton(this, btnLoadGameButton);
@@ -79,7 +78,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		button.setForeground(Color.BLACK);
 		button.setBackground(Color.WHITE);
-		button.setFont(new Font("Abadi MT Condensed Extra Bold", Font.PLAIN, 32));
+		button.setFont(new Font("Times New Roman", Font.PLAIN, 32));
 		button.addActionListener(this);
 		pane.add(button, BorderLayout.CENTER);
 	}

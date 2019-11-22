@@ -36,7 +36,6 @@ public final class GUIUtilities {
 	public static final String GAMENAME = "Rabbit and Foxes";
 	public static final EmptyBorder BLANKBORDER = new EmptyBorder(0, 0, 0, 0);
 
-
 	/**
 	 * A private constructor, preventing any instantiation of this class.
 	 */
@@ -59,7 +58,7 @@ public final class GUIUtilities {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				if (GUIUtilities.displayOptionDialog(frame, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
-						new String[] { "Yes", "No" }) == 1) {
+						new String[] { "Yes", "No" }) == 0) {
 					frame.dispose();
 					System.exit(0);
 				}
