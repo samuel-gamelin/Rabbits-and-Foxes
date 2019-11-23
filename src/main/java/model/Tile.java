@@ -1,7 +1,5 @@
 package model;
 
-import java.io.Serializable;
-
 /**
  * This class represents the tiles that the pieces will be placed on. These
  * tiles will also be placed on the board to track what is occupied and what
@@ -11,12 +9,7 @@ import java.io.Serializable;
  * @author Mohamed Radwan
  * @version 4.0
  */
-public class Tile implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8740166907112638422L;
-
+public class Tile {
 	/**
 	 * Represents the colour of the Tile.
 	 */

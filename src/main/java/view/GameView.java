@@ -43,7 +43,6 @@ import util.Move;
  * @version 4.0
  */
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
-
 	private static final BevelBorder SELECTBORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
 	private static final BevelBorder HINTBORDERSTART = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
 	private static final BevelBorder HINTBORDEREND = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
@@ -66,24 +65,18 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	private JFileChooser fc = new JFileChooser();
 
 	/**
-	 * Creates the application GUI from a saved board.
-	 * 
-	 * @param board
-	 */
-	public GameView(Board board) {
-		this(0);
-		this.board = board;
-	}
-
-	/**
 	 * Creates the application GUI.
+	 * 
+	 * @param board        The board that this GameView should have
+	 * @param level        The current level of the game. Only applicable to default
+	 *                     levels. For user levels, -1 must be provided.
+	 * @param isDefaultLevel True if the level is a default level, false otherwise
 	 */
-	public GameView(int level) {
-
-		// Create the board and controller
-		board = Resources.getLevel(1);
-		board.addListener(this);
-		gameController = new GameController(board);
+	public GameView(Board board, int level, boolean isDefaultLevel) {
+		this.board = board;
+		this.board.addListener(this);
+		
+		gameController = new GameController(board, level, isDefaultLevel);
 
 		this.updateFrameTitle();
 		JMenuBar menuBar = new JMenuBar();
@@ -172,8 +165,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuRedo.addActionListener(this);
 
 		GUIUtilities.configureFrame(this);
-		this.setGameLevel(level);
-
 	}
 
 	/**
@@ -217,7 +208,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	 * Updates the game frame's title with the new level name.
 	 */
 	private void updateFrameTitle() {
-		this.setTitle("Rabbit and Foxes! Level: " + gameController.getCurrentLevel());
+		this.setTitle("Rabbit and Foxes! Level: " + board.getName());
 	}
 
 	/**
@@ -283,8 +274,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		} else if (e.getSource() == menuSaveButton) {
 			int returnVal = fc.showSaveDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-				gameController.saveGame(file);
+				board.saveBoard(fc.getSelectedFile().getAbsolutePath());
 			}
 		} else if (e.getSource() == menuHelp) {
 			displayHelpDialog();
@@ -308,8 +298,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	/**
 	 * Sets the game level whenever the start button is pressed.
 	 */
-	private void setGameLevel(int level) {
-		gameController.setLevel(level + 1);
+	private void goToNextLevel() {
 		resetGame();
 		updateFrameTitle();
 		displayHelpDialog();

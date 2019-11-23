@@ -135,11 +135,10 @@ public class LevelSelector extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnStartSelectLevel) {
 			this.dispose();
-			SwingUtilities.invokeLater(
-					new GameView(listOfLevels.getSelectedIndex() == -1 ? 0 : listOfLevels.getSelectedIndex()));
+			int level = listOfLevels.getSelectedIndex() == -1 ? 0 : listOfLevels.getSelectedIndex();
+			SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level, true));
 		} else if (e.getSource() == btnMainMenu) {
 			this.dispose();
-			SwingUtilities.invokeLater(MainMenu::new);
+			SwingUtilities.invokeLater(MainMenu::new)
 		}
 	}
-}

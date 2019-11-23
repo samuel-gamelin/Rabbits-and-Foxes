@@ -35,7 +35,6 @@ import resources.Resources;
  * @author Mohamed Radwan
  */
 public final class GUIUtilities {
-	public static final String GAME_NAME = "Rabbit and Foxes";
 	public static final EmptyBorder BLANK_BORDER = new EmptyBorder(0, 0, 0, 0);
 
 	/**
@@ -161,8 +160,8 @@ public final class GUIUtilities {
 						buttons[x][y].setIcon(Resources.MUSHROOM);
 					} else if (piece instanceof Rabbit) {
 						try {
-							buttons[x][y].setIcon((ImageIcon) Resources.class.getDeclaredField(
-									"RABBIT_" + ((Rabbit) (piece)).getColour()).get(Resources.class));
+							buttons[x][y].setIcon((ImageIcon) Resources.class
+									.getDeclaredField("RABBIT_" + ((Rabbit) (piece)).getColour()).get(Resources.class));
 						} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
 							Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
 						}

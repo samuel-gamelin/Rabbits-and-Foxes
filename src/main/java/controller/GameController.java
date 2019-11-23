@@ -1,9 +1,5 @@
 package controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +23,9 @@ import util.Solver;
  * @author Abdalla El Nakla
  * @version 4.0
  */
-public class GameController implements Serializable {
-	private static final long serialVersionUID = 4359758451395959055L;
+public class GameController {
 	private Board board;
+	private boolean defaultLevel;
 	private int currentLevel;
 	private List<Integer> moveList;
 	private ArrayDeque<Move> undoMoveStack;
@@ -47,11 +43,14 @@ public class GameController implements Serializable {
 	 * (the board listener) so that it can request the model to update it. This will
 	 * ensure all three components of the MVC will be using the same board.
 	 * 
-	 * @param board The Board (model) that this controller should update
+	 * @param board          The Board (model) that this controller should update
+	 * @param isDefaultLevel True if the passed in board is part of the default
+	 *                       levels, false otherwise
 	 */
-	public GameController(Board board) {
+	public GameController(Board board, int level, boolean isDefaultLevel) {
 		this.board = board;
-		this.currentLevel = 1;
+		this.defaultLevel = isDefaultLevel;
+		this.currentLevel = level;
 		this.moveList = new ArrayList<>();
 		this.undoMoveStack = new ArrayDeque<>();
 		this.redoMoveStack = new ArrayDeque<>();
@@ -122,7 +121,7 @@ public class GameController implements Serializable {
 	 * @return The new board for the view to listen to it.
 	 */
 	public Board reset() {
-		board = Resources.getLevel(currentLevel);
+		board = Resources.getDefaultBoardByLevel(currentLevel);
 		moveList.clear();
 		undoMoveStack.clear();
 		redoMoveStack.clear();
@@ -182,7 +181,8 @@ public class GameController implements Serializable {
 	/**
 	 * Returns the current level of the game.
 	 * 
-	 * @return The current level of the game
+	 * @return The current level of the game. -1 if this controller maintains a
+	 *         board that is not part of the default levels.
 	 */
 	public int getCurrentLevel() {
 		return currentLevel;
@@ -192,31 +192,18 @@ public class GameController implements Serializable {
 	 * Increment the current level of the game by 1.
 	 */
 	public void incrementLevel() {
-		currentLevel++;
-	}
-
-	public static Board openGame(File file) {
-		return (Board.loadGame(file));
-	}
-
-	public void saveGame(File file) {
-		// save the object to file
-		FileOutputStream fos = null;
-		ObjectOutputStream out = null;
-		try {
-			fos = new FileOutputStream(file);
-			out = new ObjectOutputStream(fos);
-			out.writeObject(board);
-			out.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (defaultLevel) {
+			currentLevel++;
 		}
 	}
 
 	/**
-	 * Sets the level of the game
+	 * Sets the level of the game. Has no effect if the controller maintains a board
+	 * that is not part of the default levels.
 	 */
 	public void setLevel(int level) {
-		currentLevel = level;
+		if (defaultLevel) {
+			currentLevel = level;
+		}
 	}
 }

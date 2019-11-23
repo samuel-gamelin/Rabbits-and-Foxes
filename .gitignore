@@ -110,4 +110,4 @@ documentation/javadoc
 target/
 
 #Logging
-info.log
+*.log

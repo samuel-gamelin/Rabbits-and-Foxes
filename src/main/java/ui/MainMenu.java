@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,7 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
-import controller.GameController;
+import model.Board;
 import resources.Resources;
 import view.GameView;
 
@@ -28,7 +27,6 @@ import view.GameView;
  * @author Samuel Gamelin
  * @author Dani Hashweh
  * @author John Breton
- * @author Mohamed Radwan
  */
 
 public class MainMenu extends JFrame implements ActionListener {
@@ -90,13 +88,18 @@ public class MainMenu extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnStart) {
 			this.dispose();
-			SwingUtilities.invokeLater(new GameView(0));
+			SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(1), 1, true));
 		} else if (e.getSource() == btnLoadGameButton) {
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-				this.dispose();
-				SwingUtilities.invokeLater(new GameView(GameController.openGame(file)));
+				Board board = Board.loadBoard(fc.getSelectedFile().getAbsolutePath());
+
+				if (board != null) {
+					this.dispose();
+					SwingUtilities.invokeLater(new GameView(board, -1, false));
+				} else {
+					GUIUtilities.displayMessageDialog(this, "Invalid file selection!", "Invalid File");
+				}
 			}
 		} else if (e.getSource() == btnSelectLevel) {
 			this.dispose();
