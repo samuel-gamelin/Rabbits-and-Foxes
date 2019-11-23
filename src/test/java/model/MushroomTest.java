@@ -1,15 +1,12 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import model.Piece.PieceType;
-import util.Move;
 
 /**
  * Tests for the Mushroom class (for sake of completeness).
@@ -20,39 +17,26 @@ import util.Move;
 
 public class MushroomTest {
 	private Mushroom mushroom;
-	private Board board;
 
 	@Before
 	public void setUp() {
 		mushroom = new Mushroom();
-		board = Board.createBoard("MU X X X X MU X X X X MU X X X X MU X X X X MU X X X X");
 	}
 
 	@Test
 	public void testConstructor() {
-		assertTrue(new Mushroom() instanceof Mushroom);
+		assertTrue(mushroom instanceof Mushroom);
+		assertTrue(!(mushroom instanceof MovablePiece));
 	}
 
 	@Test
-	public void getPieceType() {
+	public void testPieceType() {
 		assertEquals(PieceType.MUSHROOM, mushroom.getPieceType());
 	}
 
 	@Test
-	public void testGetPossibleMoves() {
-		assertTrue(mushroom.getPossibleMoves(board, 0, 0).isEmpty());
-		assertNull(mushroom.getPossibleMoves(null, 0, 0));
-	}
-
-	@Test
-	public void testMove() {
-		assertFalse(mushroom.move(new Move(0, 0, 0, 1), board));
-		assertFalse(mushroom.move(null, null));
-	}
-
-	@Test
 	public void testToString() {
-		assertEquals(mushroom.toString(), "MU");
+		assertEquals("MU", mushroom.toString());
 	}
 
 }

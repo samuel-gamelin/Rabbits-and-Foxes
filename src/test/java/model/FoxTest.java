@@ -28,7 +28,7 @@ public class FoxTest {
 
 	@Before
 	public void setUp() {
-		board = Board.createBoard(TESTBOARD);
+		board = Board.createBoard("Anyboard", TESTBOARD);
 		fox1 = new Fox(Fox.Direction.UP, true);
 		fox2 = new Fox(Fox.Direction.LEFT, false);
 		board.setPiece(fox1, 0, 1);

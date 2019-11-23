@@ -267,10 +267,11 @@ public class Board {
 	 * @return The newly constructed Board based on the passed String.
 	 */
 	public static Board createBoard(String name, String representation) {
-		Board board = new Board(name);
 		String[] currBoard = representation.split("\\s+");
-		if (currBoard.length != 25)
+		if (currBoard.length != 25) {
 			return null;
+		}
+		Board board = new Board(name);
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				if (!currBoard[5 * i + j].equals(EMPTY)) {
@@ -321,12 +322,14 @@ public class Board {
 	}
 
 	/**
-	 * Saves this board as a JSON object in a file at the specified path.
+	 * Saves this board as a JSON object in a file at the specified path. Overwrites
+	 * the existing file should it already exist.
 	 * 
 	 * @param path The absolute path of the file that will contain the saved data
 	 *             for this board
+	 * @return True if the board was saved successfully, false otherwise
 	 */
-	public void saveBoard(String path) {
+	public boolean saveBoard(String path) {
 		try (Writer writer = new FileWriter(path)) {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -334,8 +337,10 @@ public class Board {
 			jsonObject.addProperty("name", this.name);
 			jsonObject.addProperty("board", this.toString());
 			gson.toJson(jsonObject, writer);
+			return true;
 		} catch (Exception e) {
 			Resources.LOGGER.error("Unable to save Board object to file at " + path, e);
+			return false;
 		}
 	}
 

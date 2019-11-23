@@ -27,7 +27,7 @@ public class RabbitTest {
 	public void setUp() {
 		rabbitBrown = new Rabbit(Rabbit.RabbitColour.BROWN);
 		rabbitWhite = new Rabbit(Rabbit.RabbitColour.WHITE);
-		board = Board.createBoard(TESTBOARD);
+		board = Board.createBoard("Anyboard", TESTBOARD);
 		board.setPiece(rabbitWhite, 0, 0);
 		board.setPiece(rabbitBrown, 2, 2);
 	}
@@ -66,7 +66,7 @@ public class RabbitTest {
 
 	@Test
 	public void testToString() {
-		assertEquals(rabbitWhite.toString(), "RBW");
+		assertEquals("RBW", rabbitWhite.toString());
 	}
 
 }

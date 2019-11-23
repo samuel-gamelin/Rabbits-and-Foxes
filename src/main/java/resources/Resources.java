@@ -3,10 +3,8 @@ package resources;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -44,6 +42,21 @@ import model.Board;
  * @version 4.0
  */
 public final class Resources {
+	/**
+	 * A String constant representing the key value for user levels in the LevelData.json file.
+	 */
+	private static final String USER_LEVELS = "userLevels";
+
+	/**
+	 * A String constant representing the key value for default levels in the LevelData.json file.
+	 */
+	private static final String DEFAULT_LEVELS = "defaultLevels";
+
+	/**
+	 * A constant representing the relative path of the LevelData.json file.
+	 */
+	private static final String LEVEL_DATA_PATH = "levels/LevelData.json";
+
 	/**
 	 * The Logger object used for logging.
 	 */
@@ -176,7 +189,7 @@ public final class Resources {
 	 */
 	private static int getNumberOfLevels() {
 		try {
-			return loadJsonObjectFromPath("levels/LevelData.json", false).get("defaultLevels").getAsJsonArray().size();
+			return loadJsonObjectFromPath(LEVEL_DATA_PATH, false).get(DEFAULT_LEVELS).getAsJsonArray().size();
 		} catch (Exception e) {
 			LOGGER.error("Unable to obtain total number of levels from LevelData.json file", e);
 			return -1;
@@ -200,7 +213,6 @@ public final class Resources {
 				return JsonParser.parseReader(inputStreamReader).getAsJsonObject();
 			} catch (IOException e) {
 				LOGGER.error("Could not load the file at " + path, e);
-				return null;
 			}
 		} else {
 			try (BufferedReader bufferedReader = new BufferedReader(
@@ -208,9 +220,9 @@ public final class Resources {
 				return JsonParser.parseReader(bufferedReader).getAsJsonObject();
 			} catch (IOException e) {
 				LOGGER.error("Could not load the file at " + path, e);
-				return null;
 			}
 		}
+		return null;
 	}
 
 	/**
@@ -223,10 +235,10 @@ public final class Resources {
 	 */
 	public static Board getDefaultBoardByLevel(int level) {
 		try {
-			for (JsonElement element : loadJsonObjectFromPath("levels/LevelData.json", false).get("defaultLevels")
+			for (JsonElement element : loadJsonObjectFromPath(LEVEL_DATA_PATH, false).get(DEFAULT_LEVELS)
 					.getAsJsonArray()) {
-				if (element.getAsJsonObject().get("name").getAsString().equals("Level " + level)) {
-					return Board.createBoard("Level " + level, element.getAsJsonObject().get("board").getAsString());
+				if (element.getAsJsonObject().get("name").getAsInt() == level) {
+					return Board.createBoard(String.valueOf(level), element.getAsJsonObject().get("board").getAsString());
 				}
 			}
 		} catch (Exception e) {
@@ -245,7 +257,7 @@ public final class Resources {
 		List<Board> boardList = new ArrayList<>();
 
 		try {
-			loadJsonObjectFromPath("levels/LevelData.json", false).get("defaultLevels").getAsJsonArray().forEach(
+			loadJsonObjectFromPath(LEVEL_DATA_PATH, false).get(DEFAULT_LEVELS).getAsJsonArray().forEach(
 					element -> boardList.add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(),
 							element.getAsJsonObject().get("board").getAsString())));
 		} catch (Exception e) {
@@ -265,7 +277,7 @@ public final class Resources {
 		List<Board> boardList = new ArrayList<>();
 
 		try {
-			loadJsonObjectFromPath("levels/LevelData.json", false).get("userLevels").getAsJsonArray().forEach(
+			loadJsonObjectFromPath(LEVEL_DATA_PATH, false).get(USER_LEVELS).getAsJsonArray().forEach(
 					element -> boardList.add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(),
 							element.getAsJsonObject().get("board").getAsString())));
 		} catch (Exception e) {
@@ -284,14 +296,14 @@ public final class Resources {
 	 * @return True if the user-defined level was saved, false otherwise
 	 */
 	public static boolean addUserLevel(Board board) {
-		JsonObject originalJsonObject = loadJsonObjectFromPath("levels/LevelData.json", false);
+		JsonObject originalJsonObject = loadJsonObjectFromPath(LEVEL_DATA_PATH, false);
 
-		for (JsonElement object : originalJsonObject.get("userLevels").getAsJsonArray()) {
+		for (JsonElement object : originalJsonObject.get(USER_LEVELS).getAsJsonArray()) {
 			if (object.getAsJsonObject().get("name").getAsString().equals(board.getName())) {
 				return false;
 			}
 		}
-		try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileURL("levels/LevelData.json").getPath()),
+		try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileURL(LEVEL_DATA_PATH).getPath()),
 				Charset.defaultCharset())) {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -299,7 +311,7 @@ public final class Resources {
 			jsonObject.addProperty("name", board.getName());
 			jsonObject.addProperty("board", board.toString());
 
-			originalJsonObject.get("userLevels").getAsJsonArray().add(jsonObject);
+			originalJsonObject.get(USER_LEVELS).getAsJsonArray().add(jsonObject);
 
 			gson.toJson(originalJsonObject, writer);
 			return true;
@@ -307,5 +319,35 @@ public final class Resources {
 			Resources.LOGGER.error("Unable to save user-defined level to the LevelData.json file", e);
 			return false;
 		}
+	}
+
+	/**
+	 * Removes a user-defined level from the LevelData.json file based on the
+	 * provided level name, if the level with that name exists.
+	 * 
+	 * @param name The name of the level to remove from the LevelData.json file
+	 * @return True if the user-defined level was removed, false otherwise
+	 */
+	public static boolean removeUserLevel(String name) {
+		JsonObject originalJsonObject = loadJsonObjectFromPath(LEVEL_DATA_PATH, false);
+
+		for (JsonElement object : originalJsonObject.get(USER_LEVELS).getAsJsonArray()) {
+			if (object.getAsJsonObject().get("name").getAsString().equals(name)) {
+				try (Writer writer = new OutputStreamWriter(
+						new FileOutputStream(getFileURL(LEVEL_DATA_PATH).getPath()),
+						Charset.defaultCharset())) {
+					Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+					originalJsonObject.get(USER_LEVELS).getAsJsonArray().remove(object);
+
+					gson.toJson(originalJsonObject, writer);
+					return true;
+				} catch (Exception e) {
+					Resources.LOGGER.error("Unable to save user-defined level to the LevelData.json file", e);
+					return false;
+				}
+			}
+		}
+		return false;
 	}
 }

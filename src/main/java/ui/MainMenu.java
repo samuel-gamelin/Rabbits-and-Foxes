@@ -89,7 +89,7 @@ public class MainMenu extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnStart) {
 			this.dispose();
-			SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(1), 1, true));
+			SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(1), 1));
 		} else if (e.getSource() == btnLoadGameButton) {
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -97,7 +97,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
 				if (board != null) {
 					this.dispose();
-					SwingUtilities.invokeLater(new GameView(board, -1, false));
+					SwingUtilities.invokeLater(new GameView(board, -1));
 				} else {
 					GUIUtilities.displayMessageDialog(this, "Invalid file selection!", "Invalid File");
 				}

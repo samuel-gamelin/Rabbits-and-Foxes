@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -67,16 +66,17 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	/**
 	 * Creates the application GUI.
 	 * 
-	 * @param board        The board that this GameView should have
-	 * @param level        The current level of the game. Only applicable to default
-	 *                     levels. For user levels, -1 must be provided.
+	 * @param board          The board that this GameView should have
+	 * @param level          The current level of the game. Only applicable to
+	 *                       default levels. For user levels, a negative value must
+	 *                       be provided.
 	 * @param isDefaultLevel True if the level is a default level, false otherwise
 	 */
-	public GameView(Board board, int level, boolean isDefaultLevel) {
+	public GameView(Board board, int level) {
 		this.board = board;
 		this.board.addListener(this);
-		
-		gameController = new GameController(board, level, isDefaultLevel);
+
+		gameController = new GameController(board, level);
 
 		this.updateFrameTitle();
 		JMenuBar menuBar = new JMenuBar();
@@ -229,27 +229,41 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 			Resources.SOLVED.start();
 			clearButtonBorders();
 
-			if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
+			if (!gameController.isDefaultLevel()) {
 				int choice = GUIUtilities.displayOptionDialog(this,
-						"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
-						new String[] { "Next", "Reset", "Quit" });
+						"Congrats, you solved it! Would you like to go to reset or go to the main menu?", "Solved!",
+						new String[] { "Reset", "Main Menu", "Quit" });
 				if (choice == 0) {
-					gameController.incrementLevel();
-					updateFrameTitle();
 					resetGame();
 				} else if (choice == 1) {
-					resetGame();
-				} else {
-					System.exit(0);
-				}
-			} else {
-				if (GUIUtilities.displayOptionDialog(this,
-						"You have finished the game! Would you like to go to the main menu or exit?", "End Game",
-						new String[] { "Main Menu", "Quit" }) == 0) {
 					this.dispose();
 					SwingUtilities.invokeLater(MainMenu::new);
 				} else {
 					System.exit(0);
+				}
+			} else {
+				if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
+					int choice = GUIUtilities.displayOptionDialog(this,
+							"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
+							new String[] { "Next", "Reset", "Quit" });
+					if (choice == 0) {
+						gameController.incrementLevel();
+						updateFrameTitle();
+						resetGame();
+					} else if (choice == 1) {
+						resetGame();
+					} else {
+						System.exit(0);
+					}
+				} else {
+					if (GUIUtilities.displayOptionDialog(this,
+							"You have finished the game! Would you like to go to the main menu or exit?", "End Game",
+							new String[] { "Main Menu", "Quit" }) == 0) {
+						this.dispose();
+						SwingUtilities.invokeLater(MainMenu::new);
+					} else {
+						System.exit(0);
+					}
 				}
 			}
 		}
@@ -293,15 +307,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 				GUIUtilities.displayMessageDialog(this, "No moves to redo", "Redo Move");
 			}
 		}
-	}
-
-	/**
-	 * Sets the game level whenever the start button is pressed.
-	 */
-	private void goToNextLevel() {
-		resetGame();
-		updateFrameTitle();
-		displayHelpDialog();
 	}
 
 	/**

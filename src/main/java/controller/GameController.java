@@ -27,7 +27,7 @@ import util.Solver;
  */
 public class GameController {
 	private Board board;
-	private boolean defaultLevel;
+	private boolean isDefaultLevel;
 	private int currentLevel;
 	private List<Integer> moveList;
 	private ArrayDeque<Move> undoMoveStack;
@@ -49,13 +49,16 @@ public class GameController {
 	 * @param isDefaultLevel True if the passed in board is part of the default
 	 *                       levels, false otherwise
 	 */
-	public GameController(Board board, int level, boolean isDefaultLevel) {
+	public GameController(Board board, int level) {
 		this.board = board;
-		this.defaultLevel = isDefaultLevel;
 		this.currentLevel = level;
 		this.moveList = new ArrayList<>();
 		this.undoMoveStack = new ArrayDeque<>();
 		this.redoMoveStack = new ArrayDeque<>();
+
+		if (currentLevel > 0) {
+			this.isDefaultLevel = true;
+		}
 	}
 
 	/**
@@ -127,7 +130,18 @@ public class GameController {
 	 * @return The new board for the view to listen to it.
 	 */
 	public Board reset() {
-		board = Resources.getDefaultBoardByLevel(currentLevel);
+		if (isDefaultLevel) {
+			board = Resources.getDefaultBoardByLevel(currentLevel);
+		} else {
+			board = Resources.getAllUserBoards().stream().filter(b -> b.getName().equals(board.getName())).findFirst()
+					.orElse(null);
+
+			if (board == null) {
+				board = Resources.getDefaultBoardByLevel(1);
+				isDefaultLevel = true;
+			}
+		}
+		
 		moveList.clear();
 		undoMoveStack.clear();
 		redoMoveStack.clear();
@@ -198,7 +212,7 @@ public class GameController {
 	 * Increment the current level of the game by 1.
 	 */
 	public void incrementLevel() {
-		if (defaultLevel) {
+		if (isDefaultLevel) {
 			currentLevel++;
 		}
 	}
@@ -208,8 +222,17 @@ public class GameController {
 	 * that is not part of the default levels.
 	 */
 	public void setLevel(int level) {
-		if (defaultLevel) {
+		if (isDefaultLevel) {
 			currentLevel = level;
 		}
+	}
+
+	/**
+	 * Returns whether or not this controller is associated with a default level.
+	 * 
+	 * @return True if the level is a default level, false if it is a user level
+	 */
+	public boolean isDefaultLevel() {
+		return isDefaultLevel;
 	}
 }
