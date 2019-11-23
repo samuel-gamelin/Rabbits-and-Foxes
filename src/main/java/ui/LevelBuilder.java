@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.print.attribute.standard.NumberOfDocuments;
-import javax.security.auth.x500.X500Principal;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,11 +18,8 @@ import javax.swing.SwingUtilities;
 
 import model.Board;
 import model.BoardListener;
-import model.Fox;
 import model.Mushroom;
-import model.Piece;
 import model.Rabbit;
-import model.Fox.Direction;
 import model.Rabbit.RabbitColour;
 import resources.Resources;
 
@@ -70,10 +65,10 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
 
-		menuMainScreen = ui.GUIUtilities.createMenuBarButton("Main Menu", true);
-		menuReset = ui.GUIUtilities.createMenuBarButton("Reset", false);
-		saveBoard = ui.GUIUtilities.createMenuBarButton("Save", true);
-		menuHelp = ui.GUIUtilities.createMenuBarButton("Help", false);
+		menuMainScreen = GUIUtilities.createMenuBarButton("Main Menu", true);
+		menuReset = GUIUtilities.createMenuBarButton("Reset", false);
+		saveBoard = GUIUtilities.createMenuBarButton("Save", true);
+		menuHelp = GUIUtilities.createMenuBarButton("Help", false);
 
 		menuBar.add(menuMainScreen);
 		menuBar.add(menuReset);
@@ -96,6 +91,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 		for (int y = 0; y < Board.SIZE; y++) {
 			for (int x = 0; x < Board.SIZE; x++) {
 				buttons[x][y] = new JButton();
+				buttons[x][y].setToolTipText(x + "," + y);
 				buttons[x][y].setOpaque(false);
 				buttons[x][y].setContentAreaFilled(false);
 				buttons[x][y].setBorder(GUIUtilities.BLANK_BORDER);
@@ -137,9 +133,11 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 			this.dispose();
 			SwingUtilities.invokeLater(MainMenu::new);
 		} else if (e.getSource() == saveBoard) {
-			String levelNameString = JOptionPane.showInputDialog("Please enter a name for the level: ");
-			board.setName(levelNameString);
-			Resources.addUserLevel(board);
+			String levelNameString;
+			do {
+				levelNameString = JOptionPane.showInputDialog("Please enter a name for the level: ");
+				board.setName(levelNameString);
+			} while (!(Resources.addUserLevel(board) || levelNameString == null));
 		} else if (e.getSource() == menuHelp) {
 			JPanel panel = new JPanel(new BorderLayout(0, 15));
 			panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>" + "" + "" + "<br><br>"
@@ -167,12 +165,24 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		((JButton) e.getSource()).setIcon(currentIcon);
+		if (((JButton) e.getSource()).getIcon() == null) {
+			((JButton) e.getSource()).setIcon(currentIcon);
+		}
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		((JButton) e.getSource()).setIcon(null);
+		String[] positionString = ((JButton) e.getSource()).getToolTipText().split(",");
+		int xPosition = Integer.parseInt(positionString[0]);
+		int yPosition = Integer.parseInt(positionString[1]);
+		if (!board.isOccupied(xPosition, yPosition)) {
+			((JButton) e.getSource()).setIcon(null);
+		}
+	}
+
+	@Override
+	public void handleBoardChange() {
+		GUIUtilities.updateView(buttons, board);
 	}
 
 	@Override
@@ -191,10 +201,4 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(LevelBuilder::new);
 	}
-
-	@Override
-	public void handleBoardChange() {
-		GUIUtilities.updateView(buttons, board);
-	}
-
 }

@@ -175,6 +175,7 @@ public class Board {
 	public boolean setPiece(Piece piece, int x, int y) {
 		if (piece != null && validatePosition(x, y)) {
 			tiles[x][y].placePiece(piece);
+			notifyListeners();
 			return true;
 		}
 		return false;
@@ -190,6 +191,7 @@ public class Board {
 	 */
 	public Piece removePiece(int x, int y) {
 		if (validatePosition(x, y) && tiles[x][y].isOccupied()) {
+			notifyListeners();
 			return tiles[x][y].removePiece();
 		}
 		return null;
