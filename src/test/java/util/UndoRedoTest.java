@@ -23,7 +23,7 @@ public class UndoRedoTest {
 	public void setUp() {
 		testBoard = Board.createBoard("Anyboard", BOARD_DATA);
 
-		controller = new GameController(testBoard, -1 , false);
+		controller = new GameController(testBoard, -1);
 		// Add a couple moves that can be undone/redone
 		controller.registerClick(3, 0);
 		controller.registerClick(3, 2);

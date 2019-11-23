@@ -115,29 +115,32 @@ public class BoardTest {
 		board1.setPiece(new Mushroom(), 0, 0);
 		assertFalse(board1.isInWinningState()); // Make sure it is actually checking for rabbits in brown holes.
 	}
-	
+
 	@Test
 	public void testSaveAndLoadBoard() {
-		assertTrue(board1.saveBoard("testBoard.json"));		// Save the first board
-		
-		JsonObject savedBoardObject = Resources.loadJsonObjectFromPath(new File("testBoard.json").getAbsolutePath(), true);	// Reload the board as a JSON object
-		
-		JsonObject jsonObject = new JsonObject();			// Create a mock JSON object that should be equal to the one that was just loaded
+		assertTrue(board1.saveBoard("testBoard.json")); // Save the first board
+
+		JsonObject savedBoardObject = Resources.loadJsonObjectFromPath(new File("testBoard.json").getAbsolutePath(),
+				true); // Reload the board as a JSON object
+
+		JsonObject jsonObject = new JsonObject(); // Create a mock JSON object that should be equal to the one that was
+													// just loaded
 		jsonObject.addProperty("name", board1.getName());
 		jsonObject.addProperty("board", board1.toString());
-		
-		assertEquals(jsonObject, savedBoardObject);			// Check that these two JSON objects are the same
-		
-		assertTrue(board2.saveBoard("testBoard.json"));		// Replicate for the second board (ensuring the file is properly overwritten)
-		
+
+		assertEquals(jsonObject, savedBoardObject); // Check that these two JSON objects are the same
+
+		assertTrue(board2.saveBoard("testBoard.json")); // Replicate for the second board (ensuring the file is properly
+														// overwritten)
+
 		savedBoardObject = Resources.loadJsonObjectFromPath(new File("testBoard.json").getAbsolutePath(), true);
-		
+
 		jsonObject = new JsonObject();
 		jsonObject.addProperty("name", board2.getName());
 		jsonObject.addProperty("board", board2.toString());
-		
+
 		assertEquals(jsonObject, savedBoardObject);
-		
-		assertTrue(new File("testBoard.json").delete());	// Ensure the file is properly deleted
+
+		assertTrue(new File("testBoard.json").delete()); // Ensure the file is properly deleted
 	}
 }
