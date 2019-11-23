@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Board;
+import model.MovablePiece;
 import model.Mushroom;
+import model.Piece;
 import resources.Resources;
 import util.Move;
 import util.Solver;
@@ -103,7 +105,11 @@ public class GameController {
 	 * @return List of all possible moves for the selected piece.
 	 */
 	public List<Move> getPossibleMoves(int x, int y) {
-		return board.getPiece(x, y) != null ? board.getPiece(x, y).getPossibleMoves(board, x, y) : new ArrayList<>();
+		Piece piece = board.getPiece(x, y);
+		if (piece instanceof MovablePiece) {
+			return ((MovablePiece) piece).getPossibleMoves(board, x, y);
+		}
+		return new ArrayList<>();
 	}
 
 	/**
