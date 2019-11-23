@@ -70,7 +70,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
      * @param level          The current level of the game. Only applicable to
      *                       default levels. For user levels, a negative value must
      *                       be provided.
-     * @param isDefaultLevel True if the level is a default level, false otherwise
      */
     public GameView(Board board, int level) {
         this.board = board;
