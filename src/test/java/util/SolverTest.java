@@ -47,58 +47,42 @@ public class SolverTest {
 		// (-1, -1, -1, -1).
 		assertSame(Solver.getNextBestMove(unsolvableBoard).xStart, noMove.xStart);
 	}
-	
+
 	@Test
 	public void testSolveEasyBoard() {
-		/* This easy board has an optimal two move solution.
-		* The solver will apply these two moves, at which
-		* point the board will be checked to ensure it has been solved.
-		*/ 
-		
+		/*
+		 * This easy board has an optimal two move solution. The solver will apply these
+		 * two moves, at which point the board will be checked to ensure it has been
+		 * solved.
+		 */
+
 		// Apply the next best moves to this board, ensuring that it is
 		// not in a solved state after each move.
 		for (int i = 0; i < 2; i++) {
 			assertFalse(normalBoard.isInWinningState());
 			easyBoard.move(Solver.getNextBestMove(easyBoard));
 		}
-		
+
 		// The board should now be solved
 		assertTrue(easyBoard.isInWinningState());
 	}
-	
+
 	@Test
 	public void testSolveNormalBoard() {
-		/* This normal board has an optimal six move solution.
-		* The solver will apply these six moves, at which
-		* point the board will be checked to ensure it has been solved.
-		*/ 
-		
+		/*
+		 * This normal board has an optimal six move solution. The solver will apply
+		 * these six moves, at which point the board will be checked to ensure it has
+		 * been solved.
+		 */
+
 		// Apply the next best moves to this board, ensuring that it is
 		// not in a solved state after each move.
 		for (int i = 0; i < 6; i++) {
 			assertFalse(normalBoard.isInWinningState());
 			normalBoard.move(Solver.getNextBestMove(normalBoard));
 		}
-		
+
 		// The board should now be solved.
 		assertTrue(normalBoard.isInWinningState());
-	}
-	
-	@Test
-	public void testSolveHardBoard() {
-		/* This normal board has an optimal 84 move solution.
-		* The solver will apply these 84 moves, at which
-		* point the board will be checked to ensure it has been solved.
-		*/ 
-		
-		// Apply the next best moves to this board, ensuring that it is
-		// not in a solved state after each move.
-		for (int i = 0; i < 84; i++) {
-			assertFalse(hardBoard.isInWinningState());
-			hardBoard.move(Solver.getNextBestMove(hardBoard));
-		}
-		
-		// The board should now be solved.
-		assertTrue(hardBoard.isInWinningState());
 	}
 }

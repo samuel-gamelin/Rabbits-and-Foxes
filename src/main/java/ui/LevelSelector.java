@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,15 +36,56 @@ import view.GameView;
  */
 public class LevelSelector extends JFrame implements ActionListener {
 	private JList<String> listOfLevels;
-	private JButton btnStartSelectLevel;
+	private JButton btnStartSelectLevel, btnMainMenu, btnCustomLevels, btnNextPage, btnLastPage;
 
 	public LevelSelector() {
 		this.setContentPane(new JLabel(Resources.LEVEL_SELECTOR_BACKGROUND));
 		this.getContentPane().setLayout(new BorderLayout());
 
 		btnStartSelectLevel = new JButton("Start");
+		formatButton(btnStartSelectLevel);
+		btnMainMenu = new JButton("Back to Main Menu");
+		formatButton(btnMainMenu);
+		btnCustomLevels = new JButton("Go to Custom Levels");
+		formatButton(btnCustomLevels);
+		btnNextPage = new JButton("Next Page");
+		formatButton(btnNextPage);
+		btnLastPage = new JButton("Last Page");
+		formatButton(btnLastPage);
 
-		this.add(btnStartSelectLevel, BorderLayout.SOUTH);
+		btnStartSelectLevel.addActionListener(this);
+		btnMainMenu.addActionListener(this);
+		btnCustomLevels.addActionListener(this);
+
+		JPanel pageButtons = new JPanel();
+		pageButtons.setOpaque(false);
+		pageButtons.setLayout(new BoxLayout(pageButtons, BoxLayout.LINE_AXIS));
+		pageButtons.add(Box.createHorizontalGlue());
+		pageButtons.add(btnLastPage);
+		pageButtons.add(Box.createHorizontalGlue());
+		pageButtons.add(btnNextPage);
+		pageButtons.add(Box.createHorizontalGlue());
+
+		JPanel actionButtons = new JPanel();
+		actionButtons.setOpaque(false);
+		actionButtons.setLayout(new BoxLayout(actionButtons, BoxLayout.LINE_AXIS));
+		actionButtons.add(Box.createHorizontalGlue());
+		actionButtons.add(btnMainMenu);
+		actionButtons.add(Box.createHorizontalGlue());
+		actionButtons.add(btnStartSelectLevel);
+		actionButtons.add(Box.createHorizontalGlue());
+		actionButtons.add(btnCustomLevels);
+		actionButtons.add(Box.createHorizontalGlue());
+
+		JPanel allButtons = new JPanel();
+		allButtons.setOpaque(false);
+		allButtons.setLayout(new BoxLayout(allButtons, BoxLayout.PAGE_AXIS));
+		allButtons.add(pageButtons);
+		allButtons.add(Box.createRigidArea(new Dimension(0, (int) Resources.SIDE_LENGTH / 25)));
+		allButtons.add(actionButtons);
+		allButtons.add(Box.createRigidArea(new Dimension(0, (int) Resources.SIDE_LENGTH / 50)));
+
+		this.add(allButtons, BorderLayout.SOUTH);
 		// this.add(padding, BorderLayout.CENTER);
 
 		List<String> allLevels = new ArrayList<>();
@@ -64,26 +107,28 @@ public class LevelSelector extends JFrame implements ActionListener {
 		listOfLevels.setOpaque(false);
 		listOfLevels.setForeground(Color.WHITE);
 
-		btnStartSelectLevel = new JButton("Start");
-		btnStartSelectLevel
-				.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) (0.20 * Resources.SIDE_LENGTH)));
-		btnStartSelectLevel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		btnStartSelectLevel.setForeground(Color.BLACK);
-		btnStartSelectLevel.setBackground(Color.WHITE);
-		btnStartSelectLevel.setFont(new Font("Times New Roman", Font.PLAIN, 32));
-
 		JPanel padding = new JPanel(new GridBagLayout());
 		padding.setBorder(new EmptyBorder(0, 0, 0, 0));
 		padding.setOpaque(false);
 		padding.add(listOfLevels, new GridBagConstraints());
 
-		this.add(btnStartSelectLevel, BorderLayout.SOUTH);
 		this.add(padding, BorderLayout.CENTER);
-
-		btnStartSelectLevel.addActionListener(this);
 
 		this.setTitle("Level Selector");
 		GUIUtilities.configureFrame(this);
+	}
+
+	/**
+	 * Used to
+	 * 
+	 * @param button
+	 */
+	private void formatButton(JButton button) {
+		button.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) (0.20 * Resources.SIDE_LENGTH)));
+		button.setAlignmentX(Component.CENTER_ALIGNMENT);
+		button.setForeground(Color.BLACK);
+		button.setBackground(Color.WHITE);
+		button.setFont(new Font("Times New Roman", Font.PLAIN, 32));
 	}
 
 	@Override
@@ -92,7 +137,9 @@ public class LevelSelector extends JFrame implements ActionListener {
 			this.dispose();
 			SwingUtilities.invokeLater(
 					new GameView(listOfLevels.getSelectedIndex() == -1 ? 0 : listOfLevels.getSelectedIndex()));
+		} else if (e.getSource() == btnMainMenu) {
+			this.dispose();
+			SwingUtilities.invokeLater(MainMenu::new);
 		}
-
 	}
 }
