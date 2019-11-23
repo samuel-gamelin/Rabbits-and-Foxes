@@ -43,12 +43,14 @@ import model.Board;
  */
 public final class Resources {
 	/**
-	 * A String constant representing the key value for user levels in the LevelData.json file.
+	 * A String constant representing the key value for user levels in the
+	 * LevelData.json file.
 	 */
 	private static final String USER_LEVELS = "userLevels";
 
 	/**
-	 * A String constant representing the key value for default levels in the LevelData.json file.
+	 * A String constant representing the key value for default levels in the
+	 * LevelData.json file.
 	 */
 	private static final String DEFAULT_LEVELS = "defaultLevels";
 
@@ -238,7 +240,8 @@ public final class Resources {
 			for (JsonElement element : loadJsonObjectFromPath(LEVEL_DATA_PATH, false).get(DEFAULT_LEVELS)
 					.getAsJsonArray()) {
 				if (element.getAsJsonObject().get("name").getAsInt() == level) {
-					return Board.createBoard(String.valueOf(level), element.getAsJsonObject().get("board").getAsString());
+					return Board.createBoard(String.valueOf(level),
+							element.getAsJsonObject().get("board").getAsString());
 				}
 			}
 		} catch (Exception e) {
@@ -333,8 +336,7 @@ public final class Resources {
 
 		for (JsonElement object : originalJsonObject.get(USER_LEVELS).getAsJsonArray()) {
 			if (object.getAsJsonObject().get("name").getAsString().equals(name)) {
-				try (Writer writer = new OutputStreamWriter(
-						new FileOutputStream(getFileURL(LEVEL_DATA_PATH).getPath()),
+				try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileURL(LEVEL_DATA_PATH).getPath()),
 						Charset.defaultCharset())) {
 					Gson gson = new GsonBuilder().setPrettyPrinting().create();
 

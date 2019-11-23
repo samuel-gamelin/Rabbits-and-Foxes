@@ -8,33 +8,33 @@ package model;
  * @version 4.0
  */
 public abstract class Piece {
-    /**
-     * An enumeration representing the piece's type.
-     */
-    public enum PieceType {
-        FOX, MUSHROOM, RABBIT
-    }
+	/**
+	 * An enumeration representing the piece's type.
+	 */
+	public enum PieceType {
+		FOX, MUSHROOM, RABBIT
+	}
 
-    private PieceType pieceType;
+	private PieceType pieceType;
 
-    /**
-     * Construct a new piece given the specified piece type
-     *
-     * @param pieceType The piece type of the piece, as a PieceType
-     */
-    public Piece(PieceType pieceType) {
-        this.pieceType = pieceType;
-    }
+	/**
+	 * Construct a new piece given the specified piece type
+	 *
+	 * @param pieceType The piece type of the piece, as a PieceType
+	 */
+	public Piece(PieceType pieceType) {
+		this.pieceType = pieceType;
+	}
 
-    /**
-     * @return This piece's type, as a PieceType
-     */
-    public PieceType getPieceType() {
-        return pieceType;
-    }
+	/**
+	 * @return This piece's type, as a PieceType
+	 */
+	public PieceType getPieceType() {
+		return pieceType;
+	}
 
-    /**
-     * @return A short, two to four character string representing the piece.
-     */
-    public abstract String toString();
+	/**
+	 * @return A short, two to four character string representing the piece.
+	 */
+	public abstract String toString();
 }
