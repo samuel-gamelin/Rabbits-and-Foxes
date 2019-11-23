@@ -20,7 +20,7 @@ public class SolverTest {
 	private Move noMove;
 	private final String EASY = "X X X X X MU X X X MU RBB X X X RBG X X X X X X X X X X";
 	private final String NORMAL = "X X X X X FHU1 FTU1 X X RBB X X X X MU RBW MU X FHL0 X X X RBG FTL0 X";
-	private final String HARD = "X X RBG X MU RBB X X X X X X RBW X X X FHU1 FTU1 FHL0 X MU X MU FTL0 X";
+	private final String HARD = "X FTR1 X MU X X FHR1 X X X X X MU X X MU RBW X X RBG X X RBB X X";
 	private final String UNSOLVABLE = "X X RBG X X X X X X X X X X X X X X X X X X X X X X";
 
 	@Before
@@ -36,7 +36,7 @@ public class SolverTest {
 	public void testGetNextBestMove() {
 		// The Solver should find the next best move since this board is solvable
 		assertNotSame(Solver.getNextBestMove(normalBoard).xStart, noMove.xStart);
-		// This board is solvable, and has an 64 move optimal solution (our most complex
+		// This board is solvable, and has an 84 move optimal solution (our most complex
 		// puzzle solver-wise)
 		// The Solver should find a winning path.
 		assertNotSame(Solver.getNextBestMove(hardBoard).xStart, noMove.xStart);
@@ -86,14 +86,14 @@ public class SolverTest {
 	
 	@Test
 	public void testSolveHardBoard() {
-		/* This normal board has an optimal 64 move solution.
-		* The solver will apply these 64 moves, at which
+		/* This normal board has an optimal 84 move solution.
+		* The solver will apply these 84 moves, at which
 		* point the board will be checked to ensure it has been solved.
 		*/ 
 		
 		// Apply the next best moves to this board, ensuring that it is
 		// not in a solved state after each move.
-		for (int i = 0; i < 64; i++) {
+		for (int i = 0; i < 84; i++) {
 			assertFalse(hardBoard.isInWinningState());
 			hardBoard.move(Solver.getNextBestMove(hardBoard));
 		}
