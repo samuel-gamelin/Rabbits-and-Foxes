@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
-import controller.GameController;
 import model.Board;
 import resources.Resources;
 import view.GameView;
@@ -29,7 +27,6 @@ import view.GameView;
  * @author Samuel Gamelin
  * @author Dani Hashweh
  * @author John Breton
- * @author Mohamed Radwan
  */
 
 public class MainMenu extends JFrame implements ActionListener {
@@ -96,9 +93,9 @@ public class MainMenu extends JFrame implements ActionListener {
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				String path = fc.getSelectedFile().getPath();
-				
+
 				Board board = Board.loadBoard(path);
-				
+
 				if (board != null) {
 					this.dispose();
 					SwingUtilities.invokeLater(new GameView(board));
