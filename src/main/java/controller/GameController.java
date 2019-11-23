@@ -25,6 +25,7 @@ import util.Solver;
  */
 public class GameController {
 	private Board board;
+	private boolean defaultLevel;
 	private int currentLevel;
 	private List<Integer> moveList;
 	private ArrayDeque<Move> undoMoveStack;
@@ -42,11 +43,14 @@ public class GameController {
 	 * (the board listener) so that it can request the model to update it. This will
 	 * ensure all three components of the MVC will be using the same board.
 	 * 
-	 * @param board The Board (model) that this controller should update
+	 * @param board          The Board (model) that this controller should update
+	 * @param isDefaultLevel True if the passed in board is part of the default
+	 *                       levels, false otherwise
 	 */
-	public GameController(Board board) {
+	public GameController(Board board, int level, boolean isDefaultLevel) {
 		this.board = board;
-		this.currentLevel = 1;
+		this.defaultLevel = isDefaultLevel;
+		this.currentLevel = level;
 		this.moveList = new ArrayList<>();
 		this.undoMoveStack = new ArrayDeque<>();
 		this.redoMoveStack = new ArrayDeque<>();
@@ -177,7 +181,8 @@ public class GameController {
 	/**
 	 * Returns the current level of the game.
 	 * 
-	 * @return The current level of the game
+	 * @return The current level of the game. -1 if this controller maintains a
+	 *         board that is not part of the default levels.
 	 */
 	public int getCurrentLevel() {
 		return currentLevel;
@@ -187,13 +192,18 @@ public class GameController {
 	 * Increment the current level of the game by 1.
 	 */
 	public void incrementLevel() {
-		currentLevel++;
+		if (defaultLevel) {
+			currentLevel++;
+		}
 	}
 
 	/**
-	 * Sets the level of the game
+	 * Sets the level of the game. Has no effect if the controller maintains a board
+	 * that is not part of the default levels.
 	 */
 	public void setLevel(int level) {
-		currentLevel = level;
+		if (defaultLevel) {
+			currentLevel = level;
+		}
 	}
 }

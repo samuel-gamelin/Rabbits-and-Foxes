@@ -304,9 +304,10 @@ public class Board {
 	}
 
 	/**
-	 * Loads a board from a JSON file at the given path.
+	 * Loads a board from a JSON file at the specified path.
 	 * 
-	 * @param path The path of the file that contains the saved data for a board
+	 * @param path The absolute path of the file that contains the saved data for a
+	 *             board
 	 * @return The Board represented by the file contents at the specified path, or
 	 *         null if the file is in an improper format
 	 */
