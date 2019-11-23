@@ -139,6 +139,7 @@ public class LevelSelector extends JFrame implements ActionListener {
 			SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level, true));
 		} else if (e.getSource() == btnMainMenu) {
 			this.dispose();
-			SwingUtilities.invokeLater(MainMenu::new)
+			SwingUtilities.invokeLater(MainMenu::new);
 		}
 	}
+}
