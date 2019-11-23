@@ -27,7 +27,6 @@ import view.GameView;
  * @author Samuel Gamelin
  * @author Dani Hashweh
  * @author John Breton
- * @author Mohamed Radwan
  */
 
 public class MainMenu extends JFrame implements ActionListener {

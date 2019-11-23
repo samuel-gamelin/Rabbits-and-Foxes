@@ -7,14 +7,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.print.attribute.standard.NumberOfDocuments;
+import javax.security.auth.x500.X500Principal;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 import model.Board;
+import model.BoardListener;
+import model.Fox;
+import model.Mushroom;
+import model.Piece;
+import model.Rabbit;
+import model.Fox.Direction;
+import model.Rabbit.RabbitColour;
 import resources.Resources;
 
 /**
@@ -25,27 +36,36 @@ import resources.Resources;
  * @author Mohamed Radwan
  * @version 4.0
  */
-public class LevelBuilder extends JFrame implements ActionListener, MouseListener {
+public class LevelBuilder extends JFrame implements ActionListener, MouseListener, BoardListener {
+
+	private static final int NUMBER_OF_RABBITS = 3;
+	private static final int NUMBER_OF_FOXES = 2;
+	private static final int NUMBER_OF_MUSHROOMS = 3;
 
 	private JButton menuReset;
 	private JButton menuHelp;
 	private JButton menuMainScreen;
 	private JButton saveBoard;
 
+	// test
+	private JButton mushroom;
+	private JButton whiteRabbit;
+	private ImageIcon currentIcon;
+
 	private Board board;
 	private JButton[][] buttons;
 
 	public LevelBuilder() {
-		this.board = new Board();
+		this.board = new Board("");
+		board.addListener(this);
 		this.setTitle("Level Builder");
+
+		currentIcon = null;
 
 		JLabel boardLabel = new JLabel(Resources.BOARD);
 		boardLabel.setLayout(new GridLayout(5, 5));
 
 		this.add(boardLabel, BorderLayout.CENTER);
-
-		JButton yee = new JButton("Yee Yee Yee");
-		this.add(yee, BorderLayout.EAST);
 
 		// Menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -59,6 +79,12 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 		menuBar.add(menuReset);
 		menuBar.add(saveBoard);
 		menuBar.add(menuHelp);
+
+		// For testing to be removed
+		mushroom = ui.GUIUtilities.createMenuBarButton("Mushroom", true);
+		whiteRabbit = ui.GUIUtilities.createMenuBarButton("White Rabbit", true);
+		menuBar.add(mushroom);
+		menuBar.add(whiteRabbit);
 
 		this.setJMenuBar(menuBar);
 		this.setContentPane(new JLabel(Resources.BOARD));
@@ -81,10 +107,19 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 				final int yCopy = y;
 
 				buttons[x][y].addActionListener(e -> {
+					buttons[xCopy][yCopy].setIcon(currentIcon);
+					if (currentIcon == Resources.MUSHROOM) {
+						board.setPiece(new Mushroom(), xCopy, yCopy);
+					} else {
+						board.setPiece(new Rabbit(RabbitColour.WHITE), xCopy, yCopy);
+					}
 				});
 
 			}
 		}
+		// For testing
+		mushroom.addActionListener(this);
+		whiteRabbit.addActionListener(this);
 
 		menuMainScreen.addActionListener(this);
 		menuReset.addActionListener(this);
@@ -102,13 +137,22 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 			this.dispose();
 			SwingUtilities.invokeLater(MainMenu::new);
 		} else if (e.getSource() == saveBoard) {
-
+			String levelNameString = JOptionPane.showInputDialog("Please enter a name for the level: ");
+			board.setName(levelNameString);
+			Resources.addUserLevel(board);
 		} else if (e.getSource() == menuHelp) {
-
+			JPanel panel = new JPanel(new BorderLayout(0, 15));
+			panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>" + "" + "" + "<br><br>"
+					+ "<br>" + "<br>" + "<br>" + "<br>" + "" + "</p></body></html>"), BorderLayout.NORTH);
+			JOptionPane.showMessageDialog(this, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
 		} else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
 				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
 				new String[] { "Yes", "No" }) == 0)) {
 			resetBoard();
+		} else if (e.getSource() == mushroom) {
+			currentIcon = Resources.MUSHROOM;
+		} else if (e.getSource() == whiteRabbit) {
+			currentIcon = Resources.RABBIT_WHITE;
 		}
 	}
 
@@ -116,31 +160,19 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 	 * Resets the board.
 	 */
 	private void resetBoard() {
-		board = new Board();
+		board = new Board("");
+		board.addListener(this);
+		GUIUtilities.updateView(buttons, board);
 	}
 
-	/**
-	 * Highlights a JButton when we enter the component with the mouse cursor.
-	 * 
-	 * @param e The mouse event that is triggered when the mouse enters the JButton
-	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		if (((JButton) e.getSource()).getBorder().equals(GUIUtilities.BLANK_BORDER)) {
-			((JButton) e.getSource()).setBorder(UIManager.getBorder("Button.border"));
-		}
+		((JButton) e.getSource()).setIcon(currentIcon);
 	}
 
-	/**
-	 * Stops highlighting a JButton when the mouse cursor leaves the component.
-	 * 
-	 * @param e The mouse event that is triggered when the mouse leaves the JButton
-	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
-		if (((JButton) e.getSource()).getBorder().equals(UIManager.getBorder("Button.border"))) {
-			((JButton) e.getSource()).setBorder(GUIUtilities.BLANK_BORDER);
-		}
+		((JButton) e.getSource()).setIcon(null);
 	}
 
 	@Override
@@ -158,6 +190,11 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 	// Added for testing frame
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(LevelBuilder::new);
+	}
+
+	@Override
+	public void handleBoardChange() {
+		GUIUtilities.updateView(buttons, board);
 	}
 
 }
