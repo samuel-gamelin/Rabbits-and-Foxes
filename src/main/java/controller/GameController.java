@@ -1,9 +1,5 @@
 package controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +23,7 @@ import util.Solver;
  * @author Abdalla El Nakla
  * @version 4.0
  */
-public class GameController implements Serializable {
-	private static final long serialVersionUID = 4359758451395959055L;
+public class GameController {
 	private Board board;
 	private int currentLevel;
 	private List<Integer> moveList;
@@ -122,7 +117,7 @@ public class GameController implements Serializable {
 	 * @return The new board for the view to listen to it.
 	 */
 	public Board reset() {
-		board = Resources.getLevel(currentLevel);
+		board = Resources.getDefaultBoardByLevel(currentLevel);
 		moveList.clear();
 		undoMoveStack.clear();
 		redoMoveStack.clear();
@@ -193,24 +188,6 @@ public class GameController implements Serializable {
 	 */
 	public void incrementLevel() {
 		currentLevel++;
-	}
-
-	public static Board openGame(File file) {
-		return (Board.loadGame(file));
-	}
-
-	public void saveGame(File file) {
-		// save the object to file
-		FileOutputStream fos = null;
-		ObjectOutputStream out = null;
-		try {
-			fos = new FileOutputStream(file);
-			out = new ObjectOutputStream(fos);
-			out.writeObject(board);
-			out.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 
 	/**

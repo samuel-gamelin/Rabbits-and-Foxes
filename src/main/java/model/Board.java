@@ -1,15 +1,16 @@
 package model;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import resources.Resources;
 import util.Move;
 
 /**
@@ -24,12 +25,7 @@ import util.Move;
  * 
  * @version 4.0
  */
-public class Board implements Serializable {
-	/**
-	 * Ensures that during deserialization the same class is loaded.
-	 */
-	private static final long serialVersionUID = 8647125645264835055L;
-
+public class Board {
 	/**
 	 * The size of any side for the board.
 	 */
@@ -41,6 +37,11 @@ public class Board implements Serializable {
 	public static final String EMPTY = "X";
 
 	/**
+	 * The Board's name.
+	 */
+	private String name;
+
+	/**
 	 * A 2D array of tiles used to manage all tiles on the board.
 	 */
 	private Tile[][] tiles;
@@ -49,12 +50,13 @@ public class Board implements Serializable {
 	 * A list of listeners that are updated on the status of this board whenever
 	 * appropriate.
 	 */
-	private transient List<BoardListener> boardListeners;
+	private List<BoardListener> boardListeners;
 
 	/**
 	 * Construct an empty board
 	 */
-	public Board() {
+	public Board(String name) {
+		this.name = name;
 		this.tiles = new Tile[SIZE][SIZE];
 		this.boardListeners = new ArrayList<>();
 		initializeBaseBoard();
@@ -74,50 +76,6 @@ public class Board implements Serializable {
 			}
 		}
 		this.boardListeners = new ArrayList<>();
-	}
-
-	/**
-	 * Create a board object and initializes the pieces specified by the passed
-	 * String. This is a factory method.
-	 * 
-	 * @param str The String representation of the Board that is being created. Must
-	 *            be of length 25.
-	 * @return The newly constructed Board based on the passed String.
-	 */
-	public static Board createBoard(String str) {
-		Board board = new Board();
-		String[] currBoard = str.split("\\s+");
-		if (currBoard.length != 25)
-			return null;
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				if (!currBoard[5 * i + j].equals(EMPTY)) {
-					if (currBoard[5 * i + j].length() == 2) {
-						board.tiles[i][j].placePiece(new Mushroom());
-					} else if (currBoard[5 * i + j].length() == 3) {
-						board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
-					} else if (currBoard[5 * i + j].substring(1, 2)
-							.equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
-						Fox f = Fox.createFox(currBoard[5 * i + j]);
-						board.tiles[i][j].placePiece(f);
-						switch (f.getDirection()) {
-						case DOWN:
-							board.tiles[i][j - 1].placePiece(f.getOtherHalf());
-							break;
-						case LEFT:
-							board.tiles[i + 1][j].placePiece(f.getOtherHalf());
-							break;
-						case RIGHT:
-							board.tiles[i - 1][j].placePiece(f.getOtherHalf());
-							break;
-						default:
-							board.tiles[i][j + 1].placePiece(f.getOtherHalf());
-						}
-					}
-				}
-			}
-		}
-		return board;
 	}
 
 	/**
@@ -282,34 +240,102 @@ public class Board implements Serializable {
 		return moves;
 	}
 
-	public static Board loadGame(File file) {
-		// read the object from file
-		// save the object to file
-		FileInputStream fis = null;
-		ObjectInputStream in = null;
-		Board board = null;
-		try {
-			fis = new FileInputStream(file);
-			in = new ObjectInputStream(fis);
-			board = (Board) in.readObject();
-			in.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+	/**
+	 * Returns this Board's name.
+	 * 
+	 * @return This Board's name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Sets the name of this Board to the specified name.
+	 * 
+	 * @param name The name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * Create a board object and initializes the pieces specified by the passed
+	 * String. This is a factory method.
+	 * 
+	 * @param name           The name of the Board
+	 * @param representation The String representation of the Board that is being
+	 *                       created. Must be of length 25.
+	 * @return The newly constructed Board based on the passed String.
+	 */
+	public static Board createBoard(String name, String representation) {
+		Board board = new Board(name);
+		String[] currBoard = representation.split("\\s+");
+		if (currBoard.length != 25)
+			return null;
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (!currBoard[5 * i + j].equals(EMPTY)) {
+					if (currBoard[5 * i + j].length() == 2) {
+						board.tiles[i][j].placePiece(new Mushroom());
+					} else if (currBoard[5 * i + j].length() == 3) {
+						board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
+					} else if (currBoard[5 * i + j].substring(1, 2)
+							.equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
+						Fox f = Fox.createFox(currBoard[5 * i + j]);
+						board.tiles[i][j].placePiece(f);
+						switch (f.getDirection()) {
+						case DOWN:
+							board.tiles[i][j - 1].placePiece(f.getOtherHalf());
+							break;
+						case LEFT:
+							board.tiles[i + 1][j].placePiece(f.getOtherHalf());
+							break;
+						case RIGHT:
+							board.tiles[i - 1][j].placePiece(f.getOtherHalf());
+							break;
+						default:
+							board.tiles[i][j + 1].placePiece(f.getOtherHalf());
+						}
+					}
+				}
+			}
 		}
 		return board;
 	}
 
-	public void saveGame(File file) {
-		// save the object to file
-		FileOutputStream fos = null;
-		ObjectOutputStream out = null;
+	/**
+	 * Loads a board from a JSON file at the given path.
+	 * 
+	 * @param path The path of the file that contains the saved data for a board
+	 * @return The Board represented by the file contents at the specified path, or
+	 *         null if the file is in an improper format
+	 */
+	public static Board loadBoard(String path) {
 		try {
-			fos = new FileOutputStream(file);
-			out = new ObjectOutputStream(fos);
-			out.writeObject(this);
-			out.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			JsonObject jsonObject = Resources.loadJsonObjectFromPath(path, true);
+			return Board.createBoard(jsonObject.get("name").getAsString(), jsonObject.get("board").getAsString());
+		} catch (Exception e) {
+			Resources.LOGGER.error("Unable to load Board object from file at " + path, e);
+			return null;
+		}
+	}
+
+	/**
+	 * Saves this board as a JSON object in a file at the specified path.
+	 * 
+	 * @param path The absolute path of the file that will contain the saved data
+	 *             for this board
+	 */
+	public void saveBoard(String path) {
+		try (Writer writer = new FileWriter(path)) {
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("name", this.name);
+			jsonObject.addProperty("board", this.toString());
+			gson.toJson(jsonObject, writer);
+		} catch (Exception e) {
+			Resources.LOGGER.error("Unable to save Board object to file at " + path, e);
 		}
 	}
 
@@ -346,5 +372,4 @@ public class Board implements Serializable {
 		}
 		return str.toString().trim();
 	}
-
 }

@@ -81,7 +81,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	public GameView(int level) {
 
 		// Create the board and controller
-		board = Resources.getLevel(1);
+		board = Resources.getDefaultBoardByLevel(1);
 		board.addListener(this);
 		gameController = new GameController(board);
 
@@ -284,7 +284,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 			int returnVal = fc.showSaveDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
-				gameController.saveGame(file);
 			}
 		} else if (e.getSource() == menuHelp) {
 			displayHelpDialog();

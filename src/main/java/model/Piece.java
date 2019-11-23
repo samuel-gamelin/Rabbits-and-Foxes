@@ -1,6 +1,5 @@
 package model;
 
-import java.io.Serializable;
 import java.util.List;
 
 import util.Move;
@@ -13,13 +12,7 @@ import util.Move;
  * 
  * @version 4.0
  */
-public abstract class Piece implements Serializable {
-
-	/**
-	 * Ensures that during deserialization the same class is loaded.
-	 */
-	private static final long serialVersionUID = -4217599773080427752L;
-
+public abstract class Piece {
 	/**
 	 * An enumeration representing the piece's type.
 	 */

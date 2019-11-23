@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import controller.GameController;
+import model.Board;
 import resources.Resources;
 import view.GameView;
 
@@ -94,9 +95,16 @@ public class MainMenu extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnLoadGameButton) {
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-				this.dispose();
-				SwingUtilities.invokeLater(new GameView(GameController.openGame(file)));
+				String path = fc.getSelectedFile().getPath();
+				
+				Board board = Board.loadBoard(path);
+				
+				if (board != null) {
+					this.dispose();
+					SwingUtilities.invokeLater(new GameView(board));
+				} else {
+					GUIUtilities.displayMessageDialog(this, "Invalid file selection!", "Invalid File");
+				}
 			}
 		} else if (e.getSource() == btnSelectLevel) {
 			this.dispose();
