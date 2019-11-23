@@ -13,7 +13,6 @@ import util.Move.MoveDirection;
  * @author Samuel Gamelin
  * @author John Breton
  * @author Mohamed Radwan
- * 
  * @version 4.0
  */
 public class Fox extends Piece implements MovablePiece {

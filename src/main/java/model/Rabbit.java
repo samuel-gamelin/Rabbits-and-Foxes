@@ -12,7 +12,6 @@ import util.Move.MoveDirection;
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
  * @author Mohamed Radwan
- * 
  * @version 4.0
  */
 public class Rabbit extends Piece implements MovablePiece {

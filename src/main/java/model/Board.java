@@ -22,7 +22,6 @@ import util.Move;
  * @author Dani Hashweh
  * @author John Breton
  * @author Mohamed Radwan
- * 
  * @version 4.0
  */
 public class Board {

@@ -33,6 +33,7 @@ import resources.Resources;
  * @author Dani Hashweh
  * @author John Breton
  * @author Mohamed Radwan
+ * @version 4.0
  */
 public final class GUIUtilities {
 	public static final EmptyBorder BLANK_BORDER = new EmptyBorder(0, 0, 0, 0);

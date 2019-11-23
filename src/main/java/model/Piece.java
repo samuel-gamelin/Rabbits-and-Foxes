@@ -1,15 +1,10 @@
 package model;
 
-import java.util.List;
-
-import util.Move;
-
 /**
  * This abstract class provides a high-level prototype for a piece.
  * 
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
- * 
  * @version 4.0
  */
 public abstract class Piece {
