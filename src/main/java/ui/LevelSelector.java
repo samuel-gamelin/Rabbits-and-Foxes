@@ -33,6 +33,7 @@ import view.GameView;
  * @author Dani Hashweh
  * @author John Breton
  * @author Samuel Gamelin
+ * @version 4.0
  */
 public class LevelSelector extends JFrame implements ActionListener {
 	private JList<String> listOfLevels;

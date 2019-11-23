@@ -22,7 +22,6 @@ import util.Move;
  * @author Dani Hashweh
  * @author John Breton
  * @author Mohamed Radwan
- * 
  * @version 4.0
  */
 public class Board {
@@ -112,7 +111,7 @@ public class Board {
 		if (move == null)
 			return false;
 		Piece piece = tiles[move.xStart][move.yStart].retrievePiece();
-		if (piece != null && piece.move(move, this)) {
+		if (piece instanceof MovablePiece && ((MovablePiece) piece).move(move, this)) {
 			notifyListeners();
 			return true;
 		}
@@ -234,8 +233,8 @@ public class Board {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				Piece piece = tiles[i][j].retrievePiece();
-				if (piece != null) {
-					moves.addAll(piece.getPossibleMoves(this, i, j));
+				if (piece instanceof MovablePiece) {
+					moves.addAll(((MovablePiece) piece).getPossibleMoves(this, i, j));
 				}
 			}
 		}

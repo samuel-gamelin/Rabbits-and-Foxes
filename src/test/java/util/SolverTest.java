@@ -25,10 +25,10 @@ public class SolverTest {
 
 	@Before
 	public void setUp() {
-		easyBoard = Board.createBoard(EASY);
-		normalBoard = Board.createBoard(NORMAL);
-		hardBoard = Board.createBoard(HARD);
-		unsolvableBoard = Board.createBoard(UNSOLVABLE);
+		easyBoard = Board.createBoard("Anyboard", EASY);
+		normalBoard = Board.createBoard("Anyboard", NORMAL);
+		hardBoard = Board.createBoard("Anyboard", HARD);
+		unsolvableBoard = Board.createBoard("Anyboard", UNSOLVABLE);
 		noMove = new Move(-1, -1, -1, -1);
 	}
 

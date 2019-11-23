@@ -201,7 +201,8 @@ public final class Resources {
 				return null;
 			}
 		} else {
-			try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
+			try (BufferedReader bufferedReader = new BufferedReader(
+					new InputStreamReader(new FileInputStream(path), Charset.defaultCharset()))) {
 				return JsonParser.parseReader(bufferedReader).getAsJsonObject();
 			} catch (IOException e) {
 				LOGGER.error("Could not load the file at " + path, e);
@@ -288,9 +289,7 @@ public final class Resources {
 				return false;
 			}
 		}
-		try (Writer writer = new OutputStreamWriter(
-				new FileOutputStream(
-						Thread.currentThread().getContextClassLoader().getResource("levels/LevelData.json").getPath()),
+		try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileURL("levels/LevelData.json").getPath()),
 				Charset.defaultCharset())) {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
