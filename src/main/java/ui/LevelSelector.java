@@ -41,76 +41,89 @@ import view.GameView;
  * @author Dani Hashweh
  */
 public class LevelSelector extends JFrame implements ActionListener {
+    
+    private static final double BUTTON_Y_FACTOR = 0.20;
+    private static final int BUTTON_X_FACTOR = 3;
+    private static final int FONT_SIZE = 28;
+    private static final double BOARD_DISPLAY_SIZE = 3;
+    private static final double X_SCALE_FACTOR = 0.05;
+    private static final int Y_SCALE_FACTOR = 15;
+    
     private static final BevelBorder SELECTED = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
     private static final BevelBorder DEFAULT = new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.BLACK);
-    private static final double BOARD_DISPLAY_SIZE = 3;
-    private List<Board> allDefaultLevels, allCustomLevels;
+    
     private JButton btnStartSelectLevel, btnMainMenu, btnCustomLevels, btnNextPage, btnLastPage, btnLeftLevel,
             btnMiddleLevel, btnRightLevel;
     private JTextPane levelLabelLeft, levelLabelMiddle, levelLabelRight;
-    private JPanel pageButtons, actionButtons, allButtons;
+    private JPanel pageButtons, actionButtons, allButtons, textPanel, boards, mainPanel;
     private JLabel[][] tiles1, tiles2, tiles3;
+    
+    private List<Board> allDefaultLevels, allCustomLevels;
     private int pageNumber, lastPage;
     private boolean custom;
 
     /**
-     * 
+     * Construct a new LevelSelector.
      */
     public LevelSelector() {
+        // Initializing default values for a few variables.
         custom = false;
         pageNumber = 1;
+        
+        /*
+         * Storing lists containing the stored levels in the JSON document.
+         * Also determining what the last page is based on the number of levels
+         * in the default level list.
+         */
+        allDefaultLevels = Resources.getAllDefaultBoards();
+        allCustomLevels = Resources.getAllUserBoards();
+        determineLastPageNumber(allDefaultLevels);
 
-        levelLabelLeft = new JTextPane();
-        createLevelTextArea(levelLabelLeft);
-        levelLabelMiddle = new JTextPane();
-        createLevelTextArea(levelLabelMiddle);
-        levelLabelRight = new JTextPane();
-        createLevelTextArea(levelLabelRight);
-
+        // Set the layout and background of the level selector JFrame.
         this.setContentPane(new JLabel(Resources.LEVEL_SELECTOR_BACKGROUND));
         this.getContentPane().setLayout(new BorderLayout());
+        
+        // Create the JTextPanes to display level names
+        setUpJTextArea(levelLabelLeft = new JTextPane());
+        setUpJTextArea(levelLabelMiddle = new JTextPane());
+        setUpJTextArea(levelLabelRight = new JTextPane());
 
-        btnStartSelectLevel = new JButton("Start");
-        formatButton(btnStartSelectLevel);
+        // Create the JButtons used for interacting with the level selector.
+        // Also ensuring that the start and last page button are disabled initially.
+        setUpMenuButton(btnStartSelectLevel = new JButton("Start"));
+        setUpMenuButton(btnMainMenu = new JButton("Back to Main Menu"));
+        setUpMenuButton(btnCustomLevels = new JButton("Go to Custom Levels"));
+        setUpMenuButton(btnNextPage = new JButton("Next Page"));
+        setUpMenuButton(btnLastPage = new JButton("Last Page"));
         btnStartSelectLevel.setEnabled(false);
-        btnMainMenu = new JButton("Back to Main Menu");
-        formatButton(btnMainMenu);
-        btnCustomLevels = new JButton("Go to Custom Levels");
-        formatButton(btnCustomLevels);
-        btnNextPage = new JButton("Next Page");
-        formatButton(btnNextPage);
-        btnLastPage = new JButton("Last Page");
         btnLastPage.setEnabled(false);
-        formatButton(btnLastPage);
 
-        tiles1 = new JLabel[5][5];
-        createTiles(tiles1);
-        tiles2 = new JLabel[5][5];
-        createTiles(tiles2);
-        tiles3 = new JLabel[5][5];
-        createTiles(tiles3);
+        // Create the "tiles" for the board preview.
+        setUpTiles(tiles1 = new JLabel[5][5]);
+        setUpTiles(tiles2 = new JLabel[5][5]);
+        setUpTiles(tiles3 = new JLabel[5][5]);
 
-        btnLeftLevel = new JButton();
-        createLevelDisplayButton(btnLeftLevel, 1);
+        // Creating the buttons that will hold the board previews for the levels.
+        setUpLevelDisplayButton(btnLeftLevel = new JButton(), 1);
+        setUpLevelDisplayButton(btnMiddleLevel = new JButton(), 2);
+        setUpLevelDisplayButton(btnRightLevel = new JButton(), 3);
 
-        btnMiddleLevel = new JButton();
-        createLevelDisplayButton(btnMiddleLevel, 2);
-
-        btnRightLevel = new JButton();
-        createLevelDisplayButton(btnRightLevel, 3);
-
-        pageButtons = new JPanel();
-        pageButtons.setOpaque(false);
-        pageButtons.setLayout(new BoxLayout(pageButtons, BoxLayout.LINE_AXIS));
+        // Creating a JPanel to hold the buttons associated with moving up or down a page.
+        // Also adding the associated buttons to the panel, along with glue.
+        setUpJPanel(pageButtons = new JPanel(), true);
         pageButtons.add(Box.createHorizontalGlue());
         pageButtons.add(btnLastPage);
         pageButtons.add(Box.createHorizontalGlue());
         pageButtons.add(btnNextPage);
         pageButtons.add(Box.createHorizontalGlue());
 
-        actionButtons = new JPanel();
-        actionButtons.setOpaque(false);
-        actionButtons.setLayout(new BoxLayout(actionButtons, BoxLayout.LINE_AXIS));
+        /* 
+         * Creating a JPanel to hold the buttons associated with returning to
+         * the main menu, starting a level, and going to the custom/default level
+         * selection screen.
+         * Also adding the associated buttons to the panel, along with glue.
+         */
+        setUpJPanel(actionButtons = new JPanel(), true);
         actionButtons.add(Box.createHorizontalGlue());
         actionButtons.add(btnMainMenu);
         actionButtons.add(Box.createHorizontalGlue());
@@ -119,6 +132,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         actionButtons.add(btnCustomLevels);
         actionButtons.add(Box.createHorizontalGlue());
 
+        // Creating a JPanel to store all of the buttons for the level selector.
         allButtons = new JPanel();
         allButtons.setOpaque(false);
         allButtons.setLayout(new BoxLayout(allButtons, BoxLayout.PAGE_AXIS));
@@ -127,25 +141,14 @@ public class LevelSelector extends JFrame implements ActionListener {
         allButtons.add(actionButtons);
         allButtons.add(Box.createRigidArea(new Dimension(0, (int) Resources.SIDE_LENGTH / 50)));
 
-        this.add(allButtons, BorderLayout.SOUTH);
-
-        allDefaultLevels = Resources.getAllDefaultBoards();
-        allCustomLevels = Resources.getAllUserBoards();
-
-        determinePageNumber(allDefaultLevels);
-
-        JPanel boards = new JPanel();
-        boards.setLayout(new BoxLayout(boards, BoxLayout.LINE_AXIS));
-        boards.setOpaque(false);
-
+        // Creating a JPanel to store the board previews for the levels on the current page.
+        setUpJPanel(boards = new JPanel(), true);
         boards.add(btnLeftLevel);
         boards.add(btnMiddleLevel);
         boards.add(btnRightLevel);
         
-        JPanel textPanel = new JPanel();
-        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.LINE_AXIS));
-        textPanel.setOpaque(false);
-        
+        // Creating a JPanel to store all of the level names on the current page.
+        setUpJPanel(textPanel = new JPanel(), true);
         textPanel.add(Box.createHorizontalGlue());
         textPanel.add(levelLabelLeft);
         textPanel.add(Box.createHorizontalGlue());
@@ -153,51 +156,92 @@ public class LevelSelector extends JFrame implements ActionListener {
         textPanel.add(Box.createHorizontalGlue());
         textPanel.add(levelLabelRight);
         textPanel.add(Box.createHorizontalGlue());
-
-        updateView(allDefaultLevels);
-
-        JPanel mainPanel = new JPanel();
-        mainPanel.setOpaque(false);
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        
+        // Creating a JPanel to store the other JPanels created above.
+        setUpJPanel(mainPanel = new JPanel(), false);
         mainPanel.add(boards);
         mainPanel.add(textPanel);
+        
+        // Ensuring the level displays have been updated with the levels from page 1.
+        updateView(allDefaultLevels);
 
+        // Adding everything to and subsequently setting up the JFrame.
         this.add(mainPanel, BorderLayout.CENTER);
+        this.add(allButtons, BorderLayout.SOUTH);
         this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 3.5))), BorderLayout.NORTH);
-
         this.setTitle("Level Selector");
         GUIUtilities.configureFrame(this);
     }
-
-    private void determinePageNumber(List<Board> levelList) {
-        if (levelList.size() % 3 == 0) {
-            lastPage = levelList.size() / 3;
-        } else {
-            lastPage = (levelList.size() / 3) + 1;
+    
+    /**
+     * Initialize a 2D array of JLabels to prepare for storing an image of 
+     * a piece depending on the level being previewed.
+     * 
+     * @param tiles The JLabel 2D array being set up
+     */
+    private void setUpTiles(JLabel[][] tiles) {
+        for (int y = 0; y < Board.SIZE; y++) {
+            for (int x = 0; x < Board.SIZE; x++) {
+                tiles[x][y] = new JLabel();
+                // Clear button default colours and make it transparent
+                tiles[x][y].setOpaque(false);
+                tiles[x][y].setBorder(new EmptyBorder(0, 7, 0, 7));
+            }
         }
     }
 
     /**
+     * Initialize a JPanel with default behaviour.
      * 
+     * @param panel The JPanel being set up
+     * @param layoutType True for horizontal, false for vertical
      */
-    private void createLevelTextArea(JTextPane text) {
+    private void setUpJPanel(JPanel panel, boolean layoutType) {
+        panel.setOpaque(false);
+        if (layoutType) {
+            panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        } else {
+            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        }
+    }
+    
+    /**
+     * Initialize a JButton used for interacting with the level selector with default behaviour.
+     * 
+     * @param button The JButton being set up
+     */
+    private void setUpMenuButton(JButton button) {
+        button.setMaximumSize(new Dimension((int) (Resources.SIDE_LENGTH / BUTTON_X_FACTOR), (int) (BUTTON_Y_FACTOR * Resources.SIDE_LENGTH)));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setForeground(Color.BLACK);
+        button.setBackground(Color.WHITE);
+        button.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
+        button.addActionListener(this);
+    }
+
+    /**
+     * Initialize a JTextPane with default behaviour.
+     * 
+     * @param text the JTextPane being set up
+     */
+    private void setUpJTextArea(JTextPane text) {
         StyledDocument doc = text.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
         text.setEditable(false);
         text.setOpaque(false);
-        text.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+        text.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
         text.setForeground(Color.WHITE);
         text.setHighlighter(null);
-        
     }
 
     /**
+     * Initialize a JButton used to display the level previews.
      * 
-     * @param button
+     * @param button The JButton being set up for level preview display purposes
      */
-    private void createLevelDisplayButton(JButton button, int location) {
+    private void setUpLevelDisplayButton(JButton button, int tileNumber) {
         button.setIcon(new ImageIcon(
                 Resources.BOARD.getImage().getScaledInstance((int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
                         (int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE), Image.SCALE_SMOOTH)));
@@ -205,11 +249,11 @@ public class LevelSelector extends JFrame implements ActionListener {
         button.setBorder(DEFAULT);
         button.setContentAreaFilled(false);
         button.setLayout(new GridLayout(5, 5));
-        button.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) Resources.SIDE_LENGTH / 3));
+        button.setMaximumSize(new Dimension((int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         button.addActionListener(this);
         for (int y = 0; y < Board.SIZE; y++) {
             for (int x = 0; x < Board.SIZE; x++) {
-                switch (location) {
+                switch (tileNumber) {
                 case 1: {
                     button.add(tiles1[x][y]);
                     break;
@@ -227,15 +271,20 @@ public class LevelSelector extends JFrame implements ActionListener {
     }
 
     /**
+     * Update the view of the main level selector JFrame. This involves updating
+     * all of the JButtons responsible for displaying board previews. 
+     * Some math needs to be done to determine how many JButtons should be updated
+     * depending on the number of levels remaining in the lists containing all of the
+     * levels for both the default and custom levels.
      * 
-     * @param button
+     * @param levelList The list we are using to update the level previews
      */
     private void updateView(List<Board> levelList) {
         clearSelectedBorder();
         if (pageNumber != lastPage) {
-            updateLevelSelectorView(tiles1, levelList.get(pageNumber * 3 - 3));
-            updateLevelSelectorView(tiles2, levelList.get(pageNumber * 3 - 2));
-            updateLevelSelectorView(tiles3, levelList.get(pageNumber * 3 - 1));
+            updateLevelPreview(tiles1, levelList.get(pageNumber * 3 - 3));
+            updateLevelPreview(tiles2, levelList.get(pageNumber * 3 - 2));
+            updateLevelPreview(tiles3, levelList.get(pageNumber * 3 - 1));
             btnMiddleLevel.setEnabled(true);
             btnRightLevel.setEnabled(true);
             if (!custom) {
@@ -248,27 +297,25 @@ public class LevelSelector extends JFrame implements ActionListener {
                 levelLabelRight.setText(levelList.get(pageNumber * 3 - 1).getName());
             }
         } else {
-            int levelsRemaining = levelList.size() % 3;
-            switch (levelsRemaining) {
+            switch (levelList.size() % 3) {
             case 1:
-                updateLevelSelectorView(tiles1, levelList.get(pageNumber * 3 - 3));
-                updateLevelSelectorView(tiles2, new Board("Empty"));
+                updateLevelPreview(tiles1, levelList.get(pageNumber * 3 - 3));
+                updateLevelPreview(tiles2, new Board("Empty"));
+                updateLevelPreview(tiles3, new Board("Empty"));
                 if (!custom) {
                     levelLabelLeft.setText("Level " + levelList.get(pageNumber * 3 - 3).getName());
                 } else {
                     levelLabelLeft.setText(levelList.get(pageNumber * 3 - 3).getName());
                 }
                 btnMiddleLevel.setEnabled(false);
-                levelLabelMiddle.setText("Empty");
-                updateLevelSelectorView(tiles3, new Board("Empty"));
                 btnRightLevel.setEnabled(false);
+                levelLabelMiddle.setText("Empty");
                 levelLabelRight.setText("Empty");
                 break;
             case 2:
-                updateLevelSelectorView(tiles1, levelList.get(pageNumber * 3 - 3));
-                updateLevelSelectorView(tiles2, levelList.get(pageNumber * 3 - 2));
-                updateLevelSelectorView(tiles3, new Board("Empty"));
-                btnRightLevel.setEnabled(false);
+                updateLevelPreview(tiles1, levelList.get(pageNumber * 3 - 3));
+                updateLevelPreview(tiles2, levelList.get(pageNumber * 3 - 2));
+                updateLevelPreview(tiles3, new Board("Empty"));
                 if (!custom) {
                     levelLabelLeft.setText("Level " + levelList.get(pageNumber * 3 - 3).getName());
                     levelLabelMiddle.setText("Level " + levelList.get(pageNumber * 3 - 2).getName());
@@ -276,6 +323,7 @@ public class LevelSelector extends JFrame implements ActionListener {
                     levelLabelLeft.setText(levelList.get(pageNumber * 3 - 3).getName());
                     levelLabelMiddle.setText(levelList.get(pageNumber * 3 - 2).getName());
                 }
+                btnRightLevel.setEnabled(false);
                 levelLabelRight.setText("Empty");
                 break;
             }
@@ -283,34 +331,26 @@ public class LevelSelector extends JFrame implements ActionListener {
     }
 
     /**
+     * Update the level previews for the current page.
      * 
+     * @param tiles The tiles being updated with images from the new level
+     * @param board The board used to update the images diplayed on the tiles
      */
-    private void createTiles(JLabel[][] tiles) {
-        for (int y = 0; y < Board.SIZE; y++) {
-            for (int x = 0; x < Board.SIZE; x++) {
-                tiles[x][y] = new JLabel();
-                // Clear button default colours and make it transparent
-                tiles[x][y].setOpaque(false);
-                tiles[x][y].setBorder(new EmptyBorder(0, 7, 0, 7));
-            }
-        }
-    }
-
-    private void updateLevelSelectorView(JLabel[][] tiles, Board board) {
+    private void updateLevelPreview(JLabel[][] tiles, Board board) {
         for (int x = 0; x < Board.SIZE; x++) {
             for (int y = 0; y < Board.SIZE; y++) {
                 Piece piece = board.getPiece(x, y);
                 if (piece != null) {
                     if (piece instanceof Mushroom) {
                         tiles[x][y].setIcon(new ImageIcon(
-                                Resources.MUSHROOM.getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * 0.05),
-                                        (int) (Resources.SIDE_LENGTH * 0.05), Image.SCALE_SMOOTH)));
+                                Resources.MUSHROOM.getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR),
+                                        (int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR), Image.SCALE_SMOOTH)));
                     } else if (piece instanceof Rabbit) {
                         try {
                             tiles[x][y].setIcon(new ImageIcon(((ImageIcon) Resources.class
                                     .getDeclaredField("RABBIT_" + ((Rabbit) (piece)).getColour()).get(Resources.class))
-                                            .getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * 0.05),
-                                                    (int) Resources.SIDE_LENGTH / 15, Image.SCALE_SMOOTH)));
+                                            .getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR),
+                                                    (int) Resources.SIDE_LENGTH / Y_SCALE_FACTOR, Image.SCALE_SMOOTH)));
                         } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
                             Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
                         }
@@ -318,8 +358,8 @@ public class LevelSelector extends JFrame implements ActionListener {
                         try {
                             tiles[x][y].setIcon(new ImageIcon(((ImageIcon) Resources.class
                                     .getDeclaredField("FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())
-                                    .get(Resources.class)).getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * 0.05),
-                                     (int) (Resources.SIDE_LENGTH / 15), Image.SCALE_SMOOTH)));
+                                    .get(Resources.class)).getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR),
+                                     (int) (Resources.SIDE_LENGTH / Y_SCALE_FACTOR), Image.SCALE_SMOOTH)));
                         } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
                             Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
                         }
@@ -332,22 +372,10 @@ public class LevelSelector extends JFrame implements ActionListener {
     }
 
     /**
-     * Used to
+     * Modify border of the selected level preview JButton to stand out
+     * against the borders of the other level preview JButtons.
      * 
-     * @param button
-     */
-    private void formatButton(JButton button) {
-        button.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) (0.20 * Resources.SIDE_LENGTH)));
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setForeground(Color.BLACK);
-        button.setBackground(Color.WHITE);
-        button.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-        button.addActionListener(this);
-    }
-
-    /**
-     * 
-     * @param button
+     * @param button The JButton that was selected
      */
     private void levelSelected(JButton button) {
         clearSelectedBorder();
@@ -355,55 +383,68 @@ public class LevelSelector extends JFrame implements ActionListener {
         btnStartSelectLevel.setEnabled(true);
     }
 
+    /**
+     * Clear the borders on the level preview JButtons
+     */
     private void clearSelectedBorder() {
         btnLeftLevel.setBorder(DEFAULT);
         btnMiddleLevel.setBorder(DEFAULT);
         btnRightLevel.setBorder(DEFAULT);
     }
+    
+    /**
+     * Calculate the last page for a given level list.
+     * 
+     * @param levelList The list for which the last page is being calculated for
+     */
+    private void determineLastPageNumber(List<Board> levelList) {
+        if (levelList.size() % 3 == 0) {
+            lastPage = levelList.size() / 3;
+        } else {
+            lastPage = (levelList.size() / 3) + 1;
+        }
+    }
 
+    /**
+     * Determine the appropriate action based on the JButton that was just pressed. 
+     * 
+     * @param e The ActionEvent that has just taken place
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnStartSelectLevel) {
+            this.dispose();
             if (btnLeftLevel.getBorder().equals(SELECTED)) {
-                this.dispose();
                 int level = (pageNumber * 3) - 2;
                 if (!custom) {
                     SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
                 } else {
-                    SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 3), -1));
+                    SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 3), - 1));
                 }
             } else if (btnMiddleLevel.getBorder().equals(SELECTED)) {
-                this.dispose();
                 int level = (pageNumber * 3) - 1;
                 if (!custom) {
                     SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
                 } else {
-                    SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 2), -1));
+                    SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 2), - 1));
                 }
             } else {
-                this.dispose();
                 int level = (pageNumber * 3);
                 if (!custom) {
                     SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
                 } else {
-                    SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 1), -1));
+                    SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 1), - 1));
                 }
             }
         } else if (e.getSource() == btnMainMenu) {
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
-        } else if (e.getSource() == btnLeftLevel) {
-            levelSelected(btnLeftLevel);
-        } else if (e.getSource() == btnMiddleLevel) {
-            levelSelected(btnMiddleLevel);
-        } else if (e.getSource() == btnRightLevel) {
-            levelSelected(btnRightLevel);
+        } else if (e.getSource() == btnLeftLevel || e.getSource() == btnMiddleLevel || e.getSource() == btnRightLevel) {
+            levelSelected((JButton) e.getSource());
         } else if (e.getSource() == btnNextPage) {
             pageNumber++;
             btnLastPage.setEnabled(true);
-            if (pageNumber == lastPage) {
-                btnNextPage.setEnabled(false);
-            }
+            btnNextPage.setEnabled(pageNumber != lastPage);
             btnStartSelectLevel.setEnabled(false);
             if (custom) {
                 updateView(allCustomLevels);
@@ -413,9 +454,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         } else if (e.getSource() == btnLastPage) {
             pageNumber--;
             btnNextPage.setEnabled(true);
-            if (pageNumber == 1) {
-                btnLastPage.setEnabled(false);
-            }
+            btnLastPage.setEnabled(pageNumber != 1);
             btnStartSelectLevel.setEnabled(false);
             if (custom) {
                 updateView(allCustomLevels);
@@ -423,25 +462,20 @@ public class LevelSelector extends JFrame implements ActionListener {
                 updateView(allDefaultLevels);
             }
         } else if (e.getSource() == btnCustomLevels) {
+            pageNumber = 1;
             if (custom) {
                 custom = false;
                 btnCustomLevels.setText("Go to Custom Levels");
-                pageNumber = 1;
-                determinePageNumber(allDefaultLevels);
-                if (lastPage == 1) {
-                    btnNextPage.setEnabled(false);
-                }
+                determineLastPageNumber(allDefaultLevels);
                 updateView(allDefaultLevels);
             } else {
                 custom = true;
                 btnCustomLevels.setText("Go to Default Levels");
-                pageNumber = 1;
-                determinePageNumber(allCustomLevels);
-                if (lastPage == 1) {
-                    btnNextPage.setEnabled(false);
-                }
+                determineLastPageNumber(allCustomLevels);
                 updateView(allCustomLevels);
             }
+            btnNextPage.setEnabled(lastPage != 1);
+            btnLastPage.setEnabled(false);
         }
     }
 }

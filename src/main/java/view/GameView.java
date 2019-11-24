@@ -58,6 +58,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
 	private JCheckBox showPossibleMovesBox;
 	private JButton[][] buttons;
+	private JMenuBar menuBar;
 
 	private Board board;
 	private GameController gameController;
@@ -77,7 +78,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		gameController = new GameController(board, level);
 
 		this.updateFrameTitle();
-		JMenuBar menuBar = new JMenuBar();
 
 		menuMainScreen = GUIUtilities.createMenuBarButton("Main Menu", true);
 		menuHint = GUIUtilities.createMenuBarButton("Hint", true);
@@ -87,15 +87,14 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		menuSaveButton = GUIUtilities.createMenuBarButton("Save Game", true);
 		menuHelp = GUIUtilities.createMenuBarButton("Help", false);
 
+		this.setJMenuBar(menuBar = new JMenuBar());
 		menuBar.add(menuMainScreen);
-		menuBar.add(menuHint);
-		menuBar.add(menuUndo);
-		menuBar.add(menuRedo);
-		menuBar.add(menuReset);
-		menuBar.add(menuSaveButton);
-		menuBar.add(menuHelp);
-
-		this.setJMenuBar(menuBar);
+        menuBar.add(menuHint);
+        menuBar.add(menuUndo);
+        menuBar.add(menuRedo);
+        menuBar.add(menuReset);
+        menuBar.add(menuSaveButton);
+        menuBar.add(menuHelp);
 		this.setContentPane(new JLabel(Resources.BOARD));
 		this.getContentPane().setLayout(new GridLayout(5, 5));
 
@@ -246,8 +245,8 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 							new String[] { "Next", "Reset", "Quit" });
 					if (choice == 0) {
 						gameController.incrementLevel();
-						updateFrameTitle();
 						resetGame();
+						updateFrameTitle();
 					} else if (choice == 1) {
 						resetGame();
 					} else {

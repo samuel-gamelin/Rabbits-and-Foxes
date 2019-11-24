@@ -31,11 +31,7 @@ import view.GameView;
  */
 
 public class MainMenu extends JFrame implements ActionListener {
-	private JButton btnStart;
-	private JButton btnSelectLevel;
-	private JButton btnBuildLevel;
-	private JButton btnHelp;
-	private JButton btnLoadGameButton;
+	private JButton btnStart, btnSelectLevel, btnBuildLevel, btnHelp, btnLoadGameButton, btnQuitGame;
 	private JFileChooser fc = new JFileChooser();
 
 	public MainMenu() {
@@ -46,21 +42,16 @@ public class MainMenu extends JFrame implements ActionListener {
 		this.getContentPane().setLayout(new BorderLayout());
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
-		btnStart = new JButton("Start");
-		btnSelectLevel = new JButton("Select Level");
-		btnBuildLevel = new JButton("Level Builder");
-		btnLoadGameButton = new JButton("Open Saved Game");
-		btnHelp = new JButton("Help");
-
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.NORTH);
 		this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.SOUTH);
 
-		addMainMenuButton(this, btnStart);
-		addMainMenuButton(this, btnSelectLevel);
-		addMainMenuButton(this, btnLoadGameButton);
-		addMainMenuButton(this, btnBuildLevel);
-		addMainMenuButton(this, btnHelp);
-
+		addMainMenuButton(this, btnStart = new JButton("Start"));
+		addMainMenuButton(this, btnSelectLevel = new JButton("Select Level"));
+		addMainMenuButton(this, btnLoadGameButton = new JButton("Open Saved Game"));
+		addMainMenuButton(this, btnBuildLevel = new JButton("Level Builder"));
+		addMainMenuButton(this, btnHelp = new JButton("Help"));
+		addMainMenuButton(this, btnQuitGame = new JButton("Quit"));
+		
 		GUIUtilities.configureFrame(this);
 	}
 
@@ -73,7 +64,7 @@ public class MainMenu extends JFrame implements ActionListener {
 	 *               ActionListener
 	 */
 	private void addMainMenuButton(Container pane, JButton button) {
-		button.setMaximumSize(new Dimension((int) Resources.SIDE_LENGTH / 3, (int) (0.10 * Resources.SIDE_LENGTH)));
+		button.setMaximumSize(new Dimension((int) (Resources.SIDE_LENGTH / 2.5), (int) (0.10 * Resources.SIDE_LENGTH)));
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		button.setForeground(Color.BLACK);
 		button.setBackground(Color.WHITE);
@@ -107,11 +98,16 @@ public class MainMenu extends JFrame implements ActionListener {
 			SwingUtilities.invokeLater(LevelSelector::new);
 		} else if (e.getSource() == btnHelp) {
 			GUIUtilities.displayMessageDialog(this,
-					"Start: Starts the game\nLevel Select: Opens the level section menu\nHelp: Displays the help menu\nQuit: Exits the application",
+					"Start: Starts the game\nSelect Level: Opens the level section menu\nOpen Saved Game: Continue from a previously saved game\nLevel Builder: Opens the level builder\nHelp: Displays the help menu\nQuit: Exits the application",
 					"Help");
 		} else if (e.getSource() == btnBuildLevel) {
 			this.dispose();
 			SwingUtilities.invokeLater(LevelBuilder::new);
+		} else if (e.getSource() == btnQuitGame) {
+		    if (GUIUtilities.displayOptionDialog(this, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
+                    new String[] { "Yes", "No" }) == 0) {
+                System.exit(0);
+            }
 		}
 	}
 
