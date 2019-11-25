@@ -32,10 +32,12 @@ import view.GameView;
 
 public class MainMenu extends JFrame implements ActionListener {
 	private JButton btnStart, btnSelectLevel, btnBuildLevel, btnHelp, btnLoadGameButton, btnQuitGame;
-	private JFileChooser fc = new JFileChooser();
+	private JFileChooser fc;
 
 	public MainMenu() {
 		GUIUtilities.applyDefaults();
+		
+		fc = new JFileChooser();
 
 		this.setTitle("Main Menu");
 		this.setContentPane(new JLabel(Resources.MAIN_MENU_BACKGROUND));
