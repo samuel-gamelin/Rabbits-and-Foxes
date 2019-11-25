@@ -334,6 +334,7 @@ public class LevelSelector extends JFrame implements ActionListener {
             }
         }
         this.revalidate();
+        this.repaint();
     }
 
     /**
@@ -368,6 +369,7 @@ public class LevelSelector extends JFrame implements ActionListener {
                                     .getDeclaredField("FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())
                                     .get(Resources.class)).getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR),
                                      (int) (Resources.SIDE_LENGTH / Y_SCALE_FACTOR), Image.SCALE_SMOOTH)));
+                            tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                             if (((Fox) (piece)).getFoxType() == FoxType.HEAD) {
                                 switch (((Fox) (piece)).getDirection()) {
                                 case LEFT:
@@ -377,11 +379,9 @@ public class LevelSelector extends JFrame implements ActionListener {
                                     tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
                                     break;
                                 default:
-                                    tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                                     break;
                                 }
-                            }
-                            else {
+                            } else {
                                 switch (((Fox) (piece)).getDirection()) {
                                 case LEFT:
                                     tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
@@ -390,9 +390,8 @@ public class LevelSelector extends JFrame implements ActionListener {
                                     tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
                                     break;
                                 default:
-                                    tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                                     break;
-                            }
+                                }
                             }
                         } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
                             Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
