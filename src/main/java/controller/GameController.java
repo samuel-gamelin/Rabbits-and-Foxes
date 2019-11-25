@@ -157,12 +157,7 @@ public class GameController {
 	}
 
 	/**
-	 * undoMove checks if the UndoMoveStack is empty If it is empty, return false to
-	 * show there where no moves made
-	 * <p>
-	 * If it is not empty, pop the stack and push it into the redo stack Then create
-	 * a new move with the xEnd and yEnd in the starting position and vice versa to
-	 * properly undo a move
+	 * Undoes a move.
 	 *
 	 * @return True if there is a move to undo, false otherwise
 	 */
@@ -178,11 +173,7 @@ public class GameController {
 	}
 
 	/**
-	 * The redoMove checks if the redoMoveStack is empty If it is empty then return
-	 * false, as there is no redoMoves
-	 * <p>
-	 * If it is not empty then the redoMoveStack is popped and then added into the
-	 * undoMove stack. The redoMove is the set into the board.
+	 * Redoes a move.
 	 *
 	 * @return True if there is a move to redo, false otherwise
 	 */
