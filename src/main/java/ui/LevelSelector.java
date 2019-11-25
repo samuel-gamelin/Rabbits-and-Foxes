@@ -45,9 +45,9 @@ public class LevelSelector extends JFrame implements ActionListener {
     private static final double BUTTON_Y_FACTOR = 0.20;
     private static final int BUTTON_X_FACTOR = 3;
     private static final int FONT_SIZE = 28;
-    private static final double BOARD_DISPLAY_SIZE = 3;
+    private static final double BOARD_DISPLAY_SIZE = 3.4;
     private static final double X_SCALE_FACTOR = 0.05;
-    private static final int Y_SCALE_FACTOR = 15;
+    private static final int Y_SCALE_FACTOR = 17;
     
     private static final BevelBorder SELECTED = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
     private static final BevelBorder DEFAULT = new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.BLACK);
@@ -143,9 +143,13 @@ public class LevelSelector extends JFrame implements ActionListener {
 
         // Creating a JPanel to store the board previews for the levels on the current page.
         setUpJPanel(boards = new JPanel(), true);
+        boards.add(Box.createHorizontalGlue());
         boards.add(btnLeftLevel);
+        boards.add(Box.createHorizontalGlue());
         boards.add(btnMiddleLevel);
+        boards.add(Box.createHorizontalGlue());
         boards.add(btnRightLevel);
+        boards.add(Box.createHorizontalGlue());
         
         // Creating a JPanel to store all of the level names on the current page.
         setUpJPanel(textPanel = new JPanel(), true);
@@ -251,6 +255,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         button.setLayout(new GridLayout(5, 5));
         button.setMaximumSize(new Dimension((int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         button.addActionListener(this);
+        button.setPreferredSize(new Dimension((int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         for (int y = 0; y < Board.SIZE; y++) {
             for (int x = 0; x < Board.SIZE; x++) {
                 switch (tileNumber) {
@@ -398,11 +403,9 @@ public class LevelSelector extends JFrame implements ActionListener {
      * @param levelList The list for which the last page is being calculated for
      */
     private void determineLastPageNumber(List<Board> levelList) {
-        if (levelList.size() % 3 == 0) {
-            lastPage = levelList.size() / 3;
-        } else {
-            lastPage = (levelList.size() / 3) + 1;
-        }
+        lastPage = levelList.size() / 3;
+        if (levelList.size() % 3 != 0) 
+            lastPage++;
     }
 
     /**
