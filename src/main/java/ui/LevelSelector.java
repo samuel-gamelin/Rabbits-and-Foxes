@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
@@ -31,6 +32,7 @@ import model.Fox;
 import model.Mushroom;
 import model.Piece;
 import model.Rabbit;
+import model.Fox.FoxType;
 import resources.Resources;
 import view.GameView;
 
@@ -187,9 +189,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         for (int y = 0; y < Board.SIZE; y++) {
             for (int x = 0; x < Board.SIZE; x++) {
                 tiles[x][y] = new JLabel();
-                // Clear button default colours and make it transparent
                 tiles[x][y].setOpaque(false);
-                tiles[x][y].setBorder(new EmptyBorder(0, 7, 0, 7));
             }
         }
     }
@@ -333,13 +333,14 @@ public class LevelSelector extends JFrame implements ActionListener {
                 break;
             }
         }
+        this.revalidate();
     }
 
     /**
      * Update the level previews for the current page.
      * 
      * @param tiles The tiles being updated with images from the new level
-     * @param board The board used to update the images diplayed on the tiles
+     * @param board The board used to update the images displayed on the tiles
      */
     private void updateLevelPreview(JLabel[][] tiles, Board board) {
         for (int x = 0; x < Board.SIZE; x++) {
@@ -350,12 +351,14 @@ public class LevelSelector extends JFrame implements ActionListener {
                         tiles[x][y].setIcon(new ImageIcon(
                                 Resources.MUSHROOM.getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR),
                                         (int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR), Image.SCALE_SMOOTH)));
+                        tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                     } else if (piece instanceof Rabbit) {
                         try {
                             tiles[x][y].setIcon(new ImageIcon(((ImageIcon) Resources.class
                                     .getDeclaredField("RABBIT_" + ((Rabbit) (piece)).getColour()).get(Resources.class))
                                             .getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR),
                                                     (int) Resources.SIDE_LENGTH / Y_SCALE_FACTOR, Image.SCALE_SMOOTH)));
+                            tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                         } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
                             Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
                         }
@@ -365,6 +368,32 @@ public class LevelSelector extends JFrame implements ActionListener {
                                     .getDeclaredField("FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())
                                     .get(Resources.class)).getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR),
                                      (int) (Resources.SIDE_LENGTH / Y_SCALE_FACTOR), Image.SCALE_SMOOTH)));
+                            if (((Fox) (piece)).getFoxType() == FoxType.HEAD) {
+                                switch (((Fox) (piece)).getDirection()) {
+                                case LEFT:
+                                    tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
+                                    break;
+                                case RIGHT:
+                                    tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
+                                    break;
+                                default:
+                                    tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
+                                    break;
+                                }
+                            }
+                            else {
+                                switch (((Fox) (piece)).getDirection()) {
+                                case LEFT:
+                                    tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
+                                    break;
+                                case RIGHT:
+                                    tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
+                                    break;
+                                default:
+                                    tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
+                                    break;
+                            }
+                            }
                         } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
                             Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
                         }
