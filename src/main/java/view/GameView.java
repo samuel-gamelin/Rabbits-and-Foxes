@@ -42,19 +42,14 @@ import util.Move;
  * @version 4.0
  */
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
+
 	private static final BevelBorder SELECTBORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
 	private static final BevelBorder HINTBORDERSTART = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
 	private static final BevelBorder HINTBORDEREND = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
 	private static final BevelBorder POSSIBLEPOSITIONBORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE,
 			Color.BLUE);
 
-	private JButton menuReset;
-	private JButton menuHelp;
-	private JButton menuHint;
-	private JButton menuUndo;
-	private JButton menuRedo;
-	private JButton menuMainScreen;
-	private JButton menuSaveButton;
+	private JButton menuReset, menuHelp, menuHint, menuUndo, menuRedo, menuMainScreen, menuSaveButton;
 
 	private JCheckBox showPossibleMovesBox;
 	private JButton[][] buttons;
@@ -285,7 +280,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	}
 
 	/**
-	 * Resets the custom loaded saved board to its default state. 
+	 * Resets the custom loaded saved board to its default state.
 	 */
 	private void resetLoadedBoard() {
 		this.board = GameController.customLoadBoard;
