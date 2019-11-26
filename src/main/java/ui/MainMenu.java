@@ -87,10 +87,9 @@ public class MainMenu extends JFrame implements ActionListener {
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				Board board = Board.loadBoard(fc.getSelectedFile().getAbsolutePath());
-
 				if (board != null) {
 					this.dispose();
-					SwingUtilities.invokeLater(new GameView(board, -1));
+					SwingUtilities.invokeLater(new GameView(board, Integer.parseInt(board.getName())));
 				} else {
 					GUIUtilities.displayMessageDialog(this, "Invalid file selection!", "Invalid File");
 				}

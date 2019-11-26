@@ -236,7 +236,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 					if (choice == 0) {
 						resetGame();
 						this.dispose(); 
-						SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(1), 1));
+						SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(gameController.getCurrentLevel()), gameController.getCurrentLevel()));
 					} else if (choice == 1) {
 						stateOfGame = false;
 						this.dispose();
