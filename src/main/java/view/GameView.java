@@ -225,8 +225,8 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	@Override
 	public void handleBoardChange() {
 		GUIUtilities.updateView(buttons, board);
-		if(gameController.getCurrentLevel() == -1) {
-			//stateOfGame = false; 
+		if (gameController.getCurrentLevel() == -1) {
+			// stateOfGame = false;
 		}
 		if (board.isInWinningState()) {
 			Resources.SOLVED.start();
@@ -237,13 +237,14 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 							"Congrats, you solved it! Would you like to go to reset or go to the main menu?", "Solved!",
 							new String[] { "Reset", "Main Menu", "Quit" });
 					if (choice == 0) {
-						if(gameController.getCurrentLevel() == -1) {
-							resetLoadedBoard(); 
-						}
-						else {
+						if (gameController.getCurrentLevel() == -1) {
+							resetLoadedBoard();
+						} else {
 							resetGame();
-							this.dispose(); 
-							SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(gameController.getCurrentLevel()), gameController.getCurrentLevel()));
+							this.dispose();
+							SwingUtilities.invokeLater(
+									new GameView(Resources.getDefaultBoardByLevel(gameController.getCurrentLevel()),
+											gameController.getCurrentLevel()));
 						}
 					} else if (choice == 1) {
 						stateOfGame = false;
@@ -283,9 +284,12 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		}
 	}
 
+	/**
+	 * Resets the custom loaded saved board to its default state. 
+	 */
 	private void resetLoadedBoard() {
 		this.board = GameController.customLoadBoard;
-		resetGame(); 
+		resetGame();
 	}
 
 	/**

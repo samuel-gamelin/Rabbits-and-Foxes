@@ -136,7 +136,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 			String levelNameString;
 			do {
 				levelNameString = JOptionPane.showInputDialog("Please enter a name for the level: ");
-				while(levelNameString.matches("-?\\d+")) {
+				while (levelNameString.matches("-?\\d+")) {
 					levelNameString = JOptionPane.showInputDialog("No numbers are allowed in the level name: ");
 				}
 				board.setName(levelNameString);
