@@ -63,7 +63,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	private Board board;
 	private GameController gameController;
 	private JFileChooser fc = new JFileChooser();
-	private boolean stateOfGame; 
+	private boolean stateOfGame;
 
 	/**
 	 * Creates the application GUI.
@@ -75,8 +75,8 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 	public GameView(Board board, int level) {
 		this.board = board;
 		this.board.addListener(this);
-		
-		stateOfGame = true; 
+
+		stateOfGame = true;
 
 		gameController = new GameController(board, level);
 
@@ -92,12 +92,12 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
 		this.setJMenuBar(menuBar = new JMenuBar());
 		menuBar.add(menuMainScreen);
-        menuBar.add(menuHint);
-        menuBar.add(menuUndo);
-        menuBar.add(menuRedo);
-        menuBar.add(menuReset);
-        menuBar.add(menuSaveButton);
-        menuBar.add(menuHelp);
+		menuBar.add(menuHint);
+		menuBar.add(menuUndo);
+		menuBar.add(menuRedo);
+		menuBar.add(menuReset);
+		menuBar.add(menuSaveButton);
+		menuBar.add(menuHelp);
 		this.setContentPane(new JLabel(Resources.BOARD));
 		this.getContentPane().setLayout(new GridLayout(5, 5));
 
@@ -228,7 +228,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 		if (board.isInWinningState()) {
 			Resources.SOLVED.start();
 			clearButtonBorders();
-			if(stateOfGame) {
+			if (stateOfGame) {
 				if (!gameController.isDefaultLevel()) {
 					int choice = GUIUtilities.displayOptionDialog(this,
 							"Congrats, you solved it! Would you like to go to reset or go to the main menu?", "Solved!",
@@ -236,13 +236,13 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 					if (choice == 0) {
 						resetGame();
 					} else if (choice == 1) {
-						stateOfGame = false; 
+						stateOfGame = false;
 						this.dispose();
 						SwingUtilities.invokeLater(MainMenu::new);
 					} else {
 						System.exit(0);
 					}
-			} else {
+				} else {
 					if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
 						int choice = GUIUtilities.displayOptionDialog(this,
 								"Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
@@ -258,9 +258,9 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 						}
 					} else {
 						if (GUIUtilities.displayOptionDialog(this,
-								"You have finished the game! Would you like to go to the main menu or exit?", "End Game",
-								new String[] { "Main Menu", "Quit" }) == 0) {
-							stateOfGame = false; 
+								"You have finished the game! Would you like to go to the main menu or exit?",
+								"End Game", new String[] { "Main Menu", "Quit" }) == 0) {
+							stateOfGame = false;
 							this.dispose();
 							SwingUtilities.invokeLater(MainMenu::new);
 						} else {
@@ -269,7 +269,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 					}
 				}
 			}
-			
+
 		}
 	}
 
