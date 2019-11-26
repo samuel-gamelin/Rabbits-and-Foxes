@@ -492,20 +492,24 @@ public class LevelSelector extends JFrame implements ActionListener {
                 updateView(allDefaultLevels);
             }
         } else if (e.getSource() == btnCustomLevels) {
-            pageNumber = 1;
-            if (custom) {
-                custom = false;
-                btnCustomLevels.setText("Go to Custom Levels");
-                determineLastPageNumber(allDefaultLevels);
-                updateView(allDefaultLevels);
-            } else {
-                custom = true;
-                btnCustomLevels.setText("Go to Default Levels");
-                determineLastPageNumber(allCustomLevels);
-                updateView(allCustomLevels);
-            }
-            btnNextPage.setEnabled(lastPage != 1);
-            btnLastPage.setEnabled(false);
+        	if (allCustomLevels.size() == 0) {
+        		GUIUtilities.displayMessageDialog(this, "Could not locate any custom levels.\nTry making some in the level builder!", "No custom levels found");
+        	} else {
+        		pageNumber = 1;
+        		if (custom) {
+        			custom = false;
+        			btnCustomLevels.setText("Go to Custom Levels");
+        			determineLastPageNumber(allDefaultLevels);
+        			updateView(allDefaultLevels);
+        		} else {
+        			custom = true;
+        			btnCustomLevels.setText("Go to Default Levels");
+        			determineLastPageNumber(allCustomLevels);
+        			updateView(allCustomLevels);
+        		}
+        		btnNextPage.setEnabled(lastPage != 1);
+        		btnLastPage.setEnabled(false);
+        	}
         }
     }
 }
