@@ -36,7 +36,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
 	public MainMenu() {
 		GUIUtilities.applyDefaults();
-		
+
 		fc = new JFileChooser();
 
 		this.setTitle("Main Menu");
@@ -53,7 +53,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		addMainMenuButton(this, btnBuildLevel = new JButton("Level Builder"));
 		addMainMenuButton(this, btnHelp = new JButton("Help"));
 		addMainMenuButton(this, btnQuitGame = new JButton("Quit"));
-		
+
 		GUIUtilities.configureFrame(this);
 	}
 
@@ -89,7 +89,10 @@ public class MainMenu extends JFrame implements ActionListener {
 				Board board = Board.loadBoard(fc.getSelectedFile().getAbsolutePath());
 				if (board != null) {
 					this.dispose();
-					SwingUtilities.invokeLater(new GameView(board, Integer.parseInt(board.getName())));
+					if (isStrAnInteger(board.getName()))
+						SwingUtilities.invokeLater(new GameView(board, Integer.parseInt(board.getName())));
+					else
+						SwingUtilities.invokeLater(new GameView(board, -1));
 				} else {
 					GUIUtilities.displayMessageDialog(this, "Invalid file selection!", "Invalid File");
 				}
@@ -105,11 +108,38 @@ public class MainMenu extends JFrame implements ActionListener {
 			this.dispose();
 			SwingUtilities.invokeLater(LevelBuilder::new);
 		} else if (e.getSource() == btnQuitGame) {
-		    if (GUIUtilities.displayOptionDialog(this, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
-                    new String[] { "Yes", "No" }) == 0) {
-                System.exit(0);
-            }
+			if (GUIUtilities.displayOptionDialog(this, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
+					new String[] { "Yes", "No" }) == 0) {
+				System.exit(0);
+			}
 		}
+	}
+
+	public boolean isStrAnInteger(String str) {
+
+		if (str == null) {
+			return false;
+		}
+
+		int strLength = str.length();
+
+		if (strLength == 0) {
+			return false;
+		}
+		int i = 0;
+		if (str.charAt(0) == '-') {
+			if (strLength == 1) {
+				return false;
+			}
+			i = 1;
+		}
+		for (; i < strLength; i++) {
+			char c = str.charAt(i);
+			if (c > '9' || c < '0') {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
