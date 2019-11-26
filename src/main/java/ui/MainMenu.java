@@ -89,7 +89,7 @@ public class MainMenu extends JFrame implements ActionListener {
 				Board board = Board.loadBoard(fc.getSelectedFile().getAbsolutePath());
 				if (board != null) {
 					this.dispose();
-					if (isStrAnInteger(board.getName()))
+					if (board.getName().matches("-?\\d+"))
 						SwingUtilities.invokeLater(new GameView(board, Integer.parseInt(board.getName())));
 					else
 						SwingUtilities.invokeLater(new GameView(board, -1));
@@ -113,34 +113,7 @@ public class MainMenu extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 		}
-	}
-
-	public boolean isStrAnInteger(String str) {
-
-		if (str == null) {
-			return false;
-		}
-
-		int strLength = str.length();
-
-		if (strLength == 0) {
-			return false;
-		}
-		int i = 0;
-		if (str.charAt(0) == '-') {
-			if (strLength == 1) {
-				return false;
-			}
-			i = 1;
-		}
-		for (; i < strLength; i++) {
-			char c = str.charAt(i);
-			if (c > '9' || c < '0') {
-				return false;
-			}
-		}
-		return true;
-	}
+	}	
 
 	/**
 	 * Starts the Rabbits and Foxes game.
