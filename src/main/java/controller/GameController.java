@@ -32,6 +32,8 @@ public class GameController {
 	private List<Integer> moveList;
 	private ArrayDeque<Move> undoMoveStack;
 	private ArrayDeque<Move> redoMoveStack;
+	
+	public static Board customLoadBoard; 
 
 	/**
 	 * An enumeration representing the validity of a click from the user.
@@ -60,6 +62,11 @@ public class GameController {
 			this.isDefaultLevel = true;
 		}
 	}
+	
+	public static void setLoadedBoard(Board board) {
+		customLoadBoard = board; 
+	}
+	
 
 	/**
 	 * This method is used to register a click based on the user input. It first

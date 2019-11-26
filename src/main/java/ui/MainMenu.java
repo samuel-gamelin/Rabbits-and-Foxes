@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import controller.GameController;
 import model.Board;
 import resources.Resources;
 import view.GameView;
@@ -91,8 +92,11 @@ public class MainMenu extends JFrame implements ActionListener {
 					this.dispose();
 					if (board.getName().matches("-?\\d+"))
 						SwingUtilities.invokeLater(new GameView(board, Integer.parseInt(board.getName())));
-					else
+					else {
+						GameController.setLoadedBoard(board);
 						SwingUtilities.invokeLater(new GameView(board, -1));
+					}
+
 				} else {
 					GUIUtilities.displayMessageDialog(this, "Invalid file selection!", "Invalid File");
 				}
@@ -113,7 +117,7 @@ public class MainMenu extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 		}
-	}	
+	}
 
 	/**
 	 * Starts the Rabbits and Foxes game.
