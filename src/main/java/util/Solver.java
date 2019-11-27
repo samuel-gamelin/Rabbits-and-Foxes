@@ -1,18 +1,10 @@
 package util;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-
 import model.Board;
 import model.Fox;
 import model.Piece;
+
+import java.util.*;
 
 /**
  * This class is used to solve a board representing a state in the game of

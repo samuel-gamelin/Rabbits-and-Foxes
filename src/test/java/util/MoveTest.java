@@ -1,11 +1,10 @@
 package util;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import util.Move.MoveDirection;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * A suite of tests for the Move class.

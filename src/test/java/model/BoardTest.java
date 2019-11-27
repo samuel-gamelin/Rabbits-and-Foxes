@@ -1,20 +1,14 @@
 package model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import com.google.gson.JsonObject;
+import org.junit.Before;
+import org.junit.Test;
+import resources.Resources;
+import util.Move;
 
 import java.io.File;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import com.google.gson.JsonObject;
-
-import resources.Resources;
-import util.Move;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the Board class.

@@ -1,13 +1,12 @@
 package util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import controller.GameController;
+import model.Board;
 import org.junit.Before;
 import org.junit.Test;
 
-import controller.GameController;
-import model.Board;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the undo/redo feature.
