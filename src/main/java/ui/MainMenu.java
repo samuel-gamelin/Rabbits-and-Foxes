@@ -1,6 +1,5 @@
 package ui;
 
-import controller.GameController;
 import model.Board;
 import resources.Resources;
 import view.GameView;
@@ -81,8 +80,6 @@ public class MainMenu extends JFrame implements ActionListener {
                     if (board.getName().matches("-?\\d+"))
                         SwingUtilities.invokeLater(new GameView(board, Integer.parseInt(board.getName())));
                     else {
-                        //notify the controller of the saved custom board, so if reset is pressed, it can go back to it.
-                        GameController.setLoadedBoard(board);
                         SwingUtilities.invokeLater(new GameView(board, -1));
                     }
 

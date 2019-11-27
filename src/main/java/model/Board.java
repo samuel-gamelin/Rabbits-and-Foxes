@@ -206,7 +206,9 @@ public class Board {
 	 * @param boardListener The listener to add
 	 */
 	public void addListener(BoardListener boardListener) {
-		boardListeners.add(boardListener);
+		if (!boardListeners.contains(boardListener)) {
+			boardListeners.add(boardListener);
+		}
 	}
 
 	/**

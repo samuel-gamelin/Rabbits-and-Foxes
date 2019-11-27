@@ -33,8 +33,6 @@ public class GameController {
     private ArrayDeque<Move> undoMoveStack;
     private ArrayDeque<Move> redoMoveStack;
 
-    public static Board customLoadBoard;
-
     /**
      * An enumeration representing the validity of a click from the user.
      */
@@ -60,15 +58,6 @@ public class GameController {
         if (currentLevel > 0) {
             this.isDefaultLevel = true;
         }
-    }
-
-    /**
-     * Set the custom saved loaded board
-     *
-     * @param board, which will be used to set the static board in game controller.
-     */
-    public static void setLoadedBoard(Board board) {
-        customLoadBoard = board;
     }
 
     /**
