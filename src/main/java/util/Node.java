@@ -1,9 +1,9 @@
 package util;
 
-import model.Board;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import model.Board;
 
 /**
  * This class represents a node in the game tree of Rabbits and Foxes.

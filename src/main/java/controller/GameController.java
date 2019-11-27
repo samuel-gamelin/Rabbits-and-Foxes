@@ -1,5 +1,9 @@
 package controller;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Board;
 import model.MovablePiece;
 import model.Mushroom;
@@ -7,10 +11,6 @@ import model.Piece;
 import resources.Resources;
 import util.Move;
 import util.Solver;
-
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The controller is used to register the user's moves so that it updates the

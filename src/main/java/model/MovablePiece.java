@@ -1,8 +1,8 @@
 package model;
 
-import util.Move;
-
 import java.util.List;
+
+import util.Move;
 
 /**
  * This interface models the behaviour that a movable piece should have.
