@@ -1,12 +1,11 @@
 package model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import model.Piece.PieceType;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Piece.PieceType;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the Mushroom class (for sake of completeness).

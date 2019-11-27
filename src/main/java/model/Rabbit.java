@@ -1,10 +1,10 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import util.Move;
 import util.Move.MoveDirection;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class representing a Rabbit piece.

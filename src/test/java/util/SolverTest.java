@@ -1,14 +1,10 @@
 package util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
+import model.Board;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Board;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the Solver class.
