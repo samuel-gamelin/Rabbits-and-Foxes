@@ -4,6 +4,11 @@ import model.Board;
 import resources.Resources;
 import view.GameView;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  * This class represents the main menu frame of the game.
  *
