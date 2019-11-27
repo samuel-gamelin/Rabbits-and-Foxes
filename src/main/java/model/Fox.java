@@ -1,10 +1,10 @@
 package model;
 
-import util.Move;
-import util.Move.MoveDirection;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import util.Move;
+import util.Move.MoveDirection;
 
 /**
  * A class representing a Fox piece.
