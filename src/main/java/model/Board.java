@@ -1,5 +1,11 @@
 package model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import resources.Resources;
+import util.Move;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -8,13 +14,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-
-import resources.Resources;
-import util.Move;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within
@@ -36,7 +35,7 @@ public class Board {
 	/**
 	 * A String used to represent an empty tile on the board.
 	 */
-	public static final String EMPTY = "X";
+	static final String EMPTY = "X";
 
 	/**
 	 * The Board's name.
@@ -71,6 +70,7 @@ public class Board {
 	 * @param board The board to copy
 	 */
 	public Board(Board board) {
+		this.name = board.name;
 		this.tiles = new Tile[SIZE][SIZE];
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
@@ -204,17 +204,16 @@ public class Board {
 	 * Adds a listener to this board.
 	 *
 	 * @param boardListener The listener to add
-	 * @return True if the listener was successfully added, false otherwise
 	 */
-	public boolean addListener(BoardListener boardListener) {
-		return boardListeners.add(boardListener);
+	public void addListener(BoardListener boardListener) {
+		boardListeners.add(boardListener);
 	}
 
 	/**
 	 * Notifies all listeners that the board has changed.
 	 */
 	private void notifyListeners() {
-		boardListeners.stream().forEach(BoardListener::handleBoardChange);
+		boardListeners.forEach(BoardListener::handleBoardChange);
 	}
 
 	/**
@@ -319,11 +318,13 @@ public class Board {
 	public static Board loadBoard(String path) {
 		try {
 			JsonObject jsonObject = Resources.loadJsonObjectFromPath(path, true);
-			return Board.createBoard(jsonObject.get("name").getAsString(), jsonObject.get("board").getAsString());
+			if (jsonObject != null) {
+				return Board.createBoard(jsonObject.get("name").getAsString(), jsonObject.get("board").getAsString());
+			}
 		} catch (Exception e) {
 			Resources.LOGGER.error("Unable to load Board object from file at " + path, e);
-			return null;
 		}
+		return null;
 	}
 
 	/**
@@ -378,7 +379,7 @@ public class Board {
 		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				str.append(tiles[i][j].toString() + " ");
+				str.append(tiles[i][j].toString()).append(" ");
 			}
 		}
 		return str.toString().trim();

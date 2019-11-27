@@ -1,10 +1,10 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import util.Move;
 import util.Move.MoveDirection;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class representing a Rabbit piece.
@@ -44,7 +44,7 @@ public class Rabbit extends Piece implements MovablePiece {
 	 * @param str The String to build the Rabbit from. Must be of length 3.
 	 * @return A newly created Rabbit based on the passed String.
 	 */
-	public static Rabbit createRabbit(String str) {
+	static Rabbit createRabbit(String str) {
 		if (str == null || str.length() != 3)
 			return null;
 

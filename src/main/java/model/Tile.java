@@ -79,7 +79,7 @@ public class Tile {
 	 *
 	 * @return The current Piece placed on the Tile.
 	 */
-	public Piece retrievePiece() {
+	Piece retrievePiece() {
 		return piece;
 	}
 
@@ -88,7 +88,7 @@ public class Tile {
 	 *
 	 * @param piece The piece to place on the tile
 	 */
-	public void placePiece(Piece piece) {
+	void placePiece(Piece piece) {
 		if (piece != null) {
 			this.occupied = true;
 			this.piece = piece;
@@ -138,8 +138,6 @@ public class Tile {
 				return false;
 		} else if (!piece.equals(other.piece))
 			return false;
-		if (tileColour != other.tileColour)
-			return false;
-		return true;
+		return tileColour == other.tileColour;
 	}
 }
