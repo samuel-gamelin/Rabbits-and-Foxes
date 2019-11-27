@@ -110,7 +110,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                         clearButtonBorders();
                     } else {
                         clearMove();
-                        if (Resources.INVALID_MOVE != null && !Resources.INVALID_MOVE.isActive()) {
+                        if (Resources.INVALID_MOVE != null && !Resources.INVALID_MOVE.isActive() && gameState) {
                             Resources.INVALID_MOVE.start();
                         }
                     }
@@ -195,7 +195,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     public void handleBoardChange() {
         GUIUtilities.updateView(buttons, board);
         if (board.isInWinningState()) {
-            if (Resources.SOLVED != null) {
+            if (Resources.SOLVED != null && gameState) {
                 Resources.SOLVED.start();
             }
             clearButtonBorders();
