@@ -60,23 +60,15 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
         this.updateFrameTitle();
 
-        menuMainScreen = GUIUtilities.createMenuBarButton("Main Menu", true);
-        menuHint = GUIUtilities.createMenuBarButton("Hint", true);
-        menuUndo = GUIUtilities.createMenuBarButton("Undo", true);
-        menuRedo = GUIUtilities.createMenuBarButton("Redo", true);
-        menuReset = GUIUtilities.createMenuBarButton("Reset", false);
-        menuSaveButton = GUIUtilities.createMenuBarButton("Save Game", true);
-        menuHelp = GUIUtilities.createMenuBarButton("Help", false);
-
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
-        menuBar.add(menuMainScreen);
-        menuBar.add(menuHint);
-        menuBar.add(menuUndo);
-        menuBar.add(menuRedo);
-        menuBar.add(menuReset);
-        menuBar.add(menuSaveButton);
-        menuBar.add(menuHelp);
+        menuBar.add(menuMainScreen = GUIUtilities.createMenuBarButton("Main Menu", true));
+        menuBar.add(menuHint = GUIUtilities.createMenuBarButton("Hint", true));
+        menuBar.add(menuUndo = GUIUtilities.createMenuBarButton("Undo", true));
+        menuBar.add(menuRedo = GUIUtilities.createMenuBarButton("Redo", true));
+        menuBar.add(menuReset = GUIUtilities.createMenuBarButton("Reset", false));
+        menuBar.add(menuSaveButton = GUIUtilities.createMenuBarButton("Save Game", true));
+        menuBar.add(menuHelp = GUIUtilities.createMenuBarButton("Help", false));
         this.setContentPane(new JLabel(Resources.BOARD));
         this.getContentPane().setLayout(new GridLayout(5, 5));
 

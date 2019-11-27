@@ -22,6 +22,16 @@ import java.awt.event.WindowEvent;
  */
 public final class GUIUtilities {
 	public static final EmptyBorder BLANK_BORDER = new EmptyBorder(0, 0, 0, 0);
+	/**
+	 * A percentage (80%) of the current display's height (or width, depending on
+	 * which is greater), which will be used in calculations to determine
+	 * appropriate scaling of icons and GUI elements.
+	 */
+	public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() > Toolkit
+	        .getDefaultToolkit().getScreenSize().getHeight()
+	        ? (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
+	        : (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+	public static final int FONT_SIZE = (int) (SIDE_LENGTH / 25);
 
 	/**
 	 * A private constructor, preventing any instantiation of this class.

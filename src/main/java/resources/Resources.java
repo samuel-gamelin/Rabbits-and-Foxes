@@ -2,6 +2,8 @@ package resources;
 
 import com.google.gson.*;
 import model.Board;
+import ui.GUIUtilities;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -51,16 +53,6 @@ public final class Resources {
      * The total number of levels available.
      */
     public static final int NUMBER_OF_LEVELS = getNumberOfLevels();
-
-    /**
-     * A percentage (80%) of the current display's height (or width, depending on
-     * which is greater), which will be used in calculations to determine
-     * appropriate scaling of icons and GUI elements.
-     */
-    public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() > Toolkit
-            .getDefaultToolkit().getScreenSize().getHeight()
-            ? (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
-            : (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
     // Incorrect move sound
     public static final Clip INVALID_MOVE = loadClip(getFileURL("sounds/wrong.wav"));
@@ -127,8 +119,8 @@ public final class Resources {
      */
     private static ImageIcon loadIcon(String path, double xScale, double yScale) {
         return new ImageIcon(
-                new ImageIcon(getFileURL(path)).getImage().getScaledInstance((int) (xScale * SIDE_LENGTH / Board.SIZE),
-                        (int) (yScale * SIDE_LENGTH / Board.SIZE), Image.SCALE_SMOOTH));
+                new ImageIcon(getFileURL(path)).getImage().getScaledInstance((int) (xScale * GUIUtilities.SIDE_LENGTH / Board.SIZE),
+                        (int) (yScale * GUIUtilities.SIDE_LENGTH / Board.SIZE), Image.SCALE_SMOOTH));
     }
 
     /**

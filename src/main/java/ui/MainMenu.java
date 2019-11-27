@@ -32,9 +32,10 @@ public class MainMenu extends JFrame implements ActionListener {
         this.getContentPane().setLayout(new BorderLayout());
         this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
-        this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.NORTH);
-        this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 8))), BorderLayout.SOUTH);
-
+        this.add(Box.createRigidArea(new Dimension(0, (int) (GUIUtilities.SIDE_LENGTH / 12))), BorderLayout.NORTH);
+        this.add(Box.createRigidArea(new Dimension(0, (int) (GUIUtilities.SIDE_LENGTH / 16))), BorderLayout.SOUTH);
+        
+        this.add(Box.createVerticalGlue());
         addMainMenuButton(this, btnStart = new JButton("Start"));
         addMainMenuButton(this, btnSelectLevel = new JButton("Select Level"));
         addMainMenuButton(this, btnLoadGameButton = new JButton("Open Saved Game"));
@@ -54,13 +55,15 @@ public class MainMenu extends JFrame implements ActionListener {
      *               ActionListener
      */
     private void addMainMenuButton(Container pane, JButton button) {
-        button.setMaximumSize(new Dimension((int) (Resources.SIDE_LENGTH / 2.5), (int) (0.10 * Resources.SIDE_LENGTH)));
+        button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / 2.5), (int) (0.10 * GUIUtilities.SIDE_LENGTH)));
+        button.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / 2.5), (int) (0.10 * GUIUtilities.SIDE_LENGTH)));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setForeground(Color.BLACK);
         button.setBackground(Color.WHITE);
-        button.setFont(new Font("Times New Roman", Font.PLAIN, 32));
+        button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
         button.addActionListener(this);
         pane.add(button, BorderLayout.CENTER);
+        pane.add(Box.createVerticalGlue());
     }
 
     /**

@@ -25,7 +25,6 @@ public class LevelSelector extends JFrame implements ActionListener {
 
     private static final double BUTTON_Y_FACTOR = 0.20;
     private static final int BUTTON_X_FACTOR = 3;
-    private static final int FONT_SIZE = 28;
     private static final double BOARD_DISPLAY_SIZE = 3.4;
     private static final double X_SCALE_FACTOR = 0.05;
     private static final int Y_SCALE_FACTOR = 17;
@@ -119,9 +118,9 @@ public class LevelSelector extends JFrame implements ActionListener {
         allButtons.setOpaque(false);
         allButtons.setLayout(new BoxLayout(allButtons, BoxLayout.PAGE_AXIS));
         allButtons.add(pageButtons);
-        allButtons.add(Box.createRigidArea(new Dimension(0, (int) Resources.SIDE_LENGTH / 25)));
+        allButtons.add(Box.createRigidArea(new Dimension(0, (int) GUIUtilities.SIDE_LENGTH / 25)));
         allButtons.add(actionButtons);
-        allButtons.add(Box.createRigidArea(new Dimension(0, (int) Resources.SIDE_LENGTH / 50)));
+        allButtons.add(Box.createRigidArea(new Dimension(0, (int) GUIUtilities.SIDE_LENGTH / 50)));
 
         // Creating a JPanel to store the board previews for the levels on the current page.
         JPanel boards = new JPanel();
@@ -157,7 +156,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         // Adding everything to and subsequently setting up the JFrame.
         this.add(mainPanel, BorderLayout.CENTER);
         this.add(allButtons, BorderLayout.SOUTH);
-        this.add(Box.createRigidArea(new Dimension(0, (int) (Resources.SIDE_LENGTH / 3.5))), BorderLayout.NORTH);
+        this.add(Box.createRigidArea(new Dimension(0, (int) (GUIUtilities.SIDE_LENGTH / 3.5))), BorderLayout.NORTH);
         this.setTitle("Level Selector");
         GUIUtilities.configureFrame(this);
     }
@@ -198,11 +197,11 @@ public class LevelSelector extends JFrame implements ActionListener {
      * @param button The JButton being set up
      */
     private void setUpMenuButton(JButton button) {
-        button.setMaximumSize(new Dimension((int) (Resources.SIDE_LENGTH / BUTTON_X_FACTOR), (int) (BUTTON_Y_FACTOR * Resources.SIDE_LENGTH)));
+        button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BUTTON_X_FACTOR), (int) (BUTTON_Y_FACTOR * GUIUtilities.SIDE_LENGTH)));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setForeground(Color.BLACK);
         button.setBackground(Color.WHITE);
-        button.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
+        button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
         button.addActionListener(this);
     }
 
@@ -218,7 +217,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
         text.setEditable(false);
         text.setOpaque(false);
-        text.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
+        text.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
         text.setForeground(Color.WHITE);
         text.setHighlighter(null);
     }
@@ -230,15 +229,15 @@ public class LevelSelector extends JFrame implements ActionListener {
      */
     private void setUpLevelDisplayButton(JButton button, int tileNumber) {
         button.setIcon(new ImageIcon(
-                Resources.BOARD.getImage().getScaledInstance((int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
-                        (int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE), Image.SCALE_SMOOTH)));
+                Resources.BOARD.getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
+                        (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), Image.SCALE_SMOOTH)));
         button.setOpaque(false);
         button.setBorder(DEFAULT);
         button.setContentAreaFilled(false);
         button.setLayout(new GridLayout(5, 5));
-        button.setMaximumSize(new Dimension((int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
+        button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         button.addActionListener(this);
-        button.setPreferredSize(new Dimension((int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (Resources.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
+        button.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         for (int y = 0; y < Board.SIZE; y++) {
             for (int x = 0; x < Board.SIZE; x++) {
                 switch (tileNumber) {
@@ -269,7 +268,7 @@ public class LevelSelector extends JFrame implements ActionListener {
      */
     private void updateView(List<Board> levelList) {
         clearSelectedBorder();
-        if (pageNumber != lastPage) {
+        if (pageNumber != lastPage || lastPage == 1) {
             updateLevelPreview(tiles1, levelList.get(pageNumber * 3 - 3));
             updateLevelPreview(tiles2, levelList.get(pageNumber * 3 - 2));
             updateLevelPreview(tiles3, levelList.get(pageNumber * 3 - 1));
@@ -333,15 +332,15 @@ public class LevelSelector extends JFrame implements ActionListener {
                 if (piece != null) {
                     if (piece instanceof Mushroom) {
                         tiles[x][y].setIcon(new ImageIcon(
-                                Resources.MUSHROOM.getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR),
-                                        (int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR), Image.SCALE_SMOOTH)));
+                                Resources.MUSHROOM.getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
+                                        (int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR), Image.SCALE_SMOOTH)));
                         tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                     } else if (piece instanceof Rabbit) {
                         try {
                             tiles[x][y].setIcon(new ImageIcon(((ImageIcon) Resources.class
                                     .getDeclaredField("RABBIT_" + ((Rabbit) (piece)).getColour()).get(Resources.class))
-                                    .getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR),
-                                            (int) Resources.SIDE_LENGTH / Y_SCALE_FACTOR, Image.SCALE_SMOOTH)));
+                                    .getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
+                                            (int) GUIUtilities.SIDE_LENGTH / Y_SCALE_FACTOR, Image.SCALE_SMOOTH)));
                             tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                         } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
                             Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
@@ -350,8 +349,8 @@ public class LevelSelector extends JFrame implements ActionListener {
                         try {
                             tiles[x][y].setIcon(new ImageIcon(((ImageIcon) Resources.class
                                     .getDeclaredField("FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())
-                                    .get(Resources.class)).getImage().getScaledInstance((int) (Resources.SIDE_LENGTH * X_SCALE_FACTOR),
-                                    (int) (Resources.SIDE_LENGTH / Y_SCALE_FACTOR), Image.SCALE_SMOOTH)));
+                                    .get(Resources.class)).getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
+                                    (int) (GUIUtilities.SIDE_LENGTH / Y_SCALE_FACTOR), Image.SCALE_SMOOTH)));
                             tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                             if (((Fox) (piece)).getFoxType() == FoxType.HEAD) {
                                 switch (((Fox) (piece)).getDirection()) {
