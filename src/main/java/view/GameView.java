@@ -33,7 +33,14 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     private static final BevelBorder POSSIBLEPOSITIONBORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE,
             Color.BLUE);
 
-    private JButton menuReset, menuHelp, menuHint, menuUndo, menuRedo, menuMainScreen, menuSaveButton;
+    private JButton menuReset;
+    private JButton menuHelp;
+    private JButton menuHint;
+    private JButton menuUndo;
+    private JButton menuRedo;
+    private JButton menuMainScreen;
+    private JButton menuSaveButton;
+    private JButton menuQuit;
 
     private JCheckBox showPossibleMovesBox;
     private JButton[][] buttons;
@@ -69,6 +76,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         menuBar.add(menuReset = GUIUtilities.createMenuBarButton("Reset", false));
         menuBar.add(menuSaveButton = GUIUtilities.createMenuBarButton("Save Game", true));
         menuBar.add(menuHelp = GUIUtilities.createMenuBarButton("Help", false));
+        menuBar.add(menuQuit = GUIUtilities.createMenuBarButton("Quit", true));
         this.setContentPane(new JLabel(Resources.BOARD));
         this.getContentPane().setLayout(new GridLayout(5, 5));
 
@@ -132,6 +140,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         menuHint.addActionListener(this);
         menuUndo.addActionListener(this);
         menuRedo.addActionListener(this);
+        menuQuit.addActionListener(this);
 
         GUIUtilities.configureFrame(this);
     }
@@ -281,6 +290,8 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             if (!gameController.redoMove()) {
                 GUIUtilities.displayMessageDialog(this, "No moves to redo", "Redo Move");
             }
+        } else if (e.getSource() == menuQuit) {
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         }
     }
 

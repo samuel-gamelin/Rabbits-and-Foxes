@@ -15,13 +15,12 @@ import static org.junit.Assert.assertTrue;
  */
 public class UndoRedoTest {
 
-	private Board testBoard;
 	private GameController controller;
-	private final String BOARD_DATA = "X X X X X FHU1 FTU1 X X RBB X X X X MU RBW MU X FHL0 X X X RBG FTL0 X";
 
 	@Before
 	public void setUp() {
-		testBoard = Board.createBoard("Anyboard", BOARD_DATA);
+		String BOARD_DATA = "X X X X X FHU1 FTU1 X X RBB X X X X MU RBW MU X FHL0 X X X RBG FTL0 X";
+		Board testBoard = Board.createBoard("Anyboard", BOARD_DATA);
 
 		controller = new GameController(testBoard, -1);
 		// Add a couple moves that can be undone/redone

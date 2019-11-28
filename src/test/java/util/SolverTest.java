@@ -14,16 +14,16 @@ import static org.junit.Assert.*;
 public class SolverTest {
 	private Board easyBoard, normalBoard, hardBoard, unsolvableBoard;
 	private Move noMove;
-	private final String EASY = "X X X X X MU X X X MU RBB X X X RBG X X X X X X X X X X";
-	private final String NORMAL = "X X X X X FHU1 FTU1 X X RBB X X X X MU RBW MU X FHL0 X X X RBG FTL0 X";
-	private final String HARD = "X FTR1 X MU X X FHR1 X X X X X MU X X MU RBW X X RBG X X RBB X X";
-	private final String UNSOLVABLE = "X X RBG X X X X X X X X X X X X X X X X X X X X X X";
 
 	@Before
 	public void setUp() {
+		String EASY = "X X X X X MU X X X MU RBB X X X RBG X X X X X X X X X X";
 		easyBoard = Board.createBoard("Anyboard", EASY);
+		String NORMAL = "X X X X X FHU1 FTU1 X X RBB X X X X MU RBW MU X FHL0 X X X RBG FTL0 X";
 		normalBoard = Board.createBoard("Anyboard", NORMAL);
+		String HARD = "X FTR1 X MU X X FHR1 X X X X X MU X X MU RBW X X RBG X X RBB X X";
 		hardBoard = Board.createBoard("Anyboard", HARD);
+		String UNSOLVABLE = "X X RBG X X X X X X X X X X X X X X X X X X X X X X";
 		unsolvableBoard = Board.createBoard("Anyboard", UNSOLVABLE);
 		noMove = new Move(-1, -1, -1, -1);
 	}

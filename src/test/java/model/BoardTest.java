@@ -21,11 +21,11 @@ public class BoardTest {
 	private Board board1;
 	private Board board2;
 	private final String TESTBOARD1 = "RBG MU X X X FHU1 FTU1 X X X X X RBB X X X X X X X X X X X X";
-	private final String TESTBOARD2 = "RBW MU X X X FHU1 FTU1 X X X X X RBW X X X X X X X X X X MU X";
 
 	@Before
 	public void setUp() {
 		board1 = Board.createBoard("Anyboard", TESTBOARD1);
+		String TESTBOARD2 = "RBW MU X X X FHU1 FTU1 X X X X X RBW X X X X X X X X X X MU X";
 		board2 = Board.createBoard("Anyboard", TESTBOARD2);
 	}
 
@@ -89,12 +89,14 @@ public class BoardTest {
 	public void testGetPossibleMoves() {
 		assertFalse(board1.getPossibleMoves().isEmpty());
 		Board emptyBoard = Board.createBoard("Anyboard", "X X X X X X X X X X X X X X X X X X X X X X X X X");
+		assertNotNull(emptyBoard);
 		assertTrue(emptyBoard.getPossibleMoves().isEmpty());
 	}
 
 	@Test
 	public void testToString() {
 		Board emptyBoard = Board.createBoard("Anyboard", "X X X X X X X X X X X X X X X X X X X X X X X X X");
+		assertNotNull(emptyBoard);
 		assertEquals("X X X X X X X X X X X X X X X X X X X X X X X X X", emptyBoard.toString());
 		assertEquals(board1.toString(), TESTBOARD1);
 	}

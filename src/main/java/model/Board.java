@@ -54,7 +54,9 @@ public class Board {
     private List<BoardListener> boardListeners;
 
     /**
-     * Construct an empty board
+     * Construct an empty board.
+     * 
+     * @param name The name of the board
      */
     public Board(String name) {
         this.name = name;

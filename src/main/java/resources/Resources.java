@@ -2,11 +2,10 @@ package resources;
 
 import com.google.gson.*;
 import model.Board;
-import ui.GUIUtilities;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import ui.GUIUtilities;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -173,6 +172,15 @@ public final class Resources {
         }
     }
 
+    public static ImageIcon getImageIconByName(String fieldName) {
+        try {
+            return (ImageIcon) Resources.class.getDeclaredField(fieldName).get(Resources.class);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
+        }
+        return null;
+    }
+
     /**
      * Loads a JsonObject from the specified path.
      *
@@ -276,14 +284,14 @@ public final class Resources {
     public static boolean addUserLevel(Board board) {
         JsonObject originalJsonObject = loadJsonObjectFromPath(LEVEL_DATA_PATH, false);
 
-		if (originalJsonObject != null) {
-			for (JsonElement object : originalJsonObject.get(USER_LEVELS).getAsJsonArray()) {
-				if (object.getAsJsonObject().get("name").getAsString().equals(board.getName())) {
-					return false;
-				}
-			}
-		}
-		try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileURL(LEVEL_DATA_PATH).getPath()),
+        if (originalJsonObject != null) {
+            for (JsonElement object : originalJsonObject.get(USER_LEVELS).getAsJsonArray()) {
+                if (object.getAsJsonObject().get("name").getAsString().equals(board.getName())) {
+                    return false;
+                }
+            }
+        }
+        try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileURL(LEVEL_DATA_PATH).getPath()),
                 Charset.defaultCharset())) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -291,11 +299,11 @@ public final class Resources {
             jsonObject.addProperty("name", board.getName());
             jsonObject.addProperty("board", board.toString());
 
-			if (originalJsonObject != null) {
-				originalJsonObject.get(USER_LEVELS).getAsJsonArray().add(jsonObject);
-			}
+            if (originalJsonObject != null) {
+                originalJsonObject.get(USER_LEVELS).getAsJsonArray().add(jsonObject);
+            }
 
-			gson.toJson(originalJsonObject, writer);
+            gson.toJson(originalJsonObject, writer);
             return true;
         } catch (Exception e) {
             Resources.LOGGER.error("Unable to save user-defined level to the LevelData.json file", e);
@@ -313,24 +321,24 @@ public final class Resources {
     public static boolean removeUserLevel(String name) {
         JsonObject originalJsonObject = loadJsonObjectFromPath(LEVEL_DATA_PATH, false);
 
-		if (originalJsonObject != null) {
-			for (JsonElement object : originalJsonObject.get(USER_LEVELS).getAsJsonArray()) {
-				if (object.getAsJsonObject().get("name").getAsString().equals(name)) {
-					try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileURL(LEVEL_DATA_PATH).getPath()),
-							Charset.defaultCharset())) {
-						Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        if (originalJsonObject != null) {
+            for (JsonElement object : originalJsonObject.get(USER_LEVELS).getAsJsonArray()) {
+                if (object.getAsJsonObject().get("name").getAsString().equals(name)) {
+                    try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileURL(LEVEL_DATA_PATH).getPath()),
+                            Charset.defaultCharset())) {
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-						originalJsonObject.get(USER_LEVELS).getAsJsonArray().remove(object);
+                        originalJsonObject.get(USER_LEVELS).getAsJsonArray().remove(object);
 
-						gson.toJson(originalJsonObject, writer);
-						return true;
-					} catch (Exception e) {
-						Resources.LOGGER.error("Unable to save user-defined level to the LevelData.json file", e);
-						return false;
-					}
-				}
-			}
-		}
-		return false;
+                        gson.toJson(originalJsonObject, writer);
+                        return true;
+                    } catch (Exception e) {
+                        Resources.LOGGER.error("Unable to save user-defined level to the LevelData.json file", e);
+                        return false;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

@@ -50,15 +50,15 @@ When contributing to the project please start on the issues page which is used f
 
 ## Current Class Diagram
 
-<p align="center">
-<img src="documentation/uml/classDiagram.png">
+<p style="text-align:right">
+<img src="documentation/uml/classDiagram.png" alt="Class Diagram">
 </p>
 Date: November 18, 2019
 
 ## Current Sequence Diagram
 
-<p align="center">
-<img src="documentation/uml/sequenceDiagram.png">
+<p style="text-align:right">
+<img src="documentation/uml/sequenceDiagram.png" alt="Sequence Diagram">
 </p>
 Date: November 18, 2019
 

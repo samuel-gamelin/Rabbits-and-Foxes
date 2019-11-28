@@ -16,13 +16,14 @@ public class RabbitTest {
 	private Rabbit rabbitBrown;
 	private Rabbit rabbitWhite;
 	private Board board;
-	private final String TESTBOARD = "X MU X X X FHU1 FTU1 X X X X X X X X X X X X X X X X X X";
 
 	@Before
 	public void setUp() {
 		rabbitBrown = new Rabbit(Rabbit.RabbitColour.BROWN);
 		rabbitWhite = new Rabbit(Rabbit.RabbitColour.WHITE);
+		String TESTBOARD = "X MU X X X FHU1 FTU1 X X X X X X X X X X X X X X X X X X";
 		board = Board.createBoard("Anyboard", TESTBOARD);
+		assertNotNull(board);
 		board.setPiece(rabbitWhite, 0, 0);
 		board.setPiece(rabbitBrown, 2, 2);
 	}
@@ -31,7 +32,7 @@ public class RabbitTest {
 	public void testRabbitConstructors() {
 		assertNotNull(rabbitBrown);
 		Rabbit rabbitGray = Rabbit.createRabbit("RBG");
-		assertTrue(rabbitGray instanceof Rabbit);
+		assertNotNull(rabbitGray);
 		Rabbit fakeRabbit = Rabbit.createRabbit("RABBIT");
 		assertNull(fakeRabbit);
 	}

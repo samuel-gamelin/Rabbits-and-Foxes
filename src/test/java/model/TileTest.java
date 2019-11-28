@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * A suite of tests for the Tile class.
+ * Tests for the Tile class.
  * 
  * @author Samuel Gamelin
  */

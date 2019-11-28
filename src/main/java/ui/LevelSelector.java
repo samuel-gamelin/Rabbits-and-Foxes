@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class represents the level selector for the game.
@@ -50,9 +51,9 @@ public class LevelSelector extends JFrame implements ActionListener {
         pageNumber = 1;
 
         /*
-         * Storing lists containing the stored levels in the JSON document.
-         * Also determining what the last page is based on the number of levels
-         * in the default level list.
+         * Storing lists containing the stored levels in the JSON document. Also
+         * determining what the last page is based on the number of levels in the
+         * default level list.
          */
         allDefaultLevels = Resources.getAllDefaultBoards();
         allCustomLevels = Resources.getAllUserBoards();
@@ -87,7 +88,8 @@ public class LevelSelector extends JFrame implements ActionListener {
         setUpLevelDisplayButton(btnMiddleLevel = new JButton(), 2);
         setUpLevelDisplayButton(btnRightLevel = new JButton(), 3);
 
-        // Creating a JPanel to hold the buttons associated with moving up or down a page.
+        // Creating a JPanel to hold the buttons associated with moving up or down a
+        // page.
         // Also adding the associated buttons to the panel, along with glue.
         JPanel pageButtons = new JPanel();
         setUpJPanel(pageButtons, true);
@@ -98,10 +100,9 @@ public class LevelSelector extends JFrame implements ActionListener {
         pageButtons.add(Box.createHorizontalGlue());
 
         /*
-         * Creating a JPanel to hold the buttons associated with returning to
-         * the main menu, starting a level, and going to the custom/default level
-         * selection screen.
-         * Also adding the associated buttons to the panel, along with glue.
+         * Creating a JPanel to hold the buttons associated with returning to the main
+         * menu, starting a level, and going to the custom/default level selection
+         * screen. Also adding the associated buttons to the panel, along with glue.
          */
         JPanel actionButtons = new JPanel();
         setUpJPanel(actionButtons, true);
@@ -122,7 +123,8 @@ public class LevelSelector extends JFrame implements ActionListener {
         allButtons.add(actionButtons);
         allButtons.add(Box.createRigidArea(new Dimension(0, (int) GUIUtilities.SIDE_LENGTH / 50)));
 
-        // Creating a JPanel to store the board previews for the levels on the current page.
+        // Creating a JPanel to store the board previews for the levels on the current
+        // page.
         JPanel boards = new JPanel();
         setUpJPanel(boards, true);
         boards.add(Box.createHorizontalGlue());
@@ -162,8 +164,8 @@ public class LevelSelector extends JFrame implements ActionListener {
     }
 
     /**
-     * Initialize a 2D array of JLabels to prepare for storing an image of
-     * a piece depending on the level being previewed.
+     * Initialize a 2D array of JLabels to prepare for storing an image of a piece
+     * depending on the level being previewed.
      *
      * @param tiles The JLabel 2D array being set up
      */
@@ -192,12 +194,14 @@ public class LevelSelector extends JFrame implements ActionListener {
     }
 
     /**
-     * Initialize a JButton used for interacting with the level selector with default behaviour.
+     * Initialize a JButton used for interacting with the level selector with
+     * default behaviour.
      *
      * @param button The JButton being set up
      */
     private void setUpMenuButton(JButton button) {
-        button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BUTTON_X_FACTOR), (int) (BUTTON_Y_FACTOR * GUIUtilities.SIDE_LENGTH)));
+        button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BUTTON_X_FACTOR),
+                (int) (BUTTON_Y_FACTOR * GUIUtilities.SIDE_LENGTH)));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setForeground(Color.BLACK);
         button.setBackground(Color.WHITE);
@@ -235,9 +239,11 @@ public class LevelSelector extends JFrame implements ActionListener {
         button.setBorder(DEFAULT);
         button.setContentAreaFilled(false);
         button.setLayout(new GridLayout(5, 5));
-        button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
+        button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
+                (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         button.addActionListener(this);
-        button.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
+        button.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
+                (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         for (int y = 0; y < Board.SIZE; y++) {
             for (int x = 0; x < Board.SIZE; x++) {
                 switch (tileNumber) {
@@ -258,11 +264,11 @@ public class LevelSelector extends JFrame implements ActionListener {
     }
 
     /**
-     * Update the view of the main level selector JFrame. This involves updating
-     * all of the JButtons responsible for displaying board previews.
-     * Some math needs to be done to determine how many JButtons should be updated
-     * depending on the number of levels remaining in the lists containing all of the
-     * levels for both the default and custom levels.
+     * Update the view of the main level selector JFrame. This involves updating all
+     * of the JButtons responsible for displaying board previews. Some math needs to
+     * be done to determine how many JButtons should be updated depending on the
+     * number of levels remaining in the lists containing all of the levels for both
+     * the default and custom levels.
      *
      * @param levelList The list we are using to update the level previews
      */
@@ -331,52 +337,45 @@ public class LevelSelector extends JFrame implements ActionListener {
                 Piece piece = board.getPiece(x, y);
                 if (piece != null) {
                     if (piece instanceof Mushroom) {
-                        tiles[x][y].setIcon(new ImageIcon(
-                                Resources.MUSHROOM.getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
-                                        (int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR), Image.SCALE_SMOOTH)));
+                        tiles[x][y].setIcon(new ImageIcon(Resources.MUSHROOM.getImage().getScaledInstance(
+                                (int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
+                                (int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR), Image.SCALE_SMOOTH)));
                         tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                     } else if (piece instanceof Rabbit) {
-                        try {
-                            tiles[x][y].setIcon(new ImageIcon(((ImageIcon) Resources.class
-                                    .getDeclaredField("RABBIT_" + ((Rabbit) (piece)).getColour()).get(Resources.class))
-                                    .getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
-                                            (int) GUIUtilities.SIDE_LENGTH / Y_SCALE_FACTOR, Image.SCALE_SMOOTH)));
-                            tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
-                        } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
-                            Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
-                        }
+                        tiles[x][y].setIcon(
+                                new ImageIcon((Objects.requireNonNull(Resources.getImageIconByName("RABBIT_" + ((Rabbit) (piece)).getColour())))
+                                        .getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
+                                                (int) GUIUtilities.SIDE_LENGTH / Y_SCALE_FACTOR, Image.SCALE_SMOOTH)));
+                        tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                     } else {
-                        try {
-                            tiles[x][y].setIcon(new ImageIcon(((ImageIcon) Resources.class
-                                    .getDeclaredField("FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())
-                                    .get(Resources.class)).getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
-                                    (int) (GUIUtilities.SIDE_LENGTH / Y_SCALE_FACTOR), Image.SCALE_SMOOTH)));
-                            tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
-                            if (((Fox) (piece)).getFoxType() == FoxType.HEAD) {
-                                switch (((Fox) (piece)).getDirection()) {
-                                    case LEFT:
-                                        tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
-                                        break;
-                                    case RIGHT:
-                                        tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            } else {
-                                switch (((Fox) (piece)).getDirection()) {
-                                    case LEFT:
-                                        tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
-                                        break;
-                                    case RIGHT:
-                                        tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
-                                        break;
-                                    default:
-                                        break;
-                                }
+                        tiles[x][y].setIcon(new ImageIcon((Objects.requireNonNull(Resources.getImageIconByName(
+                                "FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())))
+                                .getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
+                                        (int) (GUIUtilities.SIDE_LENGTH / Y_SCALE_FACTOR),
+                                        Image.SCALE_SMOOTH)));
+                        tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
+                        if (((Fox) (piece)).getFoxType() == FoxType.HEAD) {
+                            switch (((Fox) (piece)).getDirection()) {
+                                case LEFT:
+                                    tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
+                                    break;
+                                case RIGHT:
+                                    tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
+                                    break;
+                                default:
+                                    break;
                             }
-                        } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
-                            Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
+                        } else {
+                            switch (((Fox) (piece)).getDirection()) {
+                                case LEFT:
+                                    tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
+                                    break;
+                                case RIGHT:
+                                    tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                 } else {
@@ -384,11 +383,12 @@ public class LevelSelector extends JFrame implements ActionListener {
                 }
             }
         }
+
     }
 
     /**
-     * Modify border of the selected level preview JButton to stand out
-     * against the borders of the other level preview JButtons.
+     * Modify border of the selected level preview JButton to stand out against the
+     * borders of the other level preview JButtons.
      *
      * @param button The JButton that was selected
      */
@@ -475,8 +475,10 @@ public class LevelSelector extends JFrame implements ActionListener {
                 updateView(allDefaultLevels);
             }
         } else if (e.getSource() == btnCustomLevels) {
-            if (allCustomLevels.size() == 0) {
-                GUIUtilities.displayMessageDialog(this, "Could not locate any custom levels.\nTry making some in the level builder!", "No custom levels found");
+            if (allCustomLevels.isEmpty()) {
+                GUIUtilities.displayMessageDialog(this,
+                        "Could not locate any custom levels.\nTry making some in the level builder!",
+                        "No custom levels found");
             } else {
                 pageNumber = 1;
                 if (custom) {

@@ -4,8 +4,7 @@ import model.Piece.PieceType;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the Mushroom class (for sake of completeness).
@@ -24,8 +23,8 @@ public class MushroomTest {
 
 	@Test
 	public void testConstructor() {
-		assertTrue(mushroom instanceof Mushroom);
-		assertTrue(!(mushroom instanceof MovablePiece));
+		assertNotNull(mushroom);
+		assertFalse(mushroom instanceof MovablePiece);
 	}
 
 	@Test

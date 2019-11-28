@@ -16,13 +16,12 @@ public class FoxTest {
 
 	private Board board;
 
-	private final String TESTBOARD = "RBG MU X X X FHU1 FTU1 X X X FHL0 X RBB X X FTL0 X X X X X X X X X";
-
 	private Fox fox1;
 	private Fox fox2;
 
 	@Before
 	public void setUp() {
+		String TESTBOARD = "RBG MU X X X FHU1 FTU1 X X X FHL0 X RBB X X FTL0 X X X X X X X X X";
 		board = Board.createBoard("Anyboard", TESTBOARD);
 		fox1 = new Fox(Fox.Direction.UP, true);
 		fox2 = new Fox(Fox.Direction.LEFT, false);
@@ -32,9 +31,9 @@ public class FoxTest {
 	@Test
 	public void testFoxConstructors() {
 		assertNotNull(fox1);
-		assertTrue(fox2 instanceof Fox);
+		assertNotNull(fox2);
 		Fox fox3 = Fox.createFox("FHD1");
-		assertTrue(fox3 instanceof Fox);
+		assertNotNull(fox3);
 		Fox fakeFox = Fox.createFox("AAAAAAAAAAAAA");
 		assertNull(fakeFox);
 	}
