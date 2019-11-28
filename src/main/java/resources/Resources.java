@@ -172,6 +172,12 @@ public final class Resources {
         }
     }
 
+    /**
+     * Retrieves an ImageIcon based on its field name, as declared in this class.
+     *
+     * @param fieldName The field name associated with the desired ImageIcon
+     * @return The ImageIcon associated with the provided field name. Null if no such field exists.
+     */
     public static ImageIcon getImageIconByName(String fieldName) {
         try {
             return (ImageIcon) Resources.class.getDeclaredField(fieldName).get(Resources.class);
