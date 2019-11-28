@@ -1,18 +1,36 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.border.BevelBorder;
+
 import controller.GameController;
 import controller.GameController.ClickValidity;
 import model.Board;
 import model.BoardListener;
 import resources.Resources;
+import ui.BoardButton;
 import ui.GUIUtilities;
 import ui.MainMenu;
 import util.Move;
-
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import java.awt.*;
-import java.awt.event.*;
 
 /**
  * This class represents the view with which the user interacts in order to play
@@ -77,6 +95,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         menuBar.add(menuSaveButton = GUIUtilities.createMenuBarButton("Save Game", true));
         menuBar.add(menuHelp = GUIUtilities.createMenuBarButton("Help", false));
         menuBar.add(menuQuit = GUIUtilities.createMenuBarButton("Quit", true));
+
         this.setContentPane(new JLabel(Resources.BOARD));
         this.getContentPane().setLayout(new GridLayout(5, 5));
 
@@ -87,12 +106,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
         for (int y = 0; y < Board.SIZE; y++) {
             for (int x = 0; x < Board.SIZE; x++) {
-                buttons[x][y] = new JButton();
-                // Clear button default colours and make it transparent
-                buttons[x][y].setOpaque(false);
-                buttons[x][y].setContentAreaFilled(false);
-                buttons[x][y].setBorder(GUIUtilities.BLANK_BORDER);
-
+                buttons[x][y] = new BoardButton();
                 gameContentPane.add(buttons[x][y]);
                 buttons[x][y].addMouseListener(this);
 
@@ -130,7 +144,8 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         // Configure the escape key to cancel the pending move, setup the check box and
         GUIUtilities.bindKeyStroke(gameContentPane, "ESCAPE", "clear", this::clearMove);
         showPossibleMovesBox = new JCheckBox();
-        showPossibleMovesBox.addItemListener(e -> showPossibleMovesBox.setSelected(e.getStateChange() == ItemEvent.SELECTED));
+        showPossibleMovesBox
+                .addItemListener(e -> showPossibleMovesBox.setSelected(e.getStateChange() == ItemEvent.SELECTED));
         GUIUtilities.updateView(buttons, board);
 
         menuMainScreen.addActionListener(this);
@@ -212,7 +227,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                 if (!gameController.isDefaultLevel()) {
                     int choice = GUIUtilities.displayOptionDialog(this,
                             "Congrats, you solved it! Would you like to go to reset or go to the main menu?", "Solved!",
-                            new String[]{"Reset", "Main Menu", "Quit"});
+                            new String[] { "Reset", "Main Menu", "Quit" });
                     if (choice == 0) {
                         resetGame();
                     } else if (choice == 1) {
@@ -226,7 +241,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                     if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
                         int choice = GUIUtilities.displayOptionDialog(this,
                                 "Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
-                                new String[]{"Next", "Reset", "Quit"});
+                                new String[] { "Next", "Reset", "Quit" });
                         if (choice == 0) {
                             gameController.incrementLevel();
                             resetGame();
@@ -239,7 +254,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                     } else {
                         if (GUIUtilities.displayOptionDialog(this,
                                 "You have finished the game! Would you like to go to the main menu or exit?",
-                                "End Game", new String[]{"Main Menu", "Quit"}) == 0) {
+                                "End Game", new String[] { "Main Menu", "Quit" }) == 0) {
                             gameState = false;
                             this.dispose();
                             SwingUtilities.invokeLater(MainMenu::new);
@@ -260,7 +275,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuMainScreen
                 && GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
-                "Return to Main Menu", new String[]{"Yes", "No"}) == 0) {
+                        "Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == menuHint) {
@@ -278,7 +293,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             displayHelpDialog();
         } else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
                 "Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
-                new String[]{"Yes", "No"}) == 0)) {
+                new String[] { "Yes", "No" }) == 0)) {
             resetGame();
         } else if (e.getSource() == menuUndo) {
             clearButtonBorders();

@@ -1,15 +1,30 @@
 package ui;
 
-import model.*;
-import resources.Resources;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.ColorUIResource;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.ColorUIResource;
+
+import model.Board;
+import model.Fox;
+import model.Mushroom;
+import model.Piece;
+import model.Rabbit;
+import resources.Resources;
 
 /**
  * This class represents the GUI utilities shared by the game's frames.
@@ -33,8 +48,8 @@ public final class GUIUtilities {
      */
     public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() > Toolkit
             .getDefaultToolkit().getScreenSize().getHeight()
-            ? (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
-            : (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+                    ? (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
+                    : (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
     /**
      * Font size, as determined by display dimensions.
@@ -63,7 +78,7 @@ public final class GUIUtilities {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 if (GUIUtilities.displayOptionDialog(frame, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
-                        new String[]{"Yes", "No"}) == 0) {
+                        new String[] { "Yes", "No" }) == 0) {
                     System.exit(0);
                 }
             }
@@ -138,7 +153,8 @@ public final class GUIUtilities {
      * Creates and returns a JButton suitable for the game's menu bar.
      *
      * @param text           The text inside the button
-     * @param enableShortcut True if the corresponding shortcut should be enabled, false otherwise
+     * @param enableShortcut True if the corresponding shortcut should be enabled,
+     *                       false otherwise
      * @return The newly created JButton
      */
     public static JButton createMenuBarButton(String text, boolean enableShortcut) {
@@ -169,7 +185,8 @@ public final class GUIUtilities {
                     } else if (piece instanceof Rabbit) {
                         buttons[x][y].setIcon(Resources.getImageIconByName("RABBIT_" + ((Rabbit) (piece)).getColour()));
                     } else {
-                        buttons[x][y].setIcon(Resources.getImageIconByName("FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection()));
+                        buttons[x][y].setIcon(Resources.getImageIconByName(
+                                "FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection()));
                     }
                 } else {
                     buttons[x][y].setIcon(null);
