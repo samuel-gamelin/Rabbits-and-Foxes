@@ -537,9 +537,9 @@ public class LevelSelector extends JFrame implements ActionListener {
                 determineLastPageNumber(allDefaultLevels);
                 updateView(allDefaultLevels);
                 btnDeleteLevel.setVisible(false);
-                btnStartLevel.setEnabled(false);
             }
             btnNextPage.setEnabled(lastPage != 1);
+            btnStartLevel.setEnabled(false);
         }
     }
 }
