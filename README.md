@@ -103,4 +103,4 @@ The pictures and graphical resources used in this game were obtained from https:
 
 ## License and Disclaimer
 
-> This application is for educational purposes. JumpIN is a registered commercial product. The developers are not responsible for the distribution of this product.
+> This application is for educational purposes. JumpIN' is a registered commercial product. The developers are not responsible for the distribution of this product.
