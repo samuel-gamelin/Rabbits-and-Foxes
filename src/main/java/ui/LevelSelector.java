@@ -33,8 +33,8 @@ public class LevelSelector extends JFrame implements ActionListener {
     private static final BevelBorder SELECTED = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
     private static final BevelBorder DEFAULT = new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.BLACK);
 
-    private JButton btnStartSelectLevel, btnMainMenu, btnCustomLevels, btnNextPage, btnLastPage, btnLeftLevel,
-            btnMiddleLevel, btnRightLevel;
+    private JButton btnStartLevel, btnMainMenu, btnCustomLevels, btnNextPage, btnLastPage, btnLeftLevel,
+            btnMiddleLevel, btnRightLevel, btnDeleteLevel;
     private JTextPane levelLabelLeft, levelLabelMiddle, levelLabelRight;
     private JLabel[][] tiles1, tiles2, tiles3;
 
@@ -70,12 +70,17 @@ public class LevelSelector extends JFrame implements ActionListener {
 
         // Create the JButtons used for interacting with the level selector.
         // Also ensuring that the start and last page button are disabled initially.
-        setUpMenuButton(btnStartSelectLevel = new JButton("Start"));
+        setUpMenuButton(btnStartLevel = new JButton("Start"));
         setUpMenuButton(btnMainMenu = new JButton("Back to Main Menu"));
         setUpMenuButton(btnCustomLevels = new JButton("Go to Custom Levels"));
         setUpMenuButton(btnNextPage = new JButton("Next Page"));
         setUpMenuButton(btnLastPage = new JButton("Last Page"));
-        btnStartSelectLevel.setEnabled(false);
+        setUpMenuButton(btnDeleteLevel = new JButton("Delete Level"));
+        btnDeleteLevel.setBackground(Color.RED);
+        btnDeleteLevel.setForeground(Color.WHITE);
+        btnDeleteLevel.setVisible(false);
+        btnDeleteLevel.setEnabled(false);
+        btnStartLevel.setEnabled(false);
         btnLastPage.setEnabled(false);
 
         // Create the "tiles" for the board preview.
@@ -109,15 +114,22 @@ public class LevelSelector extends JFrame implements ActionListener {
         actionButtons.add(Box.createHorizontalGlue());
         actionButtons.add(btnMainMenu);
         actionButtons.add(Box.createHorizontalGlue());
-        actionButtons.add(btnStartSelectLevel);
+        actionButtons.add(btnStartLevel);
         actionButtons.add(Box.createHorizontalGlue());
         actionButtons.add(btnCustomLevels);
         actionButtons.add(Box.createHorizontalGlue());
+        
+        // Creating a JPanel to exclusively delete custom levels.
+        JPanel deletePanel = new JPanel();
+        setUpJPanel(deletePanel, true);
+        deletePanel.add(btnDeleteLevel);
 
         // Creating a JPanel to store all of the buttons for the level selector.
         JPanel allButtons = new JPanel();
         allButtons.setOpaque(false);
         allButtons.setLayout(new BoxLayout(allButtons, BoxLayout.PAGE_AXIS));
+        allButtons.add(deletePanel);
+        allButtons.add(Box.createRigidArea(new Dimension(0, (int) GUIUtilities.SIDE_LENGTH / 50)));
         allButtons.add(pageButtons);
         allButtons.add(Box.createRigidArea(new Dimension(0, (int) GUIUtilities.SIDE_LENGTH / 25)));
         allButtons.add(actionButtons);
@@ -145,7 +157,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         textPanel.add(Box.createHorizontalGlue());
         textPanel.add(levelLabelRight);
         textPanel.add(Box.createHorizontalGlue());
-
+        
         // Creating a JPanel to store the other JPanels created above.
         JPanel mainPanel = new JPanel();
         setUpJPanel(mainPanel, false);
@@ -395,7 +407,9 @@ public class LevelSelector extends JFrame implements ActionListener {
     private void levelSelected(JButton button) {
         clearSelectedBorder();
         button.setBorder(SELECTED);
-        btnStartSelectLevel.setEnabled(true);
+        btnStartLevel.setEnabled(true);
+        if (custom)
+            btnDeleteLevel.setEnabled(true);
     }
 
     /**
@@ -425,7 +439,7 @@ public class LevelSelector extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnStartSelectLevel) {
+        if (e.getSource() == btnStartLevel) {
             this.dispose();
             if (btnLeftLevel.getBorder().equals(SELECTED)) {
                 int level = (pageNumber * 3) - 2;
@@ -458,9 +472,10 @@ public class LevelSelector extends JFrame implements ActionListener {
             pageNumber++;
             btnLastPage.setEnabled(true);
             btnNextPage.setEnabled(pageNumber != lastPage);
-            btnStartSelectLevel.setEnabled(false);
+            btnStartLevel.setEnabled(false);
             if (custom) {
                 updateView(allCustomLevels);
+                btnDeleteLevel.setEnabled(false);
             } else {
                 updateView(allDefaultLevels);
             }
@@ -468,9 +483,10 @@ public class LevelSelector extends JFrame implements ActionListener {
             pageNumber--;
             btnNextPage.setEnabled(true);
             btnLastPage.setEnabled(pageNumber != 1);
-            btnStartSelectLevel.setEnabled(false);
+            btnStartLevel.setEnabled(false);
             if (custom) {
                 updateView(allCustomLevels);
+                btnDeleteLevel.setEnabled(false);
             } else {
                 updateView(allDefaultLevels);
             }
@@ -486,14 +502,42 @@ public class LevelSelector extends JFrame implements ActionListener {
                     btnCustomLevels.setText("Go to Custom Levels");
                     determineLastPageNumber(allDefaultLevels);
                     updateView(allDefaultLevels);
+                    btnDeleteLevel.setVisible(false);
                 } else {
                     custom = true;
                     btnCustomLevels.setText("Go to Default Levels");
                     determineLastPageNumber(allCustomLevels);
                     updateView(allCustomLevels);
+                    btnDeleteLevel.setEnabled(false);
+                    btnDeleteLevel.setVisible(true);
                 }
                 btnNextPage.setEnabled(lastPage != 1);
                 btnLastPage.setEnabled(false);
+            }
+        }
+        else if (e.getSource() == btnDeleteLevel && GUIUtilities.displayOptionDialog(this, "Are you sure you want to delete this level?\nThis cannot be undone.", "Delete Level",
+                new String[] { "Yes", "No" }) == 0) {
+            if (btnLeftLevel.getBorder().equals(SELECTED)) {
+                Resources.removeUserLevel(levelLabelLeft.getText());
+            } else if (btnMiddleLevel.getBorder().equals(SELECTED)) {
+                Resources.removeUserLevel(levelLabelMiddle.getText());
+            } else {
+                Resources.removeUserLevel(levelLabelRight.getText());
+            }
+            allCustomLevels = Resources.getAllUserBoards();
+            determineLastPageNumber(allCustomLevels);
+            pageNumber = 1;
+            btnLastPage.setEnabled(false);
+            btnNextPage.setEnabled(lastPage != 1);
+            if (allCustomLevels.size() != 0) {
+                updateView(allCustomLevels);
+                btnDeleteLevel.setEnabled(false);
+            } else {
+                custom = false;
+                btnCustomLevels.setText("Go to Custom Levels");
+                determineLastPageNumber(allDefaultLevels);
+                updateView(allDefaultLevels);
+                btnDeleteLevel.setVisible(false);
             }
         }
     }
