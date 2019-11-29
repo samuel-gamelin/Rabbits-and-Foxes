@@ -1,30 +1,15 @@
 package ui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Toolkit;
+import model.*;
+import resources.Resources;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.ColorUIResource;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.ColorUIResource;
-
-import model.Board;
-import model.Fox;
-import model.Mushroom;
-import model.Piece;
-import model.Rabbit;
-import resources.Resources;
 
 /**
  * This class represents the GUI utilities shared by the game's frames.
@@ -91,9 +76,8 @@ public final class GUIUtilities {
      */
     static void applyDefaults() {
         try {
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                | UnsupportedLookAndFeelException e) {
+            UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             Resources.LOGGER.error("Could not set the default look and feel", e);
         }
         UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
@@ -145,7 +129,6 @@ public final class GUIUtilities {
             public void actionPerformed(ActionEvent e) {
                 method.run();
             }
-
         });
     }
 
@@ -159,8 +142,9 @@ public final class GUIUtilities {
      */
     public static JButton createMenuBarButton(String text, boolean enableShortcut) {
         JButton button = new JButton("<html><p style='text-align:center;'>" + text + "</p></html>");
-        button.setBackground(Color.WHITE);
         button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setForeground(Color.WHITE);
 
         if (enableShortcut) {
             GUIUtilities.bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(0))), text,

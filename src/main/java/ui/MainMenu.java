@@ -23,8 +23,6 @@ public class MainMenu extends JFrame implements ActionListener {
     private JFileChooser fc;
 
     public MainMenu() {
-        GUIUtilities.applyDefaults();
-
         fc = new JFileChooser();
 
         this.setTitle("Main Menu");
@@ -58,8 +56,9 @@ public class MainMenu extends JFrame implements ActionListener {
         button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / 2.5), (int) (0.10 * GUIUtilities.SIDE_LENGTH)));
         button.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / 2.5), (int) (0.10 * GUIUtilities.SIDE_LENGTH)));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setForeground(Color.BLACK);
-        button.setBackground(Color.WHITE);
+        button.setForeground(Color.WHITE);
+        button.setBackground(Color.BLACK);
+        button.setFocusPainted(false);
         button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
         button.addActionListener(this);
         pane.add(button, BorderLayout.CENTER);
@@ -114,6 +113,7 @@ public class MainMenu extends JFrame implements ActionListener {
      * @param args The command-line arguments
      */
     public static void main(String[] args) {
+        GUIUtilities.applyDefaults();
         SwingUtilities.invokeLater(MainMenu::new);
     }
 }

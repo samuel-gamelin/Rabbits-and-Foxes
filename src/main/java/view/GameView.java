@@ -1,27 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
-
 import controller.GameController;
 import controller.GameController.ClickValidity;
 import model.Board;
@@ -30,6 +8,11 @@ import resources.Resources;
 import ui.GUIUtilities;
 import ui.MainMenu;
 import util.Move;
+
+import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import java.awt.*;
+import java.awt.event.*;
 
 /**
  * This class represents the view with which the user interacts in order to play
@@ -109,6 +92,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                 // Clear button default colours and make it transparent
                 buttons[x][y].setOpaque(false);
                 buttons[x][y].setContentAreaFilled(false);
+                buttons[x][y].setFocusPainted(false);
                 buttons[x][y].setBorder(GUIUtilities.BLANK_BORDER);
                 buttons[x][y].setName(x + "," + y);
                 gameContentPane.add(buttons[x][y]);
