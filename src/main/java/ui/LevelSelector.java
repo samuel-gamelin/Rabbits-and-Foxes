@@ -528,7 +528,6 @@ public class LevelSelector extends JFrame implements ActionListener {
             determineLastPageNumber(allCustomLevels);
             pageNumber = 1;
             btnLastPage.setEnabled(false);
-            btnNextPage.setEnabled(lastPage != 1);
             if (allCustomLevels.size() != 0) {
                 updateView(allCustomLevels);
                 btnDeleteLevel.setEnabled(false);
@@ -538,8 +537,9 @@ public class LevelSelector extends JFrame implements ActionListener {
                 determineLastPageNumber(allDefaultLevels);
                 updateView(allDefaultLevels);
                 btnDeleteLevel.setVisible(false);
-                btnNextPage.setEnabled(true);
             }
+            btnNextPage.setEnabled(lastPage != 1);
+            btnStartLevel.setEnabled(false);
         }
     }
 }
