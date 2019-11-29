@@ -27,7 +27,6 @@ import controller.GameController.ClickValidity;
 import model.Board;
 import model.BoardListener;
 import resources.Resources;
-import ui.BoardButton;
 import ui.GUIUtilities;
 import ui.MainMenu;
 import util.Move;
@@ -106,7 +105,12 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
         for (int y = 0; y < Board.SIZE; y++) {
             for (int x = 0; x < Board.SIZE; x++) {
-                buttons[x][y] = new BoardButton();
+                buttons[x][y] = new JButton();
+                // Clear button default colours and make it transparent
+                buttons[x][y].setOpaque(false);
+                buttons[x][y].setContentAreaFilled(false);
+                buttons[x][y].setBorder(GUIUtilities.BLANK_BORDER);
+                buttons[x][y].setName(x + "," + y);
                 gameContentPane.add(buttons[x][y]);
                 buttons[x][y].addMouseListener(this);
 
