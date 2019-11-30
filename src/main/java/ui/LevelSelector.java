@@ -292,7 +292,7 @@ public class LevelSelector extends JFrame implements ActionListener {
      */
     private void updateView(List<Board> levelList) {
         clearSelectedBorder();
-        if (pageNumber != lastPage || ((pageNumber == lastPage) && (levelList.size() % 3 == 0))) {
+        if (pageNumber != lastPage || levelList.size() % 3 == 0) {
             updateLevelPreview(tiles1, levelList.get(pageNumber * 3 - 3));
             updateLevelPreview(tiles2, levelList.get(pageNumber * 3 - 2));
             updateLevelPreview(tiles3, levelList.get(pageNumber * 3 - 1));
