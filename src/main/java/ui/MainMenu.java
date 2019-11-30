@@ -2,7 +2,6 @@ package ui;
 
 import model.Board;
 import resources.Resources;
-import view.GameView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,8 +19,15 @@ import java.awt.event.ActionListener;
 
 public class MainMenu extends JFrame implements ActionListener {
     private JButton btnStart, btnSelectLevel, btnBuildLevel, btnHelp, btnLoadGameButton, btnQuitGame;
+
+    /**
+     * The file chooser that the user will interact with should they choose to load a save file.
+     */
     private JFileChooser fc;
 
+    /**
+     * Constructs a MainMenu frame, populating it with options (as buttons) that the user can choose from.
+     */
     public MainMenu() {
         fc = new JFileChooser();
 
@@ -34,12 +40,12 @@ public class MainMenu extends JFrame implements ActionListener {
         this.add(Box.createRigidArea(new Dimension(0, (int) (GUIUtilities.SIDE_LENGTH / 16))), BorderLayout.SOUTH);
 
         this.add(Box.createVerticalGlue());
-        addMainMenuButton(this, btnStart = new JButton("Start"));
-        addMainMenuButton(this, btnSelectLevel = new JButton("Select Level"));
-        addMainMenuButton(this, btnLoadGameButton = new JButton("Open Saved Game"));
-        addMainMenuButton(this, btnBuildLevel = new JButton("Level Builder"));
-        addMainMenuButton(this, btnHelp = new JButton("Help"));
-        addMainMenuButton(this, btnQuitGame = new JButton("Quit"));
+        addMainMenuButton(btnStart = new JButton("Start"));
+        addMainMenuButton(btnSelectLevel = new JButton("Select Level"));
+        addMainMenuButton(btnLoadGameButton = new JButton("Open Saved Game"));
+        addMainMenuButton(btnBuildLevel = new JButton("Level Builder"));
+        addMainMenuButton(btnHelp = new JButton("Help"));
+        addMainMenuButton(btnQuitGame = new JButton("Quit"));
 
         GUIUtilities.configureFrame(this);
     }
@@ -48,11 +54,10 @@ public class MainMenu extends JFrame implements ActionListener {
      * Adds a button to the specified pane, registering this frame as an
      * ActionListener.
      *
-     * @param pane   The pane to which to add the specified button
      * @param button The button to add and register this pane to as an
      *               ActionListener
      */
-    private void addMainMenuButton(Container pane, JButton button) {
+    private void addMainMenuButton(JButton button) {
         button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / 2.5), (int) (0.10 * GUIUtilities.SIDE_LENGTH)));
         button.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / 2.5), (int) (0.10 * GUIUtilities.SIDE_LENGTH)));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -61,8 +66,8 @@ public class MainMenu extends JFrame implements ActionListener {
         button.setFocusPainted(false);
         button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
         button.addActionListener(this);
-        pane.add(button, BorderLayout.CENTER);
-        pane.add(Box.createVerticalGlue());
+        add(button, BorderLayout.CENTER);
+        add(Box.createVerticalGlue());
     }
 
     /**
@@ -84,7 +89,6 @@ public class MainMenu extends JFrame implements ActionListener {
                     else {
                         SwingUtilities.invokeLater(new GameView(board, -1));
                     }
-
                 } else {
                     GUIUtilities.displayMessageDialog(this, "Invalid file selection!", "Invalid File");
                 }

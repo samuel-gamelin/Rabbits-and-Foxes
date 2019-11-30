@@ -1,10 +1,10 @@
 package model;
 
 import model.Piece.PieceType;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the Mushroom class (for sake of completeness).
@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class MushroomTest {
     private Mushroom mushroom;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         mushroom = new Mushroom();
     }

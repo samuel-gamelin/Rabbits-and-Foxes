@@ -1,10 +1,10 @@
 package model;
 
 import model.Tile.TileColour;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the Tile class.
@@ -15,7 +15,7 @@ public class TileTest {
     private Tile tile1;
     private Tile tile2;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         tile1 = new Tile(TileColour.BROWN);
         tile2 = new Tile(TileColour.GREEN);

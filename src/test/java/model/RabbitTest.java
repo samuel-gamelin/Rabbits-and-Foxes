@@ -1,10 +1,10 @@
 package model;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import util.Move;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the Rabbit class.
@@ -17,7 +17,7 @@ public class RabbitTest {
     private Rabbit rabbitWhite;
     private Board board;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         rabbitBrown = new Rabbit(Rabbit.RabbitColour.BROWN);
         rabbitWhite = new Rabbit(Rabbit.RabbitColour.WHITE);
@@ -64,5 +64,4 @@ public class RabbitTest {
     public void testToString() {
         assertEquals("RBW", rabbitWhite.toString());
     }
-
 }
