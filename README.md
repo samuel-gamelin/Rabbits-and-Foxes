@@ -13,7 +13,7 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 ##### Getting Started
 
 1. From your terminal, run:
-   ```bash
+   ```
    git clone https://github.com/samuel-gamelin/SYSC-3110
    ```
    This will create a folder called SYSC-3110.
@@ -37,30 +37,28 @@ When contributing to the project please start on the issues page which is used f
 - Issues:
   - Issues will be used for task tracking.
   - When an issue is solved please document the changes that have been made.
-  - Close the issue after you have commit your code.
-  - If the issue is a bug please use Bug-<title> for the title
-  - If the issue is a task please use Task-<title> for the title
+  - Close the issue after you have committed your code.
 
 ##### Additional Tools
 
 - Contributions are made through GitHub, on this repository.
   - Please download and install [git](https://git-scm.com/) and/or [GitHub Desktop](https://desktop.github.com/).
 - Slack is used as the main chat for this project.
-- Github Issues will be used for task and ticket tracking.
+- GitHub issues will be used for task and ticket tracking.
 
 ## Current Class Diagram
 
 <p style="text-align:right">
 <img src="documentation/uml/classDiagram.png" alt="Class Diagram">
 </p>
-Date: November 18, 2019
+Date: December 2, 2019
 
 ## Current Sequence Diagram
 
 <p style="text-align:right">
 <img src="documentation/uml/sequenceDiagram.png" alt="Sequence Diagram">
 </p>
-Date: November 18, 2019
+Date: December 2, 2019
 
 ## Road Map
 
@@ -79,11 +77,12 @@ Currently no known issues are present.
 
 ## New features
 
-- Milestone 3: A solver for the game + undo/redo feature
-    - An undo/redo moves feature to make solving puzzles easier
-    - A hint system that can be used to get the next best move towards a solution
-      - The hint system uses a BFS-algorithm to solve the current puzzle and suggest the next move towards a solution
-    - 20 levels that can be played and completed, loaded from a JSON document
+- Milestone 4:
+    - Save and load features
+        - These features use JSON serialization
+    - A level builder used to create and save custom levels 
+    - A level selector screen, allowing the user to attempt any default or custom level
+    - A dark theme, which is enabled everywhere in the game
 
 ## The Team
 
