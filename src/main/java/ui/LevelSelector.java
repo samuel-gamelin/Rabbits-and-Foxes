@@ -222,6 +222,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setForeground(Color.WHITE);
         button.setBackground(Color.BLACK);
+        button.setFocusPainted(false);
         button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
         button.addActionListener(this);
     }
