@@ -24,6 +24,7 @@ import java.util.Objects;
  */
 public class LevelSelector extends JFrame implements ActionListener {
 
+    private static final int BUTTON_SPACING = (int) GUIUtilities.SIDE_LENGTH / 50;
     private static final double BUTTON_Y_FACTOR = 0.20;
     private static final int BUTTON_X_FACTOR = 3;
     private static final double BOARD_DISPLAY_SIZE = 3.4;
@@ -69,7 +70,6 @@ public class LevelSelector extends JFrame implements ActionListener {
         setUpJTextArea(levelLabelRight = new JTextPane());
 
         // Create the JButtons used for interacting with the level selector.
-        // Also ensuring that the start and last page button are disabled initially.
         setUpMenuButton(btnStartLevel = new JButton("Start"));
         setUpMenuButton(btnMainMenu = new JButton("Back to Main Menu"));
         setUpMenuButton(btnCustomLevels = new JButton("Go to Custom Levels"));
@@ -80,6 +80,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         btnDeleteLevel.setForeground(Color.WHITE);
         btnDeleteLevel.setVisible(false);
         btnDeleteLevel.setEnabled(false);
+        btnStartLevel.setBackground(new Color(0, 156, 0));
         btnStartLevel.setEnabled(false);
         btnLastPage.setEnabled(false);
 
@@ -93,9 +94,11 @@ public class LevelSelector extends JFrame implements ActionListener {
         setUpLevelDisplayButton(btnMiddleLevel = new JButton(), 2);
         setUpLevelDisplayButton(btnRightLevel = new JButton(), 3);
 
-        // Creating a JPanel to hold the buttons associated with moving up or down a
-        // page.
-        // Also adding the associated buttons to the panel, along with glue.
+        /* 
+         * Creating a JPanel to hold the buttons associated with 
+         * moving up or down a page.
+         * Also adding the associated buttons to the panel, along with glue.
+         */
         JPanel pageButtons = new JPanel();
         setUpJPanel(pageButtons, true);
         pageButtons.add(Box.createHorizontalGlue());
@@ -114,12 +117,15 @@ public class LevelSelector extends JFrame implements ActionListener {
         actionButtons.add(Box.createHorizontalGlue());
         actionButtons.add(btnMainMenu);
         actionButtons.add(Box.createHorizontalGlue());
-        actionButtons.add(btnStartLevel);
-        actionButtons.add(Box.createHorizontalGlue());
         actionButtons.add(btnCustomLevels);
         actionButtons.add(Box.createHorizontalGlue());
+        
+        // Creating a JPanel to hold the start button.
+        JPanel startPanel = new JPanel();
+        setUpJPanel(startPanel, true);
+        startPanel.add(btnStartLevel);
 
-        // Creating a JPanel to exclusively delete custom levels.
+        // Creating a JPanel to hold the delete level button.
         JPanel deletePanel = new JPanel();
         setUpJPanel(deletePanel, true);
         deletePanel.add(btnDeleteLevel);
@@ -128,15 +134,16 @@ public class LevelSelector extends JFrame implements ActionListener {
         JPanel allButtons = new JPanel();
         allButtons.setOpaque(false);
         allButtons.setLayout(new BoxLayout(allButtons, BoxLayout.PAGE_AXIS));
+        allButtons.add(startPanel);
+        allButtons.add(Box.createRigidArea(new Dimension(0, BUTTON_SPACING)));
         allButtons.add(deletePanel);
-        allButtons.add(Box.createRigidArea(new Dimension(0, (int) GUIUtilities.SIDE_LENGTH / 50)));
+        allButtons.add(Box.createRigidArea(new Dimension(0, BUTTON_SPACING)));
         allButtons.add(pageButtons);
-        allButtons.add(Box.createRigidArea(new Dimension(0, (int) GUIUtilities.SIDE_LENGTH / 25)));
+        allButtons.add(Box.createRigidArea(new Dimension(0, BUTTON_SPACING)));
         allButtons.add(actionButtons);
-        allButtons.add(Box.createRigidArea(new Dimension(0, (int) GUIUtilities.SIDE_LENGTH / 50)));
+        allButtons.add(Box.createRigidArea(new Dimension(0, BUTTON_SPACING)));
 
-        // Creating a JPanel to store the board previews for the levels on the current
-        // page.
+        // Creating a JPanel to store the board previews for the levels on the current page.
         JPanel boards = new JPanel();
         setUpJPanel(boards, true);
         boards.add(Box.createHorizontalGlue());
@@ -198,11 +205,10 @@ public class LevelSelector extends JFrame implements ActionListener {
      */
     private void setUpJPanel(JPanel panel, boolean layoutType) {
         panel.setOpaque(false);
-        if (layoutType) {
+        if (layoutType)
             panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-        } else {
+        else
             panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        }
     }
 
     /**
@@ -215,8 +221,8 @@ public class LevelSelector extends JFrame implements ActionListener {
         button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BUTTON_X_FACTOR),
                 (int) (BUTTON_Y_FACTOR * GUIUtilities.SIDE_LENGTH)));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setForeground(Color.BLACK);
-        button.setBackground(Color.WHITE);
+        button.setForeground(Color.WHITE);
+        button.setBackground(Color.BLACK);
         button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
         button.addActionListener(this);
     }
@@ -231,6 +237,10 @@ public class LevelSelector extends JFrame implements ActionListener {
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
+        text.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
+                (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
+        text.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
+                (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         text.setEditable(false);
         text.setOpaque(false);
         text.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
@@ -277,10 +287,7 @@ public class LevelSelector extends JFrame implements ActionListener {
 
     /**
      * Update the view of the main level selector JFrame. This involves updating all
-     * of the JButtons responsible for displaying board previews. Some math needs to
-     * be done to determine how many JButtons should be updated depending on the
-     * number of levels remaining in the lists containing all of the levels for both
-     * the default and custom levels.
+     * of the JButtons responsible for displaying board previews. 
      *
      * @param levelList The list we are using to update the level previews
      */
@@ -413,7 +420,7 @@ public class LevelSelector extends JFrame implements ActionListener {
     }
 
     /**
-     * Clear the borders on the level preview JButtons
+     * Clear the borders on the level preview JButtons.
      */
     private void clearSelectedBorder() {
         btnLeftLevel.setBorder(DEFAULT);
@@ -443,25 +450,22 @@ public class LevelSelector extends JFrame implements ActionListener {
             this.dispose();
             if (btnLeftLevel.getBorder().equals(SELECTED)) {
                 int level = (pageNumber * 3) - 2;
-                if (!custom) {
+                if (!custom)
                     SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
-                } else {
+                else
                     SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 3), -1));
-                }
             } else if (btnMiddleLevel.getBorder().equals(SELECTED)) {
                 int level = (pageNumber * 3) - 1;
-                if (!custom) {
+                if (!custom)
                     SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
-                } else {
+                else
                     SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 2), -1));
-                }
             } else {
                 int level = (pageNumber * 3);
-                if (!custom) {
+                if (!custom)
                     SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
-                } else {
+                else
                     SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 1), -1));
-                }
             }
         } else if (e.getSource() == btnMainMenu) {
             this.dispose();
@@ -513,16 +517,16 @@ public class LevelSelector extends JFrame implements ActionListener {
                 }
                 btnNextPage.setEnabled(lastPage != 1);
                 btnLastPage.setEnabled(false);
+                btnStartLevel.setEnabled(false);
             }
         } else if (e.getSource() == btnDeleteLevel && GUIUtilities.displayOptionDialog(this, "Are you sure you want to delete this level?\nThis cannot be undone.", "Delete Level",
                 new String[]{"Yes", "No"}) == 0) {
-            if (btnLeftLevel.getBorder().equals(SELECTED)) {
+            if (btnLeftLevel.getBorder().equals(SELECTED))
                 Resources.removeUserLevel(levelLabelLeft.getText());
-            } else if (btnMiddleLevel.getBorder().equals(SELECTED)) {
+            else if (btnMiddleLevel.getBorder().equals(SELECTED))
                 Resources.removeUserLevel(levelLabelMiddle.getText());
-            } else {
+            else
                 Resources.removeUserLevel(levelLabelRight.getText());
-            }
             allCustomLevels = Resources.getAllUserBoards();
             determineLastPageNumber(allCustomLevels);
             pageNumber = 1;
