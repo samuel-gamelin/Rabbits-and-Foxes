@@ -1,14 +1,14 @@
 package model;
 
 import com.google.gson.JsonObject;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import resources.Resources;
 import util.Move;
 
 import java.io.File;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the Board class.
@@ -17,13 +17,12 @@ import static org.junit.Assert.*;
  * @author John Breton
  * @author Samuel Gamelin
  */
-
 public class BoardTest {
     private Board board1;
     private Board board2;
     private final String TESTBOARD1 = "RBG MU X X X FHU1 FTU1 X X X X X RBB X X X X X X X X X X X X";
 
-    @Before
+    @BeforeEach
     public void setUp() {
         board1 = Board.createBoard("Anyboard", TESTBOARD1);
         String TESTBOARD2 = "RBW MU X X X FHU1 FTU1 X X X X X RBW X X X X X X X X X X MU X";

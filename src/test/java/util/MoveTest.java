@@ -1,10 +1,10 @@
 package util;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import util.Move.MoveDirection;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * A suite of tests for the Move class.
@@ -17,7 +17,7 @@ public class MoveTest {
     private Move move1;
     private Move move2;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         move1 = new Move(1, 2, 5, 6);
         move2 = new Move(-1, -1, -1, -1);

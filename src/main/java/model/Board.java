@@ -14,6 +14,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class represents a board which keeps track of tiles and pieces within
@@ -59,7 +60,7 @@ public class Board {
      * @param name The name of the board
      */
     public Board(String name) {
-        this.name = name;
+        this.name = Objects.requireNonNull(name);
         this.tiles = new Tile[SIZE][SIZE];
         this.boardListeners = new ArrayList<>();
         initializeBaseBoard();

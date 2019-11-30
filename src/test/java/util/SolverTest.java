@@ -1,10 +1,10 @@
 package util;
 
 import model.Board;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the Solver class.
@@ -15,7 +15,7 @@ public class SolverTest {
     private Board easyBoard, normalBoard, hardBoard, unsolvableBoard;
     private Move noMove;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         String EASY = "X X X X X MU X X X MU RBB X X X RBG X X X X X X X X X X";
         easyBoard = Board.createBoard("Anyboard", EASY);

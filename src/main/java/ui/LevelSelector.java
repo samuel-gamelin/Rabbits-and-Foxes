@@ -3,7 +3,6 @@ package ui;
 import model.*;
 import model.Fox.FoxType;
 import resources.Resources;
-import view.GameView;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

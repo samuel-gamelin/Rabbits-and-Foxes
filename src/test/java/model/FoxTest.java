@@ -1,10 +1,10 @@
 package model;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import util.Move;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the Fox class.
@@ -19,7 +19,7 @@ public class FoxTest {
     private Fox fox1;
     private Fox fox2;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         String TESTBOARD = "RBG MU X X X FHU1 FTU1 X X X FHL0 X RBB X X FTL0 X X X X X X X X X";
         board = Board.createBoard("Anyboard", TESTBOARD);
