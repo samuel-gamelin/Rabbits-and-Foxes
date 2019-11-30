@@ -39,7 +39,7 @@ public final class GUIUtilities {
     /**
      * Font size, as determined by display dimensions.
      */
-    static final int FONT_SIZE = (int) (SIDE_LENGTH / 25);
+    public static final int FONT_SIZE = (int) (SIDE_LENGTH / 25);
 
     /**
      * A private constructor, preventing any instantiation of this class.
@@ -74,7 +74,7 @@ public final class GUIUtilities {
      * Forces the look and feel of the application to remain consistent across
      * platforms, and removes the focus border form all buttons.
      */
-    static void applyDefaults() {
+    public static void applyDefaults() {
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
