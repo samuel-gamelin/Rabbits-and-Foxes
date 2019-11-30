@@ -222,6 +222,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setForeground(Color.WHITE);
         button.setBackground(Color.BLACK);
+        button.setFocusPainted(false);
         button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
         button.addActionListener(this);
     }
@@ -293,10 +294,10 @@ public class LevelSelector extends JFrame implements ActionListener {
      */
     private void updateView(List<Board> levelList) {
         clearSelectedBorder();
-        if (pageNumber != lastPage || ((pageNumber == lastPage) && (levelList.size() % 3 == 0))) {
-            updateLevelPreview(tilesLeft, levelList.get(pageNumber * 3 - 3));
-            updateLevelPreview(tilesMiddle, levelList.get(pageNumber * 3 - 2));
-            updateLevelPreview(tilesRight, levelList.get(pageNumber * 3 - 1));
+        if (pageNumber != lastPage || levelList.size() % 3 == 0) {
+            updateLevelPreview(tiles1, levelList.get(pageNumber * 3 - 3));
+            updateLevelPreview(tiles2, levelList.get(pageNumber * 3 - 2));
+            updateLevelPreview(tiles3, levelList.get(pageNumber * 3 - 1));
             btnMiddleLevel.setEnabled(true);
             btnRightLevel.setEnabled(true);
             if (!custom) {
