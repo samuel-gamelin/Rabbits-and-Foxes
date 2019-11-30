@@ -66,7 +66,7 @@ public final class Resources {
     /**
      * An icon used as the frame's window icon.
      */
-    public static final ImageIcon WINDOW_ICON = loadIcon("images/rabbit-gray.png", 4, 5);
+    public static final ImageIcon WINDOW_ICON = loadIcon("images/rabbit-white.png", 4, 5);
 
     /**
      * An icon used to represent a brown rabbit.
