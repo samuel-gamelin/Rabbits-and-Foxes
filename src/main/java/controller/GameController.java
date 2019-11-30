@@ -26,11 +26,34 @@ import java.util.List;
  * @version 4.0
  */
 public class GameController {
+    /**
+     * The board that this controller is currently maintaining.
+     */
     private Board board;
+
+    /**
+     * Represents whether or not this controller represents a default level.
+     */
     private boolean isDefaultLevel;
+
+    /**
+     * Represents this controller's current level.
+     */
     private int currentLevel;
+
+    /**
+     * A list used to hold information about the most recent click.
+     */
     private List<Integer> moveList;
+
+    /**
+     * A stack that maintains moves that can be undone.
+     */
     private ArrayDeque<Move> undoMoveStack;
+
+    /**
+     * A stack that maintains moves that can be redone.
+     */
     private ArrayDeque<Move> redoMoveStack;
 
     /**
@@ -41,9 +64,8 @@ public class GameController {
     }
 
     /**
-     * The constructor for this class uses a board that has been inputed by the view
-     * (the board listener) so that it can request the model to update it. This will
-     * ensure all three components of the MVC will be using the same board.
+     * Constructs a controller based on the supplied board and level number. Should the level number be non-positive,
+     * this controller will not represent a default level.
      *
      * @param board The Board (model) that this controller should update
      * @param level The level for this controller
@@ -61,20 +83,11 @@ public class GameController {
     }
 
     /**
-     * This method is used to register a click based on the user input. It first
-     * checks if the button selected by the user contains an object that is not a
-     * mushroom. If that is satisfied it adds the move to a list. When the second
-     * move is made the method uses the original move as well as the new move to
-     * pass them to the model. The model will then update the board which will
-     * update the view for the user.
-     * <p>
-     * When a move is registered, it will clear the redo stack and push the move
-     * onto the the Undo Stack
+     * This method registers a click based on the given coordinates, and performs a move if appropriate.
      *
      * @param x Represents the start of the end x value of the user's move
      * @param y Represents the start of the end y value of the user's move
-     * @return True if the selected location is valid, false if it is the first move
-     * being made on the board or if the selected location is valid
+     * @return An instance of the enumerated ClickValidity type, indicating the registered click's validity
      */
     public ClickValidity registerClick(int x, int y) {
         if (moveList.isEmpty() && board.isOccupied(x, y) && !(board.getPiece(x, y) instanceof Mushroom)) {
@@ -121,11 +134,9 @@ public class GameController {
     }
 
     /**
-     * This method is used to reset the Game. In order to ensure that the new game
-     * will not have any old registered moves the method also clears the move array
-     * list.
+     * Resets this controller, returning the newly-reset model (board).
      *
-     * @return The new board for the view to listen to it.
+     * @return The newly-reset board
      */
     public Board reset() {
         if (isDefaultLevel) {
@@ -208,7 +219,7 @@ public class GameController {
     /**
      * Sets the level of the game. Has no effect if the controller maintains a board
      * that is not part of the default levels.
-     * 
+     *
      * @param level The level to set
      */
     public void setLevel(int level) {

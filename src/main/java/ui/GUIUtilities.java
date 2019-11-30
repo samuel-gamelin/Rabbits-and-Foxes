@@ -33,8 +33,8 @@ public final class GUIUtilities {
      */
     public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() > Toolkit
             .getDefaultToolkit().getScreenSize().getHeight()
-                    ? (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
-                    : (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+            ? (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
+            : (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
     /**
      * Font size, as determined by display dimensions.
@@ -63,7 +63,7 @@ public final class GUIUtilities {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 if (GUIUtilities.displayOptionDialog(frame, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
-                        new String[] { "Yes", "No" }) == 0) {
+                        new String[]{"Yes", "No"}) == 0) {
                     System.exit(0);
                 }
             }

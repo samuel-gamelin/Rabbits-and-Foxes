@@ -118,7 +118,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         actionButtons.add(Box.createHorizontalGlue());
         actionButtons.add(btnCustomLevels);
         actionButtons.add(Box.createHorizontalGlue());
-        
+
         // Creating a JPanel to exclusively delete custom levels.
         JPanel deletePanel = new JPanel();
         setUpJPanel(deletePanel, true);
@@ -157,7 +157,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         textPanel.add(Box.createHorizontalGlue());
         textPanel.add(levelLabelRight);
         textPanel.add(Box.createHorizontalGlue());
-        
+
         // Creating a JPanel to store the other JPanels created above.
         JPanel mainPanel = new JPanel();
         setUpJPanel(mainPanel, false);
@@ -514,9 +514,8 @@ public class LevelSelector extends JFrame implements ActionListener {
                 btnNextPage.setEnabled(lastPage != 1);
                 btnLastPage.setEnabled(false);
             }
-        }
-        else if (e.getSource() == btnDeleteLevel && GUIUtilities.displayOptionDialog(this, "Are you sure you want to delete this level?\nThis cannot be undone.", "Delete Level",
-                new String[] { "Yes", "No" }) == 0) {
+        } else if (e.getSource() == btnDeleteLevel && GUIUtilities.displayOptionDialog(this, "Are you sure you want to delete this level?\nThis cannot be undone.", "Delete Level",
+                new String[]{"Yes", "No"}) == 0) {
             if (btnLeftLevel.getBorder().equals(SELECTED)) {
                 Resources.removeUserLevel(levelLabelLeft.getText());
             } else if (btnMiddleLevel.getBorder().equals(SELECTED)) {

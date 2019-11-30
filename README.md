@@ -1,6 +1,6 @@
 ## Rabbits and Foxes
 
-This GitHub repository is used for the development of a game based on JumpIN that follows the MVC design pattern.
+This GitHub repository is used for the development of a game based on JumpIN' that follows the MVC design pattern.
 
 ## Development
 

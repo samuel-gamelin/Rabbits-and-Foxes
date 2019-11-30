@@ -32,7 +32,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
         this.add(Box.createRigidArea(new Dimension(0, (int) (GUIUtilities.SIDE_LENGTH / 12))), BorderLayout.NORTH);
         this.add(Box.createRigidArea(new Dimension(0, (int) (GUIUtilities.SIDE_LENGTH / 16))), BorderLayout.SOUTH);
-        
+
         this.add(Box.createVerticalGlue());
         addMainMenuButton(this, btnStart = new JButton("Start"));
         addMainMenuButton(this, btnSelectLevel = new JButton("Select Level"));

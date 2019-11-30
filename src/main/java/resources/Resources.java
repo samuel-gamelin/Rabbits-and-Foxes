@@ -53,42 +53,94 @@ public final class Resources {
      */
     public static final int NUMBER_OF_LEVELS = getNumberOfLevels();
 
-    // Incorrect move sound
+    /**
+     * A clip used for an invalid move sound.
+     */
     public static final Clip INVALID_MOVE = loadClip(getFileURL("sounds/wrong.wav"));
 
-    // Level solved sound
+    /**
+     * A clip used for a "level completed" or "solved" sound.
+     */
     public static final Clip SOLVED = loadClip(getFileURL("sounds/solved.wav"));
 
-    // JFrame icon
+    /**
+     * An icon used as the frame's window icon.
+     */
     public static final ImageIcon WINDOW_ICON = loadIcon("images/rabbit-gray.png", 4, 5);
 
-    // Rabbit icons
+    /**
+     * An icon used to represent a brown rabbit.
+     */
     public static final ImageIcon RABBIT_BROWN = loadIcon("images/rabbit-brown.png", 0.6, 0.75);
+
+    /**
+     * An icon used to represent a white rabbit.
+     */
     public static final ImageIcon RABBIT_WHITE = loadIcon("images/rabbit-white.png", 0.6, 0.75);
+
+    /**
+     * An icon used to represent a gray rabbit.
+     */
     public static final ImageIcon RABBIT_GRAY = loadIcon("images/rabbit-gray.png", 0.6, 0.75);
 
-    // Fox head icons
+    /**
+     * An icon used to represent a fox head facing up.
+     */
     public static final ImageIcon FOX_HEAD_UP = loadIcon("images/fox-head-up.png", 0.75, 1);
+
+    /**
+     * An icon used to represent a fox head facing down.
+     */
     public static final ImageIcon FOX_HEAD_DOWN = loadIcon("images/fox-head-down.png", 0.75, 1);
+
+    /**
+     * An icon used to represent a fox head facing left.
+     */
     public static final ImageIcon FOX_HEAD_LEFT = loadIcon("images/fox-head-left.png", 1, 0.75);
+
+    /**
+     * An icon used to represent a fox head facing right.
+     */
     public static final ImageIcon FOX_HEAD_RIGHT = loadIcon("images/fox-head-right.png", 1, 0.75);
 
-    // Fox tail icons
+    /**
+     * An icon used to represent a fox tail facing up.
+     */
     public static final ImageIcon FOX_TAIL_UP = loadIcon("images/fox-tail-up.png", 0.7, 1);
+
+    /**
+     * An icon used to represent a fox tail facing down.
+     */
     public static final ImageIcon FOX_TAIL_DOWN = loadIcon("images/fox-tail-down.png", 0.75, 1);
+
+    /**
+     * An icon used to represent a fox tail facing left.
+     */
     public static final ImageIcon FOX_TAIL_LEFT = loadIcon("images/fox-tail-left.png", 1, 0.7);
+
+    /**
+     * An icon used to represent a fox tail facing right.
+     */
     public static final ImageIcon FOX_TAIL_RIGHT = loadIcon("images/fox-tail-right.png", 1.03, 0.7);
 
-    // Mushroom icon
+    /**
+     * An icon used to represent a mushroom.
+     */
     public static final ImageIcon MUSHROOM = loadIcon("images/mushroom.png", 0.75, 0.75);
 
-    // Main menu icon
+    /**
+     * An icon used to represent the main menu background.
+     */
     public static final ImageIcon MAIN_MENU_BACKGROUND = loadIcon("images/mainmenu.png", 5, 5);
 
-    // Level selector icon
+    /**
+     * An icon used to represent the level selector background.
+     */
     public static final ImageIcon LEVEL_SELECTOR_BACKGROUND = loadIcon("images/levelselectorbackground.png", 5, 5);
 
-    // Board icon
+    /**
+     * An icon used to represent the board.
+     */
     public static final ImageIcon BOARD = loadIcon("images/board.png", 5, 5);
 
     /**

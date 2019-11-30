@@ -8,15 +8,15 @@ package model;
  * @version 4.0
  */
 public class Mushroom extends Piece {
-	/**
-	 * Construct a new mushroom.
-	 */
-	public Mushroom() {
-		super(PieceType.MUSHROOM);
-	}
+    /**
+     * Construct a new mushroom.
+     */
+    public Mushroom() {
+        super(PieceType.MUSHROOM);
+    }
 
-	@Override
-	public String toString() {
-		return "MU";
-	}
+    @Override
+    public String toString() {
+        return "MU";
+    }
 }

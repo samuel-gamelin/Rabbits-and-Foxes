@@ -55,7 +55,7 @@ public class Board {
 
     /**
      * Construct an empty board.
-     * 
+     *
      * @param name The name of the board
      */
     public Board(String name) {
@@ -362,6 +362,14 @@ public class Board {
         return prime * result + Arrays.deepHashCode(tiles);
     }
 
+    /**
+     * Determines equality between a board and another object. Equality between two Board objects is satisfied if the
+     * two-dimensional array of tiles maintained by both boards are "deeply" equal. No regard is given to the list of
+     * listeners or the board's name.
+     *
+     * @param obj The object to compare this board to
+     * @return True if the objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
