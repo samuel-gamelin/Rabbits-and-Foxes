@@ -28,8 +28,6 @@
 -notifyListeners()
 -validatePosition(x:int, y:int):boolean
 +getPossibleMoves:List&lt;Move&gt;
-+&lt;u&gt;loadBoard&lt;/u&gt;(path:String):Board
-+saveBoard(path:String):boolean
 +hashCode():int
 +equals(obj:Object):boolean
 +toString():String
@@ -47,19 +45,19 @@
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double0"/>
-      <double>1350.0</double>
+      <double>1270.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double0"/>
-      <double>340.0</double>
+      <double>420.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>1350.0</double>
-     <double>340.0</double>
+     <double>1270.0</double>
+     <double>420.0</double>
     </void>
    </object>
   </void>
@@ -97,19 +95,19 @@
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double1"/>
-      <double>800.0</double>
+      <double>720.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double1"/>
-      <double>430.0</double>
+      <double>490.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>800.0</double>
-     <double>430.0</double>
+     <double>720.0</double>
+     <double>490.0</double>
     </void>
    </object>
   </void>
@@ -151,19 +149,19 @@
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double2"/>
-      <double>710.0</double>
+      <double>630.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double2"/>
-      <double>1210.0</double>
+      <double>1270.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>710.0</double>
-     <double>1210.0</double>
+     <double>630.0</double>
+     <double>1270.0</double>
     </void>
    </object>
   </void>
@@ -200,19 +198,19 @@
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double3"/>
-      <double>1200.0</double>
+      <double>1110.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double3"/>
-      <double>1250.0</double>
+      <double>1310.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>1200.0</double>
-     <double>1250.0</double>
+     <double>1110.0</double>
+     <double>1310.0</double>
     </void>
    </object>
   </void>
@@ -237,19 +235,19 @@
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double4"/>
-      <double>410.0</double>
+      <double>330.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double4"/>
-      <double>1250.0</double>
+      <double>1310.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>410.0</double>
-     <double>1250.0</double>
+     <double>330.0</double>
+     <double>1310.0</double>
     </void>
    </object>
   </void>
@@ -274,19 +272,19 @@ RABBIT</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double5"/>
-      <double>580.0</double>
+      <double>500.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double5"/>
-      <double>840.0</double>
+      <double>940.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>580.0</double>
-     <double>840.0</double>
+     <double>500.0</double>
+     <double>940.0</double>
     </void>
    </object>
   </void>
@@ -312,7 +310,7 @@ DOWN</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double6"/>
-      <double>940.0</double>
+      <double>850.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
@@ -323,7 +321,7 @@ DOWN</string>
      </void>
     </void>
     <void method="setLocation">
-     <double>940.0</double>
+     <double>850.0</double>
      <double>1610.0</double>
     </void>
    </object>
@@ -357,19 +355,19 @@ DOWN</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double7"/>
-      <double>1380.0</double>
+      <double>1300.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double7"/>
-      <double>830.0</double>
+      <double>930.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>1380.0</double>
-     <double>830.0</double>
+     <double>1300.0</double>
+     <double>930.0</double>
     </void>
    </object>
   </void>
@@ -393,19 +391,19 @@ GREEN</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double8"/>
-      <double>570.0</double>
+      <double>490.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double8"/>
-      <double>510.0</double>
+      <double>560.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>570.0</double>
-     <double>510.0</double>
+     <double>490.0</double>
+     <double>560.0</double>
     </void>
    </object>
   </void>
@@ -429,7 +427,7 @@ TAIL</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double9"/>
-      <double>690.0</double>
+      <double>610.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
@@ -440,7 +438,7 @@ TAIL</string>
      </void>
     </void>
     <void method="setLocation">
-     <double>690.0</double>
+     <double>610.0</double>
      <double>1610.0</double>
     </void>
    </object>
@@ -466,6 +464,10 @@ TAIL</string>
 +getNextBestMove():Move
 +undoMove():boolean
 +redoMove():boolean
++getUndoStack():ArrayDeque&lt;Move&gt;
++getRedoStack():ArrayDeque&lt;Move&gt;
++setUndoMoveStack(undoMoveStack:ArrayDeque&lt;Move&gt;
++setRedoMoveStack(redoMoveStack:ArrayDeque&lt;Move&gt;)
 +getCurrentLevel():int
 +incrementLevel()
 +setLevel()</string>
@@ -482,19 +484,19 @@ TAIL</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double10"/>
-      <double>1780.0</double>
+      <double>1690.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double10"/>
-      <double>770.0</double>
+      <double>830.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>1780.0</double>
-     <double>770.0</double>
+     <double>1690.0</double>
+     <double>830.0</double>
     </void>
    </object>
   </void>
@@ -520,12 +522,13 @@ TAIL</string>
     </void>
     <void property="methods">
      <void property="text">
-      <string>+GameView()
+      <string>+GameView(board:Board, level:int, undoMoveStack:ArrayDeque&lt;Move&gt;,redoMoveStack:ArrayDeque&lt;Move&gt;)
 -displayHelpDialog()
 -clearMove()
 -resetGame()
 -updateFrameTitle()
 -clearButtonBorders()
++save(path:String):boolean
 +handleBoardChange()
 +actionPerformed(e:ActionEvent)
 +mouseEntered(e:MouseEvent)
@@ -543,19 +546,19 @@ TAIL</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double11"/>
-      <double>1830.0</double>
+      <double>1690.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double11"/>
-      <double>1160.0</double>
+      <double>1350.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>1830.0</double>
-     <double>1160.0</double>
+     <double>1690.0</double>
+     <double>1350.0</double>
     </void>
    </object>
   </void>
@@ -578,19 +581,19 @@ BoardListener</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double12"/>
-      <double>2280.0</double>
+      <double>2250.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double12"/>
-      <double>380.0</double>
+      <double>420.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>2280.0</double>
-     <double>380.0</double>
+     <double>2250.0</double>
+     <double>420.0</double>
     </void>
    </object>
   </void>
@@ -651,19 +654,19 @@ BoardListener</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double13"/>
-      <double>2890.0</double>
+      <double>2530.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double13"/>
-      <double>140.0</double>
+      <double>20.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>2890.0</double>
-     <double>140.0</double>
+     <double>2530.0</double>
+     <double>20.0</double>
     </void>
    </object>
   </void>
@@ -689,19 +692,19 @@ INVALID_MOVEMADE</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double14"/>
-      <double>2110.0</double>
+      <double>2100.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double14"/>
-      <double>1010.0</double>
+      <double>1110.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>2110.0</double>
-     <double>1010.0</double>
+     <double>2100.0</double>
+     <double>1110.0</double>
     </void>
    </object>
   </void>
@@ -726,19 +729,19 @@ GRAY</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double15"/>
-      <double>1280.0</double>
+      <double>1190.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double15"/>
-      <double>1510.0</double>
+      <double>1610.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>1280.0</double>
-     <double>1510.0</double>
+     <double>1190.0</double>
+     <double>1610.0</double>
     </void>
    </object>
   </void>
@@ -764,19 +767,19 @@ INVALID</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double16"/>
-      <double>1430.0</double>
+      <double>1350.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double16"/>
-      <double>1100.0</double>
+      <double>1160.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>1430.0</double>
-     <double>1100.0</double>
+     <double>1350.0</double>
+     <double>1160.0</double>
     </void>
    </object>
   </void>
@@ -798,19 +801,19 @@ INVALID</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double17"/>
-      <double>2080.0</double>
+      <double>2000.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double17"/>
-      <double>510.0</double>
+      <double>570.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>2080.0</double>
-     <double>510.0</double>
+     <double>2000.0</double>
+     <double>570.0</double>
     </void>
    </object>
   </void>
@@ -844,19 +847,19 @@ INVALID</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double18"/>
-      <double>1840.0</double>
+      <double>1760.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double18"/>
-      <double>460.0</double>
+      <double>520.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>1840.0</double>
-     <double>460.0</double>
+     <double>1760.0</double>
+     <double>520.0</double>
     </void>
    </object>
   </void>
@@ -884,19 +887,19 @@ INVALID</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double19"/>
-      <double>1790.0</double>
+      <double>1710.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double19"/>
-      <double>670.0</double>
+      <double>730.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>1790.0</double>
-     <double>670.0</double>
+     <double>1710.0</double>
+     <double>730.0</double>
     </void>
    </object>
   </void>
@@ -938,19 +941,19 @@ INVALID</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double20"/>
-      <double>2820.0</double>
+      <double>2910.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double20"/>
-      <double>1210.0</double>
+      <double>1410.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>2820.0</double>
-     <double>1210.0</double>
+     <double>2910.0</double>
+     <double>1410.0</double>
     </void>
    </object>
   </void>
@@ -1015,19 +1018,19 @@ INVALID</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double21"/>
-      <double>2510.0</double>
+      <double>2500.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double21"/>
-      <double>500.0</double>
+      <double>770.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>2510.0</double>
-     <double>500.0</double>
+     <double>2500.0</double>
+     <double>770.0</double>
     </void>
    </object>
   </void>
@@ -1063,19 +1066,19 @@ INVALID</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double22"/>
-      <double>2990.0</double>
+      <double>3070.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double22"/>
-      <double>880.0</double>
+      <double>1010.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>2990.0</double>
-     <double>880.0</double>
+     <double>3070.0</double>
+     <double>1010.0</double>
     </void>
    </object>
   </void>
@@ -1118,19 +1121,19 @@ INVALID</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double23"/>
-      <double>1830.0</double>
+      <double>1690.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double23"/>
-      <double>70.0</double>
+      <double>160.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>1830.0</double>
-     <double>70.0</double>
+     <double>1690.0</double>
+     <double>160.0</double>
     </void>
    </object>
   </void>
@@ -1159,19 +1162,19 @@ INVALID</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double24"/>
-      <double>800.0</double>
+      <double>720.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double24"/>
-      <double>860.0</double>
+      <double>960.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>800.0</double>
-     <double>860.0</double>
+     <double>720.0</double>
+     <double>960.0</double>
     </void>
    </object>
   </void>
@@ -1195,19 +1198,19 @@ MoveablePiece</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double25"/>
-      <double>990.0</double>
+      <double>910.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double25"/>
-      <double>960.0</double>
+      <double>1030.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>990.0</double>
-     <double>960.0</double>
+     <double>910.0</double>
+     <double>1030.0</double>
     </void>
    </object>
   </void>
@@ -1543,9 +1546,6 @@ MoveablePiece</string>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
-    <void property="bentStyle">
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/>
-    </void>
     <void property="startArrowHead">
      <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/>
     </void>
@@ -1582,9 +1582,6 @@ MoveablePiece</string>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
-    <void property="bentStyle">
-     <object class="com.horstmann.violet.BentStyle" field="VH"/>
-    </void>
     <void property="endArrowHead">
      <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/>
     </void>
@@ -1597,9 +1594,6 @@ MoveablePiece</string>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
-    <void property="bentStyle">
-     <object class="com.horstmann.violet.BentStyle" field="VH"/>
-    </void>
     <void property="endArrowHead">
      <object class="com.horstmann.violet.ArrowHead" field="V"/>
     </void>
@@ -1624,9 +1618,6 @@ MoveablePiece</string>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
-    <void property="bentStyle">
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/>
-    </void>
     <void property="startArrowHead">
      <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/>
     </void>
@@ -1720,9 +1711,15 @@ MoveablePiece</string>
   </void>
   <void method="connect">
    <object class="com.horstmann.violet.ClassRelationshipEdge">
-    <void property="bentStyle">
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/>
+    <void property="startArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/>
     </void>
+   </object>
+   <object idref="ClassNode20"/>
+   <object idref="ClassNode12"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
     <void property="startArrowHead">
      <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/>
     </void>
@@ -1735,12 +1732,15 @@ MoveablePiece</string>
     <void property="bentStyle">
      <object class="com.horstmann.violet.BentStyle" field="HVH"/>
     </void>
-    <void property="startArrowHead">
-     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/>
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="V"/>
+    </void>
+    <void property="lineStyle">
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
     </void>
    </object>
-   <object idref="ClassNode20"/>
-   <object idref="ClassNode12"/>
+   <object idref="ClassNode11"/>
+   <object idref="ClassNode7"/>
   </void>
  </object>
 </java>

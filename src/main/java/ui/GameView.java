@@ -253,7 +253,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuMain
-                && GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu? (Any unsaved progress will be lost)",
+                && GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to the main menu? (Any unsaved progress will be lost)",
                 "Return to Main Menu", new String[]{"Yes", "No"}) == 0) {
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
