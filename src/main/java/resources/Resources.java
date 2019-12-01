@@ -144,6 +144,11 @@ public final class Resources {
     public static final ImageIcon BOARD = loadIcon("images/board.png", 5, 5);
 
     /**
+     * An icon used for the side panel in the level builder.
+     */
+    public static final ImageIcon SIDE_PANEL = loadIcon("images/sidepanel.png", 5, 5);
+
+    /**
      * Making the constructor private, preventing any instantiation of this class.
      */
     private Resources() {
