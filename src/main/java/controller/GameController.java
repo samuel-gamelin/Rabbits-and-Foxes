@@ -217,18 +217,6 @@ public class GameController {
     }
 
     /**
-     * Sets the level of the game. Has no effect if the controller maintains a board
-     * that is not part of the default levels.
-     *
-     * @param level The level to set
-     */
-    public void setLevel(int level) {
-        if (isDefaultLevel) {
-            currentLevel = level;
-        }
-    }
-
-    /**
      * Returns whether or not this controller is associated with a default level.
      *
      * @return True if the level is a default level, false if it is a user level

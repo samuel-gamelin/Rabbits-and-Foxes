@@ -374,9 +374,8 @@ public final class Resources {
      * provided level name, if the level with that name exists.
      *
      * @param name The name of the level to remove from the LevelData.json file
-     * @return True if the user-defined level was removed, false otherwise
      */
-    public static boolean removeUserLevel(String name) {
+    public static void removeUserLevel(String name) {
         JsonObject originalJsonObject = loadJsonObjectFromPath(LEVEL_DATA_PATH, false);
 
         if (originalJsonObject != null) {
@@ -389,14 +388,13 @@ public final class Resources {
                         originalJsonObject.get(USER_LEVELS).getAsJsonArray().remove(object);
 
                         gson.toJson(originalJsonObject, writer);
-                        return true;
+                        return;
                     } catch (Exception e) {
                         Resources.LOGGER.error("Unable to save user-defined level to the LevelData.json file", e);
-                        return false;
+                        return;
                     }
                 }
             }
         }
-        return false;
     }
 }

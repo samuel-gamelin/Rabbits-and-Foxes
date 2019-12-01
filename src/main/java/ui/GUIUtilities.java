@@ -8,10 +8,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 /**
  * This class represents the GUI utilities shared by the game's frames.
@@ -178,6 +175,28 @@ public final class GUIUtilities {
             GUIUtilities.bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(0))), text,
                     button::doClick);
         }
+        return button;
+    }
+
+    /**
+     * Configures and returns a button intended to be used as part of a board.
+     *
+     * @param component The component to which the newly-created JButton should be tied (for mouse events) and added to
+     * @param x The x-coordinate of the JButton
+     * @param y The y-coordinate of the JButton
+     * @param <C> Type parameter restrictions for the specified component
+     * @return The newly-created JButton
+     */
+    public static <C extends Container & MouseListener> JButton generateGameBoardButton(C component, int x, int y) {
+        JButton button = new JButton();
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.setBorder(GUIUtilities.BLANK_BORDER);
+        button.setName(x + "," + y);
+        button.addMouseListener(component);
+        component.add(button);
+
         return button;
     }
 
