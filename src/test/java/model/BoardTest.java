@@ -44,7 +44,7 @@ public class BoardTest {
 
     @Test
     public void testIsOccupied() {
-        assert (board1.isOccupied(1, 1));
+        assertTrue(board1.isOccupied(1, 1));
         assertTrue(board1.isOccupied(0, 0));
         assertFalse(board1.isOccupied(6, 6));
         assertFalse(board1.isOccupied(-1, -1));
