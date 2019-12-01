@@ -4,6 +4,7 @@ import model.*;
 import resources.Resources;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
@@ -24,7 +25,27 @@ public final class GUIUtilities {
     /**
      * An empty border.
      */
-    public static final EmptyBorder BLANK_BORDER = new EmptyBorder(0, 0, 0, 0);
+    static final EmptyBorder BLANK_BORDER = new EmptyBorder(0, 0, 0, 0);
+
+    /**
+     * A selected border.
+     */
+    static final BevelBorder SELECTED_BORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
+
+    /**
+     * A border for the start of a hint.
+     */
+    static final BevelBorder HINT_BORDER_START = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
+
+    /**
+     * A border for the end of a hint.
+     */
+    static final BevelBorder HINT_BORDER_END = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
+
+    /**
+     * A border for the start of a hint.
+     */
+    static final BevelBorder POSSIBLE_POSITION_BORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE, Color.BLUE);
 
     /**
      * A percentage (80%) of the current display's height (or width, depending on
@@ -40,6 +61,11 @@ public final class GUIUtilities {
      * Font size, as determined by display dimensions.
      */
     static final int FONT_SIZE = (int) (SIDE_LENGTH / 25);
+
+    /**
+     * A file chooser used to pick files.
+     */
+    static JFileChooser fc = new JFileChooser();
 
     /**
      * A private constructor, preventing any instantiation of this class.
@@ -74,13 +100,14 @@ public final class GUIUtilities {
      * Forces the look and feel of the application to remain consistent across
      * platforms, and removes the focus border form all buttons.
      */
-    static void applyDefaults() {
+    public static void applyDefaults() {
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             Resources.LOGGER.error("Could not set the default look and feel", e);
         }
         UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
+        fc = new JFileChooser();
     }
 
     /**
