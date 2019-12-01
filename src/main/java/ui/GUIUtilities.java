@@ -58,7 +58,7 @@ public final class GUIUtilities {
     /**
      * Font size, as determined by display dimensions.
      */
-    static final int FONT_SIZE = (int) (SIDE_LENGTH / 25);
+    public static final int FONT_SIZE = (int) (SIDE_LENGTH / 25);
 
     /**
      * A file chooser used to pick files.
