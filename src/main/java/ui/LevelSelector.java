@@ -259,6 +259,7 @@ public class LevelSelector extends JFrame implements ActionListener {
                 Resources.BOARD.getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
                         (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), Image.SCALE_SMOOTH)));
         button.setOpaque(false);
+        button.setFocusPainted(false);
         button.setBorder(DEFAULT);
         button.setContentAreaFilled(false);
         button.setLayout(new GridLayout(5, 5));
@@ -295,9 +296,9 @@ public class LevelSelector extends JFrame implements ActionListener {
     private void updateView(List<Board> levelList) {
         clearSelectedBorder();
         if (pageNumber != lastPage || levelList.size() % 3 == 0) {
-            updateLevelPreview(tiles1, levelList.get(pageNumber * 3 - 3));
-            updateLevelPreview(tiles2, levelList.get(pageNumber * 3 - 2));
-            updateLevelPreview(tiles3, levelList.get(pageNumber * 3 - 1));
+            updateLevelPreview(tilesLeft, levelList.get(pageNumber * 3 - 3));
+            updateLevelPreview(tilesMiddle, levelList.get(pageNumber * 3 - 2));
+            updateLevelPreview(tilesRight, levelList.get(pageNumber * 3 - 1));
             btnMiddleLevel.setEnabled(true);
             btnRightLevel.setEnabled(true);
             if (!custom) {

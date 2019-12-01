@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
  */
 
 public class MainMenu extends JFrame implements ActionListener {
-    private JButton btnStart, btnSelectLevel, btnBuildLevel, btnHelp, btnLoadGameButton, btnQuitGame;
+    private JButton btnStart, btnSelectLevel, btnBuildLevel, btnHelp, btnLoadGame, btnQuitGame;
 
     /**
      * The file chooser that the user will interact with should they choose to load a save file.
@@ -42,7 +42,7 @@ public class MainMenu extends JFrame implements ActionListener {
         this.add(Box.createVerticalGlue());
         addMainMenuButton(btnStart = new JButton("Start"));
         addMainMenuButton(btnSelectLevel = new JButton("Select Level"));
-        addMainMenuButton(btnLoadGameButton = new JButton("Open Saved Game"));
+        addMainMenuButton(btnLoadGame = new JButton("Open Saved Game"));
         addMainMenuButton(btnBuildLevel = new JButton("Level Builder"));
         addMainMenuButton(btnHelp = new JButton("Help"));
         addMainMenuButton(btnQuitGame = new JButton("Quit"));
@@ -78,7 +78,7 @@ public class MainMenu extends JFrame implements ActionListener {
         if (e.getSource() == btnStart) {
             this.dispose();
             SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(1), 1));
-        } else if (e.getSource() == btnLoadGameButton) {
+        } else if (e.getSource() == btnLoadGame) {
             int returnVal = fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 Board board = Board.loadBoard(fc.getSelectedFile().getAbsolutePath());

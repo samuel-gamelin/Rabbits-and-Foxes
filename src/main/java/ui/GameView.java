@@ -27,10 +27,10 @@ import java.awt.event.*;
  */
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
 
-    private static final BevelBorder SELECTBORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
-    private static final BevelBorder HINTBORDERSTART = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
-    private static final BevelBorder HINTBORDEREND = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
-    private static final BevelBorder POSSIBLEPOSITIONBORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE,
+    private static final BevelBorder SELECT_BORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
+    private static final BevelBorder HINT_BORDER_START = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
+    private static final BevelBorder HINT_BORDER_END = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
+    private static final BevelBorder POSSIBLE_POSITION_BORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE,
             Color.BLUE);
 
     private JButton menuReset;
@@ -109,13 +109,13 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                     // Highlights all possible moves for the selected piece.
                     if (showPossibleMovesBox.isSelected()) {
                         gameController.getPossibleMoves(xCopy, yCopy).parallelStream().forEach(move -> {
-                            buttons[move.xStart][move.yStart].setBorder(HINTBORDERSTART);
-                            buttons[move.xEnd][move.yEnd].setBorder(POSSIBLEPOSITIONBORDER);
+                            buttons[move.xStart][move.yStart].setBorder(HINT_BORDER_START);
+                            buttons[move.xEnd][move.yEnd].setBorder(POSSIBLE_POSITION_BORDER);
                         });
                     }
 
                     if (clickResult == ClickValidity.VALID) {
-                        buttons[xCopy][yCopy].setBorder(SELECTBORDER);
+                        buttons[xCopy][yCopy].setBorder(SELECT_BORDER);
                     } else if (clickResult == ClickValidity.VALID_MOVEMADE) {
                         clearButtonBorders();
                     } else {
@@ -268,10 +268,10 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == menuHint) {
             Move bestMove = gameController.getNextBestMove();
-            if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(SELECTBORDER)) {
-                buttons[bestMove.xStart][bestMove.yStart].setBorder(HINTBORDERSTART);
+            if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(SELECT_BORDER)) {
+                buttons[bestMove.xStart][bestMove.yStart].setBorder(HINT_BORDER_START);
             }
-            buttons[bestMove.xEnd][bestMove.yEnd].setBorder(HINTBORDEREND);
+            buttons[bestMove.xEnd][bestMove.yEnd].setBorder(HINT_BORDER_END);
         } else if (e.getSource() == menuSaveButton) {
             int returnVal = fc.showSaveDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
