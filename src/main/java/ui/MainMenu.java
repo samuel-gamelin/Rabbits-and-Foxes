@@ -66,7 +66,7 @@ public class MainMenu extends JFrame implements ActionListener {
         if (e.getSource() == btnStart) {
             this.dispose();
             SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(1), 1));
-        } else if (e.getSource() == btnLoadGameButton) {
+        } else if (e.getSource() == btnLoadGame) {
             int returnVal = GUIUtilities.fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 Board board = Board.loadBoard(GUIUtilities.fc.getSelectedFile().getAbsolutePath());

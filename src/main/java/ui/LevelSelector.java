@@ -30,7 +30,6 @@ public class LevelSelector extends JFrame implements ActionListener {
     private static final double X_SCALE_FACTOR = 0.05;
     private static final int Y_SCALE_FACTOR = 17;
 
-    private static final BevelBorder SELECTED = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
     private static final BevelBorder DEFAULT = new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.BLACK);
 
     private JButton btnStartLevel, btnMainMenu, btnCustomLevels, btnNextPage, btnLastPage, btnLeftLevel,
@@ -410,7 +409,7 @@ public class LevelSelector extends JFrame implements ActionListener {
      */
     private void levelSelected(JButton button) {
         clearSelectedBorder();
-        button.setBorder(SELECTED);
+        button.setBorder(GUIUtilities.SELECTED_BORDER);
         btnStartLevel.setEnabled(true);
         if (custom)
             btnDeleteLevel.setEnabled(true);
@@ -445,13 +444,13 @@ public class LevelSelector extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnStartLevel) {
             this.dispose();
-            if (btnLeftLevel.getBorder().equals(SELECTED)) {
+            if (btnLeftLevel.getBorder().equals(GUIUtilities.SELECTED_BORDER)) {
                 int level = (pageNumber * 3) - 2;
                 if (!custom)
                     SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
                 else
                     SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 3), -1));
-            } else if (btnMiddleLevel.getBorder().equals(SELECTED)) {
+            } else if (btnMiddleLevel.getBorder().equals(GUIUtilities.SELECTED_BORDER)) {
                 int level = (pageNumber * 3) - 1;
                 if (!custom)
                     SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
@@ -518,9 +517,9 @@ public class LevelSelector extends JFrame implements ActionListener {
             }
         } else if (e.getSource() == btnDeleteLevel && GUIUtilities.displayOptionDialog(this, "Are you sure you want to delete this level?\nThis cannot be undone.", "Delete Level",
                 new String[]{"Yes", "No"}) == 0) {
-            if (btnLeftLevel.getBorder().equals(SELECTED))
+            if (btnLeftLevel.getBorder().equals(GUIUtilities.SELECTED_BORDER))
                 Resources.removeUserLevel(levelLabelLeft.getText());
-            else if (btnMiddleLevel.getBorder().equals(SELECTED))
+            else if (btnMiddleLevel.getBorder().equals(GUIUtilities.SELECTED_BORDER))
                 Resources.removeUserLevel(levelLabelMiddle.getText());
             else
                 Resources.removeUserLevel(levelLabelRight.getText());
