@@ -198,6 +198,42 @@ public class GameController {
     }
 
     /**
+     * Returns the undo move stack.
+     *
+     * @return The undo move stack
+     */
+    public ArrayDeque<Move> getUndoMoveStack() {
+        return undoMoveStack;
+    }
+
+    /**
+     * Returns the redo move stack.
+     *
+     * @return The redo move stack
+     */
+    public ArrayDeque<Move> getRedoMoveStack() {
+        return redoMoveStack;
+    }
+
+    /**
+     * Sets the redo move stack.
+     *
+     * @param undoMoveStack The stack to set
+     */
+    public void setUndoMoveStack(ArrayDeque<Move> undoMoveStack) {
+        this.undoMoveStack = undoMoveStack;
+    }
+
+    /**
+     * Sets the redo move stack.
+     *
+     * @param redoMoveStack The stack to set
+     */
+    public void setRedoMoveStack(ArrayDeque<Move> redoMoveStack) {
+        this.redoMoveStack = redoMoveStack;
+    }
+
+    /**
      * Returns the current level of the game.
      *
      * @return The current level of the game. -1 if this controller maintains a

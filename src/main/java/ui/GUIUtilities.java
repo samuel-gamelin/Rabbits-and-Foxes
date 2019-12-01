@@ -216,7 +216,7 @@ public final class GUIUtilities {
     }
 
     /**
-     * Updates the visual representation of the board.
+     * Updates the visual representation of the specified two-dimensional array of buttons based on the provided board.
      *
      * @param buttons The buttons that are to be updated
      * @param board   The corresponding board

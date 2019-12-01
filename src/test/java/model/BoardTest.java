@@ -1,12 +1,8 @@
 package model;
 
-import com.google.gson.JsonObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import resources.Resources;
 import util.Move;
-
-import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,14 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class BoardTest {
     private Board board1;
-    private Board board2;
     private final String TESTBOARD1 = "RBG MU X X X FHU1 FTU1 X X X X X RBB X X X X X X X X X X X X";
 
     @BeforeEach
     public void setUp() {
         board1 = Board.createBoard("Anyboard", TESTBOARD1);
         String TESTBOARD2 = "RBW MU X X X FHU1 FTU1 X X X X X RBW X X X X X X X X X X MU X";
-        board2 = Board.createBoard("Anyboard", TESTBOARD2);
+        Board board2 = Board.createBoard("Anyboard", TESTBOARD2);
     }
 
     @Test
@@ -110,31 +105,5 @@ public class BoardTest {
         assertFalse(board1.isInWinningState()); // No more rabbits, the game is not in a winning state.
         board1.setPiece(new Mushroom(), 0, 0);
         assertFalse(board1.isInWinningState()); // Make sure it is actually checking for rabbits in brown holes.
-    }
-
-    @Test
-    public void testSaveAndLoadBoard() {
-        assertTrue(board1.saveBoard("testBoard.json")); // Save the first board
-
-        JsonObject savedBoardObject = Resources.loadJsonObjectFromPath(new File("testBoard.json").getAbsolutePath(),
-                true); // Reload the board as a JSON object
-
-        JsonObject jsonObject = new JsonObject(); // Create a mock JSON object that should be equal to the one that was just loaded
-        jsonObject.addProperty("name", board1.getName());
-        jsonObject.addProperty("board", board1.toString());
-
-        assertEquals(jsonObject, savedBoardObject); // Check that these two JSON objects are the same
-
-        assertTrue(board2.saveBoard("testBoard.json")); // Replicate for the second board (ensuring the file is properly overwritten)
-
-        savedBoardObject = Resources.loadJsonObjectFromPath(new File("testBoard.json").getAbsolutePath(), true);
-
-        jsonObject = new JsonObject();
-        jsonObject.addProperty("name", board2.getName());
-        jsonObject.addProperty("board", board2.toString());
-
-        assertEquals(jsonObject, savedBoardObject);
-
-        assertTrue(new File("testBoard.json").delete()); // Ensure the file is properly deleted
     }
 }
