@@ -219,12 +219,7 @@ public class LevelSelector extends JFrame implements ActionListener {
     private void setUpMenuButton(JButton button) {
         button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BUTTON_X_FACTOR),
                 (int) (BUTTON_Y_FACTOR * GUIUtilities.SIDE_LENGTH)));
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setForeground(Color.WHITE);
-        button.setBackground(Color.BLACK);
-        button.setFocusPainted(false);
-        button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
-        button.addActionListener(this);
+        GUIUtilities.stylizeButton(button,this);
     }
 
     /**

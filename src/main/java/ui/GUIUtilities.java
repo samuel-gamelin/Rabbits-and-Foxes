@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -178,6 +179,21 @@ public final class GUIUtilities {
                     button::doClick);
         }
         return button;
+    }
+
+    /**
+     * Stylizes a button with default configurations that is intended to be used in any frame.
+     *
+     * @param button The button to stylize
+     * @param actionListener The listener for this button
+     */
+    public static void stylizeButton(JButton button, ActionListener actionListener) {
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setForeground(Color.WHITE);
+        button.setBackground(Color.BLACK);
+        button.setFocusPainted(false);
+        button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
+        button.addActionListener(actionListener);
     }
 
     /**

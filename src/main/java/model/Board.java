@@ -337,7 +337,7 @@ public class Board {
      * @return True if the board was saved successfully, false otherwise (i.e. path already exists)
      */
     public boolean saveBoard(String path) {
-        if (new File(path).exists()) {
+        if (new File(path).isFile()) {
             return false;
         }
         try (Writer writer = new BufferedWriter(

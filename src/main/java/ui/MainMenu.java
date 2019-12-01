@@ -53,12 +53,7 @@ public class MainMenu extends JFrame implements ActionListener {
     private void addMainMenuButton(JButton button) {
         button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / 2.5), (int) (0.10 * GUIUtilities.SIDE_LENGTH)));
         button.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / 2.5), (int) (0.10 * GUIUtilities.SIDE_LENGTH)));
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setForeground(Color.WHITE);
-        button.setBackground(Color.BLACK);
-        button.setFocusPainted(false);
-        button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
-        button.addActionListener(this);
+        GUIUtilities.stylizeButton(button, this);
         add(button, BorderLayout.CENTER);
         add(Box.createVerticalGlue());
     }
