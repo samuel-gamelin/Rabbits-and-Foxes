@@ -52,7 +52,8 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     private GameController gameController;
 
     /**
-     * Represents the state of the game. True if the game is running, false otherwise.
+     * Represents the state of the game. True if the game is running, false
+     * otherwise.
      */
     private boolean gameState;
 
@@ -91,7 +92,10 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
         for (int y = 0; y < Board.SIZE; y++) {
             for (int x = 0; x < Board.SIZE; x++) {
-                buttons[x][y] = GUIUtilities.generateGameBoardButton(this, x, y);
+                buttons[x][y] = GUIUtilities.generateGameBoardButton(x, y);
+
+                buttons[x][y].addMouseListener(this);
+                this.add(buttons[x][y]);
 
                 final int xCopy = x;
                 final int yCopy = y;
@@ -144,11 +148,13 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     }
 
     /**
-     * Creates the application GUI given a board, level, along with undo and redo move stacks.
+     * Creates the application GUI given a board, level, along with undo and redo
+     * move stacks.
      *
-     * @param board The board that this GameView should have
-     * @param level The current level of the game. Only applicable to default
-     *              levels. For user levels, a negative value must be provided.
+     * @param board         The board that this GameView should have
+     * @param level         The current level of the game. Only applicable to
+     *                      default levels. For user levels, a negative value must
+     *                      be provided.
      * @param undoMoveStack The stack of moves that can be undone
      * @param redoMoveStack The stack of moves that can be redone
      */
@@ -218,7 +224,8 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
      *
      * @param path The absolute path of the file that will contain the saved data
      *             for this game
-     * @return True if the game was saved successfully, false otherwise (i.e. the path already exists)
+     * @return True if the game was saved successfully, false otherwise (i.e. the
+     *         path already exists)
      */
     public boolean save(String path) {
         if (new File(path).isFile()) {
@@ -255,7 +262,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                 if (!gameController.isDefaultLevel()) {
                     int choice = GUIUtilities.displayOptionDialog(this,
                             "Congrats, you solved it! Would you like to go to reset or go to the main menu?", "Solved!",
-                            new String[]{"Reset", "Main Menu", "Quit"});
+                            new String[] { "Reset", "Main Menu", "Quit" });
                     if (choice == 0) {
                         resetGame();
                     } else if (choice == 1) {
@@ -269,7 +276,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                     if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
                         int choice = GUIUtilities.displayOptionDialog(this,
                                 "Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
-                                new String[]{"Next", "Reset", "Quit"});
+                                new String[] { "Next", "Reset", "Quit" });
                         if (choice == 0) {
                             gameController.incrementLevel();
                             resetGame();
@@ -282,7 +289,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                     } else {
                         if (GUIUtilities.displayOptionDialog(this,
                                 "You have finished the game! Would you like to go to the main menu or exit?",
-                                "End Game", new String[]{"Main Menu", "Quit"}) == 0) {
+                                "End Game", new String[] { "Main Menu", "Quit" }) == 0) {
                             gameState = false;
                             this.dispose();
                             SwingUtilities.invokeLater(MainMenu::new);
@@ -301,9 +308,9 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == menuMain
-                && GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to the main menu? (Any unsaved progress will be lost)",
-                "Return to Main Menu", new String[]{"Yes", "No"}) == 0) {
+        if (e.getSource() == menuMain && GUIUtilities.displayOptionDialog(null,
+                "Are you sure you want to return to the main menu? (Any unsaved progress will be lost)",
+                "Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == menuHint) {
@@ -314,15 +321,16 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             buttons[bestMove.xEnd][bestMove.yEnd].setBorder(GUIUtilities.HINT_BORDER_END);
         } else if (e.getSource() == menuSaveButton) {
             int returnVal = GUIUtilities.fc.showSaveDialog(this);
-            while (returnVal == JFileChooser.APPROVE_OPTION && !this.save(GUIUtilities.fc.getSelectedFile().getAbsolutePath())) {
+            while (returnVal == JFileChooser.APPROVE_OPTION
+                    && !this.save(GUIUtilities.fc.getSelectedFile().getAbsolutePath())) {
                 GUIUtilities.displayMessageDialog(this, "File already exists!", "Invalid File Selection");
                 returnVal = GUIUtilities.fc.showSaveDialog(this);
             }
         } else if (e.getSource() == menuHelp) {
             displayHelpDialog();
         } else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
-                "Are you sure you want to reset the game? (Any unsaved progress will be lost)", "Reset Rabbits and Foxes!",
-                new String[]{"Yes", "No"}) == 0)) {
+                "Are you sure you want to reset the game? (Any unsaved progress will be lost)",
+                "Reset Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0)) {
             resetGame();
         } else if (e.getSource() == menuUndo) {
             clearButtonBorders();

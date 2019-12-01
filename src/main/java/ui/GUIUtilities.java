@@ -52,8 +52,8 @@ public final class GUIUtilities {
      */
     public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() > Toolkit
             .getDefaultToolkit().getScreenSize().getHeight()
-            ? (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
-            : (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+                    ? (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
+                    : (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
     /**
      * Font size, as determined by display dimensions.
@@ -87,7 +87,7 @@ public final class GUIUtilities {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 if (GUIUtilities.displayOptionDialog(frame, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
-                        new String[]{"Yes", "No"}) == 0) {
+                        new String[] { "Yes", "No" }) == 0) {
                     System.exit(0);
                 }
             }
@@ -101,7 +101,8 @@ public final class GUIUtilities {
     public static void applyDefaults() {
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
             Resources.LOGGER.error("Could not set the default look and feel", e);
         }
         UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
@@ -181,29 +182,25 @@ public final class GUIUtilities {
     /**
      * Configures and returns a button intended to be used as part of a board.
      *
-     * @param component The component to which the newly-created JButton should be tied (for mouse events) and added to
      * @param x The x-coordinate of the JButton
      * @param y The y-coordinate of the JButton
-     * @param <C> Type parameter restrictions for the specified component
      * @return The newly-created JButton
      */
-    public static <C extends Container & MouseListener> JButton generateGameBoardButton(C component, int x, int y) {
+    public static JButton generateGameBoardButton(int x, int y) {
         JButton button = new JButton();
         button.setOpaque(false);
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
         button.setBorder(GUIUtilities.BLANK_BORDER);
         button.setName(x + "," + y);
-        button.addMouseListener(component);
-        component.add(button);
-
         return button;
     }
 
     /**
-     * Stylizes a button with default configurations that is intended to be used in any frame.
+     * Stylizes a button with default configurations that is intended to be used in
+     * any frame.
      *
-     * @param button The button to stylize
+     * @param button         The button to stylize
      * @param actionListener The listener for this button
      */
     public static void stylizeButton(JButton button, ActionListener actionListener) {
@@ -216,7 +213,8 @@ public final class GUIUtilities {
     }
 
     /**
-     * Updates the visual representation of the specified two-dimensional array of buttons based on the provided board.
+     * Updates the visual representation of the specified two-dimensional array of
+     * buttons based on the provided board.
      *
      * @param buttons The buttons that are to be updated
      * @param board   The corresponding board
