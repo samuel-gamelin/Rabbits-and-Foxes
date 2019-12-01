@@ -93,8 +93,8 @@ public class LevelSelector extends JFrame implements ActionListener {
         setUpLevelDisplayButton(btnMiddleLevel = new JButton(), 2);
         setUpLevelDisplayButton(btnRightLevel = new JButton(), 3);
 
-        /* 
-         * Creating a JPanel to hold the buttons associated with 
+        /*
+         * Creating a JPanel to hold the buttons associated with
          * moving up or down a page.
          * Also adding the associated buttons to the panel, along with glue.
          */
@@ -118,7 +118,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         actionButtons.add(Box.createHorizontalGlue());
         actionButtons.add(btnCustomLevels);
         actionButtons.add(Box.createHorizontalGlue());
-        
+
         // Creating a JPanel to hold the start button.
         JPanel startPanel = new JPanel();
         setUpJPanel(startPanel, true);
@@ -219,12 +219,7 @@ public class LevelSelector extends JFrame implements ActionListener {
     private void setUpMenuButton(JButton button) {
         button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BUTTON_X_FACTOR),
                 (int) (BUTTON_Y_FACTOR * GUIUtilities.SIDE_LENGTH)));
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setForeground(Color.WHITE);
-        button.setBackground(Color.BLACK);
-        button.setFocusPainted(false);
-        button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
-        button.addActionListener(this);
+        GUIUtilities.stylizeButton(button,this);
     }
 
     /**
@@ -289,7 +284,7 @@ public class LevelSelector extends JFrame implements ActionListener {
 
     /**
      * Update the view of the main level selector JFrame. This involves updating all
-     * of the JButtons responsible for displaying board previews. 
+     * of the JButtons responsible for displaying board previews.
      *
      * @param levelList The list we are using to update the level previews
      */

@@ -5,12 +5,9 @@ import controller.GameController.ClickValidity;
 import model.Board;
 import model.BoardListener;
 import resources.Resources;
-import ui.GUIUtilities;
-import ui.MainMenu;
 import util.Move;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -26,28 +23,31 @@ import java.awt.event.*;
  * @version 4.0
  */
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
-
-    private static final BevelBorder SELECT_BORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
-    private static final BevelBorder HINT_BORDER_START = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
-    private static final BevelBorder HINT_BORDER_END = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
-    private static final BevelBorder POSSIBLE_POSITION_BORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE,
-            Color.BLUE);
-
     private JButton menuReset;
     private JButton menuHelp;
     private JButton menuHint;
     private JButton menuUndo;
     private JButton menuRedo;
-    private JButton menuMainScreen;
+    private JButton menuMain;
     private JButton menuSaveButton;
     private JButton menuQuit;
 
     private JCheckBox showPossibleMovesBox;
     private JButton[][] buttons;
 
+    /**
+     * The Board that this view listens to.
+     */
     private Board board;
+
+    /**
+     * The controller associated with this view.
+     */
     private GameController gameController;
-    private JFileChooser fc = new JFileChooser();
+
+    /**
+     * Represents the state of the game. True if the game is running, false otherwise.
+     */
     private boolean gameState;
 
     /**
@@ -60,16 +60,15 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     public GameView(Board board, int level) {
         this.board = board;
         this.board.addListener(this);
+        this.gameController = new GameController(board, level);
 
-        gameState = true;
-
-        gameController = new GameController(board, level);
+        this.gameState = true;
 
         this.updateFrameTitle();
 
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
-        menuBar.add(menuMainScreen = GUIUtilities.createMenuBarButton("Main Menu", true));
+        menuBar.add(menuMain = GUIUtilities.createMenuBarButton("Main Menu", true));
         menuBar.add(menuHint = GUIUtilities.createMenuBarButton("Hint", true));
         menuBar.add(menuUndo = GUIUtilities.createMenuBarButton("Undo", true));
         menuBar.add(menuRedo = GUIUtilities.createMenuBarButton("Redo", true));
@@ -88,15 +87,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
         for (int y = 0; y < Board.SIZE; y++) {
             for (int x = 0; x < Board.SIZE; x++) {
-                buttons[x][y] = new JButton();
-                // Clear button default colours and make it transparent
-                buttons[x][y].setOpaque(false);
-                buttons[x][y].setContentAreaFilled(false);
-                buttons[x][y].setFocusPainted(false);
-                buttons[x][y].setBorder(GUIUtilities.BLANK_BORDER);
-                buttons[x][y].setName(x + "," + y);
-                gameContentPane.add(buttons[x][y]);
-                buttons[x][y].addMouseListener(this);
+                buttons[x][y] = GUIUtilities.generateGameBoardButton(this, x, y);
 
                 final int xCopy = x;
                 final int yCopy = y;
@@ -109,13 +100,13 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                     // Highlights all possible moves for the selected piece.
                     if (showPossibleMovesBox.isSelected()) {
                         gameController.getPossibleMoves(xCopy, yCopy).parallelStream().forEach(move -> {
-                            buttons[move.xStart][move.yStart].setBorder(HINT_BORDER_START);
-                            buttons[move.xEnd][move.yEnd].setBorder(POSSIBLE_POSITION_BORDER);
+                            buttons[move.xStart][move.yStart].setBorder(GUIUtilities.HINT_BORDER_START);
+                            buttons[move.xEnd][move.yEnd].setBorder(GUIUtilities.POSSIBLE_POSITION_BORDER);
                         });
                     }
 
                     if (clickResult == ClickValidity.VALID) {
-                        buttons[xCopy][yCopy].setBorder(SELECT_BORDER);
+                        buttons[xCopy][yCopy].setBorder(GUIUtilities.SELECTED_BORDER);
                     } else if (clickResult == ClickValidity.VALID_MOVEMADE) {
                         clearButtonBorders();
                     } else {
@@ -136,7 +127,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                 .addItemListener(e -> showPossibleMovesBox.setSelected(e.getStateChange() == ItemEvent.SELECTED));
         GUIUtilities.updateView(buttons, board);
 
-        menuMainScreen.addActionListener(this);
+        menuMain.addActionListener(this);
         menuReset.addActionListener(this);
         menuHelp.addActionListener(this);
         menuSaveButton.addActionListener(this);
@@ -261,26 +252,27 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == menuMainScreen
-                && GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
+        if (e.getSource() == menuMain
+                && GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu? (Any unsaved progress will be lost)",
                 "Return to Main Menu", new String[]{"Yes", "No"}) == 0) {
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == menuHint) {
             Move bestMove = gameController.getNextBestMove();
-            if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(SELECT_BORDER)) {
-                buttons[bestMove.xStart][bestMove.yStart].setBorder(HINT_BORDER_START);
+            if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(GUIUtilities.SELECTED_BORDER)) {
+                buttons[bestMove.xStart][bestMove.yStart].setBorder(GUIUtilities.HINT_BORDER_START);
             }
-            buttons[bestMove.xEnd][bestMove.yEnd].setBorder(HINT_BORDER_END);
+            buttons[bestMove.xEnd][bestMove.yEnd].setBorder(GUIUtilities.HINT_BORDER_END);
         } else if (e.getSource() == menuSaveButton) {
-            int returnVal = fc.showSaveDialog(this);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                board.saveBoard(fc.getSelectedFile().getAbsolutePath());
+            int returnVal = GUIUtilities.fc.showSaveDialog(this);
+            while (returnVal == JFileChooser.APPROVE_OPTION && !board.saveBoard(GUIUtilities.fc.getSelectedFile().getAbsolutePath())) {
+                GUIUtilities.displayMessageDialog(this, "File already exists!", "Invalid File Selection");
+                returnVal = GUIUtilities.fc.showSaveDialog(this);
             }
         } else if (e.getSource() == menuHelp) {
             displayHelpDialog();
         } else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
-                "Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
+                "Are you sure you want to reset the game? (Any unsaved progress will be lost)", "Reset Rabbits and Foxes!",
                 new String[]{"Yes", "No"}) == 0)) {
             resetGame();
         } else if (e.getSource() == menuUndo) {

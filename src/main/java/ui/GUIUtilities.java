@@ -4,12 +4,11 @@ import model.*;
 import resources.Resources;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 /**
  * This class represents the GUI utilities shared by the game's frames.
@@ -24,7 +23,27 @@ public final class GUIUtilities {
     /**
      * An empty border.
      */
-    public static final EmptyBorder BLANK_BORDER = new EmptyBorder(0, 0, 0, 0);
+    static final EmptyBorder BLANK_BORDER = new EmptyBorder(0, 0, 0, 0);
+
+    /**
+     * A selected border.
+     */
+    static final BevelBorder SELECTED_BORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
+
+    /**
+     * A border for the start of a hint.
+     */
+    static final BevelBorder HINT_BORDER_START = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
+
+    /**
+     * A border for the end of a hint.
+     */
+    static final BevelBorder HINT_BORDER_END = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
+
+    /**
+     * A border for the start of a hint.
+     */
+    static final BevelBorder POSSIBLE_POSITION_BORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE, Color.BLUE);
 
     /**
      * A percentage (80%) of the current display's height (or width, depending on
@@ -40,6 +59,11 @@ public final class GUIUtilities {
      * Font size, as determined by display dimensions.
      */
     public static final int FONT_SIZE = (int) (SIDE_LENGTH / 25);
+
+    /**
+     * A file chooser used to pick files.
+     */
+    static JFileChooser fc = new JFileChooser();
 
     /**
      * A private constructor, preventing any instantiation of this class.
@@ -81,6 +105,7 @@ public final class GUIUtilities {
             Resources.LOGGER.error("Could not set the default look and feel", e);
         }
         UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
+        fc = new JFileChooser();
     }
 
     /**
@@ -151,6 +176,43 @@ public final class GUIUtilities {
                     button::doClick);
         }
         return button;
+    }
+
+    /**
+     * Configures and returns a button intended to be used as part of a board.
+     *
+     * @param component The component to which the newly-created JButton should be tied (for mouse events) and added to
+     * @param x The x-coordinate of the JButton
+     * @param y The y-coordinate of the JButton
+     * @param <C> Type parameter restrictions for the specified component
+     * @return The newly-created JButton
+     */
+    public static <C extends Container & MouseListener> JButton generateGameBoardButton(C component, int x, int y) {
+        JButton button = new JButton();
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.setBorder(GUIUtilities.BLANK_BORDER);
+        button.setName(x + "," + y);
+        button.addMouseListener(component);
+        component.add(button);
+
+        return button;
+    }
+
+    /**
+     * Stylizes a button with default configurations that is intended to be used in any frame.
+     *
+     * @param button The button to stylize
+     * @param actionListener The listener for this button
+     */
+    public static void stylizeButton(JButton button, ActionListener actionListener) {
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setForeground(Color.WHITE);
+        button.setBackground(Color.BLACK);
+        button.setFocusPainted(false);
+        button.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
+        button.addActionListener(actionListener);
     }
 
     /**

@@ -6,10 +6,7 @@ import com.google.gson.JsonObject;
 import resources.Resources;
 import util.Move;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -333,14 +330,16 @@ public class Board {
     }
 
     /**
-     * Saves this board as a JSON object in a file at the specified path. Overwrites
-     * the existing file should it already exist.
+     * Saves this board as a JSON object in a file at the specified path.
      *
      * @param path The absolute path of the file that will contain the saved data
      *             for this board
-     * @return True if the board was saved successfully, false otherwise
+     * @return True if the board was saved successfully, false otherwise (i.e. path already exists)
      */
     public boolean saveBoard(String path) {
+        if (new File(path).isFile()) {
+            return false;
+        }
         try (Writer writer = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(path), Charset.defaultCharset()))) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
