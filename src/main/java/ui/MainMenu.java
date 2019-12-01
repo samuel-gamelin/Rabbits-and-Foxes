@@ -1,12 +1,17 @@
 package ui;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import model.Board;
 import resources.Resources;
+import util.Move;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayDeque;
 
 /**
  * This class represents the main menu frame of the game.
@@ -69,15 +74,29 @@ public class MainMenu extends JFrame implements ActionListener {
         } else if (e.getSource() == btnLoadGameButton) {
             int returnVal = GUIUtilities.fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                Board board = Board.loadBoard(GUIUtilities.fc.getSelectedFile().getAbsolutePath());
-                if (board != null) {
-                    this.dispose();
-                    if (board.getName().matches("-?\\d+"))
-                        SwingUtilities.invokeLater(new GameView(board, Integer.parseInt(board.getName())));
-                    else {
-                        SwingUtilities.invokeLater(new GameView(board, -1));
+                Board board;
+                ArrayDeque<Move> undoMoveStack;
+                ArrayDeque<Move> redoMoveStack;
+
+                try {
+                    Gson gson = new Gson();
+                    JsonObject jsonObject = Resources.loadJsonObjectFromPath(GUIUtilities.fc.getSelectedFile().getAbsolutePath(), true);
+                    if (jsonObject != null) {
+                        board = Board.createBoard(jsonObject.get("name").getAsString(), jsonObject.get("board").getAsString());
+                        undoMoveStack = gson.fromJson(jsonObject.get("undoMoves").getAsString(), new TypeToken<ArrayDeque<Move>>() {
+                        }.getType());
+                        redoMoveStack = gson.fromJson(jsonObject.get("redoMoves").getAsString(), new TypeToken<ArrayDeque<Move>>() {
+                        }.getType());
+
+                        if (board != null && undoMoveStack != null && redoMoveStack != null) {
+                            this.dispose();
+                            SwingUtilities.invokeLater(new GameView(board, board.getName().matches("-?\\d+") ? Integer.parseInt(board.getName()) : -1, undoMoveStack, redoMoveStack));
+                        } else {
+                            GUIUtilities.displayMessageDialog(this, "Invalid file selection!", "Invalid File");
+                        }
                     }
-                } else {
+                } catch (Exception ex) {
+                    Resources.LOGGER.error("Unable to load Board object from file at " + GUIUtilities.fc.getSelectedFile().getAbsolutePath(), ex);
                     GUIUtilities.displayMessageDialog(this, "Invalid file selection!", "Invalid File");
                 }
             }

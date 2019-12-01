@@ -1,5 +1,8 @@
 package ui;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import controller.GameController;
 import controller.GameController.ClickValidity;
 import model.Board;
@@ -10,6 +13,9 @@ import util.Move;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.util.ArrayDeque;
 
 /**
  * This class represents the view with which the user interacts in order to play
@@ -80,8 +86,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         this.setContentPane(new JLabel(Resources.BOARD));
         this.getContentPane().setLayout(new GridLayout(5, 5));
 
-        JLabel gameContentPane = (JLabel) this.getContentPane();
-
         // Create all buttons
         buttons = new JButton[5][5];
 
@@ -121,7 +125,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         }
 
         // Configure the escape key to cancel the pending move, setup the check box and
-        GUIUtilities.bindKeyStroke(gameContentPane, "ESCAPE", "clear", this::clearMove);
+        GUIUtilities.bindKeyStroke((JComponent) this.getContentPane(), "ESCAPE", "clear", this::clearMove);
         showPossibleMovesBox = new JCheckBox();
         showPossibleMovesBox
                 .addItemListener(e -> showPossibleMovesBox.setSelected(e.getStateChange() == ItemEvent.SELECTED));
@@ -137,6 +141,21 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         menuQuit.addActionListener(this);
 
         GUIUtilities.configureFrame(this);
+    }
+
+    /**
+     * Creates the application GUI given a board, level, along with undo and redo move stacks.
+     *
+     * @param board The board that this GameView should have
+     * @param level The current level of the game. Only applicable to default
+     *              levels. For user levels, a negative value must be provided.
+     * @param undoMoveStack The stack of moves that can be undone
+     * @param redoMoveStack The stack of moves that can be redone
+     */
+    public GameView(Board board, int level, ArrayDeque<Move> undoMoveStack, ArrayDeque<Move> redoMoveStack) {
+        this(board, level);
+        gameController.setUndoMoveStack(undoMoveStack);
+        gameController.setRedoMoveStack(redoMoveStack);
     }
 
     /**
@@ -191,6 +210,36 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             for (int j = 0; j < Board.SIZE; j++) {
                 buttons[i][j].setBorder(GUIUtilities.BLANK_BORDER);
             }
+        }
+    }
+
+    /**
+     * Saves the state of the game as a JSON object in a file at the specified path.
+     *
+     * @param path The absolute path of the file that will contain the saved data
+     *             for this game
+     * @return True if the game was saved successfully, false otherwise (i.e. the path already exists)
+     */
+    public boolean save(String path) {
+        if (new File(path).isFile()) {
+            return false;
+        }
+
+        try (Writer writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(path), Charset.defaultCharset()))) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("name", board.getName());
+            jsonObject.addProperty("board", board.toString());
+            jsonObject.addProperty("undoMoves", gson.toJson(gameController.getUndoMoveStack()));
+            jsonObject.addProperty("redoMoves", gson.toJson(gameController.getRedoMoveStack()));
+
+            gson.toJson(jsonObject, writer);
+            return true;
+        } catch (Exception e) {
+            Resources.LOGGER.error("Unable to save Board object to file at " + path, e);
+            return false;
         }
     }
 
@@ -265,7 +314,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             buttons[bestMove.xEnd][bestMove.yEnd].setBorder(GUIUtilities.HINT_BORDER_END);
         } else if (e.getSource() == menuSaveButton) {
             int returnVal = GUIUtilities.fc.showSaveDialog(this);
-            while (returnVal == JFileChooser.APPROVE_OPTION && !board.saveBoard(GUIUtilities.fc.getSelectedFile().getAbsolutePath())) {
+            while (returnVal == JFileChooser.APPROVE_OPTION && !this.save(GUIUtilities.fc.getSelectedFile().getAbsolutePath())) {
                 GUIUtilities.displayMessageDialog(this, "File already exists!", "Invalid File Selection");
                 returnVal = GUIUtilities.fc.showSaveDialog(this);
             }

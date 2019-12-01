@@ -1,13 +1,7 @@
 package model;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import resources.Resources;
 import util.Move;
 
-import java.io.*;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -307,52 +301,6 @@ public class Board {
             }
         }
         return board;
-    }
-
-    /**
-     * Loads a board from a JSON file at the specified path.
-     *
-     * @param path The absolute path of the file that contains the saved data for a
-     *             board
-     * @return The Board represented by the file contents at the specified path, or
-     * null if the file is in an improper format
-     */
-    public static Board loadBoard(String path) {
-        try {
-            JsonObject jsonObject = Resources.loadJsonObjectFromPath(path, true);
-            if (jsonObject != null) {
-                return Board.createBoard(jsonObject.get("name").getAsString(), jsonObject.get("board").getAsString());
-            }
-        } catch (Exception e) {
-            Resources.LOGGER.error("Unable to load Board object from file at " + path, e);
-        }
-        return null;
-    }
-
-    /**
-     * Saves this board as a JSON object in a file at the specified path.
-     *
-     * @param path The absolute path of the file that will contain the saved data
-     *             for this board
-     * @return True if the board was saved successfully, false otherwise (i.e. path already exists)
-     */
-    public boolean saveBoard(String path) {
-        if (new File(path).isFile()) {
-            return false;
-        }
-        try (Writer writer = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(path), Charset.defaultCharset()))) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("name", this.name);
-            jsonObject.addProperty("board", this.toString());
-            gson.toJson(jsonObject, writer);
-            return true;
-        } catch (Exception e) {
-            Resources.LOGGER.error("Unable to save Board object to file at " + path, e);
-            return false;
-        }
     }
 
     @Override
