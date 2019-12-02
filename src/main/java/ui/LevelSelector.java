@@ -262,6 +262,8 @@ public class LevelSelector extends JFrame implements ActionListener {
         button.addActionListener(this);
         button.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
                 (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
+        button.setMinimumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
+                (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         for (int y = 0; y < Board.SIZE; y++) {
             for (int x = 0; x < Board.SIZE; x++) {
                 switch (tileNumber) {
