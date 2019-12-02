@@ -62,10 +62,11 @@ Date: December 2, 2019
 
 ## Road Map
 
-- Adding an undo/redo feature to the game and a hint system utilizing a game solver
-  - Adding the ability to see the next best move on the game board
-  - Incorporating an undo/redo to improve user experience
-  - Updating and adding unit tests for the Model portion of the game
+- Adding a level editor and save/load functionality
+  - Adding the ability for users to creates their own levels via a GUI
+  - Incorporating the solver to ensure that custom levels are solvable
+  - Achieving saving and loading via serialization.
+  - Updating and adding unit tests for all new features
   - Continuing to implement gradual improvements
   - Continuing to document the development and design process
 
