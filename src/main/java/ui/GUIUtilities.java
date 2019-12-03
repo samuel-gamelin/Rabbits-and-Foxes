@@ -214,6 +214,8 @@ public final class GUIUtilities {
 
     /**
      * Clears the borders on all buttons.
+     *
+     * @param buttons The grid of buttons whose borders are to be cleared
      */
     public static void clearButtonBorders(JButton[][] buttons) {
         for (int i = 0; i < Board.SIZE; i++) {
