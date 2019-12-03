@@ -213,6 +213,17 @@ public final class GUIUtilities {
     }
 
     /**
+     * Clears the borders on all buttons.
+     */
+    public static void clearButtonBorders(JButton[][] buttons) {
+        for (int i = 0; i < Board.SIZE; i++) {
+            for (int j = 0; j < Board.SIZE; j++) {
+                buttons[i][j].setBorder(GUIUtilities.BLANK_BORDER);
+            }
+        }
+    }
+
+    /**
      * Updates the visual representation of the specified two-dimensional array of
      * buttons based on the provided board.
      *
