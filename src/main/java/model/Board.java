@@ -116,11 +116,14 @@ public class Board {
     }
 
     /**
-     * Given a position on the board return boolean based on colour.
+     * Given a position on the board return boolean based on colour. This is used to
+     * Determine the the type of tile on a board.
      * 
-     * @param x
-     * @param y
-     * @return false if tile colour is brown else false
+     * @param x The x-coordinate of the position
+     * @param y The y-coordinate of the position
+     * 
+     * @return False is returned if the colour of the tile is brown. True is
+     *         returned if the colour of the tile is green.
      */
     public boolean tileType(int x, int y) {
         return tiles[x][y].getColour() != Tile.TileColour.BROWN;
