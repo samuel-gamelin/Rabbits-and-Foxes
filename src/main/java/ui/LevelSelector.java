@@ -218,7 +218,7 @@ public class LevelSelector extends JFrame implements ActionListener {
     private void setUpMenuButton(JButton button) {
         button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BUTTON_X_FACTOR),
                 (int) (BUTTON_Y_FACTOR * GUIUtilities.SIDE_LENGTH)));
-        GUIUtilities.stylizeButton(button,this);
+        GUIUtilities.stylizeButton(button, this);
     }
 
     /**
@@ -245,7 +245,7 @@ public class LevelSelector extends JFrame implements ActionListener {
     /**
      * Initialize a JButton used to display the level previews.
      *
-     * @param button The JButton being set up for level preview display purposes
+     * @param button     The JButton being set up for level preview display purposes
      * @param tileNumber 1 for left, 2 for middle, 3 for right.
      */
     private void setUpLevelDisplayButton(JButton button, int tileNumber) {

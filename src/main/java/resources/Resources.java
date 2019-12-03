@@ -218,7 +218,7 @@ public final class Resources {
      * Provides the number of default levels available in the LevelData.json file.
      *
      * @return The total number of levels in the game. Returns -1 if no valid
-     *         LevelData.json file is found.
+     * LevelData.json file is found.
      */
     private static int getNumberOfLevels() {
         try {
@@ -235,7 +235,7 @@ public final class Resources {
      *
      * @param fieldName The field name associated with the desired ImageIcon
      * @return The ImageIcon associated with the provided field name. Null if no
-     *         such field exists.
+     * such field exists.
      */
     public static ImageIcon getImageIconByName(String fieldName) {
         try {
@@ -253,7 +253,7 @@ public final class Resources {
      * @param isAbsolutePath True if the provided path is absolute, false if it is
      *                       relative (to the root of the classpath)
      * @return The loaded JsonObject, or null if that path or file contents are
-     *         invalid
+     * invalid
      */
     public static JsonObject loadJsonObjectFromPath(String path, boolean isAbsolutePath) {
         if (!isAbsolutePath) {
@@ -281,7 +281,7 @@ public final class Resources {
      *
      * @param level The level to load.
      * @return The Board associated with the passed-in level. Null if the level does
-     *         not exist or the LevelData.json file is not found.
+     * not exist or the LevelData.json file is not found.
      */
     public static Board getDefaultBoardByLevel(int level) {
         try {
@@ -302,7 +302,7 @@ public final class Resources {
      * Returns a list of all default boards as specified by the LevelData.json file.
      *
      * @return A list of all default boards, or an empty list if any problems are
-     *         encountered
+     * encountered
      */
     public static List<Board> getAllDefaultBoards() {
         List<Board> boardList = new ArrayList<>();

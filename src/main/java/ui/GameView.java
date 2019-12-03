@@ -214,7 +214,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
      * @param path The absolute path of the file that will contain the saved data
      *             for this game
      * @return True if the game was saved successfully, false otherwise (i.e. the
-     *         path already exists)
+     * path already exists)
      */
     public boolean save(String path) {
         if (new File(path).isFile()) {
@@ -251,7 +251,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                 if (!gameController.isDefaultLevel()) {
                     int choice = GUIUtilities.displayOptionDialog(this,
                             "Congrats, you solved it! Would you like to go to reset or go to the main menu?", "Solved!",
-                            new String[] { "Reset", "Main Menu", "Quit" });
+                            new String[]{"Reset", "Main Menu", "Quit"});
                     if (choice == 0) {
                         resetGame();
                     } else if (choice == 1) {
@@ -265,7 +265,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                     if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
                         int choice = GUIUtilities.displayOptionDialog(this,
                                 "Congrats, you solved it! Would you like to go to the next puzzle?", "Solved!",
-                                new String[] { "Next", "Reset", "Quit" });
+                                new String[]{"Next", "Reset", "Quit"});
                         if (choice == 0) {
                             gameController.incrementLevel();
                             resetGame();
@@ -278,7 +278,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                     } else {
                         if (GUIUtilities.displayOptionDialog(this,
                                 "You have finished the game! Would you like to go to the main menu or exit?",
-                                "End Game", new String[] { "Main Menu", "Quit" }) == 0) {
+                                "End Game", new String[]{"Main Menu", "Quit"}) == 0) {
                             gameState = false;
                             this.dispose();
                             SwingUtilities.invokeLater(MainMenu::new);
@@ -299,7 +299,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuMain && GUIUtilities.displayOptionDialog(null,
                 "Are you sure you want to return to the main menu? (Any unsaved progress will be lost)",
-                "Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
+                "Return to Main Menu", new String[]{"Yes", "No"}) == 0) {
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == menuHint) {
@@ -319,7 +319,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             displayHelpDialog();
         } else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
                 "Are you sure you want to reset the game? (Any unsaved progress will be lost)",
-                "Reset Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0)) {
+                "Reset Rabbits and Foxes!", new String[]{"Yes", "No"}) == 0)) {
             resetGame();
         } else if (e.getSource() == menuUndo) {
             GUIUtilities.clearButtonBorders(buttons);

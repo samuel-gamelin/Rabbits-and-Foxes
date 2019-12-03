@@ -11,7 +11,8 @@ import util.Move;
 import java.io.File;
 import java.util.ArrayDeque;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameViewTest {
     private Board board;

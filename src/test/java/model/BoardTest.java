@@ -15,13 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class BoardTest {
     private Board board1;
-    private final String TESTBOARD1 = "RBG MU X X X FHU1 FTU1 X X X X X RBB X X X X X X X X X X X X";
+    private final String TEST_BOARD_1 = "RBG MU X X X FHU1 FTU1 X X X X X RBB X X X X X X X X X X X X";
 
     @BeforeEach
     public void setUp() {
-        board1 = Board.createBoard("Anyboard", TESTBOARD1);
-        String TESTBOARD2 = "RBW MU X X X FHU1 FTU1 X X X X X RBW X X X X X X X X X X MU X";
-        Board board2 = Board.createBoard("Anyboard", TESTBOARD2);
+        board1 = Board.createBoard("Anyboard", TEST_BOARD_1);
     }
 
     @Test
@@ -93,7 +91,7 @@ public class BoardTest {
         Board emptyBoard = Board.createBoard("Anyboard", "X X X X X X X X X X X X X X X X X X X X X X X X X");
         assertNotNull(emptyBoard);
         assertEquals("X X X X X X X X X X X X X X X X X X X X X X X X X", emptyBoard.toString());
-        assertEquals(board1.toString(), TESTBOARD1);
+        assertEquals(board1.toString(), TEST_BOARD_1);
     }
 
     @Test

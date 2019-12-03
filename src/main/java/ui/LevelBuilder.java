@@ -1,47 +1,28 @@
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import model.Board;
-import model.BoardListener;
-import model.Fox;
+import model.*;
 import model.Fox.Direction;
-import model.Mushroom;
-import model.Rabbit;
 import model.Rabbit.RabbitColour;
 import resources.Resources;
 import util.Move.MoveDirection;
 import util.Solver;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 /**
  * This class represents a level builder which allows the user to create and
  * save their own levels.
- * 
+ *
  * @author Mohamed Radwan
  * @author Abdalla El Nakla
  * @version 4.0
  */
 public class LevelBuilder extends JFrame implements ActionListener, MouseListener, BoardListener {
-
-    /*
-     * Used to correct the size for the side panel.
-     */
-    private JButton emptySpace1;
-    private JButton emptySpace2;
 
     /**
      * Represents the Head of a vertical Fox in the up direction.
@@ -253,8 +234,8 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 
     /**
      * This method is used construct the side panel used for the pieces.
-     * 
-     * @return
+     *
+     * @return The JPanel that was created
      */
     private JLabel piecePanelSetup() {
         // create the side panel as a grid
@@ -269,8 +250,12 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
         pieceJPanel.add(horizontalFH = buttonIconSetup(Resources.FOX_HEAD_LEFT));
         pieceJPanel.add(horizontalFT = buttonIconSetup(Resources.FOX_TAIL_LEFT));
         // Add button spacing for the bottom of the menu to account for scaling
-        pieceJPanel.add(emptySpace1 = buttonIconSetup(null));
-        pieceJPanel.add(emptySpace2 = buttonIconSetup(null));
+        /*
+         * Used to correct the size for the side panel.
+         */
+
+        pieceJPanel.add(buttonIconSetup(null));
+        pieceJPanel.add(buttonIconSetup(null));
         // Add action listeners for the piece buttons on the side panel
         verticalFH.addActionListener(this);
         verticalFT.addActionListener(this);
@@ -286,9 +271,9 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 
     /**
      * Add images to the buttons
-     * 
-     * @param image
-     * @return
+     *
+     * @param image The image to use for the button
+     * @return The newly-created button
      */
     private JButton buttonIconSetup(ImageIcon image) {
         JButton button = new JButton();
@@ -396,7 +381,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuMainScreen
                 && GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
-                        "Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
+                "Return to Main Menu", new String[]{"Yes", "No"}) == 0) {
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == saveBoard) {
@@ -415,14 +400,12 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
                         levelNameString = JOptionPane.showInputDialog("No numbers are allowed in the level name: ");
                     }
                     board.setName(levelNameString);
-                    JPanel panel = new JPanel(new BorderLayout(0, 15));
-                    panel.add(new JLabel("The board has been saved successfully"), BorderLayout.NORTH);
-                    JOptionPane.showMessageDialog(this, panel, "Save", JOptionPane.INFORMATION_MESSAGE);
                 } while (!(Resources.addUserLevel(board)));
+                JPanel panel = new JPanel(new BorderLayout(0, 15));
+                panel.add(new JLabel("The board has been saved successfully"), BorderLayout.NORTH);
+                JOptionPane.showMessageDialog(this, panel, "Save", JOptionPane.INFORMATION_MESSAGE);
             }
-        } else if (e.getSource() == menuHelp)
-
-        {
+        } else if (e.getSource() == menuHelp) {
             JPanel panel = new JPanel(new BorderLayout(0, 15));
             panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>"
                     + "This is a level maker for Rabbits and foxes game." + "<br><br>"
@@ -433,8 +416,8 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
                     + "<br>" + "<br>" + "Please note in this game the user is restricted to 3 mushrooms, 2 foxes, and 3 different colour rabbits" + "</p></body></html>"), BorderLayout.NORTH);
             JOptionPane.showMessageDialog(this, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
         } else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
-                "Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
-                new String[] { "Yes", "No" }) == 0)) {
+                "Are you sure you want to reset the level builder? (Your progress will be lost)", "Reset Rabbits and Foxes!",
+                new String[]{"Yes", "No"}) == 0)) {
             resetBoard();
         } else if (e.getSource() == deletePiece) {
             if (itemToBeModifiedX == -1 && itemToBeModifiedY == -1) {

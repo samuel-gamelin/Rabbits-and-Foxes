@@ -8,7 +8,10 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * This class represents the GUI utilities shared by the game's frames.
@@ -52,8 +55,8 @@ public final class GUIUtilities {
      */
     public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() > Toolkit
             .getDefaultToolkit().getScreenSize().getHeight()
-                    ? (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
-                    : (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+            ? (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
+            : (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
     /**
      * Font size, as determined by display dimensions.
@@ -87,7 +90,7 @@ public final class GUIUtilities {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 if (GUIUtilities.displayOptionDialog(frame, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
-                        new String[] { "Yes", "No" }) == 0) {
+                        new String[]{"Yes", "No"}) == 0) {
                     System.exit(0);
                 }
             }

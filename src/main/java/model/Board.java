@@ -102,7 +102,7 @@ public class Board {
      *
      * @param move The object representing the move
      * @return true if the move was successful, false if parameters are invalid or
-     *         the move was unsuccessful
+     * the move was unsuccessful
      */
     public boolean move(Move move) {
         if (move == null)
@@ -118,12 +118,11 @@ public class Board {
     /**
      * Given a position on the board return boolean based on colour. This is used to
      * Determine the the type of tile on a board.
-     * 
+     *
      * @param x The x-coordinate of the position
      * @param y The y-coordinate of the position
-     * 
      * @return False is returned if the colour of the tile is brown. True is
-     *         returned if the colour of the tile is green.
+     * returned if the colour of the tile is green.
      */
     public boolean tileType(int x, int y) {
         return tiles[x][y].getColour() != Tile.TileColour.BROWN;
@@ -169,7 +168,7 @@ public class Board {
      * @param x The x position as a 0-based index
      * @param y The y position as a 0-based index
      * @return The piece at the specified position, null if there is no piece or the
-     *         position is invalid
+     * position is invalid
      */
     public Piece getPiece(int x, int y) {
         return validatePosition(x, y) ? this.tiles[x][y].retrievePiece() : null;
@@ -198,7 +197,7 @@ public class Board {
      * @param x The x-coordinate of the position
      * @param y The y-coordinate of the position
      * @return True if the piece was successfully removed, false otherwise (i.e.
-     *         invalid position or there was no piece to remove)
+     * invalid position or there was no piece to remove)
      */
     public Piece removePiece(int x, int y) {
         if (validatePosition(x, y) && tiles[x][y].isOccupied()) {
@@ -298,17 +297,17 @@ public class Board {
                         Fox f = Fox.createFox(currBoard[5 * i + j]);
                         board.tiles[i][j].placePiece(f);
                         switch (f.getDirection()) {
-                        case DOWN:
-                            board.tiles[i][j - 1].placePiece(f.getOtherHalf());
-                            break;
-                        case LEFT:
-                            board.tiles[i + 1][j].placePiece(f.getOtherHalf());
-                            break;
-                        case RIGHT:
-                            board.tiles[i - 1][j].placePiece(f.getOtherHalf());
-                            break;
-                        default:
-                            board.tiles[i][j + 1].placePiece(f.getOtherHalf());
+                            case DOWN:
+                                board.tiles[i][j - 1].placePiece(f.getOtherHalf());
+                                break;
+                            case LEFT:
+                                board.tiles[i + 1][j].placePiece(f.getOtherHalf());
+                                break;
+                            case RIGHT:
+                                board.tiles[i - 1][j].placePiece(f.getOtherHalf());
+                                break;
+                            default:
+                                board.tiles[i][j + 1].placePiece(f.getOtherHalf());
                         }
                     }
                 }
