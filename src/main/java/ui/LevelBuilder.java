@@ -49,7 +49,6 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 	private int numMush = 1;
 	private int numFox = 1;
 
-	// test
 	private JButton mushroom;
 	private JButton rabbit;
 	private JButton fox;
@@ -88,7 +87,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 		menuBar.add(saveBoard);
 		menuBar.add(menuHelp);
 
-		JMenu fileMenu = new JMenu("fox");
+		JMenu fileMenu = new JMenu("Fox");
 
 		upFox = new JMenuItem("Upward");
 		downFox = new JMenuItem("downward");
@@ -103,11 +102,8 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 
 		mushroom = ui.GUIUtilities.createMenuBarButton("Mushroom", true);
 		rabbit = ui.GUIUtilities.createMenuBarButton("Rabbits", true);
-		fox = ui.GUIUtilities.createMenuBarButton("Fox", true);
-
 		menuBar.add(mushroom);
 		menuBar.add(rabbit);
-		menuBar.add(fox);
 
 		this.setJMenuBar(menuBar);
 		this.setContentPane(new JLabel(Resources.BOARD));
@@ -138,30 +134,30 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 					} else if (currentIcon == Resources.FOX_HEAD_UP) {
 						Fox upFox = new Fox(Fox.Direction.UP, true);
 						board.setPiece(upFox, xCopy, yCopy);
-						board.setPiece(upFox.getOtherHalf(),xCopy,yCopy-1);
+						board.setPiece(upFox.getOtherHalf(), xCopy, yCopy+1);
 						numberOfFox();
 					} else if (currentIcon == Resources.FOX_HEAD_DOWN) {
 						Fox downFox = new Fox(Fox.Direction.DOWN, true);
 						board.setPiece(downFox, xCopy, yCopy);
-						board.setPiece(downFox.getOtherHalf(),xCopy,yCopy+1);
+						board.setPiece(downFox.getOtherHalf(), xCopy, yCopy - 1);
 						numberOfFox();
 					} else if (currentIcon == Resources.FOX_HEAD_LEFT) {
 						Fox leftFox = new Fox(Fox.Direction.LEFT, true);
 						board.setPiece(leftFox, xCopy, yCopy);
-						board.setPiece(leftFox.getOtherHalf(),xCopy-1,yCopy);
+						board.setPiece(leftFox.getOtherHalf(), xCopy + 1, yCopy);
 						numberOfFox();
 					} else if (currentIcon == Resources.FOX_HEAD_RIGHT) {
-						Fox rightFox = new Fox(Fox.Direction.UP, true);
+						Fox rightFox = new Fox(Fox.Direction.RIGHT, true);
 						board.setPiece(rightFox, xCopy, yCopy);
-						board.setPiece(rightFox.getOtherHalf(),xCopy+1,yCopy-1);
+						board.setPiece(rightFox.getOtherHalf(), xCopy - 1, yCopy);
 						numberOfFox();
-					}else if (currentIcon == Resources.RABBIT_WHITE) {
+					} else if (currentIcon == Resources.RABBIT_WHITE) {
 						board.setPiece(new Rabbit(RabbitColour.WHITE), xCopy, yCopy);
 						numberOfRabbits();
-					}else if (currentIcon == Resources.RABBIT_BROWN) {
+					} else if (currentIcon == Resources.RABBIT_BROWN) {
 						board.setPiece(new Rabbit(RabbitColour.BROWN), xCopy, yCopy);
 						numberOfRabbits();
-					}  else if (currentIcon == Resources.RABBIT_GRAY) {
+					} else if (currentIcon == Resources.RABBIT_GRAY) {
 						board.setPiece(new Rabbit(RabbitColour.GRAY), xCopy, yCopy);
 						numberOfRabbits();
 					} else {
@@ -171,7 +167,6 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 
 			}
 		}
-		// For testing
 		mushroom.addActionListener(this);
 		rabbit.addActionListener(this);
 		upFox.addActionListener(this);
@@ -217,11 +212,9 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 		} else if (e.getSource() == upFox) {
 			currentIcon = Resources.FOX_HEAD_UP;
 			foxTail = Resources.FOX_TAIL_UP;
-
 		} else if (e.getSource() == downFox) {
 			currentIcon = Resources.FOX_HEAD_DOWN;
 			foxTail = Resources.FOX_TAIL_DOWN;
-
 		} else if (e.getSource() == leftFox) {
 			currentIcon = Resources.FOX_HEAD_LEFT;
 			foxTail = Resources.FOX_TAIL_LEFT;
@@ -242,7 +235,6 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 
 		}
 	}
-
 	/**
 	 * Resets the board.
 	 */
@@ -256,6 +248,9 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 	public void mouseEntered(MouseEvent e) {
 		if (((JButton) e.getSource()).getIcon() == null) {
 			((JButton) e.getSource()).setIcon(currentIcon);
+			
+
+			
 		}
 	}
 
@@ -274,12 +269,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (((JButton) e.getSource()).getIcon() == null) {
-			((JButton) e.getSource()).setIcon(currentIcon);
-			currentIcon = null;
-			((JButton) e.getSource()).setIcon(foxTail);
-
-		}
+	
 	}
 
 	@Override
