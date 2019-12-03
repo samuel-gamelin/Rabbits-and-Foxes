@@ -114,7 +114,7 @@ public class Fox extends Piece implements MovablePiece {
      *
      * @return The other half of this Fox.
      */
-    Fox getOtherHalf() {
+    public Fox getOtherHalf() {
         return this.otherHalf;
     }
 

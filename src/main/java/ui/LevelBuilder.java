@@ -11,13 +11,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import model.Board;
 import model.BoardListener;
+import model.Fox;
 import model.Mushroom;
 import model.Rabbit;
 import model.Rabbit.RabbitColour;
@@ -33,173 +36,285 @@ import resources.Resources;
  */
 public class LevelBuilder extends JFrame implements ActionListener, MouseListener, BoardListener {
 
-    private static final int NUMBER_OF_RABBITS = 3;
-    private static final int NUMBER_OF_FOXES = 2;
-    private static final int NUMBER_OF_MUSHROOMS = 3;
+	private static final int NUMBER_OF_RABBITS = 3;
+	private static final int NUMBER_OF_FOXES = 2;
+	private static final int NUMBER_OF_MUSHROOMS = 3;
 
-    private JButton menuReset;
-    private JButton menuHelp;
-    private JButton menuMainScreen;
-    private JButton saveBoard;
+	private JButton menuReset;
+	private JButton menuHelp;
+	private JButton menuMainScreen;
+	private JButton saveBoard;
 
-    // test
-    private JButton mushroom;
-    private JButton whiteRabbit;
-    private ImageIcon currentIcon;
+	private int numRab = 1;
+	private int numMush = 1;
+	private int numFox = 1;
 
-    private Board board;
-    private JButton[][] buttons;
+	// test
+	private JButton mushroom;
+	private JButton rabbit;
+	private JButton fox;
+	private ImageIcon currentIcon;
+	private ImageIcon foxTail;
 
-    public LevelBuilder() {
-        this.board = new Board("");
-        board.addListener(this);
-        this.setTitle("Level Builder");
+	JMenuItem upFox, downFox, rightFox, leftFox;
 
-        currentIcon = null;
+	private Board board;
+	private JButton[][] buttons;
 
-        JLabel boardLabel = new JLabel(Resources.BOARD);
-        boardLabel.setLayout(new GridLayout(5, 5));
+	public LevelBuilder() {
 
-        this.add(boardLabel, BorderLayout.CENTER);
+		this.board = new Board("");
+		board.addListener(this);
+		this.setTitle("Level Builder");
 
-        // Menu bar
-        JMenuBar menuBar = new JMenuBar();
+		currentIcon = null;
+		foxTail = null;
 
-        menuMainScreen = GUIUtilities.createMenuBarButton("Main Menu", true);
-        menuReset = GUIUtilities.createMenuBarButton("Reset", false);
-        saveBoard = GUIUtilities.createMenuBarButton("Save", true);
-        menuHelp = GUIUtilities.createMenuBarButton("Help", false);
+		JLabel boardLabel = new JLabel(Resources.BOARD);
+		boardLabel.setLayout(new GridLayout(5, 5));
 
-        menuBar.add(menuMainScreen);
-        menuBar.add(menuReset);
-        menuBar.add(saveBoard);
-        menuBar.add(menuHelp);
+		this.add(boardLabel, BorderLayout.CENTER);
 
-        // For testing to be removed
-        mushroom = ui.GUIUtilities.createMenuBarButton("Mushroom", true);
-        whiteRabbit = ui.GUIUtilities.createMenuBarButton("White Rabbit", true);
-        menuBar.add(mushroom);
-        menuBar.add(whiteRabbit);
+		// Menu bar
+		JMenuBar menuBar = new JMenuBar();
 
-        this.setJMenuBar(menuBar);
-        this.setContentPane(new JLabel(Resources.BOARD));
-        this.getContentPane().setLayout(new GridLayout(5, 5));
+		menuMainScreen = GUIUtilities.createMenuBarButton("Main Menu", true);
+		menuReset = GUIUtilities.createMenuBarButton("Reset", false);
+		saveBoard = GUIUtilities.createMenuBarButton("Save", true);
+		menuHelp = GUIUtilities.createMenuBarButton("Help", false);
 
-        JLabel gameContentPane = (JLabel) this.getContentPane();
+		menuBar.add(menuMainScreen);
+		menuBar.add(menuReset);
+		menuBar.add(saveBoard);
+		menuBar.add(menuHelp);
 
-        buttons = new JButton[5][5];
-        for (int y = 0; y < Board.SIZE; y++) {
-            for (int x = 0; x < Board.SIZE; x++) {
-                buttons[x][y] = new JButton();
-                // Clear button default colours and make it transparent
-                buttons[x][y].setOpaque(false);
-                buttons[x][y].setContentAreaFilled(false);
-                buttons[x][y].setBorder(GUIUtilities.BLANK_BORDER);
-                buttons[x][y].setName(x + "," + y);
-                gameContentPane.add(buttons[x][y]);
-                buttons[x][y].addMouseListener(this);
+		JMenu fileMenu = new JMenu("fox");
 
-                final int xCopy = x;
-                final int yCopy = y;
+		upFox = new JMenuItem("Upward");
+		downFox = new JMenuItem("downward");
+		leftFox = new JMenuItem("Left");
+		rightFox = new JMenuItem("Right");
 
-                buttons[x][y].addActionListener(e -> {
-                    buttons[xCopy][yCopy].setIcon(currentIcon);
-                    if (currentIcon == Resources.MUSHROOM) {
-                        board.setPiece(new Mushroom(), xCopy, yCopy);
-                    } else {
-                        board.setPiece(new Rabbit(RabbitColour.WHITE), xCopy, yCopy);
-                    }
-                });
+		fileMenu.add(upFox);
+		fileMenu.add(downFox);
+		fileMenu.add(leftFox);
+		fileMenu.add(rightFox);
+		menuBar.add(fileMenu);
 
-            }
-        }
-        // For testing
-        mushroom.addActionListener(this);
-        whiteRabbit.addActionListener(this);
+		mushroom = ui.GUIUtilities.createMenuBarButton("Mushroom", true);
+		rabbit = ui.GUIUtilities.createMenuBarButton("Rabbits", true);
+		fox = ui.GUIUtilities.createMenuBarButton("Fox", true);
 
-        menuMainScreen.addActionListener(this);
-        menuReset.addActionListener(this);
-        menuHelp.addActionListener(this);
-        saveBoard.addActionListener(this);
+		menuBar.add(mushroom);
+		menuBar.add(rabbit);
+		menuBar.add(fox);
 
-        GUIUtilities.configureFrame(this);
-    }
+		this.setJMenuBar(menuBar);
+		this.setContentPane(new JLabel(Resources.BOARD));
+		this.getContentPane().setLayout(new GridLayout(5, 5));
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == menuMainScreen
-                && GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
-                        "Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
-            this.dispose();
-            SwingUtilities.invokeLater(MainMenu::new);
-        } else if (e.getSource() == saveBoard) {
-            String levelNameString;
-            do {
-                levelNameString = JOptionPane.showInputDialog("Please enter a name for the level: ");
-                while (levelNameString != null && levelNameString.matches("-?\\d+")) {
-                    levelNameString = JOptionPane.showInputDialog("No numbers are allowed in the level name: ");
-                }
-                board.setName(levelNameString);
-            } while (!(Resources.addUserLevel(board) || levelNameString == null));
-        } else if (e.getSource() == menuHelp) {
-            JPanel panel = new JPanel(new BorderLayout(0, 15));
-            panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>" + "" + "" + "<br><br>"
-                    + "<br>" + "<br>" + "<br>" + "<br>" + "" + "</p></body></html>"), BorderLayout.NORTH);
-            JOptionPane.showMessageDialog(this, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
-        } else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
-                "Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
-                new String[] { "Yes", "No" }) == 0)) {
-            resetBoard();
-        } else if (e.getSource() == mushroom) {
-            currentIcon = Resources.MUSHROOM;
-        } else if (e.getSource() == whiteRabbit) {
-            currentIcon = Resources.RABBIT_WHITE;
-        }
-    }
+		JLabel gameContentPane = (JLabel) this.getContentPane();
 
-    /**
-     * Resets the board.
-     */
-    private void resetBoard() {
-        board = new Board("");
-        board.addListener(this);
-        GUIUtilities.updateView(buttons, board);
-    }
+		buttons = new JButton[5][5];
+		for (int y = 0; y < Board.SIZE; y++) {
+			for (int x = 0; x < Board.SIZE; x++) {
+				buttons[x][y] = new JButton();
+				// Clear button default colours and make it transparent
+				buttons[x][y].setOpaque(false);
+				buttons[x][y].setContentAreaFilled(false);
+				buttons[x][y].setBorder(GUIUtilities.BLANK_BORDER);
+				buttons[x][y].setName(x + "," + y);
+				gameContentPane.add(buttons[x][y]);
+				buttons[x][y].addMouseListener(this);
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        if (((JButton) e.getSource()).getIcon() == null) {
-            ((JButton) e.getSource()).setIcon(currentIcon);
-        }
-    }
+				final int xCopy = x;
+				final int yCopy = y;
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-        if (!board.isOccupied(Integer.valueOf(((JButton) e.getSource()).getName().substring(0,1)),
-                (Integer.valueOf(((JButton) e.getSource()).getName().substring(2,3))))) {
-            ((JButton) e.getSource()).setIcon(null);
-        }
-    }
+				buttons[x][y].addActionListener(e -> {
+					buttons[xCopy][yCopy].setIcon(currentIcon);
+					if (currentIcon == Resources.MUSHROOM) {
+						board.setPiece(new Mushroom(), xCopy, yCopy);
+						numberOfMushrooms();
+					} else if (currentIcon == Resources.FOX_HEAD_UP) {
+						Fox upFox = new Fox(Fox.Direction.UP, true);
+						board.setPiece(upFox, xCopy, yCopy);
+						board.setPiece(upFox.getOtherHalf(),xCopy,yCopy-1)
+						numberOfFox();
+						
+					}else if (currentIcon == Resources.RABBIT_WHITE) {
+						board.setPiece(new Rabbit(RabbitColour.WHITE), xCopy, yCopy);
+						numberOfRabbits();
+					}else if (currentIcon == Resources.RABBIT_BROWN) {
+						board.setPiece(new Rabbit(RabbitColour.BROWN), xCopy, yCopy);
+						numberOfRabbits();
+					}  else if (currentIcon == Resources.RABBIT_GRAY) {
+						board.setPiece(new Rabbit(RabbitColour.GRAY), xCopy, yCopy);
+						numberOfRabbits();
+					} else {
+						currentIcon = null;
+					}
+				});
 
-    @Override
-    public void handleBoardChange() {
-        GUIUtilities.updateView(buttons, board);
-    }
+			}
+		}
+		// For testing
+		mushroom.addActionListener(this);
+		rabbit.addActionListener(this);
+		upFox.addActionListener(this);
+		downFox.addActionListener(this);
+		leftFox.addActionListener(this);
+		rightFox.addActionListener(this);
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
+		menuMainScreen.addActionListener(this);
+		menuReset.addActionListener(this);
+		menuHelp.addActionListener(this);
+		saveBoard.addActionListener(this);
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
+		GUIUtilities.configureFrame(this);
+	}
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == menuMainScreen
+				&& GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
+						"Return to Main Menu", new String[] { "Yes", "No" }) == 0) {
+			this.dispose();
+			SwingUtilities.invokeLater(MainMenu::new);
+		} else if (e.getSource() == saveBoard) {
+			String levelNameString;
+			do {
+				levelNameString = JOptionPane.showInputDialog("Please enter a name for the level: ");
+				while (levelNameString != null && levelNameString.matches("-?\\d+")) {
+					levelNameString = JOptionPane.showInputDialog("No numbers are allowed in the level name: ");
+				}
+				board.setName(levelNameString);
+			} while (!(Resources.addUserLevel(board) || levelNameString == null));
+		} else if (e.getSource() == menuHelp) {
+			JPanel panel = new JPanel(new BorderLayout(0, 15));
+			panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>" + "" + "" + "<br><br>"
+					+ "<br>" + "<br>" + "<br>" + "<br>" + "" + "</p></body></html>"), BorderLayout.NORTH);
+			JOptionPane.showMessageDialog(this, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
+		} else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
+				"Are you sure you want to reset the game? (Your progress will be lost)", "Reset Rabbits and Foxes!",
+				new String[] { "Yes", "No" }) == 0)) {
+			resetBoard();
+		} else if (e.getSource() == mushroom) {
+			currentIcon = Resources.MUSHROOM;
+		} else if (e.getSource() == upFox) {
+			currentIcon = Resources.FOX_HEAD_UP;
+			foxTail = Resources.FOX_TAIL_UP;
 
-    // Added for testing frame
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(LevelBuilder::new);
-    }
+		} else if (e.getSource() == downFox) {
+			currentIcon = Resources.FOX_HEAD_DOWN;
+			foxTail = Resources.FOX_TAIL_DOWN;
+
+		} else if (e.getSource() == leftFox) {
+			currentIcon = Resources.FOX_HEAD_LEFT;
+			foxTail = Resources.FOX_TAIL_LEFT;
+
+		} else if (e.getSource() == rightFox) {
+			currentIcon = Resources.FOX_HEAD_RIGHT;
+			foxTail = Resources.FOX_TAIL_RIGHT;
+		} else if (e.getSource() == rabbit) {
+			if (numRab == 1) {
+				currentIcon = Resources.RABBIT_WHITE;
+			} else if (numRab == 2) {
+				currentIcon = Resources.RABBIT_BROWN;
+			} else if (numRab == 3) {
+				currentIcon = Resources.RABBIT_GRAY;
+			} else {
+				currentIcon = null;
+			}
+
+		}
+	}
+
+	/**
+	 * Resets the board.
+	 */
+	private void resetBoard() {
+		board = new Board("");
+		board.addListener(this);
+		GUIUtilities.updateView(buttons, board);
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		if (((JButton) e.getSource()).getIcon() == null) {
+			((JButton) e.getSource()).setIcon(currentIcon);
+		}
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		if (!board.isOccupied(Integer.valueOf(((JButton) e.getSource()).getName().substring(0, 1)),
+				(Integer.valueOf(((JButton) e.getSource()).getName().substring(2, 3))))) {
+			((JButton) e.getSource()).setIcon(null);
+		}
+	}
+
+	@Override
+	public void handleBoardChange() {
+		GUIUtilities.updateView(buttons, board);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (((JButton) e.getSource()).getIcon() == null) {
+			((JButton) e.getSource()).setIcon(currentIcon);
+			currentIcon = null;
+			((JButton) e.getSource()).setIcon(foxTail);
+
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+
+	// Added for testing frame
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(LevelBuilder::new);
+	}
+
+	private void numberOfMushrooms() {
+		if (numMush != NUMBER_OF_MUSHROOMS) {
+			numMush++;
+			mushroom.setEnabled(true);
+		} else {
+			mushroom.setEnabled(false);
+			GUIUtilities.displayMessageDialog(this, "No more Mushrooms", "Mushrooms");
+			currentIcon = null;
+
+		}
+	}
+
+	private void numberOfRabbits() {
+		if (numRab != NUMBER_OF_RABBITS) {
+			numRab++;
+			rabbit.setEnabled(true);
+		} else {
+			rabbit.setEnabled(false);
+			GUIUtilities.displayMessageDialog(this, "No more rabbits", "rabbits");
+			currentIcon = null;
+
+		}
+	}
+
+	private void numberOfFox() {
+		if (numFox != NUMBER_OF_FOXES) {
+			numFox++;
+			fox.setEnabled(true);
+		} else {
+			fox.setEnabled(false);
+			GUIUtilities.displayMessageDialog(this, "No more foxes", "fox");
+			currentIcon = null;
+
+		}
+	}
+
 }
