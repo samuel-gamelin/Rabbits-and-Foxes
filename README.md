@@ -1,6 +1,6 @@
 ## Rabbits and Foxes
 
-This GitHub repository is used for the development of a game based on JumpIN that follows the MVC design pattern.
+This GitHub repository is used for the development of a game based on JumpIN' that follows the MVC design pattern.
 
 ## Development
 
@@ -12,13 +12,14 @@ This GitHub repository is used for the development of a game based on JumpIN tha
 
 ##### Getting Started
 
-1.  From your terminal, run:
-    ```bash
-    git clone https://github.com/samuel-gamelin/SYSC-3110
-    ```
-    This will create a folder called SYSC-3110.
-2.  Open the Eclipse IDE, and click File -> Open Projects from File System.
-3.  From that window, click on the "Directory" button next to the "Import source" box, and select the "SYSC-3110" folder that was just created. Click "Finish".
+1. From your terminal, run:
+   ```
+   git clone https://github.com/samuel-gamelin/SYSC-3110
+   ```
+   This will create a folder called SYSC-3110.
+2. Open the Eclipse IDE, and click File -> Import.
+3. Select Maven and then "Existing Maven Projects", then click Next.
+4. Click Browse and select the SYSC-3110 folder that was just created. Click "Finish".
 
 ##### Rules for Contributions:
 
@@ -36,37 +37,36 @@ When contributing to the project please start on the issues page which is used f
 - Issues:
   - Issues will be used for task tracking.
   - When an issue is solved please document the changes that have been made.
-  - Close the issue after you have commit your code.
-  - If the issue is a bug please use Bug-<title> for the title
-  - If the issue is a task please use Task-<title> for the title
+  - Close the issue after you have committed your code.
 
 ##### Additional Tools
 
 - Contributions are made through GitHub, on this repository.
   - Please download and install [git](https://git-scm.com/) and/or [GitHub Desktop](https://desktop.github.com/).
 - Slack is used as the main chat for this project.
-- Github Issues will be used for task and ticket tracking.
+- GitHub issues will be used for task and ticket tracking.
 
 ## Current Class Diagram
 
-<p align="center">
-<img src="documentation/uml/classDiagram.png">
+<p style="text-align:right">
+<img src="documentation/uml/classDiagram.png" alt="Class Diagram">
 </p>
-Date: November 18, 2019
+Date: December 2, 2019
 
 ## Current Sequence Diagram
 
-<p align="center">
-<img src="documentation/uml/sequenceDiagram.png">
+<p style="text-align:right">
+<img src="documentation/uml/sequenceDiagram.png" alt="Sequence Diagram">
 </p>
-Date: November 18, 2019
+Date: December 2, 2019
 
 ## Road Map
 
-- Adding an undo/redo feature to the game and a hint system utilizing a game solver
-  - Adding the ability to see the next best move on the game board
-  - Incorporating an undo/redo to improve user experience
-  - Updating and adding unit tests for the Model portion of the game
+- Adding a level editor and save/load functionality
+  - Adding the ability for users to creates their own levels via a GUI
+  - Incorporating the solver to ensure that custom levels are solvable
+  - Achieving saving and loading via serialization.
+  - Updating and adding unit tests for all new features
   - Continuing to implement gradual improvements
   - Continuing to document the development and design process
 
@@ -78,11 +78,12 @@ Currently no known issues are present.
 
 ## New features
 
-- Milestone 3: A solver for the game + undo/redo feature
-    - An undo/redo moves feature to make solving puzzles easier
-    - A hint system that can be used to get the next best move towards a solution
-      - The hint system uses a BFS-algorithm to solve the current puzzle and suggest the next move towards a solution
-    - 20 levels that can be played and completed, loaded from a JSON document
+- Milestone 4:
+    - Save and load features
+        - These features use JSON serialization
+    - A level builder used to create and save custom levels 
+    - A level selector screen, allowing the user to attempt any default or custom level
+    - A dark theme, which is enabled everywhere in the game
 
 ## The Team
 
@@ -102,4 +103,4 @@ The pictures and graphical resources used in this game were obtained from https:
 
 ## License and Disclaimer
 
-> This application is for educational purposes. JumpIN is a registered commercial product. The developers are not responsible for the distribution of this product.
+> This application is for educational purposes. JumpIN' is a registered commercial product. The developers are not responsible for the distribution of this product.

@@ -1,14 +1,16 @@
 package controller;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-
 import model.Board;
+import model.MovablePiece;
 import model.Mushroom;
+import model.Piece;
 import resources.Resources;
 import util.Move;
 import util.Solver;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The controller is used to register the user's moves so that it updates the
@@ -16,184 +18,246 @@ import util.Solver;
  * followed by the end position). In the case of GUI, the user will input
  * through mouse clicks. After this class registers a full move it calls the
  * method move within Board to initiate the move.
- * 
+ *
  * @author Mohamed Radwan
  * @author Dani Hashweh
  * @author Samuel Gamelin
  * @author Abdalla El Nakla
- * @version 3.0
+ * @version 4.0
  */
 public class GameController {
-	private Board board;
-	private int currentLevel;
-	private List<Integer> moveList;
-	private ArrayDeque<Move> undoMoveStack;
-	private ArrayDeque<Move> redoMoveStack;
+    /**
+     * The board that this controller is currently maintaining.
+     */
+    private Board board;
 
-	/**
-	 * An enumeration representing the validity of a click from the user.
-	 */
-	public enum ClickValidity {
-		VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
-	}
+    /**
+     * Represents whether or not this controller represents a default level.
+     */
+    private boolean isDefaultLevel;
 
-	/**
-	 * The constructor for this class uses a board that has been inputed by the view
-	 * (the board listener) so that it can request the model to update it. This will
-	 * ensure all three components of the MVC will be using the same board.
-	 * 
-	 * @param board The Board (model) that this controller should update
-	 */
-	public GameController(Board board) {
-		this.board = board;
-		this.currentLevel = 1;
-		this.moveList = new ArrayList<>();
-		this.undoMoveStack = new ArrayDeque<>();
-		this.redoMoveStack = new ArrayDeque<>();
-	}
+    /**
+     * Represents this controller's current level.
+     */
+    private int currentLevel;
 
-	/**
-	 * This method is used to register a click based on the user input. It first
-	 * checks if the button selected by the user contains an object that is not a
-	 * mushroom. If that is satisfied it adds the move to a list. When the second
-	 * move is made the method uses the original move as well as the new move to
-	 * pass them to the model. The model will then update the board which will
-	 * update the view for the user.
-	 * 
-	 * When a move is registered, it will clear the redo stack and push the move
-	 * onto the the Undo Stack
-	 * 
-	 * 
-	 * @param x Represents the start of the end x value of the user's move
-	 * @param y Represents the start of the end y value of the user's move
-	 * @return True if the selected location is valid, false if it is the first move
-	 *         being made on the board or if the selected location is valid
-	 */
-	public ClickValidity registerClick(int x, int y) {
-		if (moveList.isEmpty() && board.isOccupied(x, y) && !(board.getPiece(x, y) instanceof Mushroom)) {
-			moveList.add(x);
-			moveList.add(y);
-			return ClickValidity.VALID;
-		} else if (!moveList.isEmpty()) {
-			Move movePiece = new Move(moveList.get(0), moveList.get(1), x, y);
-			if (board.move(movePiece) && !moveList.isEmpty()) {
-				moveList.clear();
-				redoMoveStack.clear();
-				undoMoveStack.push(movePiece);
-				return ClickValidity.VALID_MOVEMADE;
-			} else if (moveList.isEmpty()) {
-				return ClickValidity.VALID_MOVEMADE;
-			}
-			return ClickValidity.INVALID_MOVEMADE;
-		}
+    /**
+     * A list used to hold information about the most recent click.
+     */
+    private List<Integer> moveList;
 
-		return ClickValidity.INVALID;
-	}
+    /**
+     * A stack that maintains moves that can be undone.
+     */
+    private ArrayDeque<Move> undoMoveStack;
 
-	/**
-	 * This method returns a list of all possible moves for the piece selected in
-	 * the view.
-	 * 
-	 * @param x represents the start of the x value of the piece selected
-	 * @param y represents the start of the y value of the piece selected
-	 * @return List of all possible moves for the selected piece.
-	 */
-	public List<Move> getPossibleMoves(int x, int y) {
-		return board.getPiece(x, y) != null ? board.getPiece(x, y).getPossibleMoves(board, x, y) : new ArrayList<>();
-	}
+    /**
+     * A stack that maintains moves that can be redone.
+     */
+    private ArrayDeque<Move> redoMoveStack;
 
-	/**
-	 * Removes any history of a previously stored position.
-	 */
-	public void clearPendingPosition() {
-		moveList.clear();
-	}
+    /**
+     * An enumeration representing the validity of a click from the user.
+     */
+    public enum ClickValidity {
+        VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
+    }
 
-	/**
-	 * This method is used to reset the Game. In order to ensure that the new game
-	 * will not have any old registered moves the method also clears the move array
-	 * list.
-	 * 
-	 * @return The new board for the view to listen to it.
-	 */
-	public Board reset() {
-		board = Resources.getLevel(currentLevel);
-		moveList.clear();
-		undoMoveStack.clear();
-		redoMoveStack.clear();
-		return board;
-	}
+    /**
+     * Constructs a controller based on the supplied board and level number. Should the level number be non-positive,
+     * this controller will not represent a default level.
+     *
+     * @param board The Board (model) that this controller should update
+     * @param level The level for this controller
+     */
+    public GameController(Board board, int level) {
+        this.board = board;
+        this.currentLevel = level;
+        this.moveList = new ArrayList<>();
+        this.undoMoveStack = new ArrayDeque<>();
+        this.redoMoveStack = new ArrayDeque<>();
 
-	/**
-	 * Returns the next best move based on this controller's current board.
-	 * 
-	 * @return The next best move
-	 */
-	public Move getNextBestMove() {
-		return Solver.getNextBestMove(board);
-	}
+        if (currentLevel > 0) {
+            this.isDefaultLevel = true;
+        }
+    }
 
-	/**
-	 * 
-	 * undoMove checkes if the UndoMoveStack is empty If it is empty, return false
-	 * to show there where no moves made
-	 * 
-	 * If it is not empty, pop the stack and push it into the redo stack Then create
-	 * a new move with the xEnd and yEnd in the starting position and vice versa to
-	 * properly undo a move
-	 * 
-	 * @return True if there is a move to undo, false otherwise
-	 */
+    /**
+     * This method registers a click based on the given coordinates, and performs a move if appropriate.
+     *
+     * @param x Represents the start of the end x value of the user's move
+     * @param y Represents the start of the end y value of the user's move
+     * @return An instance of the enumerated ClickValidity type, indicating the registered click's validity
+     */
+    public ClickValidity registerClick(int x, int y) {
+        if (moveList.isEmpty() && board.isOccupied(x, y) && !(board.getPiece(x, y) instanceof Mushroom)) {
+            moveList.add(x);
+            moveList.add(y);
+            return ClickValidity.VALID;
+        } else if (!moveList.isEmpty()) {
+            Move movePiece = new Move(moveList.get(0), moveList.get(1), x, y);
+            if (board.move(movePiece) && !moveList.isEmpty()) {
+                moveList.clear();
+                redoMoveStack.clear();
+                undoMoveStack.push(movePiece);
+                return ClickValidity.VALID_MOVEMADE;
+            } else if (moveList.isEmpty()) {
+                return ClickValidity.VALID_MOVEMADE;
+            }
+            return ClickValidity.INVALID_MOVEMADE;
+        }
 
-	public boolean undoMove() {
-		if (!undoMoveStack.isEmpty()) {
-			Move undoMove = undoMoveStack.pop();
-			redoMoveStack.push(undoMove);
-			board.move(new Move(undoMove.xEnd, undoMove.yEnd, undoMove.xStart, undoMove.yStart));
-			return true;
-		}
-		return false;
-	}
+        return ClickValidity.INVALID;
+    }
 
-	/**
-	 * The redoMove checks if the redoMoveStack is empty If it is empty then return
-	 * false, as there is no redoMoves
-	 * 
-	 * If it is not empty then the redoMoveStack is popped and then added into the
-	 * undoMove stack. The redoMove is the set into the board.
-	 * 
-	 * @return True if there is a move to redo, false otherwise
-	 */
-	public boolean redoMove() {
-		if (!redoMoveStack.isEmpty()) {
-			Move redoMove = redoMoveStack.pop();
-			undoMoveStack.push(redoMove);
-			board.move(redoMove);
-			return true;
-		}
-		return false;
-	}
+    /**
+     * This method returns a list of all possible moves for the piece selected in
+     * the view.
+     *
+     * @param x represents the start of the x value of the piece selected
+     * @param y represents the start of the y value of the piece selected
+     * @return List of all possible moves for the selected piece.
+     */
+    public List<Move> getPossibleMoves(int x, int y) {
+        Piece piece = board.getPiece(x, y);
+        if (piece instanceof MovablePiece) {
+            return ((MovablePiece) piece).getPossibleMoves(board, x, y);
+        }
+        return new ArrayList<>();
+    }
 
-	/**
-	 * Returns the current level of the game.
-	 * 
-	 * @return The current level of the game
-	 */
-	public int getCurrentLevel() {
-		return currentLevel;
-	}
+    /**
+     * Removes any history of a previously stored position.
+     */
+    public void clearPendingPosition() {
+        moveList.clear();
+    }
 
-	/**
-	 * Increment the current level of the game by 1.
-	 */
-	public void incrementLevel() {
-		currentLevel++;
-	}
+    /**
+     * Resets this controller, returning the newly-reset model (board).
+     *
+     * @return The newly-reset board
+     */
+    public Board reset() {
+        if (isDefaultLevel) {
+            board = Resources.getDefaultBoardByLevel(currentLevel);
+        } else {
+            board = Resources.getAllUserBoards().stream().filter(b -> b.getName().equals(board.getName())).findFirst()
+                    .orElse(null);
 
-	/**
-	 * Sets the level of the game
-	 */
-	public void setLevel(int level) {
-		currentLevel = level;
-	}
+            if (board == null) {
+                board = Resources.getDefaultBoardByLevel(1);
+                isDefaultLevel = true;
+            }
+        }
+
+        moveList.clear();
+        undoMoveStack.clear();
+        redoMoveStack.clear();
+        return board;
+    }
+
+    /**
+     * Returns the next best move based on this controller's current board.
+     *
+     * @return The next best move
+     */
+    public Move getNextBestMove() {
+        return Solver.getNextBestMove(board);
+    }
+
+    /**
+     * Undoes a move.
+     *
+     * @return True if there is a move to undo, false otherwise
+     */
+
+    public boolean undoMove() {
+        if (!undoMoveStack.isEmpty()) {
+            Move undoMove = undoMoveStack.pop();
+            redoMoveStack.push(undoMove);
+            board.move(new Move(undoMove.xEnd, undoMove.yEnd, undoMove.xStart, undoMove.yStart));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Redoes a move.
+     *
+     * @return True if there is a move to redo, false otherwise
+     */
+    public boolean redoMove() {
+        if (!redoMoveStack.isEmpty()) {
+            Move redoMove = redoMoveStack.pop();
+            undoMoveStack.push(redoMove);
+            board.move(redoMove);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns the undo move stack.
+     *
+     * @return The undo move stack
+     */
+    public ArrayDeque<Move> getUndoMoveStack() {
+        return undoMoveStack;
+    }
+
+    /**
+     * Returns the redo move stack.
+     *
+     * @return The redo move stack
+     */
+    public ArrayDeque<Move> getRedoMoveStack() {
+        return redoMoveStack;
+    }
+
+    /**
+     * Sets the redo move stack.
+     *
+     * @param undoMoveStack The stack to set
+     */
+    public void setUndoMoveStack(ArrayDeque<Move> undoMoveStack) {
+        this.undoMoveStack = undoMoveStack;
+    }
+
+    /**
+     * Sets the redo move stack.
+     *
+     * @param redoMoveStack The stack to set
+     */
+    public void setRedoMoveStack(ArrayDeque<Move> redoMoveStack) {
+        this.redoMoveStack = redoMoveStack;
+    }
+
+    /**
+     * Returns the current level of the game.
+     *
+     * @return The current level of the game. -1 if this controller maintains a
+     * board that is not part of the default levels.
+     */
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    /**
+     * Increment the current level of the game by 1.
+     */
+    public void incrementLevel() {
+        if (isDefaultLevel) {
+            currentLevel++;
+        }
+    }
+
+    /**
+     * Returns whether or not this controller is associated with a default level.
+     *
+     * @return True if the level is a default level, false if it is a user level
+     */
+    public boolean isDefaultLevel() {
+        return isDefaultLevel;
+    }
 }

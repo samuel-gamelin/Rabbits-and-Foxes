@@ -1,22 +1,90 @@
-[
-	{"Level 1":"X X X X X MU X X X MU RBB X X X RBG X X X X X X X X X X"},
-	{"Level 2":"X MU X X X X X X FHU1 FTU1 RBB X X X RBG X X X X X X X X X X"},
-	{"Level 3":"X X X X X X X X X X MU X MU MU X FTD1 FHD1 X X X X X X RBW X"},
-	{"Level 4":"X X X X X FHU1 FTU1 X X RBB X X X X MU RBW MU X FHL0 X X X RBG FTL0 X"},
-	{"Level 5":"X X X X X X X X X X X X X X MU X FTD1 FHD1 RBB X X X X X RBG"},
-	{"Level 6":"X X X X X FTD1 FHD1 X RBB X X X X X RBG X FHL0 X X X X FTL0 MU X X"},
-	{"Level 7":"X X X X X MU X X X X MU X MU X X X X RBG FTD1 FHD1 RBB X X X X"},
-	{"Level 8":"X MU X X X FTD1 FHD1 X FTR0 X X MU X FHR0 X X RBG X X X X MU X X RBB"},
-	{"Level 9":"X FTR1 X X X X FHR1 X FHU0 FTU0 X X X X X X RBB MU MU MU X X X X RBG"},
-	{"Level 10":"RBG X X X X FTD1 FHD1 X X RBB X MU X X X FHU0 FTU0 X X X MU X X X X"},
-	{"Level 11":"X X MU FTR1 X X MU X FHR1 X X X X X X X RBG RBB FHU0 FTU0 X X X X X"},
-	{"Level 12":"RBB X X X X X FTR1 MU X X X FHR1 MU X X MU X X RBG X X X X X X"},
-	{"Level 13":"X MU MU X MU RBB FHU1 FTU1 FHL0 X X X X FTL0 X RBG X X X X X RBW X X X"},
-	{"Level 14":"X MU X X X RBW X X MU RBG MU X X X X FTD1 FHD1 X X RBB X X X X X"},
-	{"Level 15":"X X X RBB MU X X X X X X MU RBW BRG X X X FTD1 FHD1 X X X X X MU"},
-	{"Level 16":"X FTR1 X RBW X X FHR1 X X RBB X X MU X X X FHU0 FTU0 X X MU RBG X MU X"},
-	{"Level 17":"RBW X X X X X RBB X RBG MU X X MU X X X FHL1 X FTR0 X X FTL1 X FHR0 MU"},
-	{"Level 18":"X X RBG X MU RBB X X X X X X RBW X X X FHU1 FTU1 FHL0 X MU X MU FTL0 X"},
-	{"Level 19":"X FTR1 X RBG X X FHR1 X X X X X MU FHL0 X MU RBW X FTL0 X X X RBB X MU"},
-	{"Level 20":"X FTR1 X MU X X FHR1 X X X X X MU X X MU RBW X X RBG X X RBB X X"}
-]
+{
+  "defaultLevels": [
+    {
+      "name": 1,
+      "board": "X X X X X MU X X X MU RBB X X X RBG X X X X X X X X X X"
+    },
+    {
+      "name": 2,
+      "board": "X MU X X X X X X FHU1 FTU1 RBB X X X RBG X X X X X X X X X X"
+    },
+    {
+      "name": 3,
+      "board": "X X X X X X X X X X MU X MU MU X FTD1 FHD1 X X X X X X RBW X"
+    },
+    {
+      "name": 4,
+      "board": "X X X X X FHU1 FTU1 X X RBB X X X X MU RBW MU X FHL0 X X X RBG FTL0 X"
+    },
+    {
+      "name": 5,
+      "board": "X X X X X X X X X X X X X X MU X FTD1 FHD1 RBB X X X X X RBG"
+    },
+    {
+      "name": 6,
+      "board": "X X X X X FTD1 FHD1 X RBB X X X X X RBG X FHL0 X X X X FTL0 MU X X"
+    },
+    {
+      "name": 7,
+      "board": "X X X X X MU X X X X MU X MU X X X X RBG FTD1 FHD1 RBB X X X X"
+    },
+    {
+      "name": 8,
+      "board": "X MU X X X FTD1 FHD1 X FTR0 X X MU X FHR0 X X RBG X X X X MU X X RBB"
+    },
+    {
+      "name": 9,
+      "board": "X FTR1 X X X X FHR1 X FHU0 FTU0 X X X X X X RBB MU MU MU X X X X RBG"
+    },
+    {
+      "name": 10,
+      "board": "RBG X X X X FTD1 FHD1 X X RBB X MU X X X FHU0 FTU0 X X X MU X X X X"
+    },
+    {
+      "name": 11,
+      "board": "X X MU FTR1 X X MU X FHR1 X X X X X X X RBG RBB FHU0 FTU0 X X X X X"
+    },
+    {
+      "name": 12,
+      "board": "RBB X X X X X FTR1 MU X X X FHR1 MU X X MU X X RBG X X X X X X"
+    },
+    {
+      "name": 13,
+      "board": "X MU MU X MU RBB FHU1 FTU1 FHL0 X X X X FTL0 X RBG X X X X X RBW X X X"
+    },
+    {
+      "name": 14,
+      "board": "X MU X X X RBW X X MU RBG MU X X X X FTD1 FHD1 X X RBB X X X X X"
+    },
+    {
+      "name": 15,
+      "board": "X X X RBB MU X X X X X X MU RBW BRG X X X FTD1 FHD1 X X X X X MU"
+    },
+    {
+      "name": 16,
+      "board": "X FTR1 X RBW X X FHR1 X X RBB X X MU X X X FHU0 FTU0 X X MU RBG X MU X"
+    },
+    {
+      "name": 17,
+      "board": "RBW X X X X X RBB X RBG MU X X MU X X X FHL1 X FTR0 X X FTL1 X FHR0 MU"
+    },
+    {
+      "name": 18,
+      "board": "X X RBG X MU RBB X X X X X X RBW X X X FHU1 FTU1 FHL0 X MU X MU FTL0 X"
+    },
+    {
+      "name": 19,
+      "board": "X FTR1 X RBG X X FHR1 X X X X X MU FHL0 X MU RBW X FTL0 X X X RBB X MU"
+    },
+    {
+      "name": 20,
+      "board": "X FTR1 X MU X X FHR1 X X X X X MU X X MU RBW X X RBG X X RBB X X"
+    }
+  ],
+  "userLevels": [
+    {
+      "name": "My Level",
+      "board": "X MU X X X MU X X X MU RBB X X X RBG X X X X X X X X MU X"
+    }
+  ]
+}

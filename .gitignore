@@ -108,6 +108,3 @@ documentation/javadoc
 
 # Maven
 target/
-
-#Logging
-info.log
