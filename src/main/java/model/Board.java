@@ -102,7 +102,7 @@ public class Board {
      *
      * @param move The object representing the move
      * @return true if the move was successful, false if parameters are invalid or
-     * the move was unsuccessful
+     *         the move was unsuccessful
      */
     public boolean move(Move move) {
         if (move == null)
@@ -116,6 +116,17 @@ public class Board {
     }
 
     /**
+     * Given a position on the board return boolean based on colour.
+     * 
+     * @param x
+     * @param y
+     * @return false if tile colour is brown else false
+     */
+    public boolean tileType(int x, int y) {
+        return tiles[x][y].getColour() != Tile.TileColour.BROWN;
+    }
+
+    /**
      * Checks to see if the Board is in a winning state. If no rabbits are present
      * on the Board, the game can't be played, so the Board is not in a winning
      * state.
@@ -124,12 +135,12 @@ public class Board {
      */
     public boolean isInWinningState() {
         int rabbitCount = 0;
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                Piece piece = tiles[i][j].retrievePiece();
+        for (int x = 0; x < SIZE; x++) {
+            for (int y = 0; y < SIZE; y++) {
+                Piece piece = tiles[x][y].retrievePiece();
                 if (piece != null && piece.getPieceType() == Piece.PieceType.RABBIT) {
                     rabbitCount++;
-                    if (tiles[i][j].getColour() != Tile.TileColour.BROWN) {
+                    if (tiles[x][y].getColour() != Tile.TileColour.BROWN) {
                         return false;
                     }
                 }
@@ -155,7 +166,7 @@ public class Board {
      * @param x The x position as a 0-based index
      * @param y The y position as a 0-based index
      * @return The piece at the specified position, null if there is no piece or the
-     * position is invalid
+     *         position is invalid
      */
     public Piece getPiece(int x, int y) {
         return validatePosition(x, y) ? this.tiles[x][y].retrievePiece() : null;
@@ -184,7 +195,7 @@ public class Board {
      * @param x The x-coordinate of the position
      * @param y The y-coordinate of the position
      * @return True if the piece was successfully removed, false otherwise (i.e.
-     * invalid position or there was no piece to remove)
+     *         invalid position or there was no piece to remove)
      */
     public Piece removePiece(int x, int y) {
         if (validatePosition(x, y) && tiles[x][y].isOccupied()) {
@@ -284,17 +295,17 @@ public class Board {
                         Fox f = Fox.createFox(currBoard[5 * i + j]);
                         board.tiles[i][j].placePiece(f);
                         switch (f.getDirection()) {
-                            case DOWN:
-                                board.tiles[i][j - 1].placePiece(f.getOtherHalf());
-                                break;
-                            case LEFT:
-                                board.tiles[i + 1][j].placePiece(f.getOtherHalf());
-                                break;
-                            case RIGHT:
-                                board.tiles[i - 1][j].placePiece(f.getOtherHalf());
-                                break;
-                            default:
-                                board.tiles[i][j + 1].placePiece(f.getOtherHalf());
+                        case DOWN:
+                            board.tiles[i][j - 1].placePiece(f.getOtherHalf());
+                            break;
+                        case LEFT:
+                            board.tiles[i + 1][j].placePiece(f.getOtherHalf());
+                            break;
+                        case RIGHT:
+                            board.tiles[i - 1][j].placePiece(f.getOtherHalf());
+                            break;
+                        default:
+                            board.tiles[i][j + 1].placePiece(f.getOtherHalf());
                         }
                     }
                 }
@@ -311,8 +322,9 @@ public class Board {
     }
 
     /**
-     * Determines equality between a board and another object. Equality between two Board objects is satisfied if the
-     * two-dimensional array of tiles maintained by both boards are "deeply" equal. No regard is given to the list of
+     * Determines equality between a board and another object. Equality between two
+     * Board objects is satisfied if the two-dimensional array of tiles maintained
+     * by both boards are "deeply" equal. No regard is given to the list of
      * listeners or the board's name.
      *
      * @param obj The object to compare this board to
