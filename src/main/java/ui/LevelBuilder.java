@@ -138,9 +138,23 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
 					} else if (currentIcon == Resources.FOX_HEAD_UP) {
 						Fox upFox = new Fox(Fox.Direction.UP, true);
 						board.setPiece(upFox, xCopy, yCopy);
-						board.setPiece(upFox.getOtherHalf(),xCopy,yCopy-1)
+						board.setPiece(upFox.getOtherHalf(),xCopy,yCopy-1);
 						numberOfFox();
-						
+					} else if (currentIcon == Resources.FOX_HEAD_DOWN) {
+						Fox downFox = new Fox(Fox.Direction.DOWN, true);
+						board.setPiece(downFox, xCopy, yCopy);
+						board.setPiece(downFox.getOtherHalf(),xCopy,yCopy+1);
+						numberOfFox();
+					} else if (currentIcon == Resources.FOX_HEAD_LEFT) {
+						Fox leftFox = new Fox(Fox.Direction.LEFT, true);
+						board.setPiece(leftFox, xCopy, yCopy);
+						board.setPiece(leftFox.getOtherHalf(),xCopy-1,yCopy);
+						numberOfFox();
+					} else if (currentIcon == Resources.FOX_HEAD_RIGHT) {
+						Fox rightFox = new Fox(Fox.Direction.UP, true);
+						board.setPiece(rightFox, xCopy, yCopy);
+						board.setPiece(rightFox.getOtherHalf(),xCopy+1,yCopy-1);
+						numberOfFox();
 					}else if (currentIcon == Resources.RABBIT_WHITE) {
 						board.setPiece(new Rabbit(RabbitColour.WHITE), xCopy, yCopy);
 						numberOfRabbits();
