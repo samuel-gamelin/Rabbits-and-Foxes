@@ -116,7 +116,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                     if (clickResult == ClickValidity.VALID) {
                         buttons[xCopy][yCopy].setBorder(GUIUtilities.SELECTED_BORDER);
                     } else if (clickResult == ClickValidity.VALID_MOVEMADE) {
-                        clearButtonBorders();
+                        GUIUtilities.clearButtonBorders(buttons);
                     } else {
                         clearMove();
                         if (Resources.INVALID_MOVE != null && !Resources.INVALID_MOVE.isActive() && gameState) {
@@ -187,7 +187,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
      * Clears button borders and the pending position.
      */
     private void clearMove() {
-        clearButtonBorders();
+        GUIUtilities.clearButtonBorders(buttons);
         gameController.clearPendingPosition();
     }
 
@@ -197,7 +197,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     private void resetGame() {
         board = gameController.reset();
         board.addListener(this);
-        clearButtonBorders();
+        GUIUtilities.clearButtonBorders(buttons);
         GUIUtilities.updateView(buttons, board);
     }
 
@@ -206,17 +206,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
      */
     private void updateFrameTitle() {
         this.setTitle("Rabbit and Foxes! Level: " + board.getName());
-    }
-
-    /**
-     * Clears the borders on all buttons.
-     */
-    private void clearButtonBorders() {
-        for (int i = 0; i < Board.SIZE; i++) {
-            for (int j = 0; j < Board.SIZE; j++) {
-                buttons[i][j].setBorder(GUIUtilities.BLANK_BORDER);
-            }
-        }
     }
 
     /**
@@ -257,7 +246,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             if (Resources.SOLVED != null && gameState) {
                 Resources.SOLVED.start();
             }
-            clearButtonBorders();
+            GUIUtilities.clearButtonBorders(buttons);
             if (gameState) {
                 if (!gameController.isDefaultLevel()) {
                     int choice = GUIUtilities.displayOptionDialog(this,
@@ -333,12 +322,12 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                 "Reset Rabbits and Foxes!", new String[] { "Yes", "No" }) == 0)) {
             resetGame();
         } else if (e.getSource() == menuUndo) {
-            clearButtonBorders();
+            GUIUtilities.clearButtonBorders(buttons);
             if (!gameController.undoMove()) {
                 GUIUtilities.displayMessageDialog(this, "No moves to undo", "Undo Move");
             }
         } else if (e.getSource() == menuRedo) {
-            clearButtonBorders();
+            GUIUtilities.clearButtonBorders(buttons);
             if (!gameController.redoMove()) {
                 GUIUtilities.displayMessageDialog(this, "No moves to redo", "Redo Move");
             }
