@@ -72,7 +72,7 @@ Date: December 2, 2019
 
 ## Known issues
 
-Currently no known issues are present.
+Currently, attempting to save or delete a custom level while running the jar does not function correctly. This occurs because we are attempting to write to a file located within the jar during execution. This does not occur if the project is run through an IDE. A solution to this error would be to move the LevelData.json file to be outside of the jar. We apologize for this error.
 
 > If you notice a bug, please add it to Issues tab. Make sure you include how to recreate the bug!
 
