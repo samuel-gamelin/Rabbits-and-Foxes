@@ -146,7 +146,7 @@ public final class Resources {
     /**
      * An icon used for the side panel in the level builder.
      */
-    public static final ImageIcon SIDE_PANEL = loadIcon("images/sidepanel.png", 5, 5);
+    public static final ImageIcon SIDE_PANEL = loadIcon("images/sidepanel.png", 2, 5);
 
     /**
      * Making the constructor private, preventing any instantiation of this class.
@@ -174,9 +174,9 @@ public final class Resources {
      * @return A scaled version of the icon
      */
     private static ImageIcon loadIcon(String path, double xScale, double yScale) {
-        return new ImageIcon(
-                new ImageIcon(getFileURL(path)).getImage().getScaledInstance((int) (xScale * GUIUtilities.SIDE_LENGTH / Board.SIZE),
-                        (int) (yScale * GUIUtilities.SIDE_LENGTH / Board.SIZE), Image.SCALE_SMOOTH));
+        return new ImageIcon(new ImageIcon(getFileURL(path)).getImage().getScaledInstance(
+                (int) (xScale * GUIUtilities.SIDE_LENGTH / Board.SIZE),
+                (int) (yScale * GUIUtilities.SIDE_LENGTH / Board.SIZE), Image.SCALE_SMOOTH));
     }
 
     /**
@@ -218,11 +218,12 @@ public final class Resources {
      * Provides the number of default levels available in the LevelData.json file.
      *
      * @return The total number of levels in the game. Returns -1 if no valid
-     * LevelData.json file is found.
+     *         LevelData.json file is found.
      */
     private static int getNumberOfLevels() {
         try {
-            return Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS).getAsJsonArray().size();
+            return Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS)
+                    .getAsJsonArray().size();
         } catch (Exception e) {
             LOGGER.error("Unable to obtain total number of levels from LevelData.json file", e);
             return -1;
@@ -233,7 +234,8 @@ public final class Resources {
      * Retrieves an ImageIcon based on its field name, as declared in this class.
      *
      * @param fieldName The field name associated with the desired ImageIcon
-     * @return The ImageIcon associated with the provided field name. Null if no such field exists.
+     * @return The ImageIcon associated with the provided field name. Null if no
+     *         such field exists.
      */
     public static ImageIcon getImageIconByName(String fieldName) {
         try {
@@ -251,7 +253,7 @@ public final class Resources {
      * @param isAbsolutePath True if the provided path is absolute, false if it is
      *                       relative (to the root of the classpath)
      * @return The loaded JsonObject, or null if that path or file contents are
-     * invalid
+     *         invalid
      */
     public static JsonObject loadJsonObjectFromPath(String path, boolean isAbsolutePath) {
         if (!isAbsolutePath) {
@@ -279,12 +281,12 @@ public final class Resources {
      *
      * @param level The level to load.
      * @return The Board associated with the passed-in level. Null if the level does
-     * not exist or the LevelData.json file is not found.
+     *         not exist or the LevelData.json file is not found.
      */
     public static Board getDefaultBoardByLevel(int level) {
         try {
-            for (JsonElement element : Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS)
-                    .getAsJsonArray()) {
+            for (JsonElement element : Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false))
+                    .get(DEFAULT_LEVELS).getAsJsonArray()) {
                 if (element.getAsJsonObject().get("name").getAsInt() == level) {
                     return Board.createBoard(String.valueOf(level),
                             element.getAsJsonObject().get("board").getAsString());
@@ -300,15 +302,16 @@ public final class Resources {
      * Returns a list of all default boards as specified by the LevelData.json file.
      *
      * @return A list of all default boards, or an empty list if any problems are
-     * encountered
+     *         encountered
      */
     public static List<Board> getAllDefaultBoards() {
         List<Board> boardList = new ArrayList<>();
 
         try {
-            Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS).getAsJsonArray().forEach(
-                    element -> boardList.add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(),
-                            element.getAsJsonObject().get("board").getAsString())));
+            Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS).getAsJsonArray()
+                    .forEach(element -> boardList
+                            .add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(),
+                                    element.getAsJsonObject().get("board").getAsString())));
         } catch (Exception e) {
             LOGGER.error("Unable to obtain all default levels from the LevelData.json file");
             return new ArrayList<>();
@@ -326,9 +329,10 @@ public final class Resources {
         List<Board> boardList = new ArrayList<>();
 
         try {
-            Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(USER_LEVELS).getAsJsonArray().forEach(
-                    element -> boardList.add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(),
-                            element.getAsJsonObject().get("board").getAsString())));
+            Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(USER_LEVELS).getAsJsonArray()
+                    .forEach(element -> boardList
+                            .add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(),
+                                    element.getAsJsonObject().get("board").getAsString())));
         } catch (Exception e) {
             LOGGER.error("Unable to obtain all user levels from the LevelData.json file");
             return new ArrayList<>();
@@ -386,8 +390,8 @@ public final class Resources {
         if (originalJsonObject != null) {
             for (JsonElement object : originalJsonObject.get(USER_LEVELS).getAsJsonArray()) {
                 if (object.getAsJsonObject().get("name").getAsString().equals(name)) {
-                    try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileURL(LEVEL_DATA_PATH).getPath()),
-                            Charset.defaultCharset())) {
+                    try (Writer writer = new OutputStreamWriter(
+                            new FileOutputStream(getFileURL(LEVEL_DATA_PATH).getPath()), Charset.defaultCharset())) {
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
                         originalJsonObject.get(USER_LEVELS).getAsJsonArray().remove(object);
