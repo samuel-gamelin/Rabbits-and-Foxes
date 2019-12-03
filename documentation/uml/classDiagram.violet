@@ -528,7 +528,6 @@ TAIL</string>
 -clearMove()
 -resetGame()
 -updateFrameTitle()
--clearButtonBorders()
 +save(path:String):boolean
 +handleBoardChange()
 +actionPerformed(e:ActionEvent)
@@ -554,12 +553,12 @@ TAIL</string>
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double11"/>
-      <double>1580.0</double>
+      <double>1590.0</double>
      </void>
     </void>
     <void method="setLocation">
      <double>4290.0</double>
-     <double>1580.0</double>
+     <double>1590.0</double>
     </void>
    </object>
   </void>
@@ -896,6 +895,7 @@ INVALID</string>
 +&lt;u&gt;createMenuBarButton&lt;/u&gt;(text:String,enableShortcut:boolean):JButton&lt;/u&gt;
 +&lt;u&gt;generateGameBoardButton&lt;/u&gt;(component:Container&amp;MouseListener,x:int,y:int):JButton
 +&lt;u&gt;stylizeButton&lt;/u&gt;(button:JButton,actionListener:ActionListener)
++&lt;u&gt;clearButtonBorders&lt;/u&gt;(buttons:JButton[][])
 +&lt;u&gt;updateView&lt;/u&gt;(buttons:JButton[][],board:Board)</string>
      </void>
     </void>
@@ -994,12 +994,12 @@ INVALID</string>
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double20"/>
-      <double>490.0</double>
+      <double>500.0</double>
      </void>
     </void>
     <void method="setLocation">
      <double>3110.0</double>
-     <double>490.0</double>
+     <double>500.0</double>
     </void>
    </object>
   </void>
