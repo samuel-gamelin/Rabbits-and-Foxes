@@ -12,8 +12,8 @@ import java.util.Set;
  * @author Mohamed Radwan
  * @version 4.0
  */
-public class Node {
-    private Board board;
+class Node {
+    private final Board board;
 
     public Node(Board board) {
         this.board = new Board(board);

@@ -21,7 +21,7 @@ import java.util.Objects;
  * @author John Breton
  * @author Dani Hashweh
  */
-public class LevelSelector extends JFrame implements ActionListener {
+class LevelSelector extends JFrame implements ActionListener {
 
     private static final int BUTTON_SPACING = (int) GUIUtilities.SIDE_LENGTH / 50;
     private static final double BUTTON_Y_FACTOR = 0.20;
@@ -32,12 +32,24 @@ public class LevelSelector extends JFrame implements ActionListener {
 
     private static final BevelBorder DEFAULT = new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.BLACK);
 
-    private JButton btnStartLevel, btnMainMenu, btnCustomLevels, btnNextPage, btnLastPage, btnLeftLevel,
-            btnMiddleLevel, btnRightLevel, btnDeleteLevel;
-    private JTextPane levelLabelLeft, levelLabelMiddle, levelLabelRight;
-    private JLabel[][] tilesLeft, tilesMiddle, tilesRight;
+    private final JButton btnStartLevel;
+    private final JButton btnMainMenu;
+    private final JButton btnCustomLevels;
+    private final JButton btnNextPage;
+    private final JButton btnLastPage;
+    private final JButton btnLeftLevel;
+    private final JButton btnMiddleLevel;
+    private final JButton btnRightLevel;
+    private final JButton btnDeleteLevel;
+    private final JTextPane levelLabelLeft;
+    private final JTextPane levelLabelMiddle;
+    private final JTextPane levelLabelRight;
+    private final JLabel[][] tilesLeft;
+    private final JLabel[][] tilesMiddle;
+    private final JLabel[][] tilesRight;
 
-    private List<Board> allDefaultLevels, allCustomLevels;
+    private final List<Board> allDefaultLevels;
+    private List<Board> allCustomLevels;
     private int pageNumber, lastPage;
     private boolean custom;
 

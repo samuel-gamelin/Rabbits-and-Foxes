@@ -44,7 +44,7 @@ public class GameController {
     /**
      * A list used to hold information about the most recent click.
      */
-    private List<Integer> moveList;
+    private final List<Integer> moveList;
 
     /**
      * A stack that maintains moves that can be undone.

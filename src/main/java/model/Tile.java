@@ -13,7 +13,7 @@ public class Tile {
     /**
      * Represents the colour of the Tile.
      */
-    private TileColour tileColour;
+    private final TileColour tileColour;
 
     /**
      * Represents if the Tile is occupied.

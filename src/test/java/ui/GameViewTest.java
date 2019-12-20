@@ -14,19 +14,19 @@ import java.util.ArrayDeque;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class GameViewTest {
+class GameViewTest {
     private Board board;
     private GameView gameView;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         board = Resources.getDefaultBoardByLevel(1);
         gameView = new GameView(board, 1);
         gameView.setVisible(false);
     }
 
     @Test
-    public void testSaveGame() {
+    void testSaveGame() {
         assertTrue(gameView.save("testSave.json"));
 
         Gson gson = new Gson();

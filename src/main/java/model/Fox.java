@@ -19,23 +19,23 @@ public class Fox extends Piece implements MovablePiece {
     /**
      * The direction in which the fox is facing
      */
-    private Direction direction;
+    private final Direction direction;
 
     /**
      * Stores the otherHalf of this Fox
      */
-    private Fox otherHalf;
+    private final Fox otherHalf;
 
     /**
      * The type of fox
      */
-    private FoxType foxType;
+    private final FoxType foxType;
 
     /**
      * A boolean used to identify which fox parts belong together and to distinguish
      * one fox from another.
      */
-    private boolean id;
+    private final boolean id;
 
     /**
      * An enumeration representing the head and tail of the fox

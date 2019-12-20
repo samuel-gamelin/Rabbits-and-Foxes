@@ -11,18 +11,18 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Samuel Gamelin
  */
-public class TileTest {
+class TileTest {
     private Tile tile1;
     private Tile tile2;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         tile1 = new Tile(TileColour.BROWN);
         tile2 = new Tile(TileColour.GREEN);
     }
 
     @Test
-    public void testIsOccupied() {
+    void testIsOccupied() {
         tile1.placePiece(new Mushroom());
         tile2.placePiece(null);
         assertTrue(tile1.isOccupied());
@@ -30,7 +30,7 @@ public class TileTest {
     }
 
     @Test
-    public void testRemovePiece() {
+    void testRemovePiece() {
         Rabbit rabbit1 = new Rabbit(Rabbit.RabbitColour.BROWN);
         tile1.placePiece(rabbit1);
         assertEquals(rabbit1, tile1.removePiece());
@@ -39,7 +39,7 @@ public class TileTest {
     }
 
     @Test
-    public void testRetrievePiece() {
+    void testRetrievePiece() {
         Rabbit rabbit1 = new Rabbit(Rabbit.RabbitColour.WHITE);
         tile1.placePiece(rabbit1);
         assertEquals(rabbit1, tile1.retrievePiece());
@@ -47,7 +47,7 @@ public class TileTest {
     }
 
     @Test
-    public void testPlacePiece() {
+    void testPlacePiece() {
         Rabbit rabbit1 = new Rabbit(Rabbit.RabbitColour.WHITE);
         tile1.placePiece(rabbit1);
         assertEquals(rabbit1, tile1.retrievePiece());
@@ -55,13 +55,13 @@ public class TileTest {
     }
 
     @Test
-    public void testGetColour() {
+    void testGetColour() {
         assertEquals(Tile.TileColour.BROWN, tile1.getColour());
         assertEquals(Tile.TileColour.GREEN, tile2.getColour());
     }
 
     @Test
-    public void testCopyConstructor() {
+    void testCopyConstructor() {
         assertNotEquals(tile1, tile2);
         tile1 = new Tile(tile2);
         assertEquals(tile1, tile2);

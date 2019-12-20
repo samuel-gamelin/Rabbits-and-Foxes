@@ -13,27 +13,27 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author John Breton
  */
 
-public class MushroomTest {
+class MushroomTest {
     private Mushroom mushroom;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         mushroom = new Mushroom();
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertNotNull(mushroom);
         assertFalse(mushroom instanceof MovablePiece);
     }
 
     @Test
-    public void testPieceType() {
+    void testPieceType() {
         assertEquals(PieceType.MUSHROOM, mushroom.getPieceType());
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertEquals("MU", mushroom.toString());
     }
 

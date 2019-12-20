@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author John Breton
  */
-public class SolverTest {
+class SolverTest {
     private Board easyBoard, normalBoard, hardBoard, unsolvableBoard;
     private Move noMove;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         String EASY = "X X X X X MU X X X MU RBB X X X RBG X X X X X X X X X X";
         easyBoard = Board.createBoard("Anyboard", EASY);
         String NORMAL = "X X X X X FHU1 FTU1 X X RBB X X X X MU RBW MU X FHL0 X X X RBG FTL0 X";
@@ -29,7 +29,7 @@ public class SolverTest {
     }
 
     @Test
-    public void testGetNextBestMove() {
+    void testGetNextBestMove() {
         // The Solver should find the next best move since this board is solvable
         assertNotSame(Solver.getNextBestMove(normalBoard).xStart, noMove.xStart);
         // This board is solvable, and has an 84 move optimal solution (our most complex
@@ -45,7 +45,7 @@ public class SolverTest {
     }
 
     @Test
-    public void testSolveEasyBoard() {
+    void testSolveEasyBoard() {
         /*
          * This easy board has an optimal two move solution. The solver will apply these
          * two moves, at which point the board will be checked to ensure it has been
@@ -64,7 +64,7 @@ public class SolverTest {
     }
 
     @Test
-    public void testSolveNormalBoard() {
+    void testSolveNormalBoard() {
         /*
          * This normal board has an optimal six move solution. The solver will apply
          * these six moves, at which point the board will be checked to ensure it has

@@ -29,17 +29,17 @@ import java.util.ArrayDeque;
  * @version 4.0
  */
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
-    private JButton menuReset;
-    private JButton menuHelp;
-    private JButton menuHint;
-    private JButton menuUndo;
-    private JButton menuRedo;
-    private JButton menuMain;
-    private JButton menuSaveButton;
-    private JButton menuQuit;
+    private final JButton menuReset;
+    private final JButton menuHelp;
+    private final JButton menuHint;
+    private final JButton menuUndo;
+    private final JButton menuRedo;
+    private final JButton menuMain;
+    private final JButton menuSaveButton;
+    private final JButton menuQuit;
 
     private JCheckBox showPossibleMovesBox;
-    private JButton[][] buttons;
+    private final JButton[][] buttons;
 
     /**
      * The Board that this view listens to.
@@ -49,7 +49,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     /**
      * The controller associated with this view.
      */
-    private GameController gameController;
+    private final GameController gameController;
 
     /**
      * Represents the state of the game. True if the game is running, false

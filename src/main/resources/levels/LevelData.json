@@ -80,11 +80,5 @@
       "name": 20,
       "board": "X FTR1 X MU X X FHR1 X X X X X MU X X MU RBW X X RBG X X RBB X X"
     }
-  ],
-  "userLevels": [
-    {
-      "name": "My Level",
-      "board": "X MU X X X MU X X X MU RBB X X X RBG X X X X X X X X MU X"
-    }
   ]
 }

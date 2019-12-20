@@ -13,18 +13,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
  */
-public class MoveTest {
+class MoveTest {
     private Move move1;
     private Move move2;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         move1 = new Move(1, 2, 5, 6);
         move2 = new Move(-1, -1, -1, -1);
     }
 
     @Test
-    public void testIntInput() {
+    void testIntInput() {
         assertEquals(1, move1.xStart);
         assertEquals(2, move1.yStart);
         assertEquals(5, move1.xEnd);
@@ -36,7 +36,7 @@ public class MoveTest {
     }
 
     @Test
-    public void testDirection() {
+    void testDirection() {
         assertEquals(MoveDirection.INVALID, move1.direction());
         assertEquals(MoveDirection.INVALID, move2.direction());
 
@@ -48,13 +48,13 @@ public class MoveTest {
     }
 
     @Test
-    public void testXDistance() {
+    void testXDistance() {
         assertEquals(4, move1.xDistance());
         assertEquals(0, move2.xDistance());
     }
 
     @Test
-    public void testYDistance() {
+    void testYDistance() {
         assertEquals(4, move1.yDistance());
         assertEquals(0, move2.yDistance());
     }

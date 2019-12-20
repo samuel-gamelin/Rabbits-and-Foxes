@@ -64,12 +64,12 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
     /*
      * Menu Items to be
      */
-    private JButton menuReset;
-    private JButton menuHelp;
-    private JButton deletePiece;
-    private JButton rotateFox;
-    private JButton menuMainScreen;
-    private JButton saveBoard;
+    private final JButton menuReset;
+    private final JButton menuHelp;
+    private final JButton deletePiece;
+    private final JButton rotateFox;
+    private final JButton menuMainScreen;
+    private final JButton saveBoard;
     private ImageIcon currentIcon;
 
     /**
@@ -80,7 +80,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
     /**
      *
      */
-    private JButton[][] buttons;
+    private final JButton[][] buttons;
 
     /**
      * Represents the number of foxes currently placed on the board.

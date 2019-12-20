@@ -13,17 +13,17 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author John Breton
  * @author Samuel Gamelin
  */
-public class BoardTest {
+class BoardTest {
     private Board board1;
     private final String TEST_BOARD_1 = "RBG MU X X X FHU1 FTU1 X X X X X RBB X X X X X X X X X X X X";
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         board1 = Board.createBoard("Anyboard", TEST_BOARD_1);
     }
 
     @Test
-    public void testBoardConstructor() {
+    void testBoardConstructor() {
         Board emptyBoard = new Board("Anyboard");
         assertNotNull(emptyBoard);
         assertEquals(emptyBoard, new Board(emptyBoard));
@@ -33,7 +33,7 @@ public class BoardTest {
     }
 
     @Test
-    public void testBoardMove() {
+    void testBoardMove() {
         assertFalse(board1.move(new Move(1, 2, 3, 4)));
         assertTrue(board1.move(new Move(0, 0, 0, 2)));
         // Need to check to ensure a move is not null.
@@ -41,7 +41,7 @@ public class BoardTest {
     }
 
     @Test
-    public void testIsOccupied() {
+    void testIsOccupied() {
         assertTrue(board1.isOccupied(1, 1));
         assertTrue(board1.isOccupied(0, 0));
         assertFalse(board1.isOccupied(6, 6));
@@ -49,7 +49,7 @@ public class BoardTest {
     }
 
     @Test
-    public void testGetPiece() {
+    void testGetPiece() {
         assertTrue(board1.getPiece(1, 0) instanceof Fox);
         // Ensuring the piece hasn't been removed after an initial get.
         for (int i = 0; i < 2; i++) {
@@ -61,7 +61,7 @@ public class BoardTest {
     }
 
     @Test
-    public void testSetPiece() {
+    void testSetPiece() {
         Fox fox = new Fox(Fox.Direction.DOWN, true);
         assertTrue(board1.setPiece(fox, 1, 1));
         assertTrue(board1.setPiece(fox, 0, 0)); // overwrites the rabbit
@@ -70,7 +70,7 @@ public class BoardTest {
     }
 
     @Test
-    public void testRemovePiece() {
+    void testRemovePiece() {
         assertTrue(board1.removePiece(0, 0) instanceof Rabbit);
         assertTrue(board1.removePiece(0, 1) instanceof Mushroom);
         assertTrue(board1.removePiece(1, 0) instanceof Fox);
@@ -79,7 +79,7 @@ public class BoardTest {
     }
 
     @Test
-    public void testGetPossibleMoves() {
+    void testGetPossibleMoves() {
         assertFalse(board1.getPossibleMoves().isEmpty());
         Board emptyBoard = Board.createBoard("Anyboard", "X X X X X X X X X X X X X X X X X X X X X X X X X");
         assertNotNull(emptyBoard);
@@ -87,7 +87,7 @@ public class BoardTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         Board emptyBoard = Board.createBoard("Anyboard", "X X X X X X X X X X X X X X X X X X X X X X X X X");
         assertNotNull(emptyBoard);
         assertEquals("X X X X X X X X X X X X X X X X X X X X X X X X X", emptyBoard.toString());
@@ -95,7 +95,7 @@ public class BoardTest {
     }
 
     @Test
-    public void testIsWinningState() {
+    void testIsWinningState() {
         assertTrue(board1.isInWinningState()); // Game begins in winning state.
         board1.removePiece(2, 2);
         assertTrue(board1.isInWinningState()); // One rabbit remains, game is in winning state.

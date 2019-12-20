@@ -37,13 +37,13 @@ public class Board {
     /**
      * A 2D array of tiles used to manage all tiles on the board.
      */
-    private Tile[][] tiles;
+    private final Tile[][] tiles;
 
     /**
      * A list of listeners that are updated on the status of this board whenever
      * appropriate.
      */
-    private List<BoardListener> boardListeners;
+    private final List<BoardListener> boardListeners;
 
     /**
      * Construct an empty board.

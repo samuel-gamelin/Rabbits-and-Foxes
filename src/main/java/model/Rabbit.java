@@ -18,7 +18,7 @@ public class Rabbit extends Piece implements MovablePiece {
     /**
      * The colour of the rabbit
      */
-    private RabbitColour colour;
+    private final RabbitColour colour;
 
     /**
      * An enumeration of the colour for the rabbit
