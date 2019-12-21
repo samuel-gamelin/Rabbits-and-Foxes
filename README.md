@@ -6,11 +6,10 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 
 ##### Tools
 
-- IDE: <a href="https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-java-developers" target="_blank">Eclipse</a>,
-<a href="https://www.jetbrains.com/idea/download/" target="_blank">IntelliJ IDEA</a>
-- JDK Version: <a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank">8</a>
-- Build Tool: <a href="https://maven.apache.org/download.cgi" target="_blank">Maven</a>
-- UML: <a href="http://www.horstmann.com/violet/violet-0.16c.jar" target="_blank">Violet</a>
+- IDE: [Eclipse](https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-java-developers), [IntelliJ IDEA](https://www.jetbrains.com/idea/download/)
+- JDK Version: [8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- Build Tool: [Maven](https://maven.apache.org/download.cgi)
+- UML: [Violet v0.16](http://www.horstmann.com/violet/violet-0.16c.jar)
 
 ##### Getting Started
 
@@ -60,19 +59,19 @@ Currently, attempting to save or delete a custom level while running the jar doe
 
 ## Documentation
 
-Documentation for the project can be found <a href="https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing" target="_blank">here</a>.
+Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing).
 
 ## The Team
 
-- <a href="https://github.com/MohamedRadwan" target="_blank">Mohamed Radwan</a>
-- <a href="https://github.com/samuel-gamelin" target="_blank">Samuel Gamelin</a>
-- <a href="https://github.com/danihashweh" target="_blank">Dani Hashweh</a>
-- <a href="https://github.com/john-breton" target="_blank">John Breton</a>
-- <a href="https://github.com/Abdoltim" target="_blank">Abdalla El Nakla</a>
+- [Mohamed Radwan](https://github.com/MohamedRadwan)
+- [Samuel Gamelin](https://github.com/samuel-gamelin)
+- [Dani Hashweh](https://github.com/danihashweh)
+- [John Breton](https://github.com/john-breton)
+- [Abdalla El Nakla](https://github.com/Abdoltim)
 
 ## Credits for Graphical Resources
 
-The pictures and graphical resources used in this game were obtained <a href="https://www.smartgames.eu/uk/one-player-games/jumpin" target="_blank">here</a>.
+The pictures and graphical resources used in this game were obtained [here](https://www.smartgames.eu/uk/one-player-games/jumpin).
 
 ## License and Disclaimer
 
