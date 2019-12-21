@@ -6,8 +6,9 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 
 ##### Tools
 
-- IDE: [Eclipse](https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-java-developers)
+- IDE: [Eclipse](https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-java-developers), [IntelliJ IDEA](https://www.jetbrains.com/idea/download/)
 - JDK Version: [8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- Build Tool: [Maven](https://maven.apache.org/download.cgi)
 - UML: [Violet v0.16](http://www.horstmann.com/violet/violet-0.16c.jar)
 
 ##### Getting Started
@@ -17,34 +18,24 @@ This GitHub repository is used for the development of a game based on JumpIN' th
    git clone https://github.com/samuel-gamelin/SYSC-3110
    ```
    This will create a folder called SYSC-3110.
-2. Open the Eclipse IDE, and click File -> Import.
-3. Select Maven and then "Existing Maven Projects", then click Next.
-4. Click Browse and select the SYSC-3110 folder that was just created. Click "Finish".
 
-##### Rules for Contributions:
+2. Eclipse
+    1. Open the Eclipse IDE, and click File -> Import.
+    2. Select Maven and then Existing Maven Projects, then click Next.
+    3. Click Browse and select the SYSC-3110 folder that was just created. Click Finish.
+    
+3. IntelliJ IDEA
+    1. Open the IntelliJ IDEA IDE, and click File -> Open.
+    2. Select the SYSC-3110 folder that was just created and click Open.
 
-When contributing to the project please start on the issues page which is used for task tracking.
-
-- Commits:
-  - Only commit code to the corresponding milestone.
-  - Please document your commits with changes and updates.
-  - Add test cases for the updates made.
-  - Merging to master will occur once every two weeks under the review of all developers on the project.
-- Pull requests:
-  - Open a pull request to the corresponding milestone.
-  - Document your code.
-  - If there are any conflicts during the merge please consult any developer on the team.
-- Issues:
-  - Issues will be used for task tracking.
-  - When an issue is solved please document the changes that have been made.
-  - Close the issue after you have committed your code.
+4. The entry point of the program is the main method of the MainMenu class under the ui package.
+5. The project can be built by invoking a `mvn package` command from the project's root directory. This will generate a
+runnable jar file in the target directory.
 
 ##### Additional Tools
 
 - Contributions are made through GitHub, on this repository.
-  - Please download and install [git](https://git-scm.com/) and/or [GitHub Desktop](https://desktop.github.com/).
-- Slack is used as the main chat for this project.
-- GitHub issues will be used for task and ticket tracking.
+- GitHub issues are used for task and ticket tracking.
 
 ## Current Class Diagram
 
@@ -60,30 +51,15 @@ Date: December 2, 2019
 </p>
 Date: December 2, 2019
 
-## Road Map
-
-- Adding a level editor and save/load functionality
-  - Adding the ability for users to creates their own levels via a GUI
-  - Incorporating the solver to ensure that custom levels are solvable
-  - Achieving saving and loading via serialization.
-  - Updating and adding unit tests for all new features
-  - Continuing to implement gradual improvements
-  - Continuing to document the development and design process
-
 ## Known issues
 
 Currently, attempting to save or delete a custom level while running the jar does not function correctly. This occurs because we are attempting to write to a file located within the jar during execution. This does not occur if the project is run through an IDE. A solution to this error would be to move the LevelData.json file to be outside of the jar. We apologize for this error.
 
 > If you notice a bug, please add it to Issues tab. Make sure you include how to recreate the bug!
 
-## New features
+## Documentation
 
-- Milestone 4:
-    - Save and load features
-        - These features use JSON serialization
-    - A level builder used to create and save custom levels 
-    - A level selector screen, allowing the user to attempt any default or custom level
-    - A dark theme, which is enabled everywhere in the game
+Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing).
 
 ## The Team
 
@@ -93,13 +69,9 @@ Currently, attempting to save or delete a custom level while running the jar doe
 - [John Breton](https://github.com/john-breton)
 - [Abdalla El Nakla](https://github.com/Abdoltim)
 
-## Documentation
-
-Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing).
-
 ## Credits for Graphical Resources
 
-The pictures and graphical resources used in this game were obtained from https://www.smartgames.eu/uk/one-player-games/jumpin.
+The pictures and graphical resources used in this game were obtained [here](https://www.smartgames.eu/uk/one-player-games/jumpin).
 
 ## License and Disclaimer
 
