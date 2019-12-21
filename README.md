@@ -35,7 +35,7 @@ runnable jar file in the target directory.
 ##### Additional Tools
 
 - Contributions are made through GitHub, on this repository.
-- GitHub issues will be used for task and ticket tracking.
+- GitHub issues are used for task and ticket tracking.
 
 ## Current Class Diagram
 
