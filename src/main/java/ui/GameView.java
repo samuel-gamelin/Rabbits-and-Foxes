@@ -21,22 +21,15 @@ import java.util.ArrayDeque;
  * This class represents the view with which the user interacts in order to play
  * the game.
  *
- * @author Dani Hashweh
  * @author John Breton
  * @author Samuel Gamelin
+ * @author Dani Hashweh
  * @author Abdalla El Nakla
  * @author Mohamed Radwan
  * @version 4.0
  */
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
-    private final JButton menuReset;
-    private final JButton menuHelp;
-    private final JButton menuHint;
-    private final JButton menuUndo;
-    private final JButton menuRedo;
-    private final JButton menuMain;
-    private final JButton menuSaveButton;
-    private final JButton menuQuit;
+    private final JButton menuReset, menuHelp, menuHint, menuUndo, menuRedo, menuMain, menuSaveButton, menuQuit;
 
     private JCheckBox showPossibleMovesBox;
     private final JButton[][] buttons;
@@ -75,14 +68,14 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
-        menuBar.add(menuMain = GUIUtilities.createMenuBarButton("Main Menu", true));
-        menuBar.add(menuHint = GUIUtilities.createMenuBarButton("Hint", true));
-        menuBar.add(menuUndo = GUIUtilities.createMenuBarButton("Undo", true));
-        menuBar.add(menuRedo = GUIUtilities.createMenuBarButton("Redo", true));
+        menuBar.add(menuMain = GUIUtilities.createMenuBarButton("<html><u>M</u>ain Menu</html>", true));
+        menuBar.add(menuHint = GUIUtilities.createMenuBarButton("<html><u>H</u>int</html>", true));
+        menuBar.add(menuUndo = GUIUtilities.createMenuBarButton("<html><u>U</u>ndo</html>", true));
+        menuBar.add(menuRedo = GUIUtilities.createMenuBarButton("<html><u>R</u>edo</html>", true));
         menuBar.add(menuReset = GUIUtilities.createMenuBarButton("Reset", false));
-        menuBar.add(menuSaveButton = GUIUtilities.createMenuBarButton("Save Game", true));
+        menuBar.add(menuSaveButton = GUIUtilities.createMenuBarButton("<html><u>S</u>ave Game</html>", true));
         menuBar.add(menuHelp = GUIUtilities.createMenuBarButton("Help", false));
-        menuBar.add(menuQuit = GUIUtilities.createMenuBarButton("Quit", true));
+        menuBar.add(menuQuit = GUIUtilities.createMenuBarButton("<html><u>Q</u>uit</html>", true));
 
         this.setContentPane(new JLabel(Resources.BOARD));
         this.getContentPane().setLayout(new GridLayout(5, 5));

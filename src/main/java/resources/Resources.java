@@ -46,7 +46,7 @@ public final class Resources {
     /**
      * A constant representing the path of the customLevelData.json file.
      */
-    private static final String CUSTOM_LEVEL_DATA_PATH = System.getenv("APPDATA") + "\\" + "Rabbits and Foxes!" + "\\" + "CustomLevelData.json";
+    private static final String CUSTOM_LEVEL_DATA_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + ".Rabbits and Foxes!" + File.separator + "CustomLevelData.json";
 
     /**
      * The Logger object used for logging.
@@ -365,7 +365,7 @@ public final class Resources {
                 }
             }
         }
-        try  {
+        try {
             FileOutputStream out = new FileOutputStream(CUSTOM_LEVEL_DATA_PATH);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -376,7 +376,7 @@ public final class Resources {
             if (originalJsonObject != null) {
                 originalJsonObject.get(USER_LEVELS).getAsJsonArray().add(jsonObject);
             }
-            
+
             out.write(gson.toJson(originalJsonObject).getBytes());
             out.close();
             return true;

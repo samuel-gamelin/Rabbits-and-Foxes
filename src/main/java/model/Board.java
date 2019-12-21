@@ -12,10 +12,10 @@ import java.util.Objects;
  * them. It also serves as the Model for the Rabbits and Foxes game.
  *
  * @author Samuel Gamelin
- * @author Abdalla El Nakla
- * @author Dani Hashweh
  * @author John Breton
  * @author Mohamed Radwan
+ * @author Abdalla El Nakla
+ * @author Dani Hashweh
  * @version 4.0
  */
 public class Board {
@@ -316,6 +316,9 @@ public class Board {
         return board;
     }
 
+    /**
+     * @return The hash code for this Board, as an integer.
+     */
     @Override
     public int hashCode() {
         final int prime = 31;

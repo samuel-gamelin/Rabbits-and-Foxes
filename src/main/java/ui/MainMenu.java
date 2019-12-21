@@ -14,6 +14,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayDeque;
 
 /**
@@ -132,16 +135,24 @@ class MainMenu extends JFrame implements ActionListener {
      * @param args The command-line arguments
      */
     public static void main(String[] args) {
-        File customLevelFolder = new File(System.getenv("APPDATA") + "\\" + "Rabbits and Foxes!");
+        Path path = Paths.get(System.getProperty("user.home") + File.separator + "Documents" + File.separator + ".Rabbits and Foxes!");
+        File customLevelFolder = new File(path.toString());
+
         if (!customLevelFolder.exists()) {
             customLevelFolder.mkdir();
             try {
-                FileOutputStream out = new FileOutputStream(customLevelFolder.getPath() + "\\" + "CustomLevelData.json");
+                FileOutputStream out = new FileOutputStream(customLevelFolder.getPath() + File.separator + "CustomLevelData.json");
                 out.write("{\n  \"userLevels\": [\n  ]\n}".getBytes());
                 out.close();
             } catch (IOException ex) {
-                Resources.LOGGER.error("Could not create required CustomLevelData.json file!", ex);
+                Resources.LOGGER.error("Could not create required CustomLevelData.json file!\nThe path was not found (user.home does not have Documents).", ex);
             }
+        }
+
+        try {
+            Files.setAttribute(path, "dos:hidden", true);
+        } catch (IOException ex) {
+            Resources.LOGGER.error("Unable to make .Rabbits and Foxes! a hidden folder, will be visible in user.home/Documents");
         }
 
         GUIUtilities.applyDefaults();

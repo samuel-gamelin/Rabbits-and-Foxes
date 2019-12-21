@@ -78,13 +78,12 @@ public class Rabbit extends Piece implements MovablePiece {
      */
     @Override
     public boolean move(Move move, Board board) {
-        if (move != null && board != null && !move.direction().equals(MoveDirection.INVALID)) {
+        if (move != null && board != null && !move.direction().equals(MoveDirection.INVALID))
             if (validatePath(move, board)) {
                 board.removePiece(move.xStart, move.yStart);
                 board.setPiece(this, move.xEnd, move.yEnd);
                 return true;
             }
-        }
         return false;
     }
 
@@ -99,9 +98,8 @@ public class Rabbit extends Piece implements MovablePiece {
         if ((move.direction().equals(MoveDirection.INVALID) || Math.abs(move.xDistance()) == 1
                 || Math.abs(move.yDistance()) == 1)
                 || (move.direction().equals(MoveDirection.HORIZONTAL) && !horizontalMove(move, board))
-                || (move.direction().equals(MoveDirection.VERTICAL) && !verticalMove(move, board))) {
+                || (move.direction().equals(MoveDirection.VERTICAL) && !verticalMove(move, board)))
             return false;
-        }
         return !board.isOccupied(move.xEnd, move.yEnd);
     }
 
@@ -114,17 +112,13 @@ public class Rabbit extends Piece implements MovablePiece {
      */
     private boolean verticalMove(Move move, Board board) {
         if (move.yDistance() < 0) {
-            for (int i = move.yStart - 1; i > move.yEnd; i--) {
-                if (!board.isOccupied(move.xStart, i)) {
+            for (int i = move.yStart - 1; i > move.yEnd; i--)
+                if (!board.isOccupied(move.xStart, i))
                     return false;
-                }
-            }
         } else {
-            for (int i = move.yStart + 1; i < move.yEnd; i++) {
-                if (!board.isOccupied(move.xStart, i)) {
+            for (int i = move.yStart + 1; i < move.yEnd; i++)
+                if (!board.isOccupied(move.xStart, i))
                     return false;
-                }
-            }
         }
         return true;
     }
@@ -138,17 +132,13 @@ public class Rabbit extends Piece implements MovablePiece {
      */
     private boolean horizontalMove(Move move, Board board) {
         if (move.xDistance() < 0) {
-            for (int i = move.xStart - 1; i > move.xEnd; i--) {
-                if (!board.isOccupied(i, move.yStart)) {
+            for (int i = move.xStart - 1; i > move.xEnd; i--)
+                if (!board.isOccupied(i, move.yStart))
                     return false;
-                }
-            }
         } else {
-            for (int i = move.xStart + 1; i < move.xEnd; i++) {
-                if (!board.isOccupied(i, move.yStart)) {
+            for (int i = move.xStart + 1; i < move.xEnd; i++)
+                if (!board.isOccupied(i, move.yStart))
                     return false;
-                }
-            }
         }
         return true;
     }
@@ -159,12 +149,10 @@ public class Rabbit extends Piece implements MovablePiece {
         for (int i = 0; i < Board.SIZE; i++) {
             Move moveX = new Move(x, y, i, y);
             Move moveY = new Move(x, y, x, i);
-            if (i != x && !board.isOccupied(moveX.xEnd, moveX.yEnd) && validatePath(moveX, board)) {
+            if (i != x && !board.isOccupied(moveX.xEnd, moveX.yEnd) && validatePath(moveX, board))
                 moves.add(moveX);
-            }
-            if (i != y && !board.isOccupied(moveY.xEnd, moveY.yEnd) && validatePath(moveY, board)) {
+            if (i != y && !board.isOccupied(moveY.xEnd, moveY.yEnd) && validatePath(moveY, board))
                 moves.add(moveY);
-            }
         }
         return moves;
     }
