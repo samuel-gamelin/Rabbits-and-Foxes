@@ -13,12 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author John Breton
  */
-public class UndoRedoTest {
+class UndoRedoTest {
 
     private GameController controller;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         String BOARD_DATA = "X X X X X FHU1 FTU1 X X RBB X X X X MU RBW MU X FHL0 X X X RBG FTL0 X";
         Board testBoard = Board.createBoard("Anyboard", BOARD_DATA);
 
@@ -31,7 +31,7 @@ public class UndoRedoTest {
     }
 
     @Test
-    public void testUndoRedoMoves() {
+    void testUndoRedoMoves() {
         // We have not undone anything, so redoMove should return false
         assertFalse(controller.redoMove());
 

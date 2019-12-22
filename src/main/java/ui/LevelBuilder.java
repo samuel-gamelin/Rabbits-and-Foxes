@@ -4,6 +4,7 @@ import model.*;
 import model.Fox.Direction;
 import model.Rabbit.RabbitColour;
 import resources.Resources;
+import util.Move;
 import util.Move.MoveDirection;
 import util.Solver;
 
@@ -62,14 +63,11 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
     private JButton mushroom;
 
     /*
-     * Menu Items to be
+     * Menu Items to be added to the JMenuBar
      */
-    private JButton menuReset;
-    private JButton menuHelp;
-    private JButton deletePiece;
-    private JButton rotateFox;
-    private JButton menuMainScreen;
-    private JButton saveBoard;
+    private final JButton menuReset, menuHelp, deletePiece, flipFox, menuMainScreen, saveBoard;
+
+
     private ImageIcon currentIcon;
 
     /**
@@ -80,7 +78,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
     /**
      *
      */
-    private JButton[][] buttons;
+    private final JButton[][] buttons;
 
     /**
      * Represents the number of foxes currently placed on the board.
@@ -116,12 +114,12 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
          * Menu bar items
          */
         JMenuBar menuBar = new JMenuBar();
-        menuBar.add(menuMainScreen = GUIUtilities.createMenuBarButton("Main Menu", true));
-        menuBar.add(menuReset = GUIUtilities.createMenuBarButton("Reset", false));
-        menuBar.add(deletePiece = GUIUtilities.createMenuBarButton("Delete Piece", false));
-        menuBar.add(rotateFox = GUIUtilities.createMenuBarButton("Rotate Fox", false));
-        menuBar.add(saveBoard = GUIUtilities.createMenuBarButton("Save", true));
-        menuBar.add(menuHelp = GUIUtilities.createMenuBarButton("Help", false));
+        menuBar.add(menuMainScreen = GUIUtilities.createMenuBarButton("<html><u>M</u>ain Menu</html>", true));
+        menuBar.add(menuReset = GUIUtilities.createMenuBarButton("<html><u>R</u>eset</html>", true));
+        menuBar.add(deletePiece = GUIUtilities.createMenuBarButton("<html><u>D</u>elete Piece</html>", true));
+        menuBar.add(flipFox = GUIUtilities.createMenuBarButton("<html><u>F</u>lip Fox</html>", true));
+        menuBar.add(saveBoard = GUIUtilities.createMenuBarButton("<html><u>S</u>ave</html>", true));
+        menuBar.add(menuHelp = GUIUtilities.createMenuBarButton("<html><u>H</u>elp</html>", true));
         this.setJMenuBar(menuBar);
 
         // Create a JLabel for the board
@@ -169,7 +167,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
         menuHelp.addActionListener(this);
         saveBoard.addActionListener(this);
         deletePiece.addActionListener(this);
-        rotateFox.addActionListener(this);
+        flipFox.addActionListener(this);
     }
 
     private void placePiece(int x, int y) {
@@ -385,26 +383,28 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == saveBoard) {
-            if (Solver.getNextBestMove(board).direction() == MoveDirection.INVALID) {
-                JPanel panel = new JPanel(new BorderLayout(0, 15));
-                panel.add(new JLabel("This board cannot be solved please try agian!"), BorderLayout.NORTH);
-                JOptionPane.showMessageDialog(this, panel, "Save", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                String levelNameString;
-                do {
-                    levelNameString = JOptionPane.showInputDialog("Please enter a name for the level: ");
-                    if (levelNameString == null) {
-                        return;
-                    }
-                    while (levelNameString.matches("-?\\d+")) {
-                        levelNameString = JOptionPane.showInputDialog("No numbers are allowed in the level name: ");
-                    }
-                    board.setName(levelNameString);
-                } while (!(Resources.addUserLevel(board)));
-                JPanel panel = new JPanel(new BorderLayout(0, 15));
-                panel.add(new JLabel("The board has been saved successfully"), BorderLayout.NORTH);
-                JOptionPane.showMessageDialog(this, panel, "Save", JOptionPane.INFORMATION_MESSAGE);
-            }
+            Board boardCopy = new Board(board);
+            do  {
+                Move temp = Solver.getNextBestMove(boardCopy);
+                if (temp.direction() == MoveDirection.INVALID || temp.xStart == -1) {
+                    JPanel panel = new JPanel(new BorderLayout(0, 15));
+                    panel.add(new JLabel("This board cannot be solved please try agian!"), BorderLayout.NORTH);
+                    JOptionPane.showMessageDialog(this, panel, "Save", JOptionPane.INFORMATION_MESSAGE);
+                }
+                boardCopy.move(temp);
+            } while ((!boardCopy.isInWinningState()));
+            String levelNameString;
+            do {
+                levelNameString = JOptionPane.showInputDialog("Please enter a name for the level: ");
+                if (levelNameString == null)
+                    return;
+                while (levelNameString.matches("-?\\d+"))
+                    levelNameString = JOptionPane.showInputDialog("No numbers are allowed in the level name: ");
+                board.setName(levelNameString);
+            } while (!(Resources.addUserLevel(board)));
+            JPanel panel = new JPanel(new BorderLayout(0, 15));
+            panel.add(new JLabel("The board has been saved successfully"), BorderLayout.NORTH);
+            JOptionPane.showMessageDialog(this, panel, "Save", JOptionPane.INFORMATION_MESSAGE);
         } else if (e.getSource() == menuHelp) {
             JPanel panel = new JPanel(new BorderLayout(0, 15));
             panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>"
@@ -465,53 +465,56 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
             itemToBeModifiedX = -1;
             itemToBeModifiedY = -1;
             GUIUtilities.updateView(buttons, board);
-        } else if (e.getSource() == rotateFox) {
-            boolean rotated = false;
+        } else if (e.getSource() == flipFox) {
+            boolean flipped = false;
             if (itemToBeModifiedX != -1 && itemToBeModifiedY != -1) {
-                if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_UP) {
-                    Fox fox = new Fox(Direction.DOWN, numberOfFoxs == 1);
-                    board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY + 1);
-                    board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
-                    rotated = true;
-                } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_UP) {
-                    Fox fox = new Fox(Direction.DOWN, numberOfFoxs == 1);
-                    board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
-                    board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY - 1);
-                    rotated = true;
-                } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_LEFT) {
-                    Fox fox = new Fox(Direction.RIGHT, numberOfFoxs == 1);
-                    board.setPiece(fox, itemToBeModifiedX + 1, itemToBeModifiedY);
-                    board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
-                    rotated = true;
-                } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_LEFT) {
-                    Fox fox = new Fox(Direction.RIGHT, numberOfFoxs == 1);
-                    board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
-                    board.setPiece(fox.getOtherHalf(), itemToBeModifiedX - 1, itemToBeModifiedY);
-                    rotated = true;
-                } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_DOWN) {
-                    Fox fox = new Fox(Direction.UP, numberOfFoxs == 1);
-                    board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY - 1);
-                    board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
-                    rotated = true;
-                } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_DOWN) {
-                    Fox fox = new Fox(Direction.UP, numberOfFoxs == 1);
-                    board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
-                    board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY + 1);
-                    rotated = true;
-                } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_RIGHT) {
-                    Fox fox = new Fox(Direction.LEFT, numberOfFoxs == 1);
-                    board.setPiece(fox, itemToBeModifiedX - 1, itemToBeModifiedY);
-                    board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
-                    rotated = true;
-                } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_RIGHT) {
-                    Fox fox = new Fox(Direction.LEFT, numberOfFoxs == 1);
-                    board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
-                    board.setPiece(fox.getOtherHalf(), itemToBeModifiedX + 1, itemToBeModifiedY);
-                    rotated = true;
+                if (board.getPiece(itemToBeModifiedX, itemToBeModifiedY) instanceof Fox) {
+                    Fox oldFox = (Fox) board.getPiece(itemToBeModifiedX, itemToBeModifiedY);
+                    if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_UP) {
+                        Fox fox = new Fox(Direction.DOWN, oldFox.getID());
+                        board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY + 1);
+                        board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
+                        flipped = true;
+                    } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_UP) {
+                        Fox fox = new Fox(Direction.DOWN, oldFox.getID());
+                        board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
+                        board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY - 1);
+                        flipped = true;
+                    } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_LEFT) {
+                        Fox fox = new Fox(Direction.RIGHT, oldFox.getID());
+                        board.setPiece(fox, itemToBeModifiedX + 1, itemToBeModifiedY);
+                        board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
+                        flipped = true;
+                    } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_LEFT) {
+                        Fox fox = new Fox(Direction.RIGHT, oldFox.getID());
+                        board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
+                        board.setPiece(fox.getOtherHalf(), itemToBeModifiedX - 1, itemToBeModifiedY);
+                        flipped = true;
+                    } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_DOWN) {
+                        Fox fox = new Fox(Direction.UP, oldFox.getID());
+                        board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY - 1);
+                        board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
+                        flipped = true;
+                    } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_DOWN) {
+                        Fox fox = new Fox(Direction.UP, oldFox.getID());
+                        board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
+                        board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY + 1);
+                        flipped = true;
+                    } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_RIGHT) {
+                        Fox fox = new Fox(Direction.LEFT, oldFox.getID());
+                        board.setPiece(fox, itemToBeModifiedX - 1, itemToBeModifiedY);
+                        board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
+                        flipped = true;
+                    } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_RIGHT) {
+                        Fox fox = new Fox(Direction.LEFT, oldFox.getID());
+                        board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
+                        board.setPiece(fox.getOtherHalf(), itemToBeModifiedX + 1, itemToBeModifiedY);
+                        flipped = true;
+                    }
                 }
             }
 
-            if (!rotated) {
+            if (!flipped) {
                 JPanel panel = new JPanel(new BorderLayout(0, 15));
                 panel.add(new JLabel("Please select a fox."), BorderLayout.NORTH);
                 JOptionPane.showMessageDialog(this, panel, "Rotate", JOptionPane.INFORMATION_MESSAGE);

@@ -12,10 +12,10 @@ import java.util.Set;
  * @author Mohamed Radwan
  * @version 4.0
  */
-public class Node {
-    private Board board;
+class Node {
+    private final Board board;
 
-    public Node(Board board) {
+    Node(Board board) {
         this.board = new Board(board);
     }
 
@@ -76,20 +76,18 @@ public class Node {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        return prime * result + ((board == null) ? 0 : board.hashCode());
+        return prime * result + board.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (!(obj instanceof Node)) {
+
+        if (!(obj instanceof Node))
             return false;
-        }
+
         Node other = (Node) obj;
-        if (board == null) {
-            return other.board == null;
-        } else return board.equals(other.board);
+        return board.equals(other.board);
     }
 }

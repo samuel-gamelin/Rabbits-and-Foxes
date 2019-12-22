@@ -19,9 +19,8 @@ import java.util.Objects;
  * This class represents the level selector for the game.
  *
  * @author John Breton
- * @author Dani Hashweh
  */
-public class LevelSelector extends JFrame implements ActionListener {
+class LevelSelector extends JFrame implements ActionListener {
 
     private static final int BUTTON_SPACING = (int) GUIUtilities.SIDE_LENGTH / 50;
     private static final double BUTTON_Y_FACTOR = 0.20;
@@ -32,12 +31,12 @@ public class LevelSelector extends JFrame implements ActionListener {
 
     private static final BevelBorder DEFAULT = new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.BLACK);
 
-    private JButton btnStartLevel, btnMainMenu, btnCustomLevels, btnNextPage, btnLastPage, btnLeftLevel,
-            btnMiddleLevel, btnRightLevel, btnDeleteLevel;
-    private JTextPane levelLabelLeft, levelLabelMiddle, levelLabelRight;
-    private JLabel[][] tilesLeft, tilesMiddle, tilesRight;
+    private final JButton btnStartLevel, btnMainMenu, btnCustomLevels, btnNextPage, btnLastPage, btnLeftLevel, btnMiddleLevel, btnRightLevel, btnDeleteLevel;
+    private final JTextPane levelLabelLeft, levelLabelMiddle, levelLabelRight;
+    private final JLabel[][] tilesLeft, tilesMiddle, tilesRight;
 
-    private List<Board> allDefaultLevels, allCustomLevels;
+    private final List<Board> allDefaultLevels;
+    private List<Board> allCustomLevels;
     private int pageNumber, lastPage;
     private boolean custom;
 
@@ -187,12 +186,11 @@ public class LevelSelector extends JFrame implements ActionListener {
      * @param tiles The JLabel 2D array being set up
      */
     private void setUpTiles(JLabel[][] tiles) {
-        for (int y = 0; y < Board.SIZE; y++) {
+        for (int y = 0; y < Board.SIZE; y++)
             for (int x = 0; x < Board.SIZE; x++) {
                 tiles[x][y] = new JLabel();
                 tiles[x][y].setOpaque(false);
             }
-        }
     }
 
     /**
@@ -264,8 +262,8 @@ public class LevelSelector extends JFrame implements ActionListener {
                 (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         button.setMinimumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
                 (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
-        for (int y = 0; y < Board.SIZE; y++) {
-            for (int x = 0; x < Board.SIZE; x++) {
+        for (int y = 0; y < Board.SIZE; y++)
+            for (int x = 0; x < Board.SIZE; x++)
                 switch (tileNumber) {
                     case 1: {
                         button.add(tilesLeft[x][y]);
@@ -279,8 +277,6 @@ public class LevelSelector extends JFrame implements ActionListener {
                         button.add(tilesRight[x][y]);
                     }
                 }
-            }
-        }
     }
 
     /**
@@ -306,7 +302,7 @@ public class LevelSelector extends JFrame implements ActionListener {
                 levelLabelMiddle.setText(levelList.get(pageNumber * 3 - 2).getName());
                 levelLabelRight.setText(levelList.get(pageNumber * 3 - 1).getName());
             }
-        } else {
+        } else
             switch (levelList.size() % 3) {
                 case 1:
                     updateLevelPreview(tilesLeft, levelList.get(pageNumber * 3 - 3));
@@ -337,7 +333,6 @@ public class LevelSelector extends JFrame implements ActionListener {
                     levelLabelRight.setText("Empty");
                     break;
             }
-        }
         this.revalidate();
         this.repaint();
     }
@@ -349,7 +344,7 @@ public class LevelSelector extends JFrame implements ActionListener {
      * @param board The board used to update the images displayed on the tiles
      */
     private void updateLevelPreview(JLabel[][] tiles, Board board) {
-        for (int x = 0; x < Board.SIZE; x++) {
+        for (int x = 0; x < Board.SIZE; x++)
             for (int y = 0; y < Board.SIZE; y++) {
                 Piece piece = board.getPiece(x, y);
                 if (piece != null) {
@@ -371,7 +366,7 @@ public class LevelSelector extends JFrame implements ActionListener {
                                         (int) (GUIUtilities.SIDE_LENGTH / Y_SCALE_FACTOR),
                                         Image.SCALE_SMOOTH)));
                         tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
-                        if (((Fox) (piece)).getFoxType() == FoxType.HEAD) {
+                        if (((Fox) (piece)).getFoxType() == FoxType.HEAD)
                             switch (((Fox) (piece)).getDirection()) {
                                 case LEFT:
                                     tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
@@ -382,7 +377,7 @@ public class LevelSelector extends JFrame implements ActionListener {
                                 default:
                                     break;
                             }
-                        } else {
+                        else
                             switch (((Fox) (piece)).getDirection()) {
                                 case LEFT:
                                     tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
@@ -393,14 +388,10 @@ public class LevelSelector extends JFrame implements ActionListener {
                                 default:
                                     break;
                             }
-                        }
                     }
-                } else {
+                } else
                     tiles[x][y].setIcon(null);
-                }
             }
-        }
-
     }
 
     /**
@@ -413,8 +404,7 @@ public class LevelSelector extends JFrame implements ActionListener {
         clearSelectedBorder();
         button.setBorder(GUIUtilities.SELECTED_BORDER);
         btnStartLevel.setEnabled(true);
-        if (custom)
-            btnDeleteLevel.setEnabled(true);
+        btnDeleteLevel.setEnabled(custom);
     }
 
     /**
@@ -468,9 +458,9 @@ public class LevelSelector extends JFrame implements ActionListener {
         } else if (e.getSource() == btnMainMenu) {
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
-        } else if (e.getSource() == btnLeftLevel || e.getSource() == btnMiddleLevel || e.getSource() == btnRightLevel) {
+        } else if (e.getSource() == btnLeftLevel || e.getSource() == btnMiddleLevel || e.getSource() == btnRightLevel)
             levelSelected((JButton) e.getSource());
-        } else if (e.getSource() == btnNextPage) {
+        else if (e.getSource() == btnNextPage) {
             pageNumber++;
             btnLastPage.setEnabled(true);
             btnNextPage.setEnabled(pageNumber != lastPage);
@@ -478,9 +468,8 @@ public class LevelSelector extends JFrame implements ActionListener {
             if (custom) {
                 updateView(allCustomLevels);
                 btnDeleteLevel.setEnabled(false);
-            } else {
+            } else
                 updateView(allDefaultLevels);
-            }
         } else if (e.getSource() == btnLastPage) {
             pageNumber--;
             btnNextPage.setEnabled(true);
@@ -489,9 +478,8 @@ public class LevelSelector extends JFrame implements ActionListener {
             if (custom) {
                 updateView(allCustomLevels);
                 btnDeleteLevel.setEnabled(false);
-            } else {
+            } else
                 updateView(allDefaultLevels);
-            }
         } else if (e.getSource() == btnCustomLevels) {
             if (allCustomLevels.isEmpty()) {
                 GUIUtilities.displayMessageDialog(this,

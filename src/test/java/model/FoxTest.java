@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Abdalla El Nakla
  * @author John Breton
  */
-public class FoxTest {
+class FoxTest {
 
     private Board board;
 
@@ -20,7 +20,7 @@ public class FoxTest {
     private Fox fox2;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         String TESTBOARD = "RBG MU X X X FHU1 FTU1 X X X FHL0 X RBB X X FTL0 X X X X X X X X X";
         board = Board.createBoard("Anyboard", TESTBOARD);
         fox1 = new Fox(Fox.Direction.UP, true);
@@ -29,7 +29,7 @@ public class FoxTest {
     }
 
     @Test
-    public void testFoxConstructors() {
+    void testFoxConstructors() {
         assertNotNull(fox1);
         assertNotNull(fox2);
         Fox fox3 = Fox.createFox("FHD1");
@@ -39,31 +39,31 @@ public class FoxTest {
     }
 
     @Test
-    public void testGetOtherHalf() {
+    void testGetOtherHalf() {
         assertNotNull(fox1.getOtherHalf());
         assertEquals(Fox.FoxType.TAIL, fox1.getOtherHalf().getFoxType());
     }
 
     @Test
-    public void testGetDirection() {
+    void testGetDirection() {
         assertEquals(Fox.Direction.LEFT, fox2.getDirection());
         assertEquals(Fox.Direction.UP, fox1.getDirection());
     }
 
     @Test
-    public void testGetFoxType() {
+    void testGetFoxType() {
         assertEquals(Fox.FoxType.HEAD, fox1.getFoxType());
         assertEquals(Fox.FoxType.TAIL, fox2.getOtherHalf().getFoxType());
     }
 
     @Test
-    public void testGetID() {
+    void testGetID() {
         assertTrue(fox1.getID());
         assertFalse(fox2.getID());
     }
 
     @Test
-    public void testGetPossibleMoves() {
+    void testGetPossibleMoves() {
         // By design, the head will only generate possible moves in front of itself.
         assertTrue(fox1.getPossibleMoves(board, 0, 1).isEmpty());
         // By design, the tail will only generate possible moves behind itself.
@@ -74,7 +74,7 @@ public class FoxTest {
      * This will also check for validate path if it works
      */
     @Test
-    public void testFoxMove() {
+    void testFoxMove() {
         assertFalse(fox1.move(new Move(1, 2, 3, 4), board));
         Move move = new Move(1, 0, 1, 2);
         assertFalse(fox2.move(move, board));
@@ -84,7 +84,7 @@ public class FoxTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertEquals(fox1.toString(), "FHU1");
         assertEquals(fox2.toString(), "FHL0");
         assertEquals(fox2.getOtherHalf().toString(), "FTL0");

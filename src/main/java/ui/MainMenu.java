@@ -11,6 +11,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayDeque;
 
 /**
@@ -22,8 +28,13 @@ import java.util.ArrayDeque;
  * @version 4.0
  */
 
-public class MainMenu extends JFrame implements ActionListener {
-    private JButton btnStart, btnSelectLevel, btnBuildLevel, btnHelp, btnLoadGame, btnQuitGame;
+class MainMenu extends JFrame implements ActionListener {
+    private final JButton btnStart;
+    private final JButton btnSelectLevel;
+    private final JButton btnBuildLevel;
+    private final JButton btnHelp;
+    private final JButton btnLoadGame;
+    private final JButton btnQuitGame;
 
     /**
      * Constructs a MainMenu frame, populating it with options (as buttons) that the user can choose from.
@@ -124,6 +135,28 @@ public class MainMenu extends JFrame implements ActionListener {
      * @param args The command-line arguments
      */
     public static void main(String[] args) {
+        Path path = Paths.get(System.getProperty("user.home") + File.separator + ".Rabbits and Foxes!");
+        File customLevelFolder = new File(path.toString());
+
+        if (!customLevelFolder.exists()) {
+            customLevelFolder.mkdir();
+            try {
+                FileOutputStream out = new FileOutputStream(customLevelFolder.getPath() + File.separator + "CustomLevelData.json");
+                out.write("{\n  \"userLevels\": [\n  ]\n}".getBytes());
+                out.close();
+            } catch (IOException ex) {
+                Resources.LOGGER.error("Could not create required CustomLevelData.json file!\nNo user.home directory found (I think you may have bigger problems than playing this game)!", ex);
+            }
+        }
+        // Check to see if the OS is Windows based (in which case some additional work is needed to make the folder hidden).
+        if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+            try {
+                Files.setAttribute(path, "dos:hidden", true);
+            } catch (IOException ex) {
+                Resources.LOGGER.error("Unable to make .Rabbits and Foxes! a hidden folder, will be visible in user.home");
+            }
+        }
+
         GUIUtilities.applyDefaults();
         SwingUtilities.invokeLater(MainMenu::new);
     }

@@ -15,14 +15,14 @@ public abstract class Piece {
         FOX, MUSHROOM, RABBIT
     }
 
-    private PieceType pieceType;
+    private final PieceType pieceType;
 
     /**
      * Construct a new piece given the specified piece type
      *
      * @param pieceType The piece type of the piece, as a PieceType
      */
-    public Piece(PieceType pieceType) {
+    Piece(PieceType pieceType) {
         this.pieceType = pieceType;
     }
 

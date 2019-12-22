@@ -12,10 +12,10 @@ import java.util.Objects;
  * them. It also serves as the Model for the Rabbits and Foxes game.
  *
  * @author Samuel Gamelin
- * @author Abdalla El Nakla
- * @author Dani Hashweh
  * @author John Breton
  * @author Mohamed Radwan
+ * @author Abdalla El Nakla
+ * @author Dani Hashweh
  * @version 4.0
  */
 public class Board {
@@ -37,13 +37,13 @@ public class Board {
     /**
      * A 2D array of tiles used to manage all tiles on the board.
      */
-    private Tile[][] tiles;
+    private final Tile[][] tiles;
 
     /**
      * A list of listeners that are updated on the status of this board whenever
      * appropriate.
      */
-    private List<BoardListener> boardListeners;
+    private final List<BoardListener> boardListeners;
 
     /**
      * Construct an empty board.
@@ -316,6 +316,9 @@ public class Board {
         return board;
     }
 
+    /**
+     * @return The hash code for this Board, as an integer.
+     */
     @Override
     public int hashCode() {
         final int prime = 31;

@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Abdalla El Nakla
  * @author John Breton
  */
-public class RabbitTest {
+class RabbitTest {
     private Rabbit rabbitBrown;
     private Rabbit rabbitWhite;
     private Board board;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         rabbitBrown = new Rabbit(Rabbit.RabbitColour.BROWN);
         rabbitWhite = new Rabbit(Rabbit.RabbitColour.WHITE);
         String TESTBOARD = "X MU X X X FHU1 FTU1 X X X X X X X X X X X X X X X X X X";
@@ -29,7 +29,7 @@ public class RabbitTest {
     }
 
     @Test
-    public void testRabbitConstructors() {
+    void testRabbitConstructors() {
         assertNotNull(rabbitBrown);
         Rabbit rabbitGray = Rabbit.createRabbit("RBG");
         assertNotNull(rabbitGray);
@@ -38,14 +38,14 @@ public class RabbitTest {
     }
 
     @Test
-    public void testIsColour() {
+    void testIsColour() {
         assertEquals(Rabbit.RabbitColour.WHITE, rabbitWhite.getColour());
         assertEquals(Rabbit.RabbitColour.BROWN, rabbitBrown.getColour());
 
     }
 
     @Test
-    public void testRabbitMovement() {
+    void testRabbitMovement() {
         board.setPiece(rabbitWhite, 0, 0);
         Move move = new Move(0, 0, 2, 0);
         assertTrue(rabbitWhite.move(move, board));
@@ -55,13 +55,13 @@ public class RabbitTest {
     }
 
     @Test
-    public void testGetPossibleMoves() {
+    void testGetPossibleMoves() {
         assertFalse(rabbitWhite.getPossibleMoves(board, 0, 0).isEmpty());
         assertTrue(rabbitBrown.getPossibleMoves(board, 2, 2).isEmpty());
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertEquals("RBW", rabbitWhite.toString());
     }
 }
