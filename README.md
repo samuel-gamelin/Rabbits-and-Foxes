@@ -53,7 +53,7 @@ Date: December 2, 2019
 
 ## Known issues
 
-Currently there are no none issues.
+Currently there are no known issues.
 
 > If you notice a bug, please add it to Issues tab. Make sure you include how to recreate the bug!
 
