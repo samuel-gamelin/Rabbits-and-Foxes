@@ -135,7 +135,7 @@ class MainMenu extends JFrame implements ActionListener {
      * @param args The command-line arguments
      */
     public static void main(String[] args) {
-        Path path = Paths.get(System.getProperty("user.home") + File.separator + "Documents" + File.separator + ".Rabbits and Foxes!");
+        Path path = Paths.get(System.getProperty("user.home") + File.separator + ".Rabbits and Foxes!");
         File customLevelFolder = new File(path.toString());
 
         if (!customLevelFolder.exists()) {
@@ -145,14 +145,16 @@ class MainMenu extends JFrame implements ActionListener {
                 out.write("{\n  \"userLevels\": [\n  ]\n}".getBytes());
                 out.close();
             } catch (IOException ex) {
-                Resources.LOGGER.error("Could not create required CustomLevelData.json file!\nThe path was not found (user.home does not have Documents).", ex);
+                Resources.LOGGER.error("Could not create required CustomLevelData.json file!\nNo user.home directory found (I think you may have bigger problems than playing this game)!", ex);
             }
         }
-
-        try {
-            Files.setAttribute(path, "dos:hidden", true);
-        } catch (IOException ex) {
-            Resources.LOGGER.error("Unable to make .Rabbits and Foxes! a hidden folder, will be visible in user.home/Documents");
+        // Check to see if the OS is Windows based (in which case some additional work is needed to make the folder hidden).
+        if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+            try {
+                Files.setAttribute(path, "dos:hidden", true);
+            } catch (IOException ex) {
+                Resources.LOGGER.error("Unable to make .Rabbits and Foxes! a hidden folder, will be visible in user.home");
+            }
         }
 
         GUIUtilities.applyDefaults();

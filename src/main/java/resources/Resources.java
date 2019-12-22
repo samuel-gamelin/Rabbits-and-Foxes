@@ -46,7 +46,7 @@ public final class Resources {
     /**
      * A constant representing the path of the customLevelData.json file.
      */
-    private static final String CUSTOM_LEVEL_DATA_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + ".Rabbits and Foxes!" + File.separator + "CustomLevelData.json";
+    private static final String CUSTOM_LEVEL_DATA_PATH = System.getProperty("user.home") + File.separator + ".Rabbits and Foxes!" + File.separator + "CustomLevelData.json";
 
     /**
      * The Logger object used for logging.
