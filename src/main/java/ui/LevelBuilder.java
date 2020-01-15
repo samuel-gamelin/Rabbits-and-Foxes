@@ -408,12 +408,12 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
         } else if (e.getSource() == menuHelp) {
             JPanel panel = new JPanel(new BorderLayout(0, 15));
             panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>"
-                    + "This is a level maker for Rabbits and foxes game." + "<br><br>"
-                    + "Place Piece: select a piece form the side menu by click on the piece. The piece can then be placed on the board by simply click on the location on the board."
-                    + "<br>" + "<br>" + "Delete Piece: Simply click on the piece and click delete on the menu" + "<br>"
+                    + "This is the level builder for Rabbits and Foxes!" + "<br><br>"
+                    + "Place Piece: Select a piece form the side menu by clicking on it. The piece can then be placed on the board by clicking on an empty location."
+                    + "<br>" + "<br>" + "Delete Piece: Select a piece from the board and click this button to delete the piece" + "<br>"
                     + "<br>"
-                    + "Rotate: A fox can be rotated after placement. simply click on a fox from the board followed by rotate on the menu bar"
-                    + "<br>" + "<br>" + "Please note in this game the user is restricted to 3 mushrooms, 2 foxes, and 3 different colour rabbits" + "</p></body></html>"), BorderLayout.NORTH);
+                    + "Flip Fox: A fox can be flipped after placement. Select a fox from the board and click this button to flip it 180 degrees."
+                    + "<br>" + "<br>" + "Please note: In this game the user is restricted to 3 mushrooms, 2 foxes, and 3 different colour rabbits." + "</p></body></html>"), BorderLayout.NORTH);
             JOptionPane.showMessageDialog(this, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
         } else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
                 "Are you sure you want to reset the level builder? (Your progress will be lost)", "Reset Rabbits and Foxes!",
