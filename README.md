@@ -29,7 +29,7 @@ This GitHub repository is used for the development of a game based on JumpIN' th
     2. Select the SYSC-3110 folder that was just created and click Open.
 
 4. The entry point of the program is the main method of the MainMenu class under the ui package.
-5. The project can be built by invoking a `mvn package` command from the project's root directory. This will generate a
+5. The project can be built by invoking a `mvn clean install` command from the project's root directory. This will generate a
 runnable jar file in the target directory.
 
 ##### Additional Tools
@@ -59,7 +59,7 @@ Currently there are no known issues.
 
 ## Documentation
 
-Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing).
+Documentation for the project can be found [here](documentation/Rabbits%20and%20Foxes%20Documentation%20-%20User%20Manual%20and%20Design%20Decisions.pdf).
 
 ## The Team
 
