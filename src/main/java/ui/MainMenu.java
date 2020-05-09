@@ -149,7 +149,7 @@ class MainMenu extends JFrame implements ActionListener {
             }
         }
         // Check to see if the OS is Windows based (in which case some additional work is needed to make the folder hidden).
-        if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+        if (System.getProperty("os.name").toLowerCase().contains("win")) {
             try {
                 Files.setAttribute(path, "dos:hidden", true);
             } catch (IOException ex) {

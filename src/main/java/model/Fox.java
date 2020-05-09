@@ -106,7 +106,7 @@ public class Fox extends Piece implements MovablePiece {
             default:
                 dir = Direction.DOWN;
         }
-        return new Fox(dir, str.substring(3, 4).equals("1"));
+        return new Fox(dir, str.startsWith("1", 3));
     }
 
     /**
