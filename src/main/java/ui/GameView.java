@@ -51,6 +51,12 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     private boolean gameState;
 
     /**
+     * Stores the next best move for the current board. Determined as soon as
+     * the board is loaded.
+     */
+    private Move bestMove;
+
+    /**
      * Creates the application GUI.
      *
      * @param board The board that this GameView should have
@@ -76,6 +82,10 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         menuBar.add(menuSaveButton = GUIUtilities.createMenuBarButton("<html><u>S</u>ave Game</html>", true));
         menuBar.add(menuHelp = GUIUtilities.createMenuBarButton("Help", false));
         menuBar.add(menuQuit = GUIUtilities.createMenuBarButton("<html><u>Q</u>uit</html>", true));
+
+        // Generate the hints as soon as possible to minimize waiting time.
+        Thread hintThread = new Thread(this, "Hint");
+        hintThread.start();
 
         this.setContentPane(new JLabel(Resources.BOARD));
         this.getContentPane().setLayout(new GridLayout(5, 5));
@@ -189,6 +199,9 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
      */
     private void resetGame() {
         board = gameController.reset();
+        // Generate the hints as soon as possible to minimize waiting time.
+        Thread hintThread = new Thread(this, "Hint");
+        hintThread.start();
         board.addListener(this);
         GUIUtilities.clearButtonBorders(buttons);
         GUIUtilities.updateView(buttons, board);
@@ -296,7 +309,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == menuHint) {
-            Move bestMove = gameController.getNextBestMove();
+            bestMove = gameController.getNextBestMove();
             if (!buttons[bestMove.xStart][bestMove.yStart].getBorder().equals(GUIUtilities.SELECTED_BORDER)) {
                 buttons[bestMove.xStart][bestMove.yStart].setBorder(GUIUtilities.HINT_BORDER_START);
             }
@@ -367,5 +380,12 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
 
     @Override
     public void run() {
+        if (Thread.currentThread().getName().equals("Hint")) {
+            menuHint.setEnabled(false);
+            menuHint.setText("Generating Hint...");
+            bestMove = gameController.getNextBestMove();
+            menuHint.setText("<html><u>H</u>int</html>");
+            menuHint.setEnabled(true);
+        }
     }
 }
