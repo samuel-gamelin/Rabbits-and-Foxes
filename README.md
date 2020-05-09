@@ -29,7 +29,7 @@ This GitHub repository is used for the development of a game based on JumpIN' th
     2. Select the SYSC-3110 folder that was just created and click Open.
 
 4. The entry point of the program is the main method of the MainMenu class under the ui package.
-5. The project can be built by invoking a `mvn package` command from the project's root directory. This will generate a
+5. The project can be built by invoking a `mvn clean install` command from the project's root directory. This will generate a
 runnable jar file in the target directory.
 
 ##### Additional Tools
