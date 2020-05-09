@@ -59,7 +59,7 @@ Currently there are no known issues.
 
 ## Documentation
 
-Documentation for the project can be found [here](https://docs.google.com/document/d/1F1drMjR9mFtCsQivzpvqP5nMX2gI0osJu4_xSTUs74g/edit?usp=sharing).
+Documentation for the project can be found [here](documentation/Rabbits%20and%20Foxes%20Documentation%20-%20User%20Manual%20and%20Design%20Decisions.pdf).
 
 ## The Team
 
