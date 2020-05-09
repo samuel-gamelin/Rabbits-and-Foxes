@@ -68,8 +68,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         this.board.addListener(this);
         this.gameController = new GameController(board, level);
 
-        bestMove = null;
-
         this.gameState = true;
 
         this.updateFrameTitle();
@@ -200,7 +198,6 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
      * Resets the game.
      */
     private void resetGame() {
-        bestMove = null;
         board = gameController.reset();
         // Generate the hints as soon as possible to minimize waiting time.
         Thread hintThread = new Thread(this, "Hint");
