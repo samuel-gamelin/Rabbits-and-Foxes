@@ -31,7 +31,8 @@ class LevelSelector extends JFrame implements ActionListener {
 
     private static final BevelBorder DEFAULT = new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.BLACK);
 
-    private final JButton btnStartLevel, btnMainMenu, btnCustomLevels, btnNextPage, btnLastPage, btnLeftLevel, btnMiddleLevel, btnRightLevel, btnDeleteLevel;
+    private final JButton btnStartLevel, btnMainMenu, btnCustomLevels, btnNextPage, btnLastPage, btnLeftLevel,
+            btnMiddleLevel, btnRightLevel, btnDeleteLevel;
     private final JTextPane levelLabelLeft, levelLabelMiddle, levelLabelRight;
     private final JLabel[][] tilesLeft, tilesMiddle, tilesRight;
 
@@ -201,10 +202,8 @@ class LevelSelector extends JFrame implements ActionListener {
      */
     private void setUpJPanel(JPanel panel, boolean layoutType) {
         panel.setOpaque(false);
-        if (layoutType)
-            panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-        else
-            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        if (layoutType) panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        else panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
     }
 
     /**
@@ -214,8 +213,8 @@ class LevelSelector extends JFrame implements ActionListener {
      * @param button The JButton being set up
      */
     private void setUpMenuButton(JButton button) {
-        button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BUTTON_X_FACTOR),
-                (int) (BUTTON_Y_FACTOR * GUIUtilities.SIDE_LENGTH)));
+        button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BUTTON_X_FACTOR), (int) (BUTTON_Y_FACTOR *
+                                                                                                       GUIUtilities.SIDE_LENGTH)));
         GUIUtilities.stylizeButton(button, this);
     }
 
@@ -229,10 +228,10 @@ class LevelSelector extends JFrame implements ActionListener {
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
-        pane.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
-                (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
-        pane.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
-                (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
+        pane.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (
+                GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
+        pane.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (
+                GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         pane.setEditable(false);
         pane.setOpaque(false);
         pane.setFont(new Font("Times New Roman", Font.PLAIN, GUIUtilities.FONT_SIZE));
@@ -247,21 +246,21 @@ class LevelSelector extends JFrame implements ActionListener {
      * @param tileNumber 1 for left, 2 for middle, 3 for right.
      */
     private void setUpLevelDisplayButton(JButton button, int tileNumber) {
-        button.setIcon(new ImageIcon(
-                Resources.BOARD.getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
-                        (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), Image.SCALE_SMOOTH)));
+        button.setIcon(new ImageIcon(Resources.BOARD.getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH /
+                                                                                         BOARD_DISPLAY_SIZE), (int) (
+                GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), Image.SCALE_SMOOTH)));
         button.setOpaque(false);
         button.setFocusPainted(false);
         button.setBorder(DEFAULT);
         button.setContentAreaFilled(false);
         button.setLayout(new GridLayout(5, 5));
-        button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
-                (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
+        button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (
+                GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         button.addActionListener(this);
-        button.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
-                (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
-        button.setMinimumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE),
-                (int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
+        button.setPreferredSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (
+                GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
+        button.setMinimumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), (int) (
+                GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE)));
         for (int y = 0; y < Board.SIZE; y++)
             for (int x = 0; x < Board.SIZE; x++)
                 switch (tileNumber) {
@@ -302,37 +301,36 @@ class LevelSelector extends JFrame implements ActionListener {
                 levelLabelMiddle.setText(levelList.get(pageNumber * 3 - 2).getName());
                 levelLabelRight.setText(levelList.get(pageNumber * 3 - 1).getName());
             }
-        } else
-            switch (levelList.size() % 3) {
-                case 1:
-                    updateLevelPreview(tilesLeft, levelList.get(pageNumber * 3 - 3));
-                    updateLevelPreview(tilesMiddle, new Board("Empty"));
-                    updateLevelPreview(tilesRight, new Board("Empty"));
-                    if (!custom) {
-                        levelLabelLeft.setText("Level " + levelList.get(pageNumber * 3 - 3).getName());
-                    } else {
-                        levelLabelLeft.setText(levelList.get(pageNumber * 3 - 3).getName());
-                    }
-                    btnMiddleLevel.setEnabled(false);
-                    btnRightLevel.setEnabled(false);
-                    levelLabelMiddle.setText("Empty");
-                    levelLabelRight.setText("Empty");
-                    break;
-                case 2:
-                    updateLevelPreview(tilesLeft, levelList.get(pageNumber * 3 - 3));
-                    updateLevelPreview(tilesMiddle, levelList.get(pageNumber * 3 - 2));
-                    updateLevelPreview(tilesRight, new Board("Empty"));
-                    if (!custom) {
-                        levelLabelLeft.setText("Level " + levelList.get(pageNumber * 3 - 3).getName());
-                        levelLabelMiddle.setText("Level " + levelList.get(pageNumber * 3 - 2).getName());
-                    } else {
-                        levelLabelLeft.setText(levelList.get(pageNumber * 3 - 3).getName());
-                        levelLabelMiddle.setText(levelList.get(pageNumber * 3 - 2).getName());
-                    }
-                    btnRightLevel.setEnabled(false);
-                    levelLabelRight.setText("Empty");
-                    break;
-            }
+        } else switch (levelList.size() % 3) {
+            case 1:
+                updateLevelPreview(tilesLeft, levelList.get(pageNumber * 3 - 3));
+                updateLevelPreview(tilesMiddle, new Board("Empty"));
+                updateLevelPreview(tilesRight, new Board("Empty"));
+                if (!custom) {
+                    levelLabelLeft.setText("Level " + levelList.get(pageNumber * 3 - 3).getName());
+                } else {
+                    levelLabelLeft.setText(levelList.get(pageNumber * 3 - 3).getName());
+                }
+                btnMiddleLevel.setEnabled(false);
+                btnRightLevel.setEnabled(false);
+                levelLabelMiddle.setText("Empty");
+                levelLabelRight.setText("Empty");
+                break;
+            case 2:
+                updateLevelPreview(tilesLeft, levelList.get(pageNumber * 3 - 3));
+                updateLevelPreview(tilesMiddle, levelList.get(pageNumber * 3 - 2));
+                updateLevelPreview(tilesRight, new Board("Empty"));
+                if (!custom) {
+                    levelLabelLeft.setText("Level " + levelList.get(pageNumber * 3 - 3).getName());
+                    levelLabelMiddle.setText("Level " + levelList.get(pageNumber * 3 - 2).getName());
+                } else {
+                    levelLabelLeft.setText(levelList.get(pageNumber * 3 - 3).getName());
+                    levelLabelMiddle.setText(levelList.get(pageNumber * 3 - 2).getName());
+                }
+                btnRightLevel.setEnabled(false);
+                levelLabelRight.setText("Empty");
+                break;
+        }
         this.revalidate();
         this.repaint();
     }
@@ -349,48 +347,47 @@ class LevelSelector extends JFrame implements ActionListener {
                 Piece piece = board.getPiece(x, y);
                 if (piece != null) {
                     if (piece instanceof Mushroom) {
-                        tiles[x][y].setIcon(new ImageIcon(Resources.MUSHROOM.getImage().getScaledInstance(
-                                (int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
-                                (int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR), Image.SCALE_SMOOTH)));
+                        tiles[x][y].setIcon(new ImageIcon(Resources.MUSHROOM.getImage().getScaledInstance((int) (
+                                GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR), (int) (GUIUtilities.SIDE_LENGTH *
+                                                                                   X_SCALE_FACTOR),
+                                Image.SCALE_SMOOTH)));
                         tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                     } else if (piece instanceof Rabbit) {
-                        tiles[x][y].setIcon(
-                                new ImageIcon((Objects.requireNonNull(Resources.getImageIconByName("RABBIT_" + ((Rabbit) (piece)).getColour())))
-                                        .getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
-                                                (int) GUIUtilities.SIDE_LENGTH / Y_SCALE_FACTOR, Image.SCALE_SMOOTH)));
+                        tiles[x][y].setIcon(new ImageIcon((Objects.requireNonNull(Resources.getImageIconByName(
+                                "RABBIT_" + ((Rabbit) (piece)).getColour()))).getImage().getScaledInstance((int) (
+                                        GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
+                                (int) GUIUtilities.SIDE_LENGTH / Y_SCALE_FACTOR, Image.SCALE_SMOOTH)));
                         tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                     } else {
                         tiles[x][y].setIcon(new ImageIcon((Objects.requireNonNull(Resources.getImageIconByName(
-                                "FOX_" + ((Fox) (piece)).getFoxType() + "_" + ((Fox) (piece)).getDirection())))
-                                .getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR),
-                                        (int) (GUIUtilities.SIDE_LENGTH / Y_SCALE_FACTOR),
-                                        Image.SCALE_SMOOTH)));
+                                "FOX_" + ((Fox) (piece)).getFoxType() + "_" +
+                                ((Fox) (piece)).getDirection()))).getImage().getScaledInstance((int) (
+                                GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR), (int) (GUIUtilities.SIDE_LENGTH /
+                                                                                   Y_SCALE_FACTOR),
+                                Image.SCALE_SMOOTH)));
                         tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
-                        if (((Fox) (piece)).getFoxType() == FoxType.HEAD)
-                            switch (((Fox) (piece)).getDirection()) {
-                                case LEFT:
-                                    tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
-                                    break;
-                                case RIGHT:
-                                    tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        else
-                            switch (((Fox) (piece)).getDirection()) {
-                                case LEFT:
-                                    tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
-                                    break;
-                                case RIGHT:
-                                    tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
-                                    break;
-                                default:
-                                    break;
-                            }
+                        if (((Fox) (piece)).getFoxType() == FoxType.HEAD) switch (((Fox) (piece)).getDirection()) {
+                            case LEFT:
+                                tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
+                                break;
+                            case RIGHT:
+                                tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
+                                break;
+                            default:
+                                break;
+                        }
+                        else switch (((Fox) (piece)).getDirection()) {
+                            case LEFT:
+                                tiles[x][y].setHorizontalAlignment(SwingConstants.LEFT);
+                                break;
+                            case RIGHT:
+                                tiles[x][y].setHorizontalAlignment(SwingConstants.RIGHT);
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                } else
-                    tiles[x][y].setIcon(null);
+                } else tiles[x][y].setIcon(null);
             }
     }
 
@@ -423,8 +420,7 @@ class LevelSelector extends JFrame implements ActionListener {
      */
     private void determineLastPage(List<Board> levelList) {
         lastPage = levelList.size() / 3;
-        if (levelList.size() % 3 != 0)
-            lastPage++;
+        if (levelList.size() % 3 != 0) lastPage++;
     }
 
     /**
@@ -438,22 +434,16 @@ class LevelSelector extends JFrame implements ActionListener {
             this.dispose();
             if (btnLeftLevel.getBorder().equals(GUIUtilities.SELECTED_BORDER)) {
                 int level = (pageNumber * 3) - 2;
-                if (!custom)
-                    SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
-                else
-                    SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 3), -1));
+                if (!custom) SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
+                else SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 3), -1));
             } else if (btnMiddleLevel.getBorder().equals(GUIUtilities.SELECTED_BORDER)) {
                 int level = (pageNumber * 3) - 1;
-                if (!custom)
-                    SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
-                else
-                    SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 2), -1));
+                if (!custom) SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
+                else SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 2), -1));
             } else {
                 int level = (pageNumber * 3);
-                if (!custom)
-                    SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
-                else
-                    SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 1), -1));
+                if (!custom) SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
+                else SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 1), -1));
             }
         } else if (e.getSource() == btnMainMenu) {
             this.dispose();
@@ -468,8 +458,7 @@ class LevelSelector extends JFrame implements ActionListener {
             if (custom) {
                 updateView(allCustomLevels);
                 btnDeleteLevel.setEnabled(false);
-            } else
-                updateView(allDefaultLevels);
+            } else updateView(allDefaultLevels);
         } else if (e.getSource() == btnLastPage) {
             pageNumber--;
             btnNextPage.setEnabled(true);
@@ -478,13 +467,11 @@ class LevelSelector extends JFrame implements ActionListener {
             if (custom) {
                 updateView(allCustomLevels);
                 btnDeleteLevel.setEnabled(false);
-            } else
-                updateView(allDefaultLevels);
+            } else updateView(allDefaultLevels);
         } else if (e.getSource() == btnCustomLevels) {
             if (allCustomLevels.isEmpty()) {
-                GUIUtilities.displayMessageDialog(this,
-                        "Could not locate any custom levels.\nTry making some in the level builder!",
-                        "No custom levels found");
+                GUIUtilities.displayMessageDialog(this, "Could not locate any custom levels.\nTry making some in the " +
+                                                        "level builder!", "No custom levels found");
             } else {
                 pageNumber = 1;
                 if (custom) {
@@ -505,14 +492,15 @@ class LevelSelector extends JFrame implements ActionListener {
                 btnLastPage.setEnabled(false);
                 btnStartLevel.setEnabled(false);
             }
-        } else if (e.getSource() == btnDeleteLevel && GUIUtilities.displayOptionDialog(this, "Are you sure you want to delete this level?\nThis cannot be undone.", "Delete Level",
-                new String[]{"Yes", "No"}) == 0) {
+        } else if (e.getSource() == btnDeleteLevel &&
+                   GUIUtilities.displayOptionDialog(this, "Are you sure you want to delete this level?\nThis cannot " +
+                                                          "be undone.", "Delete Level", new String[]{"Yes", "No"}) ==
+                   0) {
             if (btnLeftLevel.getBorder().equals(GUIUtilities.SELECTED_BORDER))
                 Resources.removeUserLevel(levelLabelLeft.getText());
             else if (btnMiddleLevel.getBorder().equals(GUIUtilities.SELECTED_BORDER))
                 Resources.removeUserLevel(levelLabelMiddle.getText());
-            else
-                Resources.removeUserLevel(levelLabelRight.getText());
+            else Resources.removeUserLevel(levelLabelRight.getText());
             allCustomLevels = Resources.getAllUserBoards();
             determineLastPage(allCustomLevels);
             pageNumber = 1;

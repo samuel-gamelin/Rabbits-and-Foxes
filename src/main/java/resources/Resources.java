@@ -26,6 +26,7 @@ import java.util.Objects;
  * @version 4.0
  */
 public final class Resources {
+
     /**
      * A String constant representing the key value for user levels in the
      * LevelData.json file.
@@ -46,7 +47,9 @@ public final class Resources {
     /**
      * A constant representing the path of the customLevelData.json file.
      */
-    private static final String CUSTOM_LEVEL_DATA_PATH = System.getProperty("user.home") + File.separator + ".Rabbits and Foxes!" + File.separator + "CustomLevelData.json";
+    private static final String CUSTOM_LEVEL_DATA_PATH =
+            System.getProperty("user.home") + File.separator + ".Rabbits and Foxes!" + File.separator +
+            "CustomLevelData.json";
 
     /**
      * The Logger object used for logging.
@@ -179,9 +182,9 @@ public final class Resources {
      * @return A scaled version of the icon
      */
     private static ImageIcon loadIcon(String path, double xScale, double yScale) {
-        return new ImageIcon(new ImageIcon(getFileURL(path)).getImage().getScaledInstance(
-                (int) (xScale * GUIUtilities.SIDE_LENGTH / Board.SIZE),
-                (int) (yScale * GUIUtilities.SIDE_LENGTH / Board.SIZE), Image.SCALE_SMOOTH));
+        return new ImageIcon(new ImageIcon(getFileURL(path)).getImage().getScaledInstance((int) (
+                xScale * GUIUtilities.SIDE_LENGTH / Board.SIZE), (int) (yScale * GUIUtilities.SIDE_LENGTH /
+                                                                        Board.SIZE), Image.SCALE_SMOOTH));
     }
 
     /**
@@ -227,8 +230,7 @@ public final class Resources {
      */
     private static int getNumberOfLevels() {
         try {
-            return Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS)
-                    .getAsJsonArray().size();
+            return Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS).getAsJsonArray().size();
         } catch (Exception e) {
             LOGGER.error("Unable to obtain total number of levels from LevelData.json file", e);
             return -1;
@@ -262,9 +264,8 @@ public final class Resources {
      */
     public static JsonObject loadJsonObjectFromPath(String path, boolean isAbsolutePath) {
         if (!isAbsolutePath) {
-            try (InputStreamReader inputStreamReader = new InputStreamReader(
-                    Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream(path)),
-                    Charset.defaultCharset())) {
+            try (InputStreamReader inputStreamReader =
+                         new InputStreamReader(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream(path)), Charset.defaultCharset())) {
                 JsonObject temp = JsonParser.parseReader(inputStreamReader).getAsJsonObject();
                 inputStreamReader.close();
                 return temp;
@@ -272,8 +273,8 @@ public final class Resources {
                 LOGGER.error("Could not load the file at " + path, e);
             }
         } else {
-            try (BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(new FileInputStream(path), Charset.defaultCharset()))) {
+            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(path),
+                    Charset.defaultCharset()))) {
                 return JsonParser.parseReader(bufferedReader).getAsJsonObject();
             } catch (IOException e) {
                 LOGGER.error("Could not load the file at " + path, e);
@@ -292,8 +293,8 @@ public final class Resources {
      */
     public static Board getDefaultBoardByLevel(int level) {
         try {
-            for (JsonElement element : Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false))
-                    .get(DEFAULT_LEVELS).getAsJsonArray()) {
+            for (JsonElement element :
+                    Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS).getAsJsonArray()) {
                 if (element.getAsJsonObject().get("name").getAsInt() == level) {
                     return Board.createBoard(String.valueOf(level),
                             element.getAsJsonObject().get("board").getAsString());
@@ -315,10 +316,7 @@ public final class Resources {
         List<Board> boardList = new ArrayList<>();
 
         try {
-            Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS).getAsJsonArray()
-                    .forEach(element -> boardList
-                            .add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(),
-                                    element.getAsJsonObject().get("board").getAsString())));
+            Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS).getAsJsonArray().forEach(element -> boardList.add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(), element.getAsJsonObject().get("board").getAsString())));
         } catch (Exception e) {
             LOGGER.error("Unable to obtain all default levels from the LevelData.json file");
             return new ArrayList<>();
@@ -336,10 +334,7 @@ public final class Resources {
         List<Board> boardList = new ArrayList<>();
 
         try {
-            Objects.requireNonNull(loadJsonObjectFromPath(CUSTOM_LEVEL_DATA_PATH, true)).get(USER_LEVELS).getAsJsonArray()
-                    .forEach(element -> boardList
-                            .add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(),
-                                    element.getAsJsonObject().get("board").getAsString())));
+            Objects.requireNonNull(loadJsonObjectFromPath(CUSTOM_LEVEL_DATA_PATH, true)).get(USER_LEVELS).getAsJsonArray().forEach(element -> boardList.add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(), element.getAsJsonObject().get("board").getAsString())));
         } catch (Exception e) {
             LOGGER.error("Unable to obtain all user levels from the customLevelData.json file");
             return new ArrayList<>();

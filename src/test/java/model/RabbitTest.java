@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author John Breton
  */
 class RabbitTest {
+
     private Rabbit rabbitBrown;
     private Rabbit rabbitWhite;
     private Board board;

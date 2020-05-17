@@ -23,6 +23,7 @@ import java.awt.event.WindowEvent;
  * @version 4.0
  */
 public final class GUIUtilities {
+
     /**
      * An empty border.
      */
@@ -53,10 +54,10 @@ public final class GUIUtilities {
      * which is greater), which will be used in calculations to determine
      * appropriate scaling of icons and GUI elements.
      */
-    public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() > Toolkit
-            .getDefaultToolkit().getScreenSize().getHeight()
-            ? (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getHeight())
-            : (0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+    public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() >
+                                             Toolkit.getDefaultToolkit().getScreenSize().getHeight() ? (0.8 *
+                                                                                                        Toolkit.getDefaultToolkit().getScreenSize().getHeight()) : (
+            0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
     /**
      * Font size, as determined by display dimensions.
@@ -89,8 +90,10 @@ public final class GUIUtilities {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
-                if (GUIUtilities.displayOptionDialog(frame, "Are you sure you want to exit?", "Exit Rabbits and Foxes!",
-                        new String[]{"Yes", "No"}) == 0) {
+                if (GUIUtilities.displayOptionDialog(frame, "Are you sure you want to exit?", "Exit Rabbits and " +
+                                                                                              "Foxes!", new String[]{
+                                                                                                      "Yes", "No"}) ==
+                    0) {
                     System.exit(0);
                 }
             }
@@ -104,8 +107,7 @@ public final class GUIUtilities {
     public static void applyDefaults() {
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                | UnsupportedLookAndFeelException e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             Resources.LOGGER.error("Could not set the default look and feel", e);
         }
         UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));

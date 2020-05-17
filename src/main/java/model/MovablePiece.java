@@ -11,6 +11,7 @@ import java.util.List;
  * @version 4.0
  */
 public interface MovablePiece {
+
     /**
      * Moves the piece according to the specified move on the specified board.
      *

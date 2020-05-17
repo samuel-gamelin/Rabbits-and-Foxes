@@ -1,5 +1,7 @@
 package model;
 
+import lombok.Getter;
+
 /**
  * This abstract class provides a high-level prototype for a piece.
  *
@@ -8,6 +10,7 @@ package model;
  * @version 4.0
  */
 public abstract class Piece {
+
     /**
      * An enumeration representing the piece's type.
      */
@@ -15,6 +18,7 @@ public abstract class Piece {
         FOX, MUSHROOM, RABBIT
     }
 
+    @Getter
     private final PieceType pieceType;
 
     /**
@@ -24,13 +28,6 @@ public abstract class Piece {
      */
     Piece(PieceType pieceType) {
         this.pieceType = pieceType;
-    }
-
-    /**
-     * @return This piece's type, as a PieceType
-     */
-    public PieceType getPieceType() {
-        return pieceType;
     }
 
     /**

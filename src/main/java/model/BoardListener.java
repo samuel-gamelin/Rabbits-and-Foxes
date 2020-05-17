@@ -8,6 +8,7 @@ package model;
  */
 @FunctionalInterface
 public interface BoardListener {
+
     /**
      * Called when the Board changes. Updates the necessary views accordingly.
      */

@@ -1,5 +1,7 @@
 package controller;
 
+import lombok.Getter;
+import lombok.Setter;
 import model.Board;
 import model.MovablePiece;
 import model.Mushroom;
@@ -26,6 +28,7 @@ import java.util.List;
  * @version 4.0
  */
 public class GameController {
+
     /**
      * The board that this controller is currently maintaining.
      */
@@ -34,11 +37,13 @@ public class GameController {
     /**
      * Represents whether or not this controller represents a default level.
      */
+    @Getter
     private boolean isDefaultLevel;
 
     /**
      * Represents this controller's current level.
      */
+    @Getter
     private int currentLevel;
 
     /**
@@ -49,11 +54,15 @@ public class GameController {
     /**
      * A stack that maintains moves that can be undone.
      */
+    @Getter
+    @Setter
     private ArrayDeque<Move> undoMoveStack;
 
     /**
      * A stack that maintains moves that can be redone.
      */
+    @Getter
+    @Setter
     private ArrayDeque<Move> redoMoveStack;
 
     /**
@@ -142,8 +151,7 @@ public class GameController {
         if (isDefaultLevel) {
             board = Resources.getDefaultBoardByLevel(currentLevel);
         } else {
-            board = Resources.getAllUserBoards().stream().filter(b -> b.getName().equals(board.getName())).findFirst()
-                    .orElse(null);
+            board = Resources.getAllUserBoards().stream().filter(b -> b.getName().equals(board.getName())).findFirst().orElse(null);
 
             if (board == null) {
                 board = Resources.getDefaultBoardByLevel(1);
@@ -198,66 +206,11 @@ public class GameController {
     }
 
     /**
-     * Returns the undo move stack.
-     *
-     * @return The undo move stack
-     */
-    public ArrayDeque<Move> getUndoMoveStack() {
-        return undoMoveStack;
-    }
-
-    /**
-     * Returns the redo move stack.
-     *
-     * @return The redo move stack
-     */
-    public ArrayDeque<Move> getRedoMoveStack() {
-        return redoMoveStack;
-    }
-
-    /**
-     * Sets the redo move stack.
-     *
-     * @param undoMoveStack The stack to set
-     */
-    public void setUndoMoveStack(ArrayDeque<Move> undoMoveStack) {
-        this.undoMoveStack = undoMoveStack;
-    }
-
-    /**
-     * Sets the redo move stack.
-     *
-     * @param redoMoveStack The stack to set
-     */
-    public void setRedoMoveStack(ArrayDeque<Move> redoMoveStack) {
-        this.redoMoveStack = redoMoveStack;
-    }
-
-    /**
-     * Returns the current level of the game.
-     *
-     * @return The current level of the game. -1 if this controller maintains a
-     * board that is not part of the default levels.
-     */
-    public int getCurrentLevel() {
-        return currentLevel;
-    }
-
-    /**
      * Increment the current level of the game by 1.
      */
     public void incrementLevel() {
         if (isDefaultLevel) {
             currentLevel++;
         }
-    }
-
-    /**
-     * Returns whether or not this controller is associated with a default level.
-     *
-     * @return True if the level is a default level, false if it is a user level
-     */
-    public boolean isDefaultLevel() {
-        return isDefaultLevel;
     }
 }

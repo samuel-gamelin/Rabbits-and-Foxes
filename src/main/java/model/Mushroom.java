@@ -8,6 +8,7 @@ package model;
  * @version 4.0
  */
 public class Mushroom extends Piece {
+
     /**
      * Construct a new mushroom.
      */

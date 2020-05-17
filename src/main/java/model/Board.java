@@ -1,5 +1,7 @@
 package model;
 
+import lombok.Getter;
+import lombok.Setter;
 import util.Move;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import java.util.Objects;
  * @version 4.0
  */
 public class Board {
+
     /**
      * The size of any side for the board.
      */
@@ -32,6 +35,8 @@ public class Board {
     /**
      * The Board's name.
      */
+    @Getter
+    @Setter
     private String name;
 
     /**
@@ -105,9 +110,8 @@ public class Board {
      * the move was unsuccessful
      */
     public boolean move(Move move) {
-        if (move == null)
-            return false;
-        Piece piece = tiles[move.xStart][move.yStart].retrievePiece();
+        if (move == null) return false;
+        Piece piece = tiles[move.xStart][move.yStart].getPiece();
         if (piece instanceof MovablePiece && ((MovablePiece) piece).move(move, this)) {
             notifyListeners();
             return true;
@@ -125,7 +129,7 @@ public class Board {
      * returned if the colour of the tile is green.
      */
     public boolean tileType(int x, int y) {
-        return tiles[x][y].getColour() != Tile.TileColour.BROWN;
+        return tiles[x][y].getTileColour() != Tile.TileColour.BROWN;
     }
 
     /**
@@ -139,10 +143,10 @@ public class Board {
         int rabbitCount = 0;
         for (int x = 0; x < SIZE; x++) {
             for (int y = 0; y < SIZE; y++) {
-                Piece piece = tiles[x][y].retrievePiece();
+                Piece piece = tiles[x][y].getPiece();
                 if (piece != null && piece.getPieceType() == Piece.PieceType.RABBIT) {
                     rabbitCount++;
-                    if (tiles[x][y].getColour() != Tile.TileColour.BROWN) {
+                    if (tiles[x][y].getTileColour() != Tile.TileColour.BROWN) {
                         return false;
                     }
                 }
@@ -171,7 +175,7 @@ public class Board {
      * position is invalid
      */
     public Piece getPiece(int x, int y) {
-        return validatePosition(x, y) ? this.tiles[x][y].retrievePiece() : null;
+        return validatePosition(x, y) ? this.tiles[x][y].getPiece() : null;
     }
 
     /**
@@ -243,31 +247,13 @@ public class Board {
         List<Move> moves = new ArrayList<>();
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                Piece piece = tiles[i][j].retrievePiece();
+                Piece piece = tiles[i][j].getPiece();
                 if (piece instanceof MovablePiece) {
                     moves.addAll(((MovablePiece) piece).getPossibleMoves(this, i, j));
                 }
             }
         }
         return moves;
-    }
-
-    /**
-     * Returns this Board's name.
-     *
-     * @return This Board's name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the name of this Board to the specified name.
-     *
-     * @param name The name to set
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -292,8 +278,8 @@ public class Board {
                         board.tiles[i][j].placePiece(new Mushroom());
                     } else if (currBoard[5 * i + j].length() == 3) {
                         board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
-                    } else if (currBoard[5 * i + j].substring(1, 2)
-                            .equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
+                    } else if (currBoard[5 * i +
+                                         j].substring(1, 2).equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
                         Fox f = Fox.createFox(currBoard[5 * i + j]);
                         board.tiles[i][j].placePiece(f);
                         switch (f.getDirection()) {
