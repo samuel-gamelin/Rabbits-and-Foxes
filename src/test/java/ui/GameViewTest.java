@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameViewTest {
+
     private Board board;
     private GameView gameView;
 
@@ -34,7 +35,8 @@ class GameViewTest {
         JsonObject savedBoardObject = Resources.loadJsonObjectFromPath(new File("testSave.json").getAbsolutePath(),
                 true); // Reload the board as a JSON object
 
-        JsonObject jsonObject = new JsonObject(); // Create a mock JSON object that should be equal to the one that was just loaded
+        JsonObject jsonObject = new JsonObject(); // Create a mock JSON object that should be equal to the one that
+        // was just loaded
         jsonObject.addProperty("name", board.getName());
         jsonObject.addProperty("board", board.toString());
         jsonObject.addProperty("undoMoves", gson.toJson(new ArrayDeque<Move>()));

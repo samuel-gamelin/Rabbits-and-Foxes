@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Abdalla El Nakla
  * @author John Breton
  */
-
 class MushroomTest {
+
     private Mushroom mushroom;
 
     @BeforeEach
@@ -36,5 +36,4 @@ class MushroomTest {
     void testToString() {
         assertEquals("MU", mushroom.toString());
     }
-
 }

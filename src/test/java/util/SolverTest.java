@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author John Breton
  */
 class SolverTest {
+
     private Board easyBoard, normalBoard, hardBoard, unsolvableBoard;
     private Move noMove;
 

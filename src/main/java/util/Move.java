@@ -1,5 +1,7 @@
 package util;
 
+import lombok.AllArgsConstructor;
+
 /**
  * This class represents the move coordinates for the game. Since move will be
  * used in multiple classes its easier to represent the start and end points of
@@ -9,7 +11,9 @@ package util;
  * @author Samuel Gamelin
  * @version 4.0
  */
+@AllArgsConstructor
 public final class Move {
+
     public final int xStart;
     public final int yStart;
     public final int xEnd;
@@ -17,22 +21,6 @@ public final class Move {
 
     public enum MoveDirection {
         HORIZONTAL, VERTICAL, INVALID
-    }
-
-    /**
-     * Given the position of the object being moved and where it needs to be moved
-     * this will construct the object for the move class.
-     *
-     * @param xStart The integer value of the start x position.
-     * @param yStart The integer value of the start y position.
-     * @param xEnd   The integer value of the ending x position.
-     * @param yEnd   The integer value of the start y position.
-     */
-    public Move(int xStart, int yStart, int xEnd, int yEnd) {
-        this.xStart = xStart;
-        this.yStart = yStart;
-        this.xEnd = xEnd;
-        this.yEnd = yEnd;
     }
 
     /**

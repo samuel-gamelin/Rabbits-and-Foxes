@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Samuel Gamelin
  */
 class MoveTest {
+
     private Move move1;
     private Move move2;
 

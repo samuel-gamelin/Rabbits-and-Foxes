@@ -1,5 +1,7 @@
 package util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import model.Board;
 import model.Fox;
 import model.Piece;
@@ -14,14 +16,10 @@ import java.util.*;
  * @author Mohamed Radwan
  * @version 4.0
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Solver {
-    private static List<Node> lastHint;
 
-    /**
-     * A private constructor, preventing any instantiation of this class.
-     */
-    private Solver() {
-    }
+    private static List<Node> lastHint;
 
     /**
      * Determines the next best move, given a board object.

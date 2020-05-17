@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Samuel Gamelin
  */
 class TileTest {
+
     private Tile tile1;
     private Tile tile2;
 
@@ -42,22 +43,22 @@ class TileTest {
     void testRetrievePiece() {
         Rabbit rabbit1 = new Rabbit(Rabbit.RabbitColour.WHITE);
         tile1.placePiece(rabbit1);
-        assertEquals(rabbit1, tile1.retrievePiece());
-        assertNull(tile2.retrievePiece());
+        assertEquals(rabbit1, tile1.getPiece());
+        assertNull(tile2.getPiece());
     }
 
     @Test
     void testPlacePiece() {
         Rabbit rabbit1 = new Rabbit(Rabbit.RabbitColour.WHITE);
         tile1.placePiece(rabbit1);
-        assertEquals(rabbit1, tile1.retrievePiece());
-        assertNull(tile2.retrievePiece());
+        assertEquals(rabbit1, tile1.getPiece());
+        assertNull(tile2.getPiece());
     }
 
     @Test
     void testGetColour() {
-        assertEquals(Tile.TileColour.BROWN, tile1.getColour());
-        assertEquals(Tile.TileColour.GREEN, tile2.getColour());
+        assertEquals(Tile.TileColour.BROWN, tile1.getTileColour());
+        assertEquals(Tile.TileColour.GREEN, tile2.getTileColour());
     }
 
     @Test

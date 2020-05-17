@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class FoxTest {
 
     private Board board;
-
     private Fox fox1;
     private Fox fox2;
 
@@ -89,5 +88,4 @@ class FoxTest {
         assertEquals(fox2.toString(), "FHL0");
         assertEquals(fox2.getOtherHalf().toString(), "FTL0");
     }
-
 }
