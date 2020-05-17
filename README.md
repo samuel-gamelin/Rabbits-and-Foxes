@@ -6,8 +6,9 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 
 ##### Tools
 
-- IDE: [Eclipse](https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-java-developers), [IntelliJ IDEA](https://www.jetbrains.com/idea/download/)
+- IDE: [IntelliJ IDEA](https://www.jetbrains.com/idea/download/), [Eclipse](https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-java-developers)
 - JDK Version: [8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [Lombok](https://projectlombok.org)
 - Build Tool: [Maven](https://maven.apache.org/download.cgi)
 - UML: [Violet v0.16](http://www.horstmann.com/violet/violet-0.16c.jar)
 
@@ -15,18 +16,18 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 
 1. From your terminal, run:
    ```
-   git clone https://github.com/samuel-gamelin/SYSC-3110
+   git clone https://github.com/samuel-gamelin/Rabbits-and-Foxes
    ```
-   This will create a folder called SYSC-3110.
+   This will create a folder called Rabbits-and-Foxes.
 
 2. Eclipse
     1. Open the Eclipse IDE, and click File -> Import.
     2. Select Maven and then Existing Maven Projects, then click Next.
-    3. Click Browse and select the SYSC-3110 folder that was just created. Click Finish.
+    3. Click Browse and select the Rabbits-and-Foxes folder that was just created. Click Finish.
     
 3. IntelliJ IDEA
     1. Open the IntelliJ IDEA IDE, and click File -> Open.
-    2. Select the SYSC-3110 folder that was just created and click Open.
+    2. Select the Rabbits-and-Foxes folder that was just created and click Open.
 
 4. The entry point of the program is the main method of the MainMenu class under the ui package.
 5. The project can be built by invoking a `mvn clean install` command from the project's root directory. This will generate a
