@@ -50,17 +50,11 @@ public class Rabbit extends Piece implements MovablePiece {
     static Rabbit createRabbit(String str) {
         if (str == null || str.length() != 3) return null;
 
-        RabbitColour col;
-        switch (str.substring(2, 3)) {
-            case "G":
-                col = RabbitColour.GRAY;
-                break;
-            case "B":
-                col = RabbitColour.BROWN;
-                break;
-            default:
-                col = RabbitColour.WHITE;
-        }
+        RabbitColour col = switch (str.substring(2, 3)) {
+            case "G" -> RabbitColour.GRAY;
+            case "B" -> RabbitColour.BROWN;
+            default -> RabbitColour.WHITE;
+        };
         return new Rabbit(col);
     }
 

@@ -6,11 +6,11 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 
 ##### Tools
 
-- IDE: [IntelliJ IDEA](https://www.jetbrains.com/idea/download/), [Eclipse](https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-java-developers)
-- JDK Version: [8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [IntelliJ IDEA](https://www.jetbrains.com/idea/download/), [Eclipse](https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-java-developers)
+- [Java 14](https://www.oracle.com/java/technologies/javase-jdk14-downloads.html)
 - [Lombok](https://projectlombok.org)
-- Build Tool: [Maven](https://maven.apache.org/download.cgi)
-- UML: [Violet v0.16](http://www.horstmann.com/violet/violet-0.16c.jar)
+- [Maven](https://maven.apache.org/download.cgi)
+- [Violet v0.16](http://www.horstmann.com/violet/violet-0.16c.jar)
 
 ##### Getting Started
 
