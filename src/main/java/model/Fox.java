@@ -92,20 +92,12 @@ public class Fox extends Piece implements MovablePiece {
     static Fox createFox(String str) {
         if (str == null || str.length() != 4) return null;
 
-        Direction dir;
-        switch (str.substring(2, 3)) {
-            case "L":
-                dir = Direction.LEFT;
-                break;
-            case "R":
-                dir = Direction.RIGHT;
-                break;
-            case "U":
-                dir = Direction.UP;
-                break;
-            default:
-                dir = Direction.DOWN;
-        }
+        Direction dir = switch (str.substring(2, 3)) {
+            case "L" -> Direction.LEFT;
+            case "R" -> Direction.RIGHT;
+            case "U" -> Direction.UP;
+            default -> Direction.DOWN;
+        };
         return new Fox(dir, str.startsWith("1", 3));
     }
 
