@@ -6,7 +6,7 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 
 ##### Tools
 
-- [IntelliJ IDEA](https://www.jetbrains.com/idea/download/), [Eclipse](https://www.eclipse.org/downloads/packages/release/2019-09/r/eclipse-ide-java-developers)
+- [IntelliJ IDEA](https://www.jetbrains.com/idea/download/), [Eclipse](https://www.eclipse.org/downloads/packages/release)
 - [Java 14](https://www.oracle.com/java/technologies/javase-jdk14-downloads.html)
 - [Lombok](https://projectlombok.org)
 - [Maven](https://maven.apache.org/download.cgi)
