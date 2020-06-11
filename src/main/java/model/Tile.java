@@ -36,13 +36,6 @@ public class Tile {
     private Piece piece;
 
     /**
-     * An enumeration representing this Tile's colour (either brown or green).
-     */
-    public enum TileColour {
-        BROWN, GREEN
-    }
-
-    /**
      * A copy constructor for Tile.
      *
      * @param tile The tile to copy
@@ -85,5 +78,12 @@ public class Tile {
     @Override
     public String toString() {
         return piece != null ? piece.toString() : Board.EMPTY;
+    }
+
+    /**
+     * An enumeration representing this Tile's colour (either brown or green).
+     */
+    public enum TileColour {
+        BROWN, GREEN
     }
 }

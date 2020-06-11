@@ -31,24 +31,21 @@ public class Board {
      * A String used to represent an empty tile on the board.
      */
     static final String EMPTY = "X";
-
+    /**
+     * A 2D array of tiles used to manage all tiles on the board.
+     */
+    private final Tile[][] tiles;
+    /**
+     * A list of listeners that are updated on the status of this board whenever
+     * appropriate.
+     */
+    private final List<BoardListener> boardListeners;
     /**
      * The Board's name.
      */
     @Getter
     @Setter
     private String name;
-
-    /**
-     * A 2D array of tiles used to manage all tiles on the board.
-     */
-    private final Tile[][] tiles;
-
-    /**
-     * A list of listeners that are updated on the status of this board whenever
-     * appropriate.
-     */
-    private final List<BoardListener> boardListeners;
 
     /**
      * Construct an empty board.
@@ -77,6 +74,45 @@ public class Board {
             }
         }
         this.boardListeners = new ArrayList<>();
+    }
+
+    /**
+     * Create a board object and initializes the pieces specified by the passed
+     * String. This is a factory method.
+     *
+     * @param name           The name of the Board
+     * @param representation The String representation of the Board that is being
+     *                       created. Must be of length 25.
+     * @return The newly constructed Board based on the passed String.
+     */
+    public static Board createBoard(String name, String representation) {
+        String[] currBoard = representation.split("\\s+");
+        if (currBoard.length != 25) {
+            return null;
+        }
+        Board board = new Board(name);
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (!currBoard[5 * i + j].equals(EMPTY)) {
+                    if (currBoard[5 * i + j].length() == 2) {
+                        board.tiles[i][j].placePiece(new Mushroom());
+                    } else if (currBoard[5 * i + j].length() == 3) {
+                        board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
+                    } else if (currBoard[5 * i +
+                            j].substring(1, 2).equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
+                        Fox f = Fox.createFox(currBoard[5 * i + j]);
+                        board.tiles[i][j].placePiece(f);
+                        switch (f.getDirection()) {
+                            case DOWN -> board.tiles[i][j - 1].placePiece(f.getOtherHalf());
+                            case LEFT -> board.tiles[i + 1][j].placePiece(f.getOtherHalf());
+                            case RIGHT -> board.tiles[i - 1][j].placePiece(f.getOtherHalf());
+                            default -> board.tiles[i][j + 1].placePiece(f.getOtherHalf());
+                        }
+                    }
+                }
+            }
+        }
+        return board;
     }
 
     /**
@@ -254,45 +290,6 @@ public class Board {
             }
         }
         return moves;
-    }
-
-    /**
-     * Create a board object and initializes the pieces specified by the passed
-     * String. This is a factory method.
-     *
-     * @param name           The name of the Board
-     * @param representation The String representation of the Board that is being
-     *                       created. Must be of length 25.
-     * @return The newly constructed Board based on the passed String.
-     */
-    public static Board createBoard(String name, String representation) {
-        String[] currBoard = representation.split("\\s+");
-        if (currBoard.length != 25) {
-            return null;
-        }
-        Board board = new Board(name);
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (!currBoard[5 * i + j].equals(EMPTY)) {
-                    if (currBoard[5 * i + j].length() == 2) {
-                        board.tiles[i][j].placePiece(new Mushroom());
-                    } else if (currBoard[5 * i + j].length() == 3) {
-                        board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
-                    } else if (currBoard[5 * i +
-                                         j].substring(1, 2).equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
-                        Fox f = Fox.createFox(currBoard[5 * i + j]);
-                        board.tiles[i][j].placePiece(f);
-                        switch (f.getDirection()) {
-                            case DOWN -> board.tiles[i][j - 1].placePiece(f.getOtherHalf());
-                            case LEFT -> board.tiles[i + 1][j].placePiece(f.getOtherHalf());
-                            case RIGHT -> board.tiles[i - 1][j].placePiece(f.getOtherHalf());
-                            default -> board.tiles[i][j + 1].placePiece(f.getOtherHalf());
-                        }
-                    }
-                }
-            }
-        }
-        return board;
     }
 
     /**

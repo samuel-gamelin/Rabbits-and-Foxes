@@ -24,13 +24,6 @@ public class Rabbit extends Piece implements MovablePiece {
     private final RabbitColour colour;
 
     /**
-     * An enumeration of the colour for the rabbit
-     */
-    public enum RabbitColour {
-        BROWN, WHITE, GRAY
-    }
-
-    /**
      * Constructs a new Rabbit.
      *
      * @param colour the colour of the rabbit
@@ -83,9 +76,9 @@ public class Rabbit extends Piece implements MovablePiece {
      */
     private boolean validatePath(Move move, Board board) {
         if ((move.direction().equals(MoveDirection.INVALID) || Math.abs(move.xDistance()) == 1 ||
-             Math.abs(move.yDistance()) == 1) ||
-            (move.direction().equals(MoveDirection.HORIZONTAL) && !horizontalMove(move, board)) ||
-            (move.direction().equals(MoveDirection.VERTICAL) && !verticalMove(move, board))) return false;
+                Math.abs(move.yDistance()) == 1) ||
+                (move.direction().equals(MoveDirection.HORIZONTAL) && !horizontalMove(move, board)) ||
+                (move.direction().equals(MoveDirection.VERTICAL) && !verticalMove(move, board))) return false;
         return !board.isOccupied(move.xEnd, move.yEnd);
     }
 
@@ -146,5 +139,12 @@ public class Rabbit extends Piece implements MovablePiece {
     @Override
     public String toString() {
         return "RB" + this.getColour().toString().substring(0, 1);
+    }
+
+    /**
+     * An enumeration of the colour for the rabbit
+     */
+    public enum RabbitColour {
+        BROWN, WHITE, GRAY
     }
 }

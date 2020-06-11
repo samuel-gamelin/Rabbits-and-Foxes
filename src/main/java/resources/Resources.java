@@ -1,10 +1,8 @@
 package resources;
 
 import com.google.gson.*;
+import lombok.extern.log4j.Log4j;
 import model.Board;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import ui.GUIUtilities;
 
 import javax.sound.sampled.*;
@@ -25,151 +23,114 @@ import java.util.Objects;
  * @author John Breton
  * @version 4.0
  */
+@Log4j
 public final class Resources {
-
-    /**
-     * A String constant representing the key value for user levels in the
-     * LevelData.json file.
-     */
-    private static final String USER_LEVELS = "userLevels";
-
-    /**
-     * A String constant representing the key value for default levels in the
-     * LevelData.json file.
-     */
-    private static final String DEFAULT_LEVELS = "defaultLevels";
-
-    /**
-     * A constant representing the relative path of the LevelData.json file.
-     */
-    private static final String LEVEL_DATA_PATH = "levels/LevelData.json";
-
-    /**
-     * A constant representing the path of the customLevelData.json file.
-     */
-    private static final String CUSTOM_LEVEL_DATA_PATH =
-            System.getProperty("user.home") + File.separator + ".Rabbits and Foxes!" + File.separator +
-            "CustomLevelData.json";
-
-    /**
-     * The Logger object used for logging.
-     */
-    public static final Logger LOGGER = getLogger();
-
-    /**
-     * The total number of levels available.
-     */
-    public static final int NUMBER_OF_LEVELS = getNumberOfLevels();
 
     /**
      * A clip used for an invalid move sound.
      */
     public static final Clip INVALID_MOVE = loadClip(getFileURL("sounds/wrong.wav"));
-
     /**
      * A clip used for a "level completed" or "solved" sound.
      */
     public static final Clip SOLVED = loadClip(getFileURL("sounds/solved.wav"));
-
     /**
      * An icon used as the frame's window icon.
      */
     public static final ImageIcon WINDOW_ICON = loadIcon("images/rabbit-white.png", 4, 5);
-
     /**
      * An icon used to represent a brown rabbit.
      */
     public static final ImageIcon RABBIT_BROWN = loadIcon("images/rabbit-brown.png", 0.6, 0.75);
-
     /**
      * An icon used to represent a white rabbit.
      */
     public static final ImageIcon RABBIT_WHITE = loadIcon("images/rabbit-white.png", 0.6, 0.75);
-
     /**
      * An icon used to represent a gray rabbit.
      */
     public static final ImageIcon RABBIT_GRAY = loadIcon("images/rabbit-gray.png", 0.6, 0.75);
-
     /**
      * An icon used to represent a fox head facing up.
      */
     public static final ImageIcon FOX_HEAD_UP = loadIcon("images/fox-head-up.png", 0.75, 1);
-
     /**
      * An icon used to represent a fox head facing down.
      */
     public static final ImageIcon FOX_HEAD_DOWN = loadIcon("images/fox-head-down.png", 0.75, 1);
-
     /**
      * An icon used to represent a fox head facing left.
      */
     public static final ImageIcon FOX_HEAD_LEFT = loadIcon("images/fox-head-left.png", 1, 0.75);
-
     /**
      * An icon used to represent a fox head facing right.
      */
     public static final ImageIcon FOX_HEAD_RIGHT = loadIcon("images/fox-head-right.png", 1, 0.75);
-
     /**
      * An icon used to represent a fox tail facing up.
      */
     public static final ImageIcon FOX_TAIL_UP = loadIcon("images/fox-tail-up.png", 0.7, 1);
-
     /**
      * An icon used to represent a fox tail facing down.
      */
     public static final ImageIcon FOX_TAIL_DOWN = loadIcon("images/fox-tail-down.png", 0.75, 1);
-
     /**
      * An icon used to represent a fox tail facing left.
      */
     public static final ImageIcon FOX_TAIL_LEFT = loadIcon("images/fox-tail-left.png", 1, 0.7);
-
     /**
      * An icon used to represent a fox tail facing right.
      */
     public static final ImageIcon FOX_TAIL_RIGHT = loadIcon("images/fox-tail-right.png", 1.03, 0.7);
-
     /**
      * An icon used to represent a mushroom.
      */
     public static final ImageIcon MUSHROOM = loadIcon("images/mushroom.png", 0.75, 0.75);
-
     /**
      * An icon used to represent the main menu background.
      */
     public static final ImageIcon MAIN_MENU_BACKGROUND = loadIcon("images/mainmenu.png", 5, 5);
-
     /**
      * An icon used to represent the level selector background.
      */
     public static final ImageIcon LEVEL_SELECTOR_BACKGROUND = loadIcon("images/levelselectorbackground.png", 5, 5);
-
     /**
      * An icon used to represent the board.
      */
     public static final ImageIcon BOARD = loadIcon("images/board.png", 5, 5);
-
     /**
      * An icon used for the side panel in the level builder.
      */
     public static final ImageIcon SIDE_PANEL = loadIcon("images/sidepanel.png", 2, 5);
+    /**
+     * A String constant representing the key value for user levels in the
+     * LevelData.json file.
+     */
+    private static final String USER_LEVELS = "userLevels";
+    /**
+     * A String constant representing the key value for default levels in the
+     * LevelData.json file.
+     */
+    private static final String DEFAULT_LEVELS = "defaultLevels";
+    /**
+     * A constant representing the relative path of the LevelData.json file.
+     */
+    private static final String LEVEL_DATA_PATH = "levels/LevelData.json";
+    /**
+     * The total number of levels available.
+     */
+    public static final int NUMBER_OF_LEVELS = getNumberOfLevels();
+    /**
+     * A constant representing the path of the customLevelData.json file.
+     */
+    private static final String CUSTOM_LEVEL_DATA_PATH =
+            System.getProperty("user.home") + File.separator + ".Rabbits and Foxes!" + File.separator +
+                    "CustomLevelData.json";
 
     /**
      * Making the constructor private, preventing any instantiation of this class.
      */
     private Resources() {
-    }
-
-    /**
-     * Configures and returns the logger used for this application.
-     *
-     * @return The properly-configured logger object
-     */
-    private static Logger getLogger() {
-        PropertyConfigurator.configure(getFileURL("log4j.properties"));
-        return LogManager.getLogger(Resources.class);
     }
 
     /**
@@ -184,7 +145,7 @@ public final class Resources {
     private static ImageIcon loadIcon(String path, double xScale, double yScale) {
         return new ImageIcon(new ImageIcon(getFileURL(path)).getImage().getScaledInstance((int) (
                 xScale * GUIUtilities.SIDE_LENGTH / Board.SIZE), (int) (yScale * GUIUtilities.SIDE_LENGTH /
-                                                                        Board.SIZE), Image.SCALE_SMOOTH));
+                Board.SIZE), Image.SCALE_SMOOTH));
     }
 
     /**
@@ -217,7 +178,7 @@ public final class Resources {
             });
             return clip;
         } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-            LOGGER.error("Could not load audio resource at " + path, e);
+            log.error("Could not load audio resource at " + path, e);
         }
         return null;
     }
@@ -232,7 +193,7 @@ public final class Resources {
         try {
             return Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS).getAsJsonArray().size();
         } catch (Exception e) {
-            LOGGER.error("Unable to obtain total number of levels from LevelData.json file", e);
+            log.error("Unable to obtain total number of levels from LevelData.json file", e);
             return -1;
         }
     }
@@ -248,7 +209,7 @@ public final class Resources {
         try {
             return (ImageIcon) Resources.class.getDeclaredField(fieldName).get(Resources.class);
         } catch (IllegalAccessException | NoSuchFieldException e) {
-            Resources.LOGGER.error("Could not obtain the required field from the Resources class", e);
+            log.error("Could not obtain the required field from the Resources class", e);
         }
         return null;
     }
@@ -270,14 +231,14 @@ public final class Resources {
                 inputStreamReader.close();
                 return temp;
             } catch (IOException e) {
-                LOGGER.error("Could not load the file at " + path, e);
+                log.error("Could not load the file at " + path, e);
             }
         } else {
             try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(path),
                     Charset.defaultCharset()))) {
                 return JsonParser.parseReader(bufferedReader).getAsJsonObject();
             } catch (IOException e) {
-                LOGGER.error("Could not load the file at " + path, e);
+                log.error("Could not load the file at " + path, e);
             }
         }
         return null;
@@ -301,7 +262,7 @@ public final class Resources {
                 }
             }
         } catch (Exception e) {
-            LOGGER.error("Unable to obtain level from LevelData.json file for level " + level);
+            log.error("Unable to obtain level from LevelData.json file for level " + level);
         }
         return null;
     }
@@ -318,7 +279,7 @@ public final class Resources {
         try {
             Objects.requireNonNull(loadJsonObjectFromPath(LEVEL_DATA_PATH, false)).get(DEFAULT_LEVELS).getAsJsonArray().forEach(element -> boardList.add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(), element.getAsJsonObject().get("board").getAsString())));
         } catch (Exception e) {
-            LOGGER.error("Unable to obtain all default levels from the LevelData.json file");
+            log.error("Unable to obtain all default levels from the LevelData.json file");
             return new ArrayList<>();
         }
 
@@ -336,7 +297,7 @@ public final class Resources {
         try {
             Objects.requireNonNull(loadJsonObjectFromPath(CUSTOM_LEVEL_DATA_PATH, true)).get(USER_LEVELS).getAsJsonArray().forEach(element -> boardList.add(Board.createBoard(element.getAsJsonObject().get("name").getAsString(), element.getAsJsonObject().get("board").getAsString())));
         } catch (Exception e) {
-            LOGGER.error("Unable to obtain all user levels from the customLevelData.json file");
+            log.error("Unable to obtain all user levels from the customLevelData.json file");
             return new ArrayList<>();
         }
 
@@ -377,7 +338,7 @@ public final class Resources {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            Resources.LOGGER.error("Unable to save user-defined level to the customLevelData.json file", e);
+            log.error("Unable to save user-defined level to the customLevelData.json file", e);
             return false;
         }
     }
@@ -404,7 +365,7 @@ public final class Resources {
                         out.close();
                         return;
                     } catch (Exception e) {
-                        Resources.LOGGER.error("Unable to save user-defined level to the customLevelData.json file", e);
+                        log.error("Unable to save user-defined level to the customLevelData.json file", e);
                         return;
                     }
                 }

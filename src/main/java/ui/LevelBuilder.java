@@ -26,15 +26,21 @@ import java.awt.event.MouseListener;
 public class LevelBuilder extends JFrame implements ActionListener, MouseListener, BoardListener {
 
     /**
+     * Menu Items to be added to the JMenuBar
+     */
+    private final JButton menuReset, menuHelp, deletePiece, flipFox, menuMainScreen, saveBoard;
+    /**
+     *
+     */
+    private final JButton[][] buttons;
+    /**
      * Represents the Head of a vertical Fox in the up direction.
      */
     private JButton verticalFH;
-
     /**
      * Represents the Tail of a vertical Fox in the up direction.
      */
     private JButton verticalFT;
-
     /**
      * Represents the Head of a Horizontal Fox in the left direction.
      */
@@ -51,35 +57,19 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
      * Represents a gray Rabbit.
      */
     private JButton rabbitGray;
-
     /**
      * Represents a brown Rabbit.
      */
     private JButton rabbitBrown;
-
     /**
      * Represents a mushroom.
      */
     private JButton mushroom;
-
-    /**
-     * Menu Items to be added to the JMenuBar
-     */
-    private final JButton menuReset, menuHelp, deletePiece, flipFox, menuMainScreen, saveBoard;
-
-
     private ImageIcon currentIcon;
-
     /**
      * The Board that this view listens to.
      */
     private Board board;
-
-    /**
-     *
-     */
-    private final JButton[][] buttons;
-
     /**
      * Represents the number of foxes currently placed on the board.
      */
@@ -179,25 +169,25 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
         boolean currentTile = board.tileType(x, y);
 
         if (currentIcon == Resources.FOX_HEAD_UP && y + 1 < 5 && y + 1 > -1 && !board.isOccupied(x, y + 1) &&
-            currentTile && board.tileType(x, y + 1)) {
+                currentTile && board.tileType(x, y + 1)) {
             Fox fox = new Fox(Direction.UP, numberOfFoxs == 1);
             board.setPiece(fox, x, y);
             board.setPiece(fox.getOtherHalf(), x, y + 1);
             numberOfFoxs++;
         } else if (currentIcon == Resources.FOX_TAIL_UP && y - 1 < 5 && y - 1 > -1 && !board.isOccupied(x, y - 1) &&
-                   currentTile && board.tileType(x, y - 1)) {
+                currentTile && board.tileType(x, y - 1)) {
             Fox fox = new Fox(Direction.UP, numberOfFoxs == 1);
             board.setPiece(fox, x, y - 1);
             board.setPiece(fox.getOtherHalf(), x, y);
             numberOfFoxs++;
         } else if (currentIcon == Resources.FOX_HEAD_LEFT && x + 1 < 5 && x + 1 > -1 && !board.isOccupied(x + 1, y) &&
-                   currentTile && board.tileType(x + 1, y)) {
+                currentTile && board.tileType(x + 1, y)) {
             Fox fox = new Fox(Direction.LEFT, numberOfFoxs == 1);
             board.setPiece(fox, x, y);
             board.setPiece(fox.getOtherHalf(), x + 1, y);
             numberOfFoxs++;
         } else if (currentIcon == Resources.FOX_TAIL_LEFT && x - 1 < 5 && x - 1 > -1 && !board.isOccupied(x - 1, y) &&
-                   currentTile && board.tileType(x - 1, y)) {
+                currentTile && board.tileType(x - 1, y)) {
             Fox fox = new Fox(Direction.LEFT, numberOfFoxs == 1);
             board.setPiece(fox, x - 1, y);
             board.setPiece(fox.getOtherHalf(), x, y);
@@ -311,7 +301,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
     public void mouseEntered(MouseEvent e) {
         if (((JButton) e.getSource()).getIcon() == null) {
             if (currentIcon == Resources.RABBIT_WHITE || currentIcon == Resources.RABBIT_BROWN ||
-                currentIcon == Resources.RABBIT_GRAY || currentIcon == Resources.MUSHROOM) {
+                    currentIcon == Resources.RABBIT_GRAY || currentIcon == Resources.MUSHROOM) {
                 ((JButton) e.getSource()).setIcon(currentIcon);
                 return;
             }
@@ -321,19 +311,19 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
             boolean currentTile = board.tileType(x, y);
             if (currentTile) {
                 if (currentIcon == Resources.FOX_HEAD_UP && y + 1 < 5 && y + 1 > -1 && !board.isOccupied(x, y + 1) &&
-                    board.tileType(x, y + 1)) {
+                        board.tileType(x, y + 1)) {
                     ((JButton) e.getSource()).setIcon(currentIcon);
                     buttons[x][y + 1].setIcon(Resources.FOX_TAIL_UP);
                 } else if (currentIcon == Resources.FOX_TAIL_UP && y - 1 < 5 && y - 1 > -1 &&
-                           !board.isOccupied(x, y - 1) && board.tileType(x, y - 1)) {
+                        !board.isOccupied(x, y - 1) && board.tileType(x, y - 1)) {
                     ((JButton) e.getSource()).setIcon(currentIcon);
                     buttons[x][y - 1].setIcon(Resources.FOX_HEAD_UP);
                 } else if (currentIcon == Resources.FOX_HEAD_LEFT && x + 1 < 5 && x + 1 > -1 &&
-                           !board.isOccupied(x + 1, y) && board.tileType(x + 1, y)) {
+                        !board.isOccupied(x + 1, y) && board.tileType(x + 1, y)) {
                     ((JButton) e.getSource()).setIcon(currentIcon);
                     buttons[x + 1][y].setIcon(Resources.FOX_TAIL_LEFT);
                 } else if (currentIcon == Resources.FOX_TAIL_LEFT && x - 1 < 5 && x - 1 > -1 &&
-                           (!board.isOccupied(x - 1, y) && board.tileType(x - 1, y))) {
+                        (!board.isOccupied(x - 1, y) && board.tileType(x - 1, y))) {
                     ((JButton) e.getSource()).setIcon(currentIcon);
                     buttons[x - 1][y].setIcon(Resources.FOX_HEAD_LEFT);
                 }
@@ -355,13 +345,13 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
             if (currentIcon == Resources.FOX_HEAD_UP && y + 1 < 5 && y + 1 > -1 && (!board.isOccupied(x, y + 1))) {
                 buttons[x][y + 1].setIcon(null);
             } else if (currentIcon == Resources.FOX_TAIL_UP && y - 1 < 5 && y - 1 > -1 &&
-                       (!board.isOccupied(x, y - 1))) {
+                    (!board.isOccupied(x, y - 1))) {
                 buttons[x][y - 1].setIcon(null);
             } else if (currentIcon == Resources.FOX_HEAD_LEFT && x + 1 < 5 && x + 1 > -1 &&
-                       (!board.isOccupied(x + 1, y))) {
+                    (!board.isOccupied(x + 1, y))) {
                 buttons[x + 1][y].setIcon(null);
             } else if (currentIcon == Resources.FOX_TAIL_LEFT && x - 1 < 5 && x - 1 > -1 &&
-                       (!board.isOccupied(x - 1, y))) {
+                    (!board.isOccupied(x - 1, y))) {
                 buttons[x - 1][y].setIcon(null);
             }
         }
@@ -378,10 +368,11 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuMainScreen &&
-            GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?", "Return to Main " +
-                                                                                                    "Menu",
-                    new String[]{"Yes", "No"}) ==
-            0) {
+                GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?", "Return to " +
+                                "Main " +
+                                "Menu",
+                        new String[]{"Yes", "No"}) ==
+                        0) {
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == saveBoard) {
@@ -409,25 +400,25 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
         } else if (e.getSource() == menuHelp) {
             JPanel panel = new JPanel(new BorderLayout(0, 15));
             panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>" +
-                                 "This is the level builder for Rabbits and Foxes!" + "<br><br>" +
-                                 "Place Piece: Select a piece form the side menu by clicking on it. The piece can " +
-                                 "then be placed on the board by clicking on an empty location." +
-                                 "<br>" + "<br>" +
-                                 "Delete Piece: Select a piece from the board and click this button to delete the " +
-                                 "piece" +
-                                 "<br>" + "<br>" +
-                                 "Flip Fox: A fox can be flipped after placement. Select a fox from the board and " +
-                                 "click this button to flip it 180 degrees." +
-                                 "<br>" + "<br>" +
-                                 "Please note: In this game the user is restricted to 3 mushrooms, 2 foxes, and 3 " +
-                                 "different colour rabbits." +
-                                 "</p></body></html>"), BorderLayout.NORTH);
+                    "This is the level builder for Rabbits and Foxes!" + "<br><br>" +
+                    "Place Piece: Select a piece form the side menu by clicking on it. The piece can " +
+                    "then be placed on the board by clicking on an empty location." +
+                    "<br>" + "<br>" +
+                    "Delete Piece: Select a piece from the board and click this button to delete the " +
+                    "piece" +
+                    "<br>" + "<br>" +
+                    "Flip Fox: A fox can be flipped after placement. Select a fox from the board and " +
+                    "click this button to flip it 180 degrees." +
+                    "<br>" + "<br>" +
+                    "Please note: In this game the user is restricted to 3 mushrooms, 2 foxes, and 3 " +
+                    "different colour rabbits." +
+                    "</p></body></html>"), BorderLayout.NORTH);
             JOptionPane.showMessageDialog(this, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
         } else if ((e.getSource() == menuReset) &&
-                   (GUIUtilities.displayOptionDialog(this, "Are you sure you want to reset the level builder? (Your " +
-                                                           "progress will be lost)", "Reset Rabbits and Foxes!",
-                           new String[]{"Yes", "No"}) ==
-                    0)) {
+                (GUIUtilities.displayOptionDialog(this, "Are you sure you want to reset the level builder? (Your " +
+                                "progress will be lost)", "Reset Rabbits and Foxes!",
+                        new String[]{"Yes", "No"}) ==
+                        0)) {
             resetBoard();
         } else if (e.getSource() == deletePiece) {
             if (itemToBeModifiedX == -1 && itemToBeModifiedY == -1) {
@@ -451,22 +442,22 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
                     }
                     numberOfMushrooms--;
                 } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_UP ||
-                           buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_DOWN) {
+                        buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_DOWN) {
                     board.removePiece(itemToBeModifiedX, itemToBeModifiedY);
                     board.removePiece(itemToBeModifiedX, itemToBeModifiedY + 1);
                     foxRemoved();
                 } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_UP ||
-                           buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_DOWN) {
+                        buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_DOWN) {
                     board.removePiece(itemToBeModifiedX, itemToBeModifiedY);
                     board.removePiece(itemToBeModifiedX, itemToBeModifiedY - 1);
                     foxRemoved();
                 } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_LEFT ||
-                           buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_RIGHT) {
+                        buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_RIGHT) {
                     board.removePiece(itemToBeModifiedX, itemToBeModifiedY);
                     board.removePiece(itemToBeModifiedX + 1, itemToBeModifiedY);
                     foxRemoved();
                 } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_LEFT ||
-                           buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_RIGHT) {
+                        buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_RIGHT) {
                     board.removePiece(itemToBeModifiedX, itemToBeModifiedY);
                     board.removePiece(itemToBeModifiedX - 1, itemToBeModifiedY);
                     foxRemoved();

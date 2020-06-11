@@ -1,5 +1,6 @@
 package ui;
 
+import lombok.extern.log4j.Log4j;
 import model.*;
 import resources.Resources;
 
@@ -22,32 +23,8 @@ import java.awt.event.WindowEvent;
  * @author Mohamed Radwan
  * @version 4.0
  */
+@Log4j
 public final class GUIUtilities {
-
-    /**
-     * An empty border.
-     */
-    static final EmptyBorder BLANK_BORDER = new EmptyBorder(0, 0, 0, 0);
-
-    /**
-     * A selected border.
-     */
-    static final BevelBorder SELECTED_BORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
-
-    /**
-     * A border for the start of a hint.
-     */
-    static final BevelBorder HINT_BORDER_START = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
-
-    /**
-     * A border for the end of a hint.
-     */
-    static final BevelBorder HINT_BORDER_END = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
-
-    /**
-     * A border for the start of a hint.
-     */
-    static final BevelBorder POSSIBLE_POSITION_BORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE, Color.BLUE);
 
     /**
      * A percentage (80%) of the current display's height (or width, depending on
@@ -55,15 +32,33 @@ public final class GUIUtilities {
      * appropriate scaling of icons and GUI elements.
      */
     public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() >
-                                             Toolkit.getDefaultToolkit().getScreenSize().getHeight() ? (0.8 *
-                                                                                                        Toolkit.getDefaultToolkit().getScreenSize().getHeight()) : (
+            Toolkit.getDefaultToolkit().getScreenSize().getHeight() ? (0.8 *
+            Toolkit.getDefaultToolkit().getScreenSize().getHeight()) : (
             0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
-
     /**
      * Font size, as determined by display dimensions.
      */
     public static final int FONT_SIZE = (int) (SIDE_LENGTH / 25);
-
+    /**
+     * An empty border.
+     */
+    static final EmptyBorder BLANK_BORDER = new EmptyBorder(0, 0, 0, 0);
+    /**
+     * A selected border.
+     */
+    static final BevelBorder SELECTED_BORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
+    /**
+     * A border for the start of a hint.
+     */
+    static final BevelBorder HINT_BORDER_START = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
+    /**
+     * A border for the end of a hint.
+     */
+    static final BevelBorder HINT_BORDER_END = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
+    /**
+     * A border for the start of a hint.
+     */
+    static final BevelBorder POSSIBLE_POSITION_BORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE, Color.BLUE);
     /**
      * A file chooser used to pick files.
      */
@@ -91,9 +86,9 @@ public final class GUIUtilities {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 if (GUIUtilities.displayOptionDialog(frame, "Are you sure you want to exit?", "Exit Rabbits and " +
-                                                                                              "Foxes!", new String[]{
-                                                                                                      "Yes", "No"}) ==
-                    0) {
+                        "Foxes!", new String[]{
+                        "Yes", "No"}) ==
+                        0) {
                     System.exit(0);
                 }
             }
@@ -108,7 +103,7 @@ public final class GUIUtilities {
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            Resources.LOGGER.error("Could not set the default look and feel", e);
+            log.error("Could not set the default look and feel", e);
         }
         UIManager.getLookAndFeelDefaults().put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
         fc = new JFileChooser();

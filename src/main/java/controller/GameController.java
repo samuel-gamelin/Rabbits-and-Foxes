@@ -30,27 +30,23 @@ import java.util.List;
 public class GameController {
 
     /**
+     * A list used to hold information about the most recent click.
+     */
+    private final List<Integer> moveList;
+    /**
      * The board that this controller is currently maintaining.
      */
     private Board board;
-
     /**
      * Represents whether or not this controller represents a default level.
      */
     @Getter
     private boolean isDefaultLevel;
-
     /**
      * Represents this controller's current level.
      */
     @Getter
     private int currentLevel;
-
-    /**
-     * A list used to hold information about the most recent click.
-     */
-    private final List<Integer> moveList;
-
     /**
      * A stack that maintains moves that can be undone.
      */
@@ -64,13 +60,6 @@ public class GameController {
     @Getter
     @Setter
     private ArrayDeque<Move> redoMoveStack;
-
-    /**
-     * An enumeration representing the validity of a click from the user.
-     */
-    public enum ClickValidity {
-        VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
-    }
 
     /**
      * Constructs a controller based on the supplied board and level number. Should the level number be non-positive,
@@ -212,5 +201,12 @@ public class GameController {
         if (isDefaultLevel) {
             currentLevel++;
         }
+    }
+
+    /**
+     * An enumeration representing the validity of a click from the user.
+     */
+    public enum ClickValidity {
+        VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
     }
 }

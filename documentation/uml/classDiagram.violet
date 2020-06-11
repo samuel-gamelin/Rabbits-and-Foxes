@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_231" class="java.beans.XMLDecoder">
+<java version="14.0.1" class="java.beans.XMLDecoder">
  <object class="com.horstmann.violet.ClassDiagramGraph">
   <void method="addNode">
    <object class="com.horstmann.violet.ClassNode" id="ClassNode0">
@@ -604,7 +604,6 @@ BoardListener</string>
       <string>-&lt;u&gt;USER_LEVELS&lt;/u&gt;:String=&quot;userLevels&quot;
 -&lt;u&gt;DEFAULT_LEVELS&lt;/u&gt;:String=&quot;defaultLevels
 -&lt;u&gt;LEVEL_DATA_PATH&lt;/u&gt;:String=&quot;levels/LevelData.json&quot;
-+&lt;u&gt;LOGGER&lt;/u&gt;:Logger
 +&lt;u&gt;NUMBER_OF_LEVELS&lt;/u&gt;:int
 +&lt;u&gt;INVALID_MOVE&lt;/u&gt;:Clip
 +&lt;u&gt;SOLVED&lt;/u&gt;:Clip

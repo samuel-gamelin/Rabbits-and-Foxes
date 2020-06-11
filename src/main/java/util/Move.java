@@ -19,10 +19,6 @@ public final class Move {
     public final int xEnd;
     public final int yEnd;
 
-    public enum MoveDirection {
-        HORIZONTAL, VERTICAL, INVALID
-    }
-
     /**
      * This method is used to compute the direction of movement. Since each piece
      * has move restrictions this method will be used to initially determine if a
@@ -57,5 +53,9 @@ public final class Move {
      */
     public int yDistance() {
         return yEnd - yStart;
+    }
+
+    public enum MoveDirection {
+        HORIZONTAL, VERTICAL, INVALID
     }
 }
