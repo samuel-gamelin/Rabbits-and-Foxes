@@ -11,13 +11,6 @@ import lombok.Getter;
  */
 public abstract class Piece {
 
-    /**
-     * An enumeration representing the piece's type.
-     */
-    public enum PieceType {
-        FOX, MUSHROOM, RABBIT
-    }
-
     @Getter
     private final PieceType pieceType;
 
@@ -34,4 +27,11 @@ public abstract class Piece {
      * @return A short, two to four character string representing the piece.
      */
     public abstract String toString();
+
+    /**
+     * An enumeration representing the piece's type.
+     */
+    public enum PieceType {
+        FOX, MUSHROOM, RABBIT
+    }
 }

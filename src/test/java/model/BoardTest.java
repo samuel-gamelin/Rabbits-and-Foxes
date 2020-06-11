@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class BoardTest {
 
-    private Board board1;
     private final String TEST_BOARD_1 = "RBG MU X X X FHU1 FTU1 X X X X X RBB X X X X X X X X X X X X";
+    private Board board1;
 
     @BeforeEach
     void setUp() {
@@ -29,7 +29,7 @@ class BoardTest {
         assertNotNull(emptyBoard);
         assertEquals(emptyBoard, new Board(emptyBoard));
         assertNull(Board.createBoard("Anyboard", "This is a test of malformed strings being passed to the facotry " +
-                                                 "method."));
+                "method."));
         assertNotNull(board1);
     }
 

@@ -35,15 +35,15 @@ runnable jar file in the target directory.
 
 ##### Additional Tools
 
-- Contributions are made through GitHub, on this repository.
-- GitHub issues are used for task and ticket tracking.
+- Contributions are made through GitHub, on this repository
+- GitHub issues are used for task and ticket tracking
 
 ## Current Class Diagram
 
 <p style="text-align:right">
 <img src="documentation/uml/classDiagram.png" alt="Class Diagram">
 </p>
-Date: December 2, 2019
+Date: June 11, 2020
 
 ## Current Sequence Diagram
 
@@ -54,7 +54,7 @@ Date: December 2, 2019
 
 ## Known issues
 
-Currently there are no known issues.
+Currently, there are no known issues.
 
 > If you notice a bug, please add it to Issues tab. Make sure you include how to recreate the bug!
 
