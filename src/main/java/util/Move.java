@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
  *
  * @author Mohamed Radwan
  * @author Samuel Gamelin
- * @version 4.0
  */
 @AllArgsConstructor
 public final class Move {

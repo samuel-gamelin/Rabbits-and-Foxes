@@ -27,7 +27,6 @@ import java.util.ArrayDeque;
  * @author Dani Hashweh
  * @author Abdalla El Nakla
  * @author Mohamed Radwan
- * @version 4.0
  */
 @Log4j
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {

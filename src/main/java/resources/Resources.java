@@ -21,7 +21,6 @@ import java.util.Objects;
  *
  * @author Samuel Gamelin
  * @author John Breton
- * @version 4.0
  */
 @Log4j
 public final class Resources {

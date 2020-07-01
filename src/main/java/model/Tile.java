@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
  *
  * @author Dani Hashweh
  * @author Mohamed Radwan
- * @version 4.0
  */
 @EqualsAndHashCode
 @RequiredArgsConstructor

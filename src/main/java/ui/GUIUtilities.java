@@ -21,7 +21,6 @@ import java.awt.event.WindowEvent;
  * @author Dani Hashweh
  * @author John Breton
  * @author Mohamed Radwan
- * @version 4.0
  */
 @Log4j
 public final class GUIUtilities {

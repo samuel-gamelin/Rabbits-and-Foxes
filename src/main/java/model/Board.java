@@ -18,7 +18,6 @@ import java.util.Objects;
  * @author Mohamed Radwan
  * @author Abdalla El Nakla
  * @author Dani Hashweh
- * @version 4.0
  */
 public class Board {
 
