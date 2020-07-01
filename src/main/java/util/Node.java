@@ -13,7 +13,6 @@ import java.util.Set;
  *
  * @author Samuel Gamelin
  * @author Mohamed Radwan
- * @version 4.0
  */
 @EqualsAndHashCode
 @ToString

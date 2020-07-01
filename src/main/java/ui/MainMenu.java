@@ -26,7 +26,6 @@ import java.util.ArrayDeque;
  * @author Samuel Gamelin
  * @author Dani Hashweh
  * @author John Breton
- * @version 4.0
  */
 @Log4j
 public class MainMenu extends JFrame implements ActionListener {

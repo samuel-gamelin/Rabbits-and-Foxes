@@ -7,7 +7,6 @@ import lombok.Getter;
  *
  * @author Abdalla El Nakla
  * @author Samuel Gamelin
- * @version 4.0
  */
 public abstract class Piece {
 

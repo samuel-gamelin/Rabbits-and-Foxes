@@ -25,7 +25,6 @@ import java.util.List;
  * @author Dani Hashweh
  * @author Samuel Gamelin
  * @author Abdalla El Nakla
- * @version 4.0
  */
 public class GameController {
 

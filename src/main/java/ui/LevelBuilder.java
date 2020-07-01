@@ -21,7 +21,6 @@ import java.awt.event.MouseListener;
  *
  * @author Mohamed Radwan
  * @author Abdalla El Nakla
- * @version 4.0
  */
 public class LevelBuilder extends JFrame implements ActionListener, MouseListener, BoardListener {
 

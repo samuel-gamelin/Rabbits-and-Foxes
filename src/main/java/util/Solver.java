@@ -14,7 +14,6 @@ import java.util.*;
  *
  * @author Samuel Gamelin
  * @author Mohamed Radwan
- * @version 4.0
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Solver {

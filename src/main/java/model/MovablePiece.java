@@ -8,7 +8,6 @@ import java.util.List;
  * This interface models the behaviour that a movable piece should have.
  *
  * @author Samuel Gamelin
- * @version 4.0
  */
 public interface MovablePiece {
 
