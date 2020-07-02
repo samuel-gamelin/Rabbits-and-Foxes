@@ -15,8 +15,11 @@ import lombok.AllArgsConstructor;
 public final class Move {
 
     public final int xStart;
+
     public final int yStart;
+
     public final int xEnd;
+
     public final int yEnd;
 
     /**

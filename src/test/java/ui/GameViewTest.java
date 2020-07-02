@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class GameViewTest {
 
     private Board board;
+
     private GameView gameView;
 
     @BeforeEach

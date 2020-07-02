@@ -33,20 +33,24 @@ public class GameController {
      * A list used to hold information about the most recent click.
      */
     private final List<Integer> moveList;
+
     /**
      * The board that this controller is currently maintaining.
      */
     private Board board;
+
     /**
      * Represents whether or not this controller represents a default level.
      */
     @Getter
     private boolean isDefaultLevel;
+
     /**
      * Represents this controller's current level.
      */
     @Getter
     private int currentLevel;
+
     /**
      * A stack that maintains moves that can be undone.
      */

@@ -29,47 +29,59 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
      * Menu Items to be added to the JMenuBar
      */
     private final JButton menuReset, menuHelp, deletePiece, flipFox, menuMainScreen, saveBoard;
+
     /**
      *
      */
     private final JButton[][] buttons;
+
     /**
      * Represents the Head of a vertical Fox in the up direction.
      */
     private JButton verticalFH;
+
     /**
      * Represents the Tail of a vertical Fox in the up direction.
      */
     private JButton verticalFT;
+
     /**
      * Represents the Head of a Horizontal Fox in the left direction.
      */
     private JButton horizontalFH;
+
     /**
      * Represents the Tail of a Horizontal Fox in the left direction.
      */
     private JButton horizontalFT;
+
     /**
      * Represents a white Rabbit.
      */
     private JButton rabbitWhite;
+
     /**
      * Represents a gray Rabbit.
      */
     private JButton rabbitGray;
+
     /**
      * Represents a brown Rabbit.
      */
     private JButton rabbitBrown;
+
     /**
      * Represents a mushroom.
      */
     private JButton mushroom;
+
     private ImageIcon currentIcon;
+
     /**
      * The Board that this view listens to.
      */
     private Board board;
+
     /**
      * Represents the number of foxes currently placed on the board.
      */

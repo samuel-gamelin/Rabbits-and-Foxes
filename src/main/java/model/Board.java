@@ -31,15 +31,18 @@ public class Board {
      * A String used to represent an empty tile on the board.
      */
     static final String EMPTY = "X";
+
     /**
      * A 2D array of tiles used to manage all tiles on the board.
      */
     private final Tile[][] tiles;
+
     /**
      * A list of listeners that are updated on the status of this board whenever
      * appropriate.
      */
     private final List<BoardListener> boardListeners;
+
     /**
      * The Board's name.
      */

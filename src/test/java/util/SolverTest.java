@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SolverTest {
 
     private Board easyBoard, normalBoard, hardBoard, unsolvableBoard;
+
     private Move noMove;
 
     @BeforeEach
