@@ -32,16 +32,21 @@ import java.util.ArrayDeque;
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
 
     private final JButton menuReset, menuHelp, menuHint, menuUndo, menuRedo, menuMain, menuSaveButton, menuQuit;
+
     private final JButton[][] buttons;
+
     /**
      * The controller associated with this view.
      */
     private final GameController gameController;
+
     private JCheckBox showPossibleMovesBox;
+
     /**
      * The Board that this view listens to.
      */
     private Board board;
+
     /**
      * Represents the state of the game. True if the game is running, false
      * otherwise.

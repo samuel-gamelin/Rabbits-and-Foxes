@@ -15,7 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class RabbitTest {
 
     private Rabbit rabbitBrown;
+
     private Rabbit rabbitWhite;
+
     private Board board;
 
     @BeforeEach

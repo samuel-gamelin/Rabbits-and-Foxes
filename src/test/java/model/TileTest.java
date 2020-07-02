@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TileTest {
 
     private Tile tile1;
+
     private Tile tile2;
 
     @BeforeEach

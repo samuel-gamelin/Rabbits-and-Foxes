@@ -34,30 +34,37 @@ public final class GUIUtilities {
             Toolkit.getDefaultToolkit().getScreenSize().getHeight() ? (0.8 *
             Toolkit.getDefaultToolkit().getScreenSize().getHeight()) : (
             0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+
     /**
      * Font size, as determined by display dimensions.
      */
     public static final int FONT_SIZE = (int) (SIDE_LENGTH / 25);
+
     /**
      * An empty border.
      */
     static final EmptyBorder BLANK_BORDER = new EmptyBorder(0, 0, 0, 0);
+
     /**
      * A selected border.
      */
     static final BevelBorder SELECTED_BORDER = new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED);
+
     /**
      * A border for the start of a hint.
      */
     static final BevelBorder HINT_BORDER_START = new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW);
+
     /**
      * A border for the end of a hint.
      */
     static final BevelBorder HINT_BORDER_END = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN);
+
     /**
      * A border for the start of a hint.
      */
     static final BevelBorder POSSIBLE_POSITION_BORDER = new BevelBorder(BevelBorder.RAISED, Color.BLUE, Color.BLUE);
+
     /**
      * A file chooser used to pick files.
      */

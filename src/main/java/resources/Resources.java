@@ -29,96 +29,119 @@ public final class Resources {
      * A clip used for an invalid move sound.
      */
     public static final Clip INVALID_MOVE = loadClip(getFileURL("sounds/wrong.wav"));
+
     /**
      * A clip used for a "level completed" or "solved" sound.
      */
     public static final Clip SOLVED = loadClip(getFileURL("sounds/solved.wav"));
+
     /**
      * An icon used as the frame's window icon.
      */
     public static final ImageIcon WINDOW_ICON = loadIcon("images/rabbit-white.png", 4, 5);
+
     /**
      * An icon used to represent a brown rabbit.
      */
     public static final ImageIcon RABBIT_BROWN = loadIcon("images/rabbit-brown.png", 0.6, 0.75);
+
     /**
      * An icon used to represent a white rabbit.
      */
     public static final ImageIcon RABBIT_WHITE = loadIcon("images/rabbit-white.png", 0.6, 0.75);
+
     /**
      * An icon used to represent a gray rabbit.
      */
     public static final ImageIcon RABBIT_GRAY = loadIcon("images/rabbit-gray.png", 0.6, 0.75);
+
     /**
      * An icon used to represent a fox head facing up.
      */
     public static final ImageIcon FOX_HEAD_UP = loadIcon("images/fox-head-up.png", 0.75, 1);
+
     /**
      * An icon used to represent a fox head facing down.
      */
     public static final ImageIcon FOX_HEAD_DOWN = loadIcon("images/fox-head-down.png", 0.75, 1);
+
     /**
      * An icon used to represent a fox head facing left.
      */
     public static final ImageIcon FOX_HEAD_LEFT = loadIcon("images/fox-head-left.png", 1, 0.75);
+
     /**
      * An icon used to represent a fox head facing right.
      */
     public static final ImageIcon FOX_HEAD_RIGHT = loadIcon("images/fox-head-right.png", 1, 0.75);
+
     /**
      * An icon used to represent a fox tail facing up.
      */
     public static final ImageIcon FOX_TAIL_UP = loadIcon("images/fox-tail-up.png", 0.7, 1);
+
     /**
      * An icon used to represent a fox tail facing down.
      */
     public static final ImageIcon FOX_TAIL_DOWN = loadIcon("images/fox-tail-down.png", 0.75, 1);
+
     /**
      * An icon used to represent a fox tail facing left.
      */
     public static final ImageIcon FOX_TAIL_LEFT = loadIcon("images/fox-tail-left.png", 1, 0.7);
+
     /**
      * An icon used to represent a fox tail facing right.
      */
     public static final ImageIcon FOX_TAIL_RIGHT = loadIcon("images/fox-tail-right.png", 1.03, 0.7);
+
     /**
      * An icon used to represent a mushroom.
      */
     public static final ImageIcon MUSHROOM = loadIcon("images/mushroom.png", 0.75, 0.75);
+
     /**
      * An icon used to represent the main menu background.
      */
     public static final ImageIcon MAIN_MENU_BACKGROUND = loadIcon("images/mainmenu.png", 5, 5);
+
     /**
      * An icon used to represent the level selector background.
      */
     public static final ImageIcon LEVEL_SELECTOR_BACKGROUND = loadIcon("images/levelselectorbackground.png", 5, 5);
+
     /**
      * An icon used to represent the board.
      */
     public static final ImageIcon BOARD = loadIcon("images/board.png", 5, 5);
+
     /**
      * An icon used for the side panel in the level builder.
      */
     public static final ImageIcon SIDE_PANEL = loadIcon("images/sidepanel.png", 2, 5);
+
     /**
      * A String constant representing the key value for user levels in the
      * LevelData.json file.
      */
     private static final String USER_LEVELS = "userLevels";
+
     /**
      * A String constant representing the key value for default levels in the
      * LevelData.json file.
      */
     private static final String DEFAULT_LEVELS = "defaultLevels";
+
     /**
      * A constant representing the relative path of the LevelData.json file.
      */
     private static final String LEVEL_DATA_PATH = "levels/LevelData.json";
+
     /**
      * The total number of levels available.
      */
     public static final int NUMBER_OF_LEVELS = getNumberOfLevels();
+
     /**
      * A constant representing the path of the customLevelData.json file.
      */

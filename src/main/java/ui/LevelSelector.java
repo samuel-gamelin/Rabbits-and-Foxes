@@ -23,22 +23,32 @@ import java.util.Objects;
 class LevelSelector extends JFrame implements ActionListener {
 
     private static final int BUTTON_SPACING = (int) GUIUtilities.SIDE_LENGTH / 50;
+
     private static final double BUTTON_Y_FACTOR = 0.20;
+
     private static final int BUTTON_X_FACTOR = 3;
+
     private static final double BOARD_DISPLAY_SIZE = 3.4;
+
     private static final double X_SCALE_FACTOR = 0.05;
+
     private static final int Y_SCALE_FACTOR = 17;
 
     private static final BevelBorder DEFAULT = new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.BLACK);
 
     private final JButton btnStartLevel, btnMainMenu, btnCustomLevels, btnNextPage, btnLastPage, btnLeftLevel,
             btnMiddleLevel, btnRightLevel, btnDeleteLevel;
+
     private final JTextPane levelLabelLeft, levelLabelMiddle, levelLabelRight;
+
     private final JLabel[][] tilesLeft, tilesMiddle, tilesRight;
 
     private final List<Board> allDefaultLevels;
+
     private List<Board> allCustomLevels;
+
     private int pageNumber, lastPage;
+
     private boolean custom;
 
     /**

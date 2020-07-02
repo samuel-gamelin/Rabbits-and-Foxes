@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
 
     private final String TEST_BOARD_1 = "RBG MU X X X FHU1 FTU1 X X X X X RBB X X X X X X X X X X X X";
+
     private Board board1;
 
     @BeforeEach

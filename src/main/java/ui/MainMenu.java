@@ -31,10 +31,15 @@ import java.util.ArrayDeque;
 public class MainMenu extends JFrame implements ActionListener {
 
     private final JButton btnStart;
+
     private final JButton btnSelectLevel;
+
     private final JButton btnBuildLevel;
+
     private final JButton btnHelp;
+
     private final JButton btnLoadGame;
+
     private final JButton btnQuitGame;
 
     /**
