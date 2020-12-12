@@ -224,7 +224,7 @@ class LevelSelector extends JFrame implements ActionListener {
      */
     private void setUpMenuButton(JButton button) {
         button.setMaximumSize(new Dimension((int) (GUIUtilities.SIDE_LENGTH / BUTTON_X_FACTOR), (int) (BUTTON_Y_FACTOR *
-                GUIUtilities.SIDE_LENGTH)));
+                                                                                                       GUIUtilities.SIDE_LENGTH)));
         GUIUtilities.stylizeButton(button, this);
     }
 
@@ -257,7 +257,7 @@ class LevelSelector extends JFrame implements ActionListener {
      */
     private void setUpLevelDisplayButton(JButton button, int tileNumber) {
         button.setIcon(new ImageIcon(Resources.BOARD.getImage().getScaledInstance((int) (GUIUtilities.SIDE_LENGTH /
-                BOARD_DISPLAY_SIZE), (int) (
+                                                                                         BOARD_DISPLAY_SIZE), (int) (
                 GUIUtilities.SIDE_LENGTH / BOARD_DISPLAY_SIZE), Image.SCALE_SMOOTH)));
         button.setOpaque(false);
         button.setFocusPainted(false);
@@ -350,8 +350,8 @@ class LevelSelector extends JFrame implements ActionListener {
                 if (piece != null) {
                     if (piece instanceof Mushroom) {
                         tiles[x][y].setIcon(new ImageIcon(Resources.MUSHROOM.getImage().getScaledInstance((int) (
-                                        GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR), (int) (GUIUtilities.SIDE_LENGTH *
-                                        X_SCALE_FACTOR),
+                                GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR), (int) (GUIUtilities.SIDE_LENGTH *
+                                                                                   X_SCALE_FACTOR),
                                 Image.SCALE_SMOOTH)));
                         tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                     } else if (piece instanceof Rabbit) {
@@ -363,9 +363,9 @@ class LevelSelector extends JFrame implements ActionListener {
                     } else {
                         tiles[x][y].setIcon(new ImageIcon((Objects.requireNonNull(Resources.getImageIconByName(
                                 "FOX_" + ((Fox) (piece)).getFoxType() + "_" +
-                                        ((Fox) (piece)).getDirection()))).getImage().getScaledInstance((int) (
-                                        GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR), (int) (GUIUtilities.SIDE_LENGTH /
-                                        Y_SCALE_FACTOR),
+                                ((Fox) (piece)).getDirection()))).getImage().getScaledInstance((int) (
+                                GUIUtilities.SIDE_LENGTH * X_SCALE_FACTOR), (int) (GUIUtilities.SIDE_LENGTH /
+                                                                                   Y_SCALE_FACTOR),
                                 Image.SCALE_SMOOTH)));
                         tiles[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                         if (((Fox) (piece)).getFoxType() == FoxType.HEAD) switch (((Fox) (piece)).getDirection()) {
@@ -473,7 +473,7 @@ class LevelSelector extends JFrame implements ActionListener {
         } else if (e.getSource() == btnCustomLevels) {
             if (allCustomLevels.isEmpty()) {
                 GUIUtilities.displayMessageDialog(this, "Could not locate any custom levels.\nTry making some in the " +
-                        "level builder!", "No custom levels found");
+                                                        "level builder!", "No custom levels found");
             } else {
                 pageNumber = 1;
                 if (custom) {
@@ -494,10 +494,9 @@ class LevelSelector extends JFrame implements ActionListener {
                 btnLastPage.setEnabled(false);
                 btnStartLevel.setEnabled(false);
             }
-        } else if (e.getSource() == btnDeleteLevel &&
-                GUIUtilities.displayOptionDialog(this, "Are you sure you want to delete this level?\nThis cannot " +
-                        "be undone.", "Delete Level", new String[]{"Yes", "No"}) ==
-                        0) {
+        } else if (e.getSource() == btnDeleteLevel && GUIUtilities.displayOptionDialog(this,
+                "Are you sure you want to delete this level?\nThis cannot " +
+                "be undone.", "Delete Level", new String[]{"Yes", "No"}) == 0) {
             if (btnLeftLevel.getBorder().equals(GUIUtilities.SELECTED_BORDER))
                 Resources.removeUserLevel(levelLabelLeft.getText());
             else if (btnMiddleLevel.getBorder().equals(GUIUtilities.SELECTED_BORDER))

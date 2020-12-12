@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class MoveTest {
 
     private Move move1;
-
     private Move move2;
 
     @BeforeEach

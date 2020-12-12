@@ -24,8 +24,8 @@ class RabbitTest {
     void setUp() {
         rabbitBrown = new Rabbit(Rabbit.RabbitColour.BROWN);
         rabbitWhite = new Rabbit(Rabbit.RabbitColour.WHITE);
-        String TESTBOARD = "X MU X X X FHU1 FTU1 X X X X X X X X X X X X X X X X X X";
-        board = Board.createBoard("Anyboard", TESTBOARD);
+        String TEST_BOARD = "X MU X X X FHU1 FTU1 X X X X X X X X X X X X X X X X X X";
+        board = Board.createBoard("Anyboard", TEST_BOARD);
         assertNotNull(board);
         board.setPiece(rabbitWhite, 0, 0);
         board.setPiece(rabbitBrown, 2, 2);

@@ -101,7 +101,7 @@ public class Board {
                     } else if (currBoard[5 * i + j].length() == 3) {
                         board.tiles[i][j].placePiece(Rabbit.createRabbit(currBoard[5 * i + j]));
                     } else if (currBoard[5 * i +
-                            j].substring(1, 2).equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
+                                         j].substring(1, 2).equals(Fox.FoxType.HEAD.toString().substring(0, 1))) {
                         Fox f = Fox.createFox(currBoard[5 * i + j]);
                         board.tiles[i][j].placePiece(f);
                         switch (f.getDirection()) {

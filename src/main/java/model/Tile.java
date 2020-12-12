@@ -13,25 +13,23 @@ import lombok.RequiredArgsConstructor;
  * @author Mohamed Radwan
  */
 @EqualsAndHashCode
+@Getter
 @RequiredArgsConstructor
 public class Tile {
 
     /**
      * Represents the colour of the Tile.
      */
-    @Getter
     private final TileColour tileColour;
 
     /**
      * Represents if the Tile is occupied.
      */
-    @Getter
     private boolean occupied;
 
     /**
      * A Piece that occupies the Tile.
      */
-    @Getter
     private Piece piece;
 
     /**
@@ -58,7 +56,7 @@ public class Tile {
     }
 
     /**
-     * Places piece and sets occupied to true
+     * Places piece and sets occupied to true.
      *
      * @param piece The piece to place on the tile
      */
@@ -70,6 +68,10 @@ public class Tile {
     }
 
     /**
+     * Returns a two to four character string representation of this tile. If the
+     * tile has no piece, return the String used to represent an empty tile on a
+     * board
+     *
      * @return A two to four character string representation of this tile. If the
      * tile has no piece, return the String used to represent an empty tile on a
      * board.

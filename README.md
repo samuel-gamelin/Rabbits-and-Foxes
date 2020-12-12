@@ -6,7 +6,8 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 
 ##### Tools
 
-- [IntelliJ IDEA](https://www.jetbrains.com/idea/download/), [Eclipse](https://www.eclipse.org/downloads/packages/release)
+- [IntelliJ IDEA](https://www.jetbrains.com/idea/download/)
+  , [Eclipse](https://www.eclipse.org/downloads/packages/release)
 - [Java 14](https://www.oracle.com/java/technologies/javase-jdk14-downloads.html)
 - [Lombok](https://projectlombok.org)
 - [Maven](https://maven.apache.org/download.cgi)
@@ -24,14 +25,14 @@ This GitHub repository is used for the development of a game based on JumpIN' th
     1. Open the Eclipse IDE, and click File -> Import.
     2. Select Maven and then Existing Maven Projects, then click Next.
     3. Click Browse and select the Rabbits-and-Foxes folder that was just created. Click Finish.
-    
+
 3. IntelliJ IDEA
     1. Open the IntelliJ IDEA IDE, and click File -> Open.
     2. Select the Rabbits-and-Foxes folder that was just created and click Open.
 
 4. The entry point of the program is the main method of the MainMenu class under the ui package.
-5. The project can be built by invoking a `mvn clean install` command from the project's root directory. This will generate a
-runnable jar file in the target directory.
+5. The project can be built by invoking a `mvn clean install` command from the project's root directory. This will
+   generate a runnable jar file in the target directory.
 
 ##### Additional Tools
 
@@ -60,7 +61,8 @@ Currently, there are no known issues.
 
 ## Documentation
 
-Documentation for the project can be found [here](documentation/Rabbits%20and%20Foxes%20Documentation%20-%20User%20Manual%20and%20Design%20Decisions.pdf).
+Documentation for the project can be
+found [here](documentation/Rabbits%20and%20Foxes%20Documentation%20-%20User%20Manual%20and%20Design%20Decisions.pdf).
 
 ## The Team
 
@@ -72,7 +74,8 @@ Documentation for the project can be found [here](documentation/Rabbits%20and%20
 
 ## Credits for Graphical Resources
 
-The pictures and graphical resources used in this game were obtained [here](https://www.smartgames.eu/uk/one-player-games/jumpin).
+The pictures and graphical resources used in this game were
+obtained [here](https://www.smartgames.eu/uk/one-player-games/jumpin).
 
 ## License and Disclaimer
 

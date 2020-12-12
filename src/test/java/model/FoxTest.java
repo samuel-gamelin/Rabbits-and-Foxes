@@ -22,8 +22,8 @@ class FoxTest {
 
     @BeforeEach
     void setUp() {
-        String TESTBOARD = "RBG MU X X X FHU1 FTU1 X X X FHL0 X RBB X X FTL0 X X X X X X X X X";
-        board = Board.createBoard("Anyboard", TESTBOARD);
+        String TEST_BOARD = "RBG MU X X X FHU1 FTU1 X X X FHL0 X RBB X X FTL0 X X X X X X X X X";
+        board = Board.createBoard("Anyboard", TEST_BOARD);
         fox1 = new Fox(Fox.Direction.UP, true);
         fox2 = new Fox(Fox.Direction.LEFT, false);
         board.setPiece(fox1, 0, 1);

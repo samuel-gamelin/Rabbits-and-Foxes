@@ -1,5 +1,7 @@
 package ui;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import model.*;
 import resources.Resources;
@@ -23,6 +25,7 @@ import java.awt.event.WindowEvent;
  * @author Mohamed Radwan
  */
 @Log4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GUIUtilities {
 
     /**
@@ -31,8 +34,8 @@ public final class GUIUtilities {
      * appropriate scaling of icons and GUI elements.
      */
     public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() >
-            Toolkit.getDefaultToolkit().getScreenSize().getHeight() ? (0.8 *
-            Toolkit.getDefaultToolkit().getScreenSize().getHeight()) : (
+                                             Toolkit.getDefaultToolkit().getScreenSize().getHeight() ? (0.8 *
+                                                                                                        Toolkit.getDefaultToolkit().getScreenSize().getHeight()) : (
             0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
     /**
@@ -71,12 +74,6 @@ public final class GUIUtilities {
     static JFileChooser fc = new JFileChooser();
 
     /**
-     * A private constructor, preventing any instantiation of this class.
-     */
-    private GUIUtilities() {
-    }
-
-    /**
      * Configures the provided frame with default frame configurations.
      *
      * @param frame The frame to configure
@@ -91,10 +88,8 @@ public final class GUIUtilities {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
-                if (GUIUtilities.displayOptionDialog(frame, "Are you sure you want to exit?", "Exit Rabbits and " +
-                        "Foxes!", new String[]{
-                        "Yes", "No"}) ==
-                        0) {
+                if (GUIUtilities.displayOptionDialog(frame, "Are you sure you want to exit?",
+                        "Exit Rabbits and " + "Foxes!", new String[]{"Yes", "No"}) == 0) {
                     System.exit(0);
                 }
             }
