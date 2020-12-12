@@ -101,13 +101,12 @@ public class GameController {
                 moveList.clear();
                 redoMoveStack.clear();
                 undoMoveStack.push(movePiece);
-                return ClickValidity.VALID_MOVEMADE;
+                return ClickValidity.VALID_MOVE_MADE;
             } else if (moveList.isEmpty()) {
-                return ClickValidity.VALID_MOVEMADE;
+                return ClickValidity.VALID_MOVE_MADE;
             }
-            return ClickValidity.INVALID_MOVEMADE;
+            return ClickValidity.INVALID_MOVE_MADE;
         }
-
         return ClickValidity.INVALID;
     }
 
@@ -210,6 +209,6 @@ public class GameController {
      * An enumeration representing the validity of a click from the user.
      */
     public enum ClickValidity {
-        VALID, INVALID, VALID_MOVEMADE, INVALID_MOVEMADE
+        VALID, INVALID, VALID_MOVE_MADE, INVALID_MOVE_MADE
     }
 }

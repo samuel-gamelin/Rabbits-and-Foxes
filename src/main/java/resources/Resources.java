@@ -1,6 +1,8 @@
 package resources;
 
 import com.google.gson.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import model.Board;
 import ui.GUIUtilities;
@@ -23,6 +25,7 @@ import java.util.Objects;
  * @author John Breton
  */
 @Log4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Resources {
 
     /**
@@ -147,13 +150,7 @@ public final class Resources {
      */
     private static final String CUSTOM_LEVEL_DATA_PATH =
             System.getProperty("user.home") + File.separator + ".Rabbits and Foxes!" + File.separator +
-                    "CustomLevelData.json";
-
-    /**
-     * Making the constructor private, preventing any instantiation of this class.
-     */
-    private Resources() {
-    }
+            "CustomLevelData.json";
 
     /**
      * Returns a scaled version of the icon based on the primary display's size. A
@@ -167,7 +164,7 @@ public final class Resources {
     private static ImageIcon loadIcon(String path, double xScale, double yScale) {
         return new ImageIcon(new ImageIcon(getFileURL(path)).getImage().getScaledInstance((int) (
                 xScale * GUIUtilities.SIDE_LENGTH / Board.SIZE), (int) (yScale * GUIUtilities.SIDE_LENGTH /
-                Board.SIZE), Image.SCALE_SMOOTH));
+                                                                        Board.SIZE), Image.SCALE_SMOOTH));
     }
 
     /**
