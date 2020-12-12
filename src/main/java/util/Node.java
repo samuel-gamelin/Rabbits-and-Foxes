@@ -14,6 +14,7 @@ import java.util.Set;
  * @author Samuel Gamelin
  * @author Mohamed Radwan
  */
+@Getter
 @EqualsAndHashCode
 @ToString
 public class Node {
@@ -21,7 +22,6 @@ public class Node {
     /**
      * The board associated with this node.
      */
-    @Getter
     private final Board board;
 
     public Node(Board board) {

@@ -676,8 +676,8 @@ BoardListener</string>
      <void property="text">
       <string>VALID
 INVALID
-VALID_MOVEMADE
-INVALID_MOVEMADE</string>
+VALID_MOVE_MADE
+INVALID_MOVE_MADE</string>
      </void>
     </void>
     <void property="name">
@@ -1170,7 +1170,7 @@ INVALID</string>
     <void property="name">
      <void property="text">
       <string>«interface»
-MoveablePiece</string>
+MovablePiece</string>
      </void>
     </void>
    </object>
