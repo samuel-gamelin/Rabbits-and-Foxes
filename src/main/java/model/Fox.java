@@ -77,12 +77,20 @@ public class Fox extends Piece implements MovablePiece {
     static Fox createFox(String str) {
         if (str == null || str.length() != 4) return null;
 
-        Direction dir = switch (str.substring(2, 3)) {
-            case "L" -> Direction.LEFT;
-            case "R" -> Direction.RIGHT;
-            case "U" -> Direction.UP;
-            default -> Direction.DOWN;
-        };
+        Direction dir;
+        switch (str.substring(2, 3)) {
+            case "L":
+                dir = Direction.LEFT;
+                break;
+            case "R":
+                dir = Direction.RIGHT;
+                break;
+            case "U":
+                dir = Direction.UP;
+                break;
+            default:
+                dir = Direction.DOWN;
+        }
         return new Fox(dir, str.startsWith("1", 3));
     }
 
@@ -135,7 +143,7 @@ public class Fox extends Piece implements MovablePiece {
         // this would fail. However, since that scenario has no reason to occur, this
         // implementation was kept.
         if ((move == null) || ((direction.ordinal() < 2 && move.direction() != MoveDirection.HORIZONTAL) ||
-                               (direction.ordinal() > 1 && move.direction() != MoveDirection.VERTICAL))) {
+                (direction.ordinal() > 1 && move.direction() != MoveDirection.VERTICAL))) {
             return false;
         }
 
@@ -155,7 +163,7 @@ public class Fox extends Piece implements MovablePiece {
             // or moving up and the other piece is below or moving down and the other piece
             // is above.
             if ((location && xDistance < 0) || (!location && xDistance > 0) || (location && yDistance > 0) ||
-                (!location && yDistance < 0)) {
+                    (!location && yDistance < 0)) {
                 board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
                 if (xDistance < 0) board.setPiece(board.removePiece(xStart + 1, yStart), xEnd + 1, yEnd);
                 else if (xDistance > 0) board.setPiece(board.removePiece(xStart - 1, yStart), xEnd - 1, yEnd);
@@ -196,8 +204,8 @@ public class Fox extends Piece implements MovablePiece {
 
         // Initial check to see if the move can be valid.
         if (board == null || (board.isOccupied(xEnd, yEnd) && !(board.getPiece(xEnd, yEnd) instanceof Fox)) ||
-            (location && xEnd + 1 > 4) || (!location && xEnd - 1 < 0) || (!location && yEnd + 1 > 4) ||
-            (location && yEnd - 1 < 0)) return false;
+                (location && xEnd + 1 > 4) || (!location && xEnd - 1 < 0) || (!location && yEnd + 1 > 4) ||
+                (location && yEnd - 1 < 0)) return false;
 
         // The other part of the fox is to the right and we are moving right
         if (location && xDistance > 0) {
@@ -240,19 +248,19 @@ public class Fox extends Piece implements MovablePiece {
         List<Move> moves = new ArrayList<>();
 
         if ((foxType == FoxType.TAIL && direction == Direction.LEFT) ||
-            (foxType == FoxType.HEAD && direction == Direction.RIGHT)) {
+                (foxType == FoxType.HEAD && direction == Direction.RIGHT)) {
             for (int i = x + 1; i < Board.SIZE; i++) {
                 Move moveX = new Move(x, y, i, y);
                 if (validatePath(moveX, board, false)) moves.add(moveX);
             }
         } else if ((foxType == FoxType.TAIL && direction == Direction.RIGHT) ||
-                   (foxType == FoxType.HEAD && direction == Direction.LEFT)) {
+                (foxType == FoxType.HEAD && direction == Direction.LEFT)) {
             for (int i = x - 1; i >= 0; i--) {
                 Move moveX = new Move(x, y, i, y);
                 if (validatePath(moveX, board, true)) moves.add(moveX);
             }
         } else if ((foxType == FoxType.TAIL && direction == Direction.UP) ||
-                   (foxType == FoxType.HEAD && direction == Direction.DOWN)) {
+                (foxType == FoxType.HEAD && direction == Direction.DOWN)) {
             for (int i = y + 1; i < Board.SIZE; i++) {
                 Move moveY = new Move(x, y, x, i);
                 if (validatePath(moveY, board, true)) moves.add(moveY);
@@ -273,7 +281,7 @@ public class Fox extends Piece implements MovablePiece {
      */
     private boolean getRelativeLocation() {
         return !((foxType == FoxType.TAIL && (direction == Direction.LEFT || direction == Direction.DOWN)) ||
-                 (foxType == FoxType.HEAD && (direction == Direction.RIGHT || direction == Direction.UP)));
+                (foxType == FoxType.HEAD && (direction == Direction.RIGHT || direction == Direction.UP)));
     }
 
     /**

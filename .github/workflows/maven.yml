@@ -16,6 +16,6 @@ jobs:
       - name: Set up JDK 14
         uses: joschi/setup-jdk@v2
         with:
-          java-version: '14'
+          java-version: '11'
       - name: Build with Maven
         run: mvn -B clean package -Dtest=\!GameViewTest --file pom.xml
