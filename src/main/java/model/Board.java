@@ -105,10 +105,17 @@ public class Board {
                         Fox f = Fox.createFox(currBoard[5 * i + j]);
                         board.tiles[i][j].placePiece(f);
                         switch (f.getDirection()) {
-                            case DOWN -> board.tiles[i][j - 1].placePiece(f.getOtherHalf());
-                            case LEFT -> board.tiles[i + 1][j].placePiece(f.getOtherHalf());
-                            case RIGHT -> board.tiles[i - 1][j].placePiece(f.getOtherHalf());
-                            default -> board.tiles[i][j + 1].placePiece(f.getOtherHalf());
+                            case DOWN:
+                                board.tiles[i][j - 1].placePiece(f.getOtherHalf());
+                                break;
+                            case LEFT:
+                                board.tiles[i + 1][j].placePiece(f.getOtherHalf());
+                                break;
+                            case RIGHT:
+                                board.tiles[i - 1][j].placePiece(f.getOtherHalf());
+                                break;
+                            default:
+                                board.tiles[i][j + 1].placePiece(f.getOtherHalf());
                         }
                     }
                 }
