@@ -180,14 +180,14 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         panel.add(showPossibleMovesBox, BorderLayout.EAST);
 
         panel.add(new JLabel("<html><body><p style='width: 200px; text-align: justify'>" +
-                             "Rabbits and Foxes is a game in which you must get all rabbits to safety by having them " +
-                             "land in brown holes. " +
-                             "To do this, rabbits can only jump over other pieces and must land in an empty hole. " +
-                             "Foxes can slide along their initial direction as long as no other piece obstructs their" +
-                             " way.<br><br>" + "Hint (h): Outlines the next best move<br>" +
-                             "Help: Displays the help menu<br>" + "Reset:   Restarts the game<br>" +
-                             "Quit   (q):   Exits the application<br>" + "Escape (ESC): Clears the pending move" +
-                             "</p></body></html>"), BorderLayout.NORTH);
+                "Rabbits and Foxes is a game in which you must get all rabbits to safety by having them " +
+                "land in brown holes. " +
+                "To do this, rabbits can only jump over other pieces and must land in an empty hole. " +
+                "Foxes can slide along their initial direction as long as no other piece obstructs their" +
+                " way.<br><br>" + "Hint (h): Outlines the next best move<br>" +
+                "Help: Displays the help menu<br>" + "Reset:   Restarts the game<br>" +
+                "Quit   (q):   Exits the application<br>" + "Escape (ESC): Clears the pending move" +
+                "</p></body></html>"), BorderLayout.NORTH);
         JOptionPane.showMessageDialog(this, panel, "Help Dialog", JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -260,8 +260,8 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             GUIUtilities.clearButtonBorders(buttons);
             if (gameState) {
                 if (!gameController.isDefaultLevel()) {
-                    int choice = GUIUtilities.displayOptionDialog(this, "Congrats, you solved it! Would you like to " +
-                                                                        "go to reset or go to the main menu?",
+                    int choice = GUIUtilities.displayOptionDialog(this, "Congrats, you solved it! Would you like " +
+                                    "to reset or go to the main menu?",
                             "Solved!", new String[]{"Reset", "Main Menu", "Quit"});
                     if (choice == 0) {
                         resetGame();
@@ -275,7 +275,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                 } else {
                     if (gameController.getCurrentLevel() != Resources.NUMBER_OF_LEVELS) {
                         int choice = GUIUtilities.displayOptionDialog(this, "Congrats, you solved it! Would you like " +
-                                                                            "to go to the next puzzle?", "Solved!",
+                                        "to go to the next puzzle?", "Solved!",
                                 new String[]{"Next", "Reset", "Quit"});
                         if (choice == 0) {
                             gameController.incrementLevel();
@@ -288,9 +288,9 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                         }
                     } else {
                         if (GUIUtilities.displayOptionDialog(this, "You have finished the game! Would you like to go " +
-                                                                   "to the main menu or exit?", "End Game",
+                                        "to the main menu or exit?", "End Game",
                                 new String[]{"Main Menu", "Quit"}) ==
-                            0) {
+                                0) {
                             gameState = false;
                             this.dispose();
                             SwingUtilities.invokeLater(MainMenu::new);
@@ -311,7 +311,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuMain && GUIUtilities.displayOptionDialog(null,
                 "Are you sure you want to return to the main menu? (Any " + "unsaved " +
-                "progress will be lost)", "Return to Main Menu", new String[]{"Yes", "No"}) == 0) {
+                        "progress will be lost)", "Return to Main Menu", new String[]{"Yes", "No"}) == 0) {
             this.dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == menuHint) {
@@ -323,7 +323,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         } else if (e.getSource() == menuSaveButton) {
             int returnVal = GUIUtilities.fc.showSaveDialog(this);
             while (returnVal == JFileChooser.APPROVE_OPTION &&
-                   !this.save(GUIUtilities.fc.getSelectedFile().getAbsolutePath())) {
+                    !this.save(GUIUtilities.fc.getSelectedFile().getAbsolutePath())) {
                 GUIUtilities.displayMessageDialog(this, "File already exists!", "Invalid File Selection");
                 returnVal = GUIUtilities.fc.showSaveDialog(this);
             }
@@ -331,7 +331,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             displayHelpDialog();
         } else if ((e.getSource() == menuReset) && (GUIUtilities.displayOptionDialog(this,
                 "Are you sure you want to reset the game? (Any unsaved " +
-                "progress will be lost)", "Reset Rabbits and Foxes!", new String[]{"Yes", "No"}) == 0)) {
+                        "progress will be lost)", "Reset Rabbits and Foxes!", new String[]{"Yes", "No"}) == 0)) {
             resetGame();
         } else if (e.getSource() == menuUndo) {
             GUIUtilities.clearButtonBorders(buttons);

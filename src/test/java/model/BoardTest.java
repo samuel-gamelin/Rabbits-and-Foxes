@@ -30,7 +30,7 @@ class BoardTest {
         assertNotNull(emptyBoard);
         assertEquals(emptyBoard, new Board(emptyBoard));
         assertNull(Board.createBoard("Anyboard", "This is a test of malformed strings being passed to the factory " +
-                                                 "method."));
+                "method."));
         assertNotNull(board1);
     }
 

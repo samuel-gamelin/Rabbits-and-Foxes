@@ -15,24 +15,22 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 
 ##### Getting Started
 
-1. From your terminal, run:
-   ```
-   git clone https://github.com/samuel-gamelin/Rabbits-and-Foxes
-   ```
-   This will create a folder called Rabbits-and-Foxes.
+1. Clone this repository.
 
 2. Eclipse
-    1. Open the Eclipse IDE, and click File -> Import.
-    2. Select Maven and then Existing Maven Projects, then click Next.
-    3. Click Browse and select the Rabbits-and-Foxes folder that was just created. Click Finish.
+    1. Ensure you have the Lombok plugin installed and configured.
+    2. Open the Eclipse IDE, and click File -> Import.
+    3. Select Maven and then Existing Maven Projects, then click Next.
+    4. Click Browse and select the directory containing the repository you've cloned. Click Finish.
 
 3. IntelliJ IDEA
-    1. Open the IntelliJ IDEA IDE, and click File -> Open.
-    2. Select the Rabbits-and-Foxes folder that was just created and click Open.
+    1. Ensure you have the Lombok plugin installed and configured.
+    2. Open the IntelliJ IDEA IDE, and click File -> Open.
+    3. Select the directory containing the repository you've cloned and click Open.
 
 4. The entry point of the program is the main method of the MainMenu class under the ui package.
 5. The project can be built by invoking a `mvn clean install` command from the project's root directory. This will
-   generate a runnable jar file in the target directory.
+   generate a runnable jar file in the `target` directory.
 
 ##### Additional Tools
 
@@ -44,7 +42,7 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 <p style="text-align:right">
 <img src="documentation/uml/classDiagram.png" alt="Class Diagram">
 </p>
-Date: June 11, 2020
+Date: March 1, 2021
 
 ## Current Sequence Diagram
 

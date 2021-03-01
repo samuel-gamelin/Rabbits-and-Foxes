@@ -132,7 +132,7 @@
 +getOtherHalf():Fox
 +getDirection:Fox.Direction
 +getFoxType:Fox.FoxType
-+getID():boolean
++id():boolean
 +move(move:Move, board:Board):boolean
 -validatePath(move:Move, board:Board, location:boolean):boolean
 +getPossibleMoves(board:Board, x:int, y:int):List&lt;Move&gt;

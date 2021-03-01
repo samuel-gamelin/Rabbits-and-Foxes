@@ -1,5 +1,7 @@
 package model;
 
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import util.Move;
 import util.Move.MoveDirection;
 
@@ -14,6 +16,7 @@ import java.util.List;
  * @author John Breton
  * @author Mohamed Radwan
  */
+@Getter
 public class Fox extends Piece implements MovablePiece {
 
     /**
@@ -35,6 +38,7 @@ public class Fox extends Piece implements MovablePiece {
      * A boolean used to identify which fox parts belong together and to distinguish
      * one fox from another.
      */
+    @Accessors(fluent = true)
     private final boolean id;
 
     /**
@@ -92,36 +96,6 @@ public class Fox extends Piece implements MovablePiece {
                 dir = Direction.DOWN;
         }
         return new Fox(dir, str.startsWith("1", 3));
-    }
-
-    /**
-     * Returns the other half of a Fox.
-     *
-     * @return The other half of this Fox.
-     */
-    public Fox getOtherHalf() {
-        return this.otherHalf;
-    }
-
-    /**
-     * @return the Direction
-     */
-    public Direction getDirection() {
-        return direction;
-    }
-
-    /**
-     * @return the FoxType, Whether it is heads or tails
-     */
-    public FoxType getFoxType() {
-        return foxType;
-    }
-
-    /**
-     * @return The ID of this Fox
-     */
-    public boolean getID() {
-        return id;
     }
 
     /**
@@ -293,7 +267,7 @@ public class Fox extends Piece implements MovablePiece {
      */
     @Override
     public String toString() {
-        return "F" + foxType.toString().charAt(0) + this.getDirection().toString().charAt(0) + (this.getID() ? 1 : 0);
+        return "F" + foxType.toString().charAt(0) + this.getDirection().toString().charAt(0) + (this.id() ? 1 : 0);
     }
 
     /**
