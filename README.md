@@ -42,7 +42,7 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 <p style="text-align:right">
 <img src="documentation/uml/classDiagram.png" alt="Class Diagram">
 </p>
-Date: June 11, 2020
+Date: March 1, 2021
 
 ## Current Sequence Diagram
 
