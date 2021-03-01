@@ -34,8 +34,8 @@ public final class GUIUtilities {
      * appropriate scaling of icons and GUI elements.
      */
     public static final double SIDE_LENGTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() >
-                                             Toolkit.getDefaultToolkit().getScreenSize().getHeight() ? (0.8 *
-                                                                                                        Toolkit.getDefaultToolkit().getScreenSize().getHeight()) : (
+            Toolkit.getDefaultToolkit().getScreenSize().getHeight() ? (0.8 *
+            Toolkit.getDefaultToolkit().getScreenSize().getHeight()) : (
             0.8 * Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
     /**
