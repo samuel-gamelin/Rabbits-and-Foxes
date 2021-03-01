@@ -474,42 +474,42 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
                 if (board.getPiece(itemToBeModifiedX, itemToBeModifiedY) instanceof Fox) {
                     Fox oldFox = (Fox) board.getPiece(itemToBeModifiedX, itemToBeModifiedY);
                     if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_UP) {
-                        Fox fox = new Fox(Direction.DOWN, oldFox.getID());
+                        Fox fox = new Fox(Direction.DOWN, oldFox.id());
                         board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY + 1);
                         board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
                         flipped = true;
                     } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_UP) {
-                        Fox fox = new Fox(Direction.DOWN, oldFox.getID());
+                        Fox fox = new Fox(Direction.DOWN, oldFox.id());
                         board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
                         board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY - 1);
                         flipped = true;
                     } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_LEFT) {
-                        Fox fox = new Fox(Direction.RIGHT, oldFox.getID());
+                        Fox fox = new Fox(Direction.RIGHT, oldFox.id());
                         board.setPiece(fox, itemToBeModifiedX + 1, itemToBeModifiedY);
                         board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
                         flipped = true;
                     } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_LEFT) {
-                        Fox fox = new Fox(Direction.RIGHT, oldFox.getID());
+                        Fox fox = new Fox(Direction.RIGHT, oldFox.id());
                         board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
                         board.setPiece(fox.getOtherHalf(), itemToBeModifiedX - 1, itemToBeModifiedY);
                         flipped = true;
                     } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_DOWN) {
-                        Fox fox = new Fox(Direction.UP, oldFox.getID());
+                        Fox fox = new Fox(Direction.UP, oldFox.id());
                         board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY - 1);
                         board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
                         flipped = true;
                     } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_DOWN) {
-                        Fox fox = new Fox(Direction.UP, oldFox.getID());
+                        Fox fox = new Fox(Direction.UP, oldFox.id());
                         board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
                         board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY + 1);
                         flipped = true;
                     } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_HEAD_RIGHT) {
-                        Fox fox = new Fox(Direction.LEFT, oldFox.getID());
+                        Fox fox = new Fox(Direction.LEFT, oldFox.id());
                         board.setPiece(fox, itemToBeModifiedX - 1, itemToBeModifiedY);
                         board.setPiece(fox.getOtherHalf(), itemToBeModifiedX, itemToBeModifiedY);
                         flipped = true;
                     } else if (buttons[itemToBeModifiedX][itemToBeModifiedY].getIcon() == Resources.FOX_TAIL_RIGHT) {
-                        Fox fox = new Fox(Direction.LEFT, oldFox.getID());
+                        Fox fox = new Fox(Direction.LEFT, oldFox.id());
                         board.setPiece(fox, itemToBeModifiedX, itemToBeModifiedY);
                         board.setPiece(fox.getOtherHalf(), itemToBeModifiedX + 1, itemToBeModifiedY);
                         flipped = true;

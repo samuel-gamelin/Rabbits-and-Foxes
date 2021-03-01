@@ -58,9 +58,9 @@ class FoxTest {
     }
 
     @Test
-    void testGetID() {
-        assertTrue(fox1.getID());
-        assertFalse(fox2.getID());
+    void testId() {
+        assertTrue(fox1.id());
+        assertFalse(fox2.id());
     }
 
     @Test
