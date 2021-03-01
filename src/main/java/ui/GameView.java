@@ -260,8 +260,8 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
             GUIUtilities.clearButtonBorders(buttons);
             if (gameState) {
                 if (!gameController.isDefaultLevel()) {
-                    int choice = GUIUtilities.displayOptionDialog(this, "Congrats, you solved it! Would you like to " +
-                                    "go to reset or go to the main menu?",
+                    int choice = GUIUtilities.displayOptionDialog(this, "Congrats, you solved it! Would you like " +
+                                    "to reset or go to the main menu?",
                             "Solved!", new String[]{"Reset", "Main Menu", "Quit"});
                     if (choice == 0) {
                         resetGame();
