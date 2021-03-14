@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import model.*;
-import resources.Resources;
+import util.Resources;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

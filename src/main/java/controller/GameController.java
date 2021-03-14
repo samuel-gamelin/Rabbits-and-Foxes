@@ -6,8 +6,8 @@ import model.Board;
 import model.MovablePiece;
 import model.Mushroom;
 import model.Piece;
-import resources.Resources;
 import util.Move;
+import util.Resources;
 import util.Solver;
 
 import java.util.ArrayDeque;

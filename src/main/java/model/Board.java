@@ -68,14 +68,14 @@ public class Board {
      * @param board The board to copy
      */
     public Board(Board board) {
-        this.name = board.name;
-        this.tiles = new Tile[SIZE][SIZE];
+        name = board.name;
+        tiles = new Tile[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                this.tiles[i][j] = new Tile(board.tiles[i][j]);
+                tiles[i][j] = new Tile(board.tiles[i][j]);
             }
         }
-        this.boardListeners = new ArrayList<>();
+        boardListeners = new ArrayList<>();
     }
 
     /**
@@ -220,7 +220,7 @@ public class Board {
      * position is invalid
      */
     public Piece getPiece(int x, int y) {
-        return validatePosition(x, y) ? this.tiles[x][y].getPiece() : null;
+        return validatePosition(x, y) ? tiles[x][y].getPiece() : null;
     }
 
     /**

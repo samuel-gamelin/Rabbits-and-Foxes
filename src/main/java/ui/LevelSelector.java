@@ -2,7 +2,7 @@ package ui;
 
 import model.*;
 import model.Fox.FoxType;
-import resources.Resources;
+import util.Resources;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -69,8 +69,8 @@ class LevelSelector extends JFrame implements ActionListener {
         determineLastPage(allDefaultLevels);
 
         // Set the layout and background of the level selector JFrame.
-        this.setContentPane(new JLabel(Resources.LEVEL_SELECTOR_BACKGROUND));
-        this.getContentPane().setLayout(new BorderLayout());
+        setContentPane(new JLabel(Resources.LEVEL_SELECTOR_BACKGROUND));
+        getContentPane().setLayout(new BorderLayout());
 
         // Create the JTextPanes to display level names
         setUpJTextPane(levelLabelLeft = new JTextPane());
@@ -183,10 +183,10 @@ class LevelSelector extends JFrame implements ActionListener {
         updateView(allDefaultLevels);
 
         // Adding everything to and subsequently setting up the JFrame.
-        this.add(mainPanel, BorderLayout.CENTER);
-        this.add(allButtons, BorderLayout.SOUTH);
-        this.add(Box.createRigidArea(new Dimension(0, (int) (GUIUtilities.SIDE_LENGTH / 3.5))), BorderLayout.NORTH);
-        this.setTitle("Level Selector");
+        add(mainPanel, BorderLayout.CENTER);
+        add(allButtons, BorderLayout.SOUTH);
+        add(Box.createRigidArea(new Dimension(0, (int) (GUIUtilities.SIDE_LENGTH / 3.5))), BorderLayout.NORTH);
+        setTitle("Level Selector");
         GUIUtilities.configureFrame(this);
     }
 
@@ -337,8 +337,8 @@ class LevelSelector extends JFrame implements ActionListener {
                 btnRightLevel.setEnabled(false);
                 levelLabelRight.setText("Empty");
         }
-        this.revalidate();
-        this.repaint();
+        revalidate();
+        repaint();
     }
 
     /**
@@ -433,7 +433,7 @@ class LevelSelector extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnStartLevel) {
-            this.dispose();
+            dispose();
             if (btnLeftLevel.getBorder().equals(GUIUtilities.SELECTED_BORDER)) {
                 int level = (pageNumber * 3) - 2;
                 if (!custom) SwingUtilities.invokeLater(new GameView(Resources.getDefaultBoardByLevel(level), level));
@@ -448,7 +448,7 @@ class LevelSelector extends JFrame implements ActionListener {
                 else SwingUtilities.invokeLater(new GameView(allCustomLevels.get(pageNumber * 3 - 1), -1));
             }
         } else if (e.getSource() == btnMainMenu) {
-            this.dispose();
+            dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == btnLeftLevel || e.getSource() == btnMiddleLevel || e.getSource() == btnRightLevel)
             levelSelected((JButton) e.getSource());

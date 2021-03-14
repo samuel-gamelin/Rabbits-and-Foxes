@@ -1,4 +1,4 @@
-package resources;
+package util;
 
 import com.google.gson.*;
 import lombok.AccessLevel;

@@ -8,12 +8,10 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK 14
+      - name: Set up JDK 11
         uses: joschi/setup-jdk@v2
         with:
           java-version: '11'

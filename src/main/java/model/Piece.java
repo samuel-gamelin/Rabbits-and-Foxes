@@ -16,12 +16,14 @@ public abstract class Piece {
     private final PieceType pieceType;
 
     /**
-     * @return A short, two to four character string representing the piece.
+     * Generates a short string representing this piece.
+     *
+     * @return A short, two- to four-character string representing this piece.
      */
     public abstract String toString();
 
     /**
-     * An enumeration representing the piece's type.
+     * An enumeration representing this piece's type.
      */
     public enum PieceType {
         FOX, MUSHROOM, RABBIT

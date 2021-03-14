@@ -8,8 +8,8 @@ import controller.GameController.ClickValidity;
 import lombok.extern.log4j.Log4j;
 import model.Board;
 import model.BoardListener;
-import resources.Resources;
 import util.Move;
+import util.Resources;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,13 +70,12 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         this.board = board;
         this.board.addListener(this);
         this.gameController = new GameController(board, level);
-
         this.gameState = true;
 
-        this.updateFrameTitle();
+        updateFrameTitle();
 
         JMenuBar menuBar = new JMenuBar();
-        this.setJMenuBar(menuBar);
+        setJMenuBar(menuBar);
         menuBar.add(menuMain = GUIUtilities.createMenuBarButton("<html><u>M</u>ain Menu</html>", true));
         menuBar.add(menuHint = GUIUtilities.createMenuBarButton("<html><u>H</u>int</html>", true));
         menuBar.add(menuUndo = GUIUtilities.createMenuBarButton("<html><u>U</u>ndo</html>", true));
@@ -90,8 +89,8 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         Thread hintThread = new Thread(this, "Hint");
         hintThread.start();
 
-        this.setContentPane(new JLabel(Resources.BOARD));
-        this.getContentPane().setLayout(new GridLayout(5, 5));
+        setContentPane(new JLabel(Resources.BOARD));
+        getContentPane().setLayout(new GridLayout(5, 5));
 
         // Create all buttons
         buttons = new JButton[5][5];
@@ -101,7 +100,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                 buttons[x][y] = GUIUtilities.generateGameBoardButton(x, y);
 
                 buttons[x][y].addMouseListener(this);
-                this.add(buttons[x][y]);
+                add(buttons[x][y]);
 
                 final int xCopy = x;
                 final int yCopy = y;
@@ -135,7 +134,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         }
 
         // Configure the escape key to cancel the pending move, setup the check box and
-        GUIUtilities.bindKeyStroke((JComponent) this.getContentPane(), "ESCAPE", "clear", this::clearMove);
+        GUIUtilities.bindKeyStroke((JComponent) getContentPane(), "ESCAPE", "clear", this::clearMove);
         showPossibleMovesBox = new JCheckBox();
         showPossibleMovesBox.addItemListener(e -> showPossibleMovesBox.setSelected(
                 e.getStateChange() == ItemEvent.SELECTED));
@@ -216,7 +215,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
      * Updates the game frame's title with the new level name.
      */
     private void updateFrameTitle() {
-        this.setTitle("Rabbit and Foxes! Level: " + board.getName());
+        setTitle("Rabbit and Foxes! Level: " + board.getName());
     }
 
     /**
@@ -267,7 +266,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                         resetGame();
                     } else if (choice == 1) {
                         gameState = false;
-                        this.dispose();
+                        dispose();
                         SwingUtilities.invokeLater(MainMenu::new);
                     } else {
                         System.exit(0);
@@ -292,7 +291,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
                                 new String[]{"Main Menu", "Quit"}) ==
                                 0) {
                             gameState = false;
-                            this.dispose();
+                            dispose();
                             SwingUtilities.invokeLater(MainMenu::new);
                         } else {
                             System.exit(0);
@@ -312,7 +311,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         if (e.getSource() == menuMain && GUIUtilities.displayOptionDialog(null,
                 "Are you sure you want to return to the main menu? (Any " + "unsaved " +
                         "progress will be lost)", "Return to Main Menu", new String[]{"Yes", "No"}) == 0) {
-            this.dispose();
+            dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == menuHint) {
             bestMove = gameController.getNextBestMove();
@@ -323,7 +322,7 @@ public class GameView extends JFrame implements ActionListener, BoardListener, M
         } else if (e.getSource() == menuSaveButton) {
             int returnVal = GUIUtilities.fc.showSaveDialog(this);
             while (returnVal == JFileChooser.APPROVE_OPTION &&
-                    !this.save(GUIUtilities.fc.getSelectedFile().getAbsolutePath())) {
+                    !save(GUIUtilities.fc.getSelectedFile().getAbsolutePath())) {
                 GUIUtilities.displayMessageDialog(this, "File already exists!", "Invalid File Selection");
                 returnVal = GUIUtilities.fc.showSaveDialog(this);
             }
