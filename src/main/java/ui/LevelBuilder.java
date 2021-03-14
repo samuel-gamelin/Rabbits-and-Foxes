@@ -3,9 +3,9 @@ package ui;
 import model.*;
 import model.Fox.Direction;
 import model.Rabbit.RabbitColour;
-import resources.Resources;
 import util.Move;
 import util.Move.MoveDirection;
+import util.Resources;
 import util.Solver;
 
 import javax.swing.*;
@@ -102,9 +102,9 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
     private int itemToBeModifiedY;
 
     public LevelBuilder() {
-        this.board = new Board("");
+        board = new Board("");
         board.addListener(this);
-        this.setTitle("Level Builder");
+        setTitle("Level Builder");
         currentIcon = new ImageIcon();
         numberOfMushrooms = 0;
         numberOfFoxes = 0;
@@ -121,7 +121,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
         menuBar.add(flipFox = GUIUtilities.createMenuBarButton("<html><u>F</u>lip Fox</html>", true));
         menuBar.add(saveBoard = GUIUtilities.createMenuBarButton("<html><u>S</u>ave</html>", true));
         menuBar.add(menuHelp = GUIUtilities.createMenuBarButton("<html><u>H</u>elp</html>", true));
-        this.setJMenuBar(menuBar);
+        setJMenuBar(menuBar);
 
         // Create a JLabel for the board
         JLabel gameBoardJPanel = new JLabel(Resources.BOARD);
@@ -156,9 +156,9 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
         }
 
         // West side for the board.
-        this.add(gameBoardJPanel, BorderLayout.WEST);
+        add(gameBoardJPanel, BorderLayout.WEST);
         // East side for the tile for objects to be selected from.
-        this.add(piecePanelSetup(), BorderLayout.EAST);
+        add(piecePanelSetup(), BorderLayout.EAST);
 
         GUIUtilities.configureFrame(this);
 
@@ -381,7 +381,7 @@ public class LevelBuilder extends JFrame implements ActionListener, MouseListene
         if (e.getSource() == menuMainScreen &&
                 GUIUtilities.displayOptionDialog(null, "Are you sure you want to return to main menu?",
                         "Return to " + "Main " + "Menu", new String[]{"Yes", "No"}) == 0) {
-            this.dispose();
+            dispose();
             SwingUtilities.invokeLater(MainMenu::new);
         } else if (e.getSource() == saveBoard) {
             Board boardCopy = new Board(board);

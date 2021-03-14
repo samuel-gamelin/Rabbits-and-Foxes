@@ -27,7 +27,7 @@ public class Node {
     /**
      * Create a node given the provided board.
      *
-     * @param board The board to associated with this node
+     * @param board The board to associate with this node
      */
     public Node(Board board) {
         this.board = new Board(board);

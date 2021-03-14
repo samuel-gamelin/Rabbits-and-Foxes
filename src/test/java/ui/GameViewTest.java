@@ -5,8 +5,8 @@ import com.google.gson.JsonObject;
 import model.Board;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import resources.Resources;
 import util.Move;
+import util.Resources;
 
 import java.io.File;
 import java.util.ArrayDeque;

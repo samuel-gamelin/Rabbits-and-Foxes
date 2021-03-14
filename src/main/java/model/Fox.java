@@ -267,7 +267,7 @@ public class Fox extends Piece implements MovablePiece {
      */
     @Override
     public String toString() {
-        return "F" + foxType.toString().charAt(0) + this.getDirection().toString().charAt(0) + (this.id() ? 1 : 0);
+        return "F" + foxType.toString().charAt(0) + getDirection().toString().charAt(0) + (id() ? 1 : 0);
     }
 
     /**

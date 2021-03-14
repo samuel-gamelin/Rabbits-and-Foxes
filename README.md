@@ -29,8 +29,8 @@ This GitHub repository is used for the development of a game based on JumpIN' th
     3. Select the directory containing the repository you've cloned and click Open.
 
 4. The entry point of the program is the main method of the MainMenu class under the ui package.
-5. The project can be built by invoking a `mvn clean install` command from the project's root directory. This will
-   generate a runnable jar file in the `target` directory.
+5. The project can be built by invoking a `mvn clean package` command from the project's root directory. This will
+   generate a runnable jar file in the `target` directory named `Rabbits-and-Foxes.jar`.
 
 ##### Additional Tools
 
@@ -40,14 +40,14 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 ## Current Class Diagram
 
 <p style="text-align:right">
-<img src="documentation/uml/classDiagram.png" alt="Class Diagram">
+<img src="documentation/uml/class-diagram.png" alt="Class Diagram">
 </p>
 Date: March 1, 2021
 
 ## Current Sequence Diagram
 
 <p style="text-align:right">
-<img src="documentation/uml/sequenceDiagram.png" alt="Sequence Diagram">
+<img src="documentation/uml/sequence-diagram.png" alt="Sequence Diagram">
 </p>
 Date: December 2, 2019
 

@@ -143,7 +143,7 @@ public class Rabbit extends Piece implements MovablePiece {
      */
     @Override
     public String toString() {
-        return "RB" + this.getColour().toString().charAt(0);
+        return "RB" + getColour().toString().charAt(0);
     }
 
     /**
