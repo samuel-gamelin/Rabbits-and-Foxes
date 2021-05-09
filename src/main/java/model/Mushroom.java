@@ -1,6 +1,6 @@
 package model;
 
-/***
+/**
  * A class representing a Mushroom piece.
  *
  * @author Abdalla El Nakla
