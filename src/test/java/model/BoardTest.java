@@ -85,7 +85,6 @@ class BoardTest {
         assertFalse(board1.getPossibleMoves().isEmpty());
         Board emptyBoard = Board.createBoard("Anyboard", "X X X X X X X X X X X X X X X X X X X X X X X X X");
         assertNotNull(emptyBoard);
-        assert emptyBoard != null;
         assertTrue(emptyBoard.getPossibleMoves().isEmpty());
     }
 
@@ -93,7 +92,6 @@ class BoardTest {
     void testToString() {
         Board emptyBoard = Board.createBoard("Anyboard", "X X X X X X X X X X X X X X X X X X X X X X X X X");
         assertNotNull(emptyBoard);
-        assert emptyBoard != null;
         assertEquals("X X X X X X X X X X X X X X X X X X X X X X X X X", emptyBoard.toString());
         assertEquals(board1.toString(), TEST_BOARD_1);
     }
