@@ -155,7 +155,9 @@ public class Board {
      * the move was unsuccessful
      */
     public boolean move(Move move) {
-        if (move == null) return false;
+        if (move == null) {
+            return false;
+        }
         Piece piece = tiles[move.xStart][move.yStart].getPiece();
         if (piece instanceof MovablePiece && ((MovablePiece) piece).move(move, this)) {
             notifyListeners();
