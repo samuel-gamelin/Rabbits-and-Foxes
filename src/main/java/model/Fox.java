@@ -110,12 +110,12 @@ public class Fox extends Piece implements MovablePiece {
      */
     @Override
     public boolean move(Move move, Board board) {
-        // Initial check to ensure the move direction matches the orientation of the
-        // fox.
-        // The use of ordinals saved two conditional checks. It's understood that if the
-        // enum were to change order
-        // this would fail. However, since that scenario has no reason to occur, this
-        // implementation was kept.
+        /*
+         Initial check to ensure the move direction matches the orientation of the fox.
+         The use of ordinals saved two conditional checks. It's understood that if the
+         enum were to change order this would fail.
+         However, since that scenario has no reason to occur, this implementation was kept.
+         */
         if ((move == null) || ((direction.ordinal() < 2 && move.direction() != MoveDirection.HORIZONTAL) ||
                 (direction.ordinal() > 1 && move.direction() != MoveDirection.VERTICAL))) {
             return false;
@@ -129,29 +129,46 @@ public class Fox extends Piece implements MovablePiece {
         int yDistance = move.yDistance();
         boolean location = getRelativeLocation();
 
-        // Only need to check one, since it will be either true for both or false for
-        // both
+        // Only need to check one, since it will be either true for both or false for both
         if (validatePath(move, board, location)) {
-            // Moving left and the other piece is to the right or moving right and the other
-            // piece is to the left
-            // or moving up and the other piece is below or moving down and the other piece
-            // is above.
+            /*
+             Moving left and the other piece is to the right or moving right and the other
+             piece is to the left
+             or moving up and the other piece is below or moving down and the other piece
+             is above.
+             */
             if ((location && xDistance < 0) || (!location && xDistance > 0) || (location && yDistance > 0) ||
                     (!location && yDistance < 0)) {
                 board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
-                if (xDistance < 0) board.setPiece(board.removePiece(xStart + 1, yStart), xEnd + 1, yEnd);
-                else if (xDistance > 0) board.setPiece(board.removePiece(xStart - 1, yStart), xEnd - 1, yEnd);
-                else if (yDistance < 0) board.setPiece(board.removePiece(xStart, yStart + 1), xEnd, yEnd + 1);
-                else board.setPiece(board.removePiece(xStart, yStart - 1), xEnd, yEnd - 1);
-                // Moving left and the other piece is to the left or moving right and the other
-                // piece is to the right
-                // or moving up and the other piece is above or moving down and the other piece
-                // is below.
+                if (xDistance < 0) {
+                    board.setPiece(board.removePiece(xStart + 1, yStart), xEnd + 1, yEnd);
+                } else if (xDistance > 0) {
+                    board.setPiece(board.removePiece(xStart - 1, yStart), xEnd - 1, yEnd);
+                }
+                else if (yDistance < 0) {
+                    board.setPiece(board.removePiece(xStart, yStart + 1), xEnd, yEnd + 1);
+                } else {
+                    board.setPiece(board.removePiece(xStart, yStart - 1), xEnd, yEnd - 1);
+                }
+            /*
+             Moving left and the other piece is to the left or moving right and the other
+             piece is to the right
+             or moving up and the other piece is above or moving down and the other piece
+             is below.
+             */
             } else {
-                if (xDistance < 0) board.setPiece(board.removePiece(xStart - 1, yStart), xEnd - 1, yEnd);
-                else if (xDistance > 0) board.setPiece(board.removePiece(xStart + 1, yStart), xEnd + 1, yEnd);
-                else if (yDistance < 0) board.setPiece(board.removePiece(xStart, yStart - 1), xEnd, yEnd - 1);
-                else board.setPiece(board.removePiece(xStart, yStart + 1), xEnd, yEnd + 1);
+                if (xDistance < 0) {
+                    board.setPiece(board.removePiece(xStart - 1, yStart), xEnd - 1, yEnd);
+                }
+                else if (xDistance > 0) {
+                    board.setPiece(board.removePiece(xStart + 1, yStart), xEnd + 1, yEnd);
+                }
+                else if (yDistance < 0) {
+                    board.setPiece(board.removePiece(xStart, yStart - 1), xEnd, yEnd - 1);
+                }
+                else {
+                    board.setPiece(board.removePiece(xStart, yStart + 1), xEnd, yEnd + 1);
+                }
                 board.setPiece(board.removePiece(xStart, yStart), xEnd, yEnd);
             }
             return true;
@@ -183,36 +200,60 @@ public class Fox extends Piece implements MovablePiece {
 
         // The other part of the fox is to the right and we are moving right
         if (location && xDistance > 0) {
-            for (int i = xStart + 2; i <= xEnd + 1; i++)
-                if (board.isOccupied(i, yStart)) return false;
-            // The other part of the fox is to the right and we are moving left
+            for (int i = xStart + 2; i <= xEnd + 1; i++) {
+                if (board.isOccupied(i, yStart)) {
+                    return false;
+                }
+            }
+        // The other part of the fox is to the right and we are moving left
         } else if (location && xDistance < 0) {
-            for (int i = xStart - 1; i >= xEnd; i--)
-                if (board.isOccupied(i, yStart)) return false;
-            // The other part of the fox is to the left and we are moving right
+            for (int i = xStart - 1; i >= xEnd; i--) {
+                if (board.isOccupied(i, yStart)) {
+                    return false;
+                }
+            }
+        // The other part of the fox is to the left and we are moving right
         } else if (!location && xDistance > 0) {
-            for (int i = xStart + 1; i <= xEnd; i++)
-                if (board.isOccupied(i, yStart)) return false;
-            // The other part of the fox is the the left and we are moving left
+            for (int i = xStart + 1; i <= xEnd; i++) {
+                if (board.isOccupied(i, yStart)) {
+                    return false;
+                }
+            }
+        // The other part of the fox is the the left and we are moving left
         } else if (!location && xDistance < 0) {
-            for (int i = xStart - 2; i >= xEnd - 1; i--)
-                if (board.isOccupied(i, yStart)) return false;
-            // The other part of the fox is up and we are moving down
+            for (int i = xStart - 2; i >= xEnd - 1; i--) {
+                if (board.isOccupied(i, yStart)) {
+                    return false;
+                }
+            }
+        // The other part of the fox is up and we are moving down
         } else if (location && yDistance > 0) {
-            for (int i = yStart + 1; i <= yEnd; i++)
-                if (board.isOccupied(xStart, i)) return false;
-            // The other part of the fox is up and we are moving up
+            for (int i = yStart + 1; i <= yEnd; i++) {
+                if (board.isOccupied(xStart, i)) {
+                    return false;
+                }
+            }
+        // The other part of the fox is up and we are moving up
         } else if (location && yDistance < 0) {
-            for (int i = yStart - 2; i >= yEnd - 1; i--)
-                if (board.isOccupied(xStart, i)) return false;
-            // The other part of the fox is down and we are moving down
+            for (int i = yStart - 2; i >= yEnd - 1; i--) {
+                if (board.isOccupied(xStart, i)) {
+                    return false;
+                }
+            }
+        // The other part of the fox is down and we are moving down
         } else if (!location && yDistance > 0) {
-            for (int i = yStart + 2; i <= yEnd + 1; i++)
-                if (board.isOccupied(xStart, i)) return false;
-            // We know the other part of the fox is down and we are moving up
+            for (int i = yStart + 2; i <= yEnd + 1; i++) {
+                if (board.isOccupied(xStart, i)) {
+                    return false;
+                }
+            }
+        // We know the other part of the fox is down and we are moving up
         } else {
-            for (int i = yStart - 1; i >= yEnd; i--)
-                if (board.isOccupied(xStart, i)) return false;
+            for (int i = yStart - 1; i >= yEnd; i--) {
+                if (board.isOccupied(xStart, i)) {
+                    return false;
+                }
+            }
         }
         return true;
     }
@@ -225,24 +266,32 @@ public class Fox extends Piece implements MovablePiece {
                 (foxType == FoxType.HEAD && direction == Direction.RIGHT)) {
             for (int i = x + 1; i < Board.SIZE; i++) {
                 Move moveX = new Move(x, y, i, y);
-                if (validatePath(moveX, board, false)) moves.add(moveX);
+                if (validatePath(moveX, board, false)) {
+                    moves.add(moveX);
+                }
             }
         } else if ((foxType == FoxType.TAIL && direction == Direction.RIGHT) ||
                 (foxType == FoxType.HEAD && direction == Direction.LEFT)) {
             for (int i = x - 1; i >= 0; i--) {
                 Move moveX = new Move(x, y, i, y);
-                if (validatePath(moveX, board, true)) moves.add(moveX);
+                if (validatePath(moveX, board, true)) {
+                    moves.add(moveX);
+                }
             }
         } else if ((foxType == FoxType.TAIL && direction == Direction.UP) ||
                 (foxType == FoxType.HEAD && direction == Direction.DOWN)) {
             for (int i = y + 1; i < Board.SIZE; i++) {
                 Move moveY = new Move(x, y, x, i);
-                if (validatePath(moveY, board, true)) moves.add(moveY);
+                if (validatePath(moveY, board, true)) {
+                    moves.add(moveY);
+                }
             }
         } else {
             for (int i = y - 1; i >= 0; i--) {
                 Move moveY = new Move(x, y, x, i);
-                if (validatePath(moveY, board, getRelativeLocation())) moves.add(moveY);
+                if (validatePath(moveY, board, getRelativeLocation())) {
+                    moves.add(moveY);
+                }
             }
         }
         return moves;

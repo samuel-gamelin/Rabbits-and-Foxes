@@ -172,9 +172,10 @@ public final class GUIUtilities {
         button.setBorderPainted(false);
         button.setFocusPainted(false);
         button.setForeground(Color.WHITE);
-        if (enableShortcut)
+        if (enableShortcut) {
             GUIUtilities.bindKeyStroke(button, String.valueOf(Character.toLowerCase(text.charAt(9))), text,
                     button::doClick);
+        }
         return button;
     }
 
