@@ -3,7 +3,7 @@ package ui;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import model.Board;
 import util.Move;
 import util.Resources;
@@ -27,7 +27,7 @@ import java.util.ArrayDeque;
  * @author Dani Hashweh
  * @author John Breton
  */
-@Log4j
+@Slf4j
 public class MainMenu extends JFrame implements ActionListener {
 
     private final JButton btnStart;

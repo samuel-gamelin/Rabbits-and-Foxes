@@ -2,7 +2,7 @@ package ui;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import model.*;
 import util.Resources;
 
@@ -24,7 +24,7 @@ import java.awt.event.WindowEvent;
  * @author John Breton
  * @author Mohamed Radwan
  */
-@Log4j
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GUIUtilities {
 
