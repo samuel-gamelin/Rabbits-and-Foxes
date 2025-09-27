@@ -11,7 +11,7 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 - [Java 21](https://adoptium.net/temurin/releases/?os=any&arch=any&package=jdk&version=21)
 - [Lombok](https://projectlombok.org)
 - [Maven](https://maven.apache.org/download.cgi)
-- [Violet](https://www.horstmann.com/violet/)
+- [Mermaid](https://mermaid.js.org/) for UML diagrams (renders natively in GitHub and VSCode)
 
 ##### Getting Started
 
@@ -37,19 +37,17 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 - Contributions are made through GitHub, on this repository
 - GitHub issues are used for task and ticket tracking
 
-## Current Class Diagram
+## Class Diagram
 
-<p style="text-align:right">
-<img src="documentation/uml/class-diagram.png" alt="Class Diagram">
-</p>
-Date: March 1, 2021
+View the interactive class diagram: [docs/class-diagram.md](docs/class-diagram.md)
 
-## Current Sequence Diagram
+*Last updated: September 27, 2025*
 
-<p style="text-align:right">
-<img src="documentation/uml/sequence-diagram.png" alt="Sequence Diagram">
-</p>
-Date: December 2, 2019
+## Sequence Diagram
+
+View the interactive sequence diagram: [docs/sequence-diagram.md](docs/sequence-diagram.md)
+
+*Last updated: September 27, 2025*
 
 ## Known issues
 
