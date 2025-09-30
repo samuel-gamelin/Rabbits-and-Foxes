@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import controller.GameController;
 import controller.GameController.ClickValidity;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import model.Board;
 import model.BoardListener;
 import util.Move;
@@ -28,7 +28,7 @@ import java.util.ArrayDeque;
  * @author Abdalla El Nakla
  * @author Mohamed Radwan
  */
-@Log4j
+@Slf4j
 public class GameView extends JFrame implements ActionListener, BoardListener, MouseListener, Runnable {
 
     private final JButton menuReset, menuHelp, menuHint, menuUndo, menuRedo, menuMain, menuSaveButton, menuQuit;

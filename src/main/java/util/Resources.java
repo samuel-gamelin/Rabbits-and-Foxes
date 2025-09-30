@@ -3,7 +3,7 @@ package util;
 import com.google.gson.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import model.Board;
 import ui.GUIUtilities;
 
@@ -24,7 +24,7 @@ import java.util.Objects;
  * @author Samuel Gamelin
  * @author John Breton
  */
-@Log4j
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Resources {
 
