@@ -52,7 +52,7 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 ## Important Development Notes
 
 ### Java Version
-- Project targets Java 21 (source and target in maven-compiler-plugin)
+- Project targets Java 25 (source and target in maven-compiler-plugin)
 
 ### Resource Management
 - Game assets (images, sounds) in `src/main/resources/`
