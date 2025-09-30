@@ -10,11 +10,14 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 
 ### Build and Package
 - `mvn clean package` - Builds the project and creates `Rabbits-and-Foxes.jar` in the `target` directory
+- `mvn clean package -Dtest=\!GameViewTest` - Build without GUI tests (for headless environments)
 - `mvn clean compile` - Compiles the project without packaging
 
 ### Testing
 - `mvn test` - Runs all JUnit 5 tests
+- `mvn test -Dtest=GameViewTest` - Run only GameViewTest (requires display)
 - `mvn surefire:test` - Alternative test runner with specific configuration
+- Note: GameViewTest requires display and audio; uses gracefully degraded audio in CI
 
 ### Running the Application
 - `java -jar target/Rabbits-and-Foxes.jar` - Run the packaged application
@@ -64,10 +67,53 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
   - `docs/class-diagram.md` - Interactive class diagram showing MVC structure
   - `docs/sequence-diagram.md` - Game interaction flow diagram
   - Renders natively in GitHub and VSCode (with Mermaid extension)
+- **User Manual**: `docs/user-manual.md` - Complete game guide with screenshots
+- **Milestone Documentation**: `docs/milestones/` - Project milestone history
 - **Legacy**: Original Violet UML files removed (were in `documentation/uml/`)
-- **User Manual**: PDF documentation in `documentation/` directory
 
 ### Testing Structure
 - Tests mirror main package structure under `src/test/java/`
 - Comprehensive test coverage for model classes and utilities
 - All 40 tests pass with Java 25 and JUnit 5.13.4
+
+### CI/CD Configuration
+- **GitHub Actions**: `.github/workflows/maven.yml`
+  - Uses `xvfb-run` for headless GUI testing (provides virtual X11 display)
+  - All 40 tests run in CI, including GameViewTest
+  - Ubuntu runner with Java 25
+- **Headless Environment Handling**:
+  - Display: Xvfb provides virtual framebuffer for Swing/AWT components
+  - Audio: Resources gracefully degrade when audio devices unavailable
+  - Audio clips (`Resources.INVALID_MOVE`, `Resources.SOLVED`) may be null in CI
+
+### Known Limitations
+- **Java 25 Warnings**: Reflection warnings from Log4j (`sun.reflect.Reflection.getCallerClass is not supported`)
+  - This is a known compatibility issue with older logging libraries on Java 25
+  - Does not affect functionality, can be safely ignored
+- **GameView Requirements**:
+  - Requires display server for initialization (Xvfb in CI)
+  - Audio components gracefully handle unavailable audio devices
+- **Audio Resources**: Sound effects may be null in headless environments
+  - Code already has proper null checks for all audio usage
+
+## Git Workflow
+
+### Branch Management
+- **Main branch**: `main` (not `master`)
+- **Feature branches**: Create from `main`, name with prefix (e.g., `feature/`, `fix/`)
+- **Stacked PRs**: PRs can target feature branches; will auto-retarget to `main` when base merges
+
+### Pull Request Workflow
+1. Create feature branch from latest `main`
+2. Make changes and commit
+3. Push branch and create PR
+4. Resolve merge conflicts by pulling latest `main` into feature branch
+5. Enable auto-merge once checks pass and reviews approved
+6. PR merges automatically when all conditions met
+
+### Key Contributors
+- `Abdoltim` (Abdalla El Nakla)
+- `danihashweh` (Dani Hashweh)
+- `john-breton` (John Breton)
+- `mo-5` (Mohamed Radwan)
+- `samuel-gamelin` (Samuel Gamelin)
