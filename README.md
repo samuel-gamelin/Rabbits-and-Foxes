@@ -8,7 +8,7 @@ This GitHub repository is used for the development of a game based on JumpIN' th
 
 - [IntelliJ IDEA](https://www.jetbrains.com/idea/download),
   [Eclipse](https://www.eclipse.org/downloads/packages/release)
-- [Java 21](https://adoptium.net/temurin/releases/?os=any&arch=any&package=jdk&version=21)
+- [Java 25](https://adoptium.net/temurin/releases/?os=any&arch=any&package=jdk&version=25)
 - [Lombok](https://projectlombok.org)
 - [Maven](https://maven.apache.org/download.cgi)
 - [Mermaid](https://mermaid.js.org/) for UML diagrams (renders natively in GitHub and VSCode)
