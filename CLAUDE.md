@@ -43,11 +43,11 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 - **Undo/Redo**: Move history management with stack-based implementation
 
 ### Dependencies
-- **Lombok**: Used throughout for `@Getter`, `@Setter`, `@Log4j` annotations
+- **Lombok**: Used throughout for `@Getter`, `@Setter`, `@Slf4j` annotations (migrated from Log4j to SLF4J)
 - **Gson**: JSON parsing for level data
 - **JTattoo**: Look and feel theming
-- **Log4j**: Logging framework
-- **JUnit 5**: Testing framework
+- **SLF4J + Log4j 2**: Modern logging framework (migrated from Log4j 1.x)
+- **JUnit 5**: Testing framework (version 5.13.4)
 
 ## Important Development Notes
 
@@ -59,6 +59,15 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 - Level definitions in JSON format
 - Images for different piece orientations (fox head/tail directions, rabbit colors)
 
+### Documentation
+- **Architecture Diagrams**: Located in `docs/` directory using Mermaid format
+  - `docs/class-diagram.md` - Interactive class diagram showing MVC structure
+  - `docs/sequence-diagram.md` - Game interaction flow diagram
+  - Renders natively in GitHub and VSCode (with Mermaid extension)
+- **Legacy**: Original Violet UML files removed (were in `documentation/uml/`)
+- **User Manual**: PDF documentation in `documentation/` directory
+
 ### Testing Structure
 - Tests mirror main package structure under `src/test/java/`
 - Comprehensive test coverage for model classes and utilities
+- All 40 tests pass with Java 25 and JUnit 5.13.4
