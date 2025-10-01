@@ -103,6 +103,16 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 - **Audio Resources**: Sound effects may be null in headless environments
   - Code already has proper null checks for all audio usage
 
+### Repository Configuration
+- **Branch Protection**: Main branch requires at least 1 approving review and passing CI checks before merge
+- **CI/CD**: GitHub Actions build workflow runs on all PRs
+- **Merging Dependabot PRs**: When merging multiple Dependabot PRs in sequence:
+  1. Request rebase after each merge using `gh pr comment <number> --body "@dependabot rebase"`
+  2. Wait for rebase to complete and CI checks to pass
+  3. Approve the PR using `gh pr review <number> --approve`
+  4. Merge using `gh pr merge <number> --squash --delete-branch`
+  5. Verify merge completion before proceeding to next PR in queue
+
 ## Git Workflow
 
 ### Branch Management
