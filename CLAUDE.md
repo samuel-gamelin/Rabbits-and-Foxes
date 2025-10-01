@@ -85,7 +85,7 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 - All 40 tests pass with Java 25 and JUnit 5.13.4
 
 ### CI/CD Configuration
-- **GitHub Actions**: `.github/workflows/maven.yml`
+- **GitHub Actions**: `.github/workflows/gradle.yml`
   - Uses `xvfb-run` for headless GUI testing (provides virtual X11 display)
   - All 40 tests run in CI, including GameViewTest
   - Ubuntu runner with Java 25
@@ -103,6 +103,18 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
   - Audio components gracefully handle unavailable audio devices
 - **Audio Resources**: Sound effects may be null in headless environments
   - Code already has proper null checks for all audio usage
+
+### Repository Configuration
+- **Branch Protection**: Main branch requires at least 1 approving review and passing CI checks before merge
+- **CI/CD**: GitHub Actions build workflow runs on all PRs
+  - New or renamed workflow files in PRs won't run automatically (GitHub security feature)
+  - Add `workflow_dispatch:` trigger to allow manual workflow runs
+- **Merging Dependabot PRs**: When merging multiple Dependabot PRs in sequence:
+  1. Request rebase after each merge using `gh pr comment <number> --body "@dependabot rebase"`
+  2. Wait for rebase to complete and CI checks to pass
+  3. Approve the PR using `gh pr review <number> --approve`
+  4. Merge using `gh pr merge <number> --squash --delete-branch`
+  5. Verify merge completion before proceeding to next PR in queue
 
 ## Git Workflow
 
@@ -125,3 +137,13 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 - `john-breton` (John Breton)
 - `mo-5` (Mohamed Radwan)
 - `samuel-gamelin` (Samuel Gamelin)
+
+## Keeping This File Updated
+
+**For Claude Code**: At the end of each session, before completing the final task:
+1. Review what was learned during the session (technical insights, gotchas, workarounds, best practices)
+2. Ask the user: "Would you like to update CLAUDE.md with any learnings from this session?"
+3. If yes, suggest specific additions based on the session's discoveries
+4. Update this file to help future sessions and developers
+
+This ensures institutional knowledge is captured and shared across the project.
