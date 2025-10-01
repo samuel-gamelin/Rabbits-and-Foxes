@@ -9,18 +9,17 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 ## Build and Development Commands
 
 ### Build and Package
-- `mvn clean package` - Builds the project and creates `Rabbits-and-Foxes.jar` in the `target` directory
-- `mvn clean package -Dtest=\!GameViewTest` - Build without GUI tests (for headless environments)
-- `mvn clean compile` - Compiles the project without packaging
+- `./gradlew clean build` - Builds the project and creates `Rabbits-and-Foxes.jar` in the `build/libs` directory (fat JAR with dependencies)
+- `./gradlew clean compileJava` - Compiles the project without packaging
+- `./gradlew shadowJar` - Creates the fat JAR directly
+- Note: JAR contains only compiled classes and resources (no source files)
 
 ### Testing
-- `mvn test` - Runs all JUnit 5 tests
-- `mvn test -Dtest=GameViewTest` - Run only GameViewTest (requires display)
-- `mvn surefire:test` - Alternative test runner with specific configuration
-- Note: GameViewTest requires display and audio; uses gracefully degraded audio in CI
+- `./gradlew test` - Runs all JUnit 5 tests
+- `./gradlew test --tests '*' --tests '!ui.GameViewTest'` - Run tests excluding GameViewTest
 
 ### Running the Application
-- `java -jar target/Rabbits-and-Foxes.jar` - Run the packaged application
+- `java -jar build/libs/Rabbits-and-Foxes.jar` - Run the packaged application
 - Main class: `ui.MainMenu` (entry point for the application)
 
 ## Architecture
@@ -51,11 +50,20 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 - **JTattoo**: Look and feel theming
 - **SLF4J + Log4j 2**: Modern logging framework (migrated from Log4j 1.x)
 - **JUnit 5**: Testing framework (version 5.13.4)
+- **Shadow Plugin**: Creates fat JAR with all dependencies bundled
+- **Dependency Updates**: Managed automatically by Dependabot - do not manually update dependencies
 
 ## Important Development Notes
 
-### Java Version
-- Project targets Java 25 (source and target in maven-compiler-plugin)
+### Build System
+- **Gradle**: Version 9.1.0 with Kotlin DSL (build.gradle.kts)
+- **Java Version**: Targets Java 25 via toolchain configuration
+- **Shadow Plugin**: Version 8.3.9 for fat JAR creation
+  - Plugin ID: `com.gradleup.shadow` (new maintainership, not `com.github.johnrengelman.shadow`)
+  - Shadow 8.1.1 and earlier are incompatible with Gradle 9.x
+  - Minimum version for Gradle 9 compatibility: 8.3.7
+- **JUnit Platform Launcher**: Required as `testRuntimeOnly` dependency for Gradle 9
+- **Test Exclusion in CI**: GameViewTest excluded when `CI=true` environment variable is set (configured in build.gradle.kts)
 
 ### Resource Management
 - Game assets (images, sounds) in `src/main/resources/`

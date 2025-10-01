@@ -108,3 +108,8 @@ documentation/javadoc
 
 # Maven
 target/
+
+# Gradle
+.gradle/
+build/
+!gradle-wrapper.jar

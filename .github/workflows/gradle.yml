@@ -4,6 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -16,11 +17,9 @@ jobs:
         with:
           java-version: 25
           distribution: 'temurin'
-      - name: Cache Maven packages
-        uses: actions/cache@v4
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Build with Maven
-        run: xvfb-run -a mvn -B clean package --file pom.xml
+          cache-read-only: false
+      - name: Build with Gradle
+        run: xvfb-run -a ./gradlew clean build
