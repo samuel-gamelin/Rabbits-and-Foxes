@@ -66,7 +66,7 @@ found [here](documentation/Rabbits%20and%20Foxes%20Documentation%20-%20User%20Ma
 - [Samuel Gamelin](https://github.com/samuel-gamelin)
 - [Dani Hashweh](https://github.com/danihashweh)
 - [John Breton](https://github.com/john-breton)
-- [Abdalla El Nakla](https://github.com/Abdoltim)
+- [Abdalla El Nakla](https://github.com/abdallaelnakla)
 
 ## Credits for Graphical Resources
 

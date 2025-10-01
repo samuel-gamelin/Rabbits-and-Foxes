@@ -201,7 +201,7 @@ This project was developed by a collaborative team of Software Engineering stude
 - **[Samuel Gamelin](https://github.com/samuel-gamelin)** - Project Manager & Developer
 - **[Dani Hashweh](https://github.com/danihashweh)** - UI/UX Developer
 - **[John Breton](https://github.com/john-breton)** - Algorithm Developer
-- **[Abdalla El Nakla](https://github.com/Abdoltim)** - Quality Assurance
+- **[Abdalla El Nakla](https://github.com/abdallaelnakla)** - Quality Assurance
 
 Each team member contributed their expertise to create a polished, educational implementation of the JumpIN' puzzle game. The team collaborated effectively using agile methodologies and modern software development practices.
 
