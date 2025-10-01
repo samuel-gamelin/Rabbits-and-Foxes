@@ -42,10 +42,6 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-
-    // Match Maven Surefire configuration: reuseForks=false, forkCount=1
-    maxParallelForks = 1
-    forkEvery = 1
 }
 
 // Configure Shadow plugin to create fat JAR
