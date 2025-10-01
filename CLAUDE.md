@@ -9,9 +9,10 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 ## Build and Development Commands
 
 ### Build and Package
-- `mvn clean package` - Builds the project and creates `Rabbits-and-Foxes.jar` in the `target` directory
+- `mvn clean package` - Builds the project and creates `Rabbits-and-Foxes.jar` in the `target` directory (fat JAR with dependencies)
 - `mvn clean package -Dtest=\!GameViewTest` - Build without GUI tests (for headless environments)
 - `mvn clean compile` - Compiles the project without packaging
+- Note: JAR contains only compiled classes and resources (no source files)
 
 ### Testing
 - `mvn test` - Runs all JUnit 5 tests
@@ -51,6 +52,7 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 - **JTattoo**: Look and feel theming
 - **SLF4J + Log4j 2**: Modern logging framework (migrated from Log4j 1.x)
 - **JUnit 5**: Testing framework (version 5.13.4)
+- **Dependency Updates**: Managed automatically by Dependabot - do not manually update dependencies
 
 ## Important Development Notes
 
@@ -67,6 +69,11 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
   - `docs/class-diagram.md` - Interactive class diagram showing MVC structure
   - `docs/sequence-diagram.md` - Game interaction flow diagram
   - Renders natively in GitHub and VSCode (with Mermaid extension)
+- **Architecture Decision Records (ADRs)**: `docs/decisions/` directory
+  - Uses MADR (Markdown Architecture Decision Records) format
+  - Template available at `docs/decisions/adr-template.md`
+  - Documents significant architectural and technical decisions
+  - See `docs/decisions/README.md` for usage guidelines
 - **User Manual**: `docs/user-manual.md` - Complete game guide with screenshots
 - **Milestone Documentation**: `docs/milestones/` - Project milestone history
 - **Legacy**: Original Violet UML files removed (were in `documentation/uml/`)
