@@ -170,11 +170,9 @@ When a new dependency is proposed:
 - JTattoo is GPL v2 **or later** (we choose v3)
 - This allows use of Apache 2.0 dependencies
 
-### Fair Use and Assets
-- Game mechanics: NOT copyrightable
-- Graphical assets: Copyrighted by SmartGames
-- GitHub = public distribution (not "educational use" exemption)
-- Risk accepted by team after 7 years without issues
+### Third-Party Assets
+- Graphical assets: Obtained from SmartGames
+- See NOTICE file for full attribution
 
 ## Communication
 
