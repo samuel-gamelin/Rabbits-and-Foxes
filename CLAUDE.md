@@ -53,6 +53,13 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 - **Shadow Plugin**: Creates fat JAR with all dependencies bundled
 - **Dependency Updates**: Managed automatically by Dependabot - do not manually update dependencies
 
+### Licensing
+- **Project License**: GNU General Public License v3.0 (GPL v3)
+  - Required due to JTattoo dependency (GPL v2 or later)
+  - `LICENSE` file contains GPL v3 text with project copyright notice
+  - `NOTICE` file documents all third-party dependency attributions
+- **For license audits or compliance**: Use the `license-auditor` agent
+
 ## Important Development Notes
 
 ### Build System
@@ -114,12 +121,52 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
 - **CI/CD**: GitHub Actions build workflow runs on all PRs
   - New or renamed workflow files in PRs won't run automatically (GitHub security feature)
   - Add `workflow_dispatch:` trigger to allow manual workflow runs
-- **Merging Dependabot PRs**: When merging multiple Dependabot PRs in sequence:
-  1. Request rebase after each merge using `gh pr comment <number> --body "@dependabot rebase"`
-  2. Wait for rebase to complete and CI checks to pass
-  3. Approve the PR using `gh pr review <number> --approve`
-  4. Merge using `gh pr merge <number> --squash --delete-branch`
-  5. Verify merge completion before proceeding to next PR in queue
+- **Merging Dependabot PRs**: Use the `dependency-updater` agent to handle Dependabot PRs in sequence
+
+## Specialized Agents
+
+The project includes custom Claude Code agents in `.claude/agents/` for specific workflows:
+
+### dependency-updater
+**Purpose**: Manage Dependabot PRs and dependency updates
+
+**When to use**:
+- Merging multiple Dependabot PRs in sequence
+- Adding new dependencies to the project
+- Verifying license compatibility of dependencies
+
+**Key features**:
+- Automated Dependabot PR workflow (rebase, approve, merge)
+- License compatibility verification with GPL v3
+- NOTICE file updates when dependencies change
+- Build and test verification after updates
+
+**Usage**:
+```
+Use the dependency-updater agent to merge the pending Dependabot PRs
+```
+
+### license-auditor
+**Purpose**: Ensure license compliance and maintain attribution files
+
+**When to use**:
+- Performing license audits
+- Generating Software Bill of Materials (SBOM)
+- Updating LICENSE or NOTICE files
+- Verifying new dependency licenses
+
+**Key features**:
+- SBOM generation using syft
+- GPL v3 compatibility verification
+- LICENSE and NOTICE file maintenance
+- Detailed license compatibility matrix
+
+**Usage**:
+```
+Use the license-auditor agent to audit our dependencies
+```
+
+**Note**: Claude Code will automatically invoke these agents when appropriate based on your requests.
 
 ## Git Workflow
 

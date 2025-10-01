@@ -1,0 +1,162 @@
+Rabbits and Foxes
+Copyright (C) 2019-2025 The Rabbits and Foxes Team
+
+This product includes software developed by:
+  - Mohamed Radwan (https://github.com/MohamedRadwan)
+  - Samuel Gamelin (https://github.com/samuel-gamelin)
+  - Dani Hashweh (https://github.com/danihashweh)
+  - John Breton (https://github.com/john-breton)
+  - Abdalla El Nakla (https://github.com/abdallaelnakla)
+
+This project is licensed under the GNU General Public License v3.0 or later.
+See the LICENSE file for the full license text.
+
+================================================================================
+THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
+================================================================================
+
+This project incorporates components from the projects listed below. The
+original copyright notices and the licenses under which these components were
+received are set forth below for informational purposes only. We license these
+components to you under the terms of the GNU General Public License v3.0 or
+later (see LICENSE file).
+
+--------------------------------------------------------------------------------
+1. Gson 2.9.0
+--------------------------------------------------------------------------------
+
+Copyright 2008 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+--------------------------------------------------------------------------------
+2. Apache Log4j 2.20.0 (log4j-api, log4j-core, log4j-slf4j2-impl)
+--------------------------------------------------------------------------------
+
+Copyright 1999-2023 The Apache Software Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+--------------------------------------------------------------------------------
+3. SLF4J 2.0.7
+--------------------------------------------------------------------------------
+
+Copyright (c) 2004-2022 QOS.ch
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+--------------------------------------------------------------------------------
+4. JTattoo 1.6.13
+--------------------------------------------------------------------------------
+
+Copyright (C) Michael Hagen
+
+JTattoo is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option)
+any later version.
+
+JTattoo is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along
+with JTattoo; if not, write to the Free Software Foundation, Inc.,
+51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+
+Note: This project uses JTattoo under the terms of the GNU General Public
+License version 2 or later, which is compatible with this project's GPL v3
+license.
+
+--------------------------------------------------------------------------------
+5. Project Lombok 1.18.42 (Compile-time only)
+--------------------------------------------------------------------------------
+
+Copyright (C) 2009-2021 The Project Lombok Authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+Note: Lombok is a compile-time annotation processor and is not included in
+the distributed binary.
+
+--------------------------------------------------------------------------------
+6. JUnit 5.13.4 (Test-time only)
+--------------------------------------------------------------------------------
+
+Eclipse Public License - v 2.0
+
+Copyright (c) 2015-2024 The JUnit Team
+
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License 2.0 which is available at
+http://www.eclipse.org/legal/epl-2.0
+
+Note: JUnit is used only for testing and is not included in the distributed
+binary.
+
+================================================================================
+ADDITIONAL NOTICES
+================================================================================
+
+Graphical Resources:
+The pictures and graphical resources used in this game were obtained from
+SmartGames: https://www.smartgames.eu/uk/one-player-games/jumpin
+
+Educational Purpose Disclaimer:
+This application is for educational purposes. JumpIN' is a registered
+commercial product. The developers are not responsible for the distribution
+of this product.
