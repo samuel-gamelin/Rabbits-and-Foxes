@@ -18,13 +18,13 @@ repositories {
 
 dependencies {
     // JSON parsing
-    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.13.2")
 
     // Logging
-    implementation("org.slf4j:slf4j-api:2.0.7")
-    implementation("org.apache.logging.log4j:log4j-slf4j2-impl:2.20.0")
+    implementation("org.slf4j:slf4j-api:2.0.17")
+    implementation("org.apache.logging.log4j:log4j-slf4j2-impl:2.25.2")
     implementation("org.apache.logging.log4j:log4j-api:2.20.0")
-    implementation("org.apache.logging.log4j:log4j-core:2.20.0")
+    implementation("org.apache.logging.log4j:log4j-core:2.25.2")
 
     // UI theming
     implementation("com.jtattoo:JTattoo:1.6.13")
@@ -34,7 +34,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.42")
 
     // Testing
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.13.4")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:6.0.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testCompileOnly("org.projectlombok:lombok:1.18.42")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
