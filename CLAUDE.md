@@ -75,6 +75,11 @@ This is a Java Swing-based puzzle game based on JumpIN' that follows the MVC des
   - `docs/class-diagram.md` - Interactive class diagram showing MVC structure
   - `docs/sequence-diagram.md` - Game interaction flow diagram
   - Renders natively in GitHub and VSCode (with Mermaid extension)
+- **Architecture Decision Records (ADRs)**: `docs/decisions/` directory
+  - Uses MADR (Markdown Architecture Decision Records) format
+  - Template available at `docs/decisions/adr-template.md`
+  - Documents significant architectural and technical decisions
+  - See `docs/decisions/README.md` for usage guidelines
 - **User Manual**: `docs/user-manual.md` - Complete game guide with screenshots
 - **Milestone Documentation**: `docs/milestones/` - Project milestone history
 - **Legacy**: Original Violet UML files removed (were in `documentation/uml/`)
