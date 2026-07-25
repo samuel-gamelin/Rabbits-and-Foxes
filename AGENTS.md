@@ -65,4 +65,5 @@ dependency and plugin versions.
 - Add or update tests when behavior changes.
 - Run `./gradlew test` for code changes and `./gradlew clean build` for build,
   packaging, dependency, or CI changes.
+- Use squash merges for pull requests.
 - Do not commit `.gradle/`, `build/`, or other generated output.
