@@ -196,8 +196,9 @@ public final class Resources {
                 }
             });
             return clip;
-        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-            log.error("Could not load audio resource at " + path, e);
+        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException | IllegalArgumentException e) {
+            log.warn("Could not load audio resource at " + path
+                    + " (audio may not be available in a headless environment)", e);
         }
         return null;
     }
