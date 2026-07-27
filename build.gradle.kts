@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     // JSON parsing
-    implementation("com.google.code.gson:gson:2.13.2")
+    implementation("com.google.code.gson:gson:2.14.0")
 
     // Logging
     implementation("org.slf4j:slf4j-api:2.0.17")
